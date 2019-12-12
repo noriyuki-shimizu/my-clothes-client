@@ -1,12 +1,15 @@
-import { Getters, Mutations, Actions } from './types';
-import { State, IGetters, IMutations, IActions } from './couterType';
+import { Getters, Mutations, Actions } from 'vuex';
+import { State, IGetters, IMutations, IActions } from './type';
 
 const state: State = {
-  count: 0
+  count: 1
 };
 
 const getters: Getters<State, IGetters> = {
-  double(state) {
+  double(state, getters, rootState, rootGetters) {
+    console.log(getters.expo(state.count));
+    console.log(rootState.counter.count);
+    console.log(rootGetters['counter/expo']);
     return state.count * 2;
   },
   expo2(state) {
