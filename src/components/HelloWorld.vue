@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h1>{{ double }}</h1>
     <p>
       For a guide and recipes on how to configure / customize this project,<br />
       check out the
@@ -112,10 +112,22 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import * as Vuex from 'vuex';
 
 @Component
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
+
+  $store!: Vuex.ExStore;
+
+  get double() {
+    console.log('hoge: ', this.$store.getters['counter/double']);
+    return this.$store.getters['counter/double'];
+  }
+
+  increment(payload: { amount: number }) {
+    this.$store.commit('counter/setCount', payload);
+  }
 }
 </script>
 
