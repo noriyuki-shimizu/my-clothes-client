@@ -1,7 +1,7 @@
 import 'vuex';
-import * as Root from '@/store/type'
+import * as Root from '@/store/type';
 import * as Counter from '@/store/counter/type';
-// import * as Todos from '@/store/todos/type';
+import * as User from '@/store/user/type';
 
 declare module 'vuex' {
   type Getters<S, G> = {
@@ -28,7 +28,7 @@ declare module 'vuex' {
     rootGetters: RootGetters;
   };
   type Actions<S, A, G = {}, M = {}> = {
-    [K in keyof A]: (ctx: ExActionContext<S, A, G, M>, payload: A[K]) => any
+    [K in keyof A]: (ctx: ExActionContext<S, A, G, M>, payload: A[K]) => any;
   };
 
   interface ExStore extends Store<RootState> {
@@ -40,13 +40,13 @@ declare module 'vuex' {
   // -----------------------------------------------------------------------------
 
   type RootState = Root.State & {
-      counter: Counter.State
-  }
+    counter: Counter.State;
+    user: User.State;
+  };
 
-  type RootGetters = Counter.IRootGetters;
-  // type RootGetters = Counter.IRootGetters & Todos.IRootGetters
+  type RootGetters = Counter.IRootGetters & User.IRootGetters;
 
-  type RootMutations = Counter.IRootMutations;
+  type RootMutations = Counter.IRootMutations & User.IRootMutations;
 
-  type RootActions = Counter.IRootActions;
+  type RootActions = Counter.IRootActions & User.IRootActions;
 }
