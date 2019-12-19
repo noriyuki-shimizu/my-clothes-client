@@ -7,9 +7,9 @@ import beforeEach from '@/router/before-each';
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes
 });
 
 router.beforeEach(beforeEach);
