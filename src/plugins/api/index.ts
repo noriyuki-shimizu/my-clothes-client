@@ -1,5 +1,9 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig, AxiosError } from 'axios';
 import store from '@/store';
+
+export const isAxiosError = (err: any): err is AxiosError => {
+    return 'isAxiosError' in err;
+};
 
 const http = axios.create({
     baseURL: process.env.VUE_APP_API_BASE_URL
@@ -22,7 +26,7 @@ http.interceptors.request.use(
     }
 );
 
-export default async (option: any) => {
+export default async (option: AxiosRequestConfig) => {
     return http(option).catch((error: any) => {
         throw error;
     });
