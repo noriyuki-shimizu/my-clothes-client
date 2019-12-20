@@ -3,7 +3,7 @@ import 'firebase/auth';
 
 import {
     FirebaseExternalApiAuthError,
-    FirebaseNormalAuthError
+    FirebaseAuthError
 } from '@/plugins/firebase/auth/type';
 
 export const isFirebaseExternalApiAuthError = (
@@ -12,10 +12,8 @@ export const isFirebaseExternalApiAuthError = (
     return 'credential' in err;
 };
 
-export const isFirebaseNormalAuthError = (
-    err: any
-): err is FirebaseNormalAuthError => {
-    return 'code' in err;
+export const isFirebaseAuthError = (err: any): err is FirebaseAuthError => {
+    return 'code' in err && 'message' in err;
 };
 
 export default {
