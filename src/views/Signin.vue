@@ -30,7 +30,7 @@
                 </a-button>
                 <a-divider />
                 <a-form
-                    id="components-form-demo-normal-login"
+                    id="components-form-normal-login"
                     :form="form"
                     class="login-form"
                     @submit="handleSubmit"
@@ -69,23 +69,20 @@
                         </a-input>
                     </a-form-item>
                     <a-form-item>
-                        <div id="card_footer">
-                            <a-button
-                                type="primary"
-                                html-type="submit"
-                                class="login-form-button"
-                                :disabled="hasErrors(form.getFieldsError())"
-                            >
-                                Log in
-                            </a-button>
-                            Or
-                            <router-link to="/signup">
-                                register now!
-                            </router-link>
-                            <a class="login-form-forgot" href="">
-                                Forgot password
-                            </a>
-                        </div>
+                        <a-button
+                            type="primary"
+                            html-type="submit"
+                            class="login-form-button"
+                        >
+                            Log in
+                        </a-button>
+                        Or
+                        <router-link to="/signup">
+                            register now!
+                        </router-link>
+                        <a class="login-form-forgot" href="">
+                            Forgot password
+                        </a>
                     </a-form-item>
                 </a-form>
             </a-card>
@@ -96,13 +93,17 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
+import {
+    FieldDecoratorOptions,
+    WrappedFormUtils
+} from 'ant-design-vue/types/form/form';
 
-import firebaseAuth, {
-    isFirebaseNormalAuthError,
+import {
+    isFirebaseAuthError,
     isFirebaseExternalApiAuthError
 } from '@/plugins/firebase/auth';
 import { FirebaseExternalApiAuthError } from '@/plugins/firebase/auth/type';
-import { Decorator } from '@/views/decorator';
+import { isAxiosError } from '../plugins/api';
 
 type FormFields = {
     mailAddress: string;
@@ -122,11 +123,15 @@ type Message = {
     type: 'warning' | 'error' | null;
 };
 
+type Decorator = {
+    [k: string]: [string, FieldDecoratorOptions];
+};
+
 @Component
 export default class Signin extends Vue {
-    private form: any;
+    private form!: WrappedFormUtils;
 
-    private spinning: boolean = false;
+    private spinning = false;
 
     private externalApiAuthMessage: Message = {
         isShow: false,
@@ -142,14 +147,14 @@ export default class Signin extends Vue {
         type: null
     };
 
-    private decorator: Decorator.FieldParameters = {
+    private decorator: Decorator = {
         mailAddress: [
             'mailAddress',
             {
                 rules: [
                     {
                         type: 'email',
-                        message: 'Please enter the correct email address!'
+                        message: 'The input is not valid mail address!'
                     },
                     {
                         required: true,
@@ -183,7 +188,7 @@ export default class Signin extends Vue {
         };
     }
 
-    private goHome(): void {
+    private toHome(): void {
         this.$router.push({ name: 'home' });
     }
 
@@ -194,7 +199,7 @@ export default class Signin extends Vue {
 
         try {
             await this.$store.dispatch('user/signinWithGithub');
-            this.goHome();
+            this.toHome();
         } catch (err) {
             if (isFirebaseExternalApiAuthError(err)) {
                 this.spinning = false;
@@ -210,7 +215,7 @@ export default class Signin extends Vue {
 
         try {
             await this.$store.dispatch('user/signinWithGoogle');
-            this.goHome();
+            this.toHome();
         } catch (err) {
             console.log(err);
             if (isFirebaseExternalApiAuthError(err)) {
@@ -220,37 +225,39 @@ export default class Signin extends Vue {
         }
     }
 
-    hasErrors(formValidateField: FormValidateFields): boolean {
-        return Object.keys(formValidateField).some(
-            field => formValidateField[field]
-        );
-    }
-
     handleSubmit(e: Event): void {
         e.preventDefault();
         this.externalApiAuthMessage.isShow = false;
         this.normalAuthMessage.isShow = false;
-        this.spinning = true;
 
-        this.form.validateFields(async (err: any, values: FormFields) => {
+        this.form.validateFields(async (err: Error[], values: FormFields) => {
             if (!err) {
+                this.spinning = true;
                 try {
                     await this.$store.dispatch(
                         'user/signinWithMailAddressAndPassword',
                         values
                     );
-                    this.goHome();
+                    this.toHome();
                 } catch (err) {
-                    if (isFirebaseNormalAuthError(err)) {
-                        this.spinning = false;
+                    if (isAxiosError(err)) {
+                        this.normalAuthMessage = {
+                            isShow: true,
+                            text: `Error (${err.message})`,
+                            description: `Access URL: ${err.config.url}`,
+                            type: 'error'
+                        };
+                    }
+                    if (isFirebaseAuthError(err)) {
                         this.normalAuthMessage = {
                             isShow: true,
                             text: `Error (${err.code})`,
                             description: err.message,
                             type: 'error'
                         };
-                        this.form.resetFields();
                     }
+                    this.spinning = false;
+                    this.form.resetFields();
                 }
             }
         });
@@ -258,7 +265,7 @@ export default class Signin extends Vue {
 }
 </script>
 
-<style>
+<style scoped>
 #signin {
     background-color: #ececec;
     padding: 5%;
@@ -269,13 +276,13 @@ export default class Signin extends Vue {
     width: 35vw;
     margin: auto;
 }
-#components-form-demo-normal-login .login-form {
+#components-form-normal-login .login-form {
     max-width: 300px;
 }
-#components-form-demo-normal-login .login-form-forgot {
+#components-form-normal-login .login-form-forgot {
     float: right;
 }
-#components-form-demo-normal-login .login-form-button {
+#components-form-normal-login .login-form-button {
     width: 100%;
 }
 .external-api-login-button {
@@ -290,9 +297,6 @@ export default class Signin extends Vue {
 }
 #google_login_button {
     background-color: blue;
-}
-#card_footer {
-    bottom: 0;
 }
 .external-api-login-message {
     margin-top: 2%;
