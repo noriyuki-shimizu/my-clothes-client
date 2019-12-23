@@ -22,12 +22,18 @@ export default {
     },
 
     async createUserWithEmailAndPassword(
+        name: string,
         mailAddress: string,
         password: string
-    ): Promise<firebase.auth.UserCredential> {
-        return firebase
+    ): Promise<void> {
+        await firebase
             .auth()
             .createUserWithEmailAndPassword(mailAddress, password);
+
+        const user = firebase.auth().currentUser as firebase.User;
+        await user.updateProfile({
+            displayName: name
+        });
     },
 
     async signInWithEmailAndPassword(
@@ -49,7 +55,7 @@ export default {
         return firebase.auth().signInWithPopup(provider);
     },
 
-    async logout(): Promise<void> {
+    async signOut(): Promise<void> {
         await firebase.auth().signOut();
     }
 };
