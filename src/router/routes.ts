@@ -2,15 +2,15 @@ import { RouteConfig } from 'vue-router';
 
 const routes: RouteConfig[] = [
     {
-        path: '/signin',
-        name: 'signin',
-        component: () => import('../views/Signin.vue'),
+        path: '/signIn',
+        name: 'signIn',
+        component: () => import('../views/SignIn.vue'),
         meta: { requiresAuth: false }
     },
     {
-        path: '/signup',
-        name: 'signup',
-        component: () => import('../views/Signup.vue'),
+        path: '/signUp',
+        name: 'signUp',
+        component: () => import('../views/SignUp.vue'),
         meta: { requiresAuth: false }
     },
     {

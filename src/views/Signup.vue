@@ -1,6 +1,6 @@
 <template>
-    <div id="signup">
-        <a-spin id="signup_card" :spinning="spinning" size="large">
+    <div id="sign_up">
+        <a-spin id="sign_up_card" :spinning="spinning" size="large">
             <a-card title="Sign up" :bordered="false">
                 <a-alert
                     class="registered-message"
@@ -11,6 +11,9 @@
                     showIcon
                 />
                 <a-form :form="form" @submit="handleSubmit">
+                    <a-form-item v-bind="formItemLayout" label="Name">
+                        <a-input v-decorator="decorator.name" />
+                    </a-form-item>
                     <a-form-item v-bind="formItemLayout" label="Mail address">
                         <a-input v-decorator="decorator.mailAddress" />
                     </a-form-item>
@@ -40,7 +43,7 @@
                                 Register
                             </a-button>
                             Do you have an account?
-                            <router-link to="/signin">
+                            <router-link to="/signIn">
                                 Then sign in now!
                             </router-link>
                         </div>
@@ -64,6 +67,7 @@ import firebaseAuth, { isFirebaseAuthError } from '@/plugins/firebase/auth';
 import { FirebaseExternalApiAuthError } from '@/plugins/firebase/auth/type';
 
 type FormFields = {
+    name: string;
     mailAddress: string;
     password: string;
     confirm: string;
@@ -87,7 +91,7 @@ interface HTMLElementEvent<T extends HTMLElement> extends Event {
 }
 
 @Component
-export default class Signin extends Vue {
+export default class SignUn extends Vue {
     private form!: WrappedFormUtils;
 
     private confirmDirty = false;
@@ -102,6 +106,17 @@ export default class Signin extends Vue {
     };
 
     private decorator: Decorator = {
+        name: [
+            'name',
+            {
+                rules: [
+                    {
+                        required: true,
+                        message: 'Please input your name!'
+                    }
+                ]
+            }
+        ],
         mailAddress: [
             'mailAddress',
             {
@@ -147,7 +162,7 @@ export default class Signin extends Vue {
         ]
     };
 
-    private formItemLayout: ExPartial<Form> = {
+    private formItemLayout: Readonly<ExPartial<Form>> = {
         labelCol: {
             xs: { span: 24, offset: 0 },
             sm: { span: 8, offset: 0 }
@@ -200,12 +215,13 @@ export default class Signin extends Vue {
             if (!err) {
                 this.spinning = true;
                 try {
-                    const { mailAddress, password } = values;
+                    const { name, mailAddress, password } = values;
                     await firebaseAuth.createUserWithEmailAndPassword(
+                        name,
                         mailAddress,
                         password
                     );
-                    this.$router.push({ name: 'signin' });
+                    this.$router.push({ name: 'signIn' });
                 } catch (err) {
                     if (isFirebaseAuthError(err)) {
                         this.registerMessage = {
@@ -225,13 +241,13 @@ export default class Signin extends Vue {
 </script>
 
 <style scoped>
-#signup {
+#sign_up {
     background-color: #ececec;
     padding: 5%;
     height: 100vh;
     width: 100vw;
 }
-#signup_card {
+#sign_up_card {
     width: 35vw;
     margin: auto;
 }

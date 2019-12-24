@@ -1,6 +1,6 @@
 <template>
-    <div id="signin">
-        <a-spin id="signin_card" :spinning="spinning" size="large">
+    <div id="sign_in">
+        <a-spin id="sign_in_card" :spinning="spinning" size="large">
             <a-card title="Sign in" :bordered="false">
                 <a-alert
                     class="external-api-login-message"
@@ -15,7 +15,7 @@
                     shape="round"
                     class="external-api-login-button"
                     id="github_login_button"
-                    @click="signinWithGithub"
+                    @click="signInWithGithub"
                 >
                     Log in for Github
                 </a-button>
@@ -24,7 +24,7 @@
                     shape="round"
                     class="external-api-login-button"
                     id="google_login_button"
-                    @click="signinWithGoogle"
+                    @click="signInWithGoogle"
                 >
                     Log in for Google
                 </a-button>
@@ -77,7 +77,7 @@
                             Log in
                         </a-button>
                         Or
-                        <router-link to="/signup">
+                        <router-link to="/signUp">
                             register now!
                         </router-link>
                         <a class="login-form-forgot" href="">
@@ -128,7 +128,7 @@ type Decorator = {
 };
 
 @Component
-export default class Signin extends Vue {
+export default class SignIn extends Vue {
     private form!: WrappedFormUtils;
 
     private spinning = false;
@@ -192,13 +192,13 @@ export default class Signin extends Vue {
         this.$router.push({ name: 'home' });
     }
 
-    async signinWithGithub(): Promise<void> {
+    async signInWithGithub(): Promise<void> {
         this.externalApiAuthMessage.isShow = false;
         this.normalAuthMessage.isShow = false;
         this.spinning = true;
 
         try {
-            await this.$store.dispatch('user/signinWithGithub');
+            await this.$store.dispatch('user/signInWithGithub');
             this.toHome();
         } catch (err) {
             if (isFirebaseExternalApiAuthError(err)) {
@@ -208,16 +208,15 @@ export default class Signin extends Vue {
         }
     }
 
-    async signinWithGoogle(): Promise<void> {
+    async signInWithGoogle(): Promise<void> {
         this.externalApiAuthMessage.isShow = false;
         this.normalAuthMessage.isShow = false;
         this.spinning = true;
 
         try {
-            await this.$store.dispatch('user/signinWithGoogle');
+            await this.$store.dispatch('user/signInWithGoogle');
             this.toHome();
         } catch (err) {
-            console.log(err);
             if (isFirebaseExternalApiAuthError(err)) {
                 this.spinning = false;
                 this.externalApiAuthMessage = this.mappingMessage(err);
@@ -235,7 +234,7 @@ export default class Signin extends Vue {
                 this.spinning = true;
                 try {
                     await this.$store.dispatch(
-                        'user/signinWithMailAddressAndPassword',
+                        'user/signInWithMailAddressAndPassword',
                         values
                     );
                     this.toHome();
@@ -266,13 +265,13 @@ export default class Signin extends Vue {
 </script>
 
 <style scoped>
-#signin {
+#sign_in {
     background-color: #ececec;
     padding: 5%;
     height: 100vh;
     width: 100vw;
 }
-#signin_card {
+#sign_in_card {
     width: 35vw;
     margin: auto;
 }

@@ -22,17 +22,19 @@ export interface IRootMutations {
 }
 
 export interface IActions {
-    signinWithGithub: void;
-    signinWithGoogle: void;
-    signinWithMailAddressAndPassword: {
+    signInWithGithub: void;
+    signInWithGoogle: void;
+    signInWithMailAddressAndPassword: {
         mailAddress: string;
         password: string;
     };
     linkUserToAPI: void;
+    signOut: void;
 }
 export interface IRootActions {
-    'user/signinWithGithub': IActions['signinWithGithub'];
-    'user/signinWithGoogle': IActions['signinWithGoogle'];
-    'user/signinWithMailAddressAndPassword': IActions['signinWithMailAddressAndPassword'];
+    'user/signInWithGithub': IActions['signInWithGithub'];
+    'user/signInWithGoogle': IActions['signInWithGoogle'];
+    'user/signInWithMailAddressAndPassword': IActions['signInWithMailAddressAndPassword'];
     'user/linkUserToAPI': IActions['linkUserToAPI'];
+    'user/signOut': IActions['signOut'];
 }

@@ -28,17 +28,17 @@ const mutations: Mutations<State, IMutations> = {
 };
 
 const actions: Actions<State, IActions, IGetters, IMutations> = {
-    async signinWithGithub(ctx) {
+    async signInWithGithub(ctx) {
         const userCredential = await firebaseAuth.signInWithGithub();
         ctx.commit('onCurrentUserStateChanged', userCredential.user);
         await ctx.dispatch('linkUserToAPI');
     },
-    async signinWithGoogle(ctx) {
+    async signInWithGoogle(ctx) {
         const userCredential = await firebaseAuth.signInWithGoogle();
         ctx.commit('onCurrentUserStateChanged', userCredential.user);
         await ctx.dispatch('linkUserToAPI');
     },
-    async signinWithMailAddressAndPassword(ctx, payload) {
+    async signInWithMailAddressAndPassword(ctx, payload) {
         const { mailAddress, password } = payload;
         const userCredential = await firebaseAuth.signInWithEmailAndPassword(
             mailAddress,

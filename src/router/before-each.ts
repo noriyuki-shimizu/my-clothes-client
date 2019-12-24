@@ -12,7 +12,7 @@ const guard: NavigationGuard<Vue> = (to, from, next) => {
         // Already authenticated.
         const currentUser: firebase.User | null =
             store.getters['user/currentUser'];
-        currentUser ? next() : next({ name: 'signin' });
+        currentUser ? next() : next({ name: 'signIn' });
 
         return;
     }
