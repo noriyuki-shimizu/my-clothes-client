@@ -3,14 +3,12 @@ import firebase from 'firebase';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import Antd, { Form } from 'ant-design-vue';
-import 'ant-design-vue/dist/antd.css';
 
+import setAntdComponents from '@/plugins/antd/components';
 import firebaseAuth from '@/plugins/firebase/auth';
 
+setAntdComponents(Vue);
 Vue.config.productionTip = false;
-
-Vue.use(Antd);
 
 firebase.initializeApp({
     apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
