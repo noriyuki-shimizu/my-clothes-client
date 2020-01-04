@@ -60,7 +60,8 @@ import {
     WrappedFormUtils,
     ValidationRule,
     FieldDecoratorOptions,
-    Form
+    Form,
+    FieldDecorator
 } from 'ant-design-vue/types/form/form';
 
 import firebaseAuth, { isFirebaseAuthError } from '@/plugins/firebase/auth';
@@ -78,10 +79,6 @@ type Message = {
     text: string;
     description: string;
     type: 'warning' | 'error' | null;
-};
-
-type Decorator = {
-    [k: string]: [string, FieldDecoratorOptions];
 };
 
 type ExPartial<T> = { [P in keyof T]?: Partial<T[P]> | undefined };
@@ -105,7 +102,7 @@ export default class SignUn extends Vue {
         type: null
     };
 
-    private decorator: Decorator = {
+    private decorator: FieldDecorator = {
         name: [
             'name',
             {

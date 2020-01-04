@@ -18,7 +18,7 @@ export default async (option: AxiosRequestConfig) => {
             return requestConfig;
         },
         error => {
-            return Promise.reject(error);
+            throw error;
         }
     );
 

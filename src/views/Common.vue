@@ -1,37 +1,35 @@
 <template>
-    <a-layout id="components-layout-toHome-trigger">
-        <a-layout-sider :trigger="null" collapsible>
-            <div class="logo" />
+    <a-layout id="components-layout-fixed-sider">
+        <a-layout-sider class="sidebar">
+            <router-link to="/home">
+                <div class="logo" />
+            </router-link>
             <a-menu theme="dark" mode="inline" :defaultSelectedKeys="['1']">
                 <a-menu-item key="1">
-                    <a-icon type="video-camera" />
-                    <span>nav 2</span>
+                    <a-icon type="smile" />
+                    <span>My photo book</span>
                 </a-menu-item>
                 <a-sub-menu key="2">
                     <span slot="title">
                         <a-icon type="setting" /><span>Maintenance</span>
                     </span>
-                    <a-menu-item key="2-1">Clothe</a-menu-item>
+                    <a-menu-item key="2-1">Clothes</a-menu-item>
                     <a-menu-item key="2-2">Brand</a-menu-item>
                     <a-menu-item key="2-3">Genre</a-menu-item>
                     <a-menu-item key="2-4">Shop</a-menu-item>
                 </a-sub-menu>
                 <a-menu-item key="3">
-                    <a-icon type="upload" />
-                    <span>nav 3</span>
-                </a-menu-item>
-                <a-menu-item key="4">
                     <a-icon type="pie-chart" />
                     <span>Pie chart</span>
                 </a-menu-item>
                 <a-divider />
-                <a-menu-item @click="signOut" key="5">
+                <a-menu-item @click="signOut" key="4">
                     <a-icon type="logout" />
                     <span>Sign out</span>
                 </a-menu-item>
             </a-menu>
         </a-layout-sider>
-        <a-layout>
+        <a-layout :style="{ marginLeft: '200px' }">
             <a-layout-header id="header">
                 <a-popover placement="bottomLeft">
                     <template slot="content">
@@ -41,16 +39,18 @@
                         <span>
                             Signed in as
                             <div>
-                                <strong>{{ currentUser.displayName }}</strong>
+                                <strong>{{
+                                    currentUser ? currentUser.displayName : ''
+                                }}</strong>
                             </div>
                         </span>
                     </template>
                     <a-badge :count="0">
                         <a-avatar
-                            v-if="currentUser.photoURL"
+                            v-if="currentUser ? currentUser.photoURL : ''"
                             shape="square"
                             size="large"
-                            :src="currentUser.photoURL"
+                            :src="currentUser ? currentUser.photoURL : ''"
                         />
                         <a-avatar
                             v-else
@@ -68,8 +68,7 @@
                 <div
                     :style="{
                         padding: '24px',
-                        background: '#fff',
-                        textAlign: 'center'
+                        background: '#fff'
                     }"
                 >
                     <router-view />
@@ -120,25 +119,15 @@ export default class Common extends Vue {
 </script>
 
 <style scoped>
-#components-layout-toHome-trigger {
+.sidebar {
+    overflow: auto;
     height: 100vh;
+    position: fixed;
+    left: 0;
 }
 
-#components-layout-toHome-trigger .trigger {
-    font-size: 18px;
-    line-height: 64px;
-    padding: 0 24px;
-    cursor: pointer;
-    transition: color 0.3s;
-}
-
-#components-layout-toHome-trigger .trigger:hover {
-    color: #1890ff;
-}
-
-#components-layout-toHome-trigger .logo {
+#components-layout-fixed-sider .logo {
     height: 112px;
-    /* background: rgba(255, 255, 255, 0.2); */
     background-image: url('../assets/icon.jpg');
     background-size: contain;
     background-repeat: space;

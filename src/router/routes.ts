@@ -18,7 +18,11 @@ const routes: RouteConfig[] = [
         component: () => import('../views/Common.vue'),
         meta: { requiresAuth: false },
         children: [
-            { path: '*', redirect: { name: 'home' } },
+            {
+                path: '*',
+                redirect: { name: 'home' },
+                meta: { requiresAuth: true }
+            },
             {
                 path: '/home',
                 name: 'home',

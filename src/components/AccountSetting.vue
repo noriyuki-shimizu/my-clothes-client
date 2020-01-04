@@ -19,13 +19,13 @@
             >
                 <a-form-item label="Mail address">
                     <span class="ant-form-text">
-                        {{ currentUser.email }}
+                        {{ currentUser ? currentUser.email : '' }}
                     </span>
                 </a-form-item>
 
                 <a-form-item v-bind="formItemLayout" label="Name">
                     <a-input
-                        v-decorator="decorator.name"
+                        v-decorator="decorator.displayName"
                         placeholder="Please enter user name"
                     />
                 </a-form-item>
@@ -55,29 +55,14 @@
                     </a-upload>
                 </a-form-item>
 
-                <div
-                    :style="{
-                        position: 'absolute',
-                        left: 0,
-                        bottom: 0,
-                        width: '100%',
-                        borderTop: '1px solid #e9e9e9',
-                        padding: '10px 16px',
-                        background: '#fff',
-                        textAlign: 'right'
-                    }"
-                >
+                <div class="form-submit-button">
                     <a-button
                         :style="{ marginRight: '8px' }"
                         @click="onInputResetAndClose"
                     >
                         Cancel
                     </a-button>
-                    <a-button
-                        html-type="submit"
-                        type="primary"
-                        :loading="registerLoading"
-                    >
+                    <a-button html-type="submit" type="primary">
                         Submit
                     </a-button>
                 </div>
@@ -102,7 +87,7 @@ import {
 } from 'ant-design-vue/types/upload';
 
 type FormFields = {
-    name: string;
+    displayName: string;
     icon: DoneUploadFileInfo;
 };
 
@@ -133,8 +118,8 @@ export default class AccountSetting extends Vue {
     visible!: boolean;
 
     private decorator: FieldDecorator = {
-        name: [
-            'name',
+        displayName: [
+            'displayName',
             {
                 rules: [
                     {
@@ -163,7 +148,7 @@ export default class AccountSetting extends Vue {
         this.form = this.$form.createForm(this, {
             mapPropsToFields: () => {
                 return {
-                    name: this.$form.createFormField({
+                    displayName: this.$form.createFormField({
                         value: user.displayName
                     })
                 };
@@ -173,7 +158,7 @@ export default class AccountSetting extends Vue {
     }
 
     get currentUser() {
-        return this.$store.getters['user/currentUser'] as firebase.User;
+        return this.$store.getters['user/currentUser'];
     }
 
     handleChange(info: UploadingFileInfo | DoneUploadFileInfo) {
@@ -201,7 +186,7 @@ export default class AccountSetting extends Vue {
     onInputResetAndClose() {
         const user = this.currentUser as firebase.User;
         this.form.setFieldsValue({
-            name: user.displayName,
+            displayName: user.displayName,
             icon: null
         });
         this.imageURL = user.photoURL || '';
@@ -217,12 +202,12 @@ export default class AccountSetting extends Vue {
             async (err: any, values: FormFields) => {
                 if (!err) {
                     try {
-                        const { name, icon } = values;
+                        const { displayName, icon } = values;
                         const iconFile =
                             icon && icon.file ? icon.file.originFileObj : null;
 
-                        await this.$store.dispatch('user/updateAccount', {
-                            name,
+                        await this.$store.dispatch('user/updateProfile', {
+                            displayName,
                             iconFile
                         });
                         this.$message.success('Successfully updated account!');
@@ -248,13 +233,15 @@ export default class AccountSetting extends Vue {
     width: 128px;
     height: 128px;
 }
-.ant-upload-select-picture-card i {
-    font-size: 32px;
-    color: #999;
-}
 
-.ant-upload-select-picture-card .ant-upload-text {
-    margin-top: 8px;
-    color: #666;
+.form-submit-button {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #e9e9e9;
+    padding: 10px 16px;
+    background: #fff;
+    text-align: right;
 }
 </style>

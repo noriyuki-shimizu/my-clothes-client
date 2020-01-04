@@ -1,7 +1,7 @@
 import 'vuex';
 import * as Root from '@/store/type';
-import * as Counter from '@/store/counter/type';
 import * as User from '@/store/user/type';
+import * as ImageAddress from '@/store/image/address/type';
 
 declare module 'vuex' {
     type Getters<S, G> = {
@@ -43,13 +43,13 @@ declare module 'vuex' {
     // -----------------------------------------------------------------------------
 
     type RootState = Root.State & {
-        counter: Counter.State;
         user: User.State;
+        imageAddress: ImageAddress.State;
     };
 
-    type RootGetters = Counter.IRootGetters & User.IRootGetters;
+    type RootGetters = User.IRootGetters & ImageAddress.IRootGetters;
 
-    type RootMutations = Counter.IRootMutations & User.IRootMutations;
+    type RootMutations = User.IRootMutations & ImageAddress.IRootMutations;
 
-    type RootActions = Counter.IRootActions & User.IRootActions;
+    type RootActions = User.IRootActions & ImageAddress.IRootActions;
 }

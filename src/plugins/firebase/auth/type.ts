@@ -10,3 +10,7 @@ export interface FirebaseExternalApiAuthError extends FirebaseAuthError {
         [k: string]: string | null;
     };
 }
+
+export type ProfileState = Partial<
+    Pick<firebase.User, 'displayName' | 'photoURL'>
+>;

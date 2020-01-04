@@ -95,7 +95,8 @@ import { Vue, Component } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 import {
     FieldDecoratorOptions,
-    WrappedFormUtils
+    WrappedFormUtils,
+    FieldDecorator
 } from 'ant-design-vue/types/form/form';
 
 import {
@@ -110,21 +111,11 @@ type FormFields = {
     password: string;
 };
 
-type FormValidateFields = {
-    [k: string]: string;
-    mailAddress: string;
-    password: string;
-};
-
 type Message = {
     isShow: boolean;
     text: string;
     description: string;
     type: 'warning' | 'error' | null;
-};
-
-type Decorator = {
-    [k: string]: [string, FieldDecoratorOptions];
 };
 
 @Component
@@ -147,7 +138,7 @@ export default class SignIn extends Vue {
         type: null
     };
 
-    private decorator: Decorator = {
+    private decorator: FieldDecorator = {
         mailAddress: [
             'mailAddress',
             {
@@ -272,7 +263,7 @@ export default class SignIn extends Vue {
     width: 100vw;
 }
 #sign_in_card {
-    width: 35vw;
+    width: 30vw;
     margin: auto;
 }
 #components-form-normal-login .login-form {

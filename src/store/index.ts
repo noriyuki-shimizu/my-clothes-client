@@ -1,13 +1,20 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import counter from '@/store/counter';
+import createPersistedState from 'vuex-persistedstate';
+
 import user from '@/store/user';
+import imageAddress from '@/store/image/address';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     modules: {
-        counter,
-        user
-    }
+        user,
+        imageAddress
+    },
+    plugins: [
+        createPersistedState({
+            key: 'mcm-client'
+        })
+    ]
 });

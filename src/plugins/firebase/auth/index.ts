@@ -3,7 +3,8 @@ import 'firebase/auth';
 
 import {
     FirebaseExternalApiAuthError,
-    FirebaseAuthError
+    FirebaseAuthError,
+    ProfileState
 } from '@/plugins/firebase/auth/type';
 
 export const isFirebaseExternalApiAuthError = (
@@ -21,8 +22,23 @@ export default {
         firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     },
 
+    async updateProfile({ displayName, photoURL }: ProfileState) {
+        const user = firebase.auth().currentUser;
+        if (user) {
+            await user
+                .updateProfile({
+                    displayName,
+                    photoURL
+                })
+                .catch(err => {
+                    throw err;
+                });
+        }
+        return firebase.auth().currentUser;
+    },
+
     async createUserWithEmailAndPassword(
-        name: string,
+        displayName: string,
         mailAddress: string,
         password: string
     ): Promise<void> {
@@ -30,10 +46,7 @@ export default {
             .auth()
             .createUserWithEmailAndPassword(mailAddress, password);
 
-        const user = firebase.auth().currentUser as firebase.User;
-        await user.updateProfile({
-            displayName: name
-        });
+        await this.updateProfile({ displayName });
     },
 
     async signInWithEmailAndPassword(
