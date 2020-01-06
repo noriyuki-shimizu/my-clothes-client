@@ -14,7 +14,11 @@
                         <a-icon type="setting" /><span>Maintenance</span>
                     </span>
                     <a-menu-item key="2-1">Clothes</a-menu-item>
-                    <a-menu-item key="2-2">Brand</a-menu-item>
+                    <a-menu-item key="2-2">
+                        <router-link to="/maintenance/brand">
+                            Brand
+                        </router-link>
+                    </a-menu-item>
                     <a-menu-item key="2-3">Genre</a-menu-item>
                     <a-menu-item key="2-4">Shop</a-menu-item>
                 </a-sub-menu>
@@ -62,15 +66,8 @@
                 </a-popover>
                 <account-setting :visible="visible" v-on:onClose="onClose" />
             </a-layout-header>
-            <a-layout-content
-                :style="{ margin: '24px 16px 0', overflow: 'initial' }"
-            >
-                <div
-                    :style="{
-                        padding: '24px',
-                        background: '#fff'
-                    }"
-                >
+            <a-layout-content id="main_layout_content">
+                <div id="content">
                     <router-view />
                 </div>
             </a-layout-content>
@@ -137,5 +134,16 @@ export default class Common extends Vue {
 #header {
     background: #fff;
     padding: 0 5% 0;
+}
+
+#main_layout_content {
+    margin: 24px 16px 0;
+    overflow: initial;
+}
+
+#content {
+    padding: 24px;
+    background: #fff;
+    min-height: 80vh;
 }
 </style>
