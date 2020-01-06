@@ -1,5 +1,13 @@
 <template>
     <div>
+        <a-alert
+            class="alert-message"
+            v-if="message.isShow"
+            :message="message.text"
+            :description="message.description"
+            :type="message.type"
+            showIcon
+        />
         <div id="home-title">
             <h1>My Clothes</h1>
             <a-carousel autoplay>
@@ -47,11 +55,26 @@ import { Vue, Component } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 import { isAxiosError } from '../plugins/api';
 
+type Message = {
+    isShow: boolean;
+    text: string;
+    description: string;
+    type: 'warning' | 'error' | null;
+};
+
 @Component
 export default class Home extends Vue {
     $store!: Vuex.ExStore;
 
+    private message: Message = {
+        isShow: false,
+        text: '',
+        description: '',
+        type: null
+    };
+
     async created() {
+        this.message.isShow = false;
         try {
             const imageAddresses = this.imageAddresses;
             if (!(imageAddresses && imageAddresses.length)) {
@@ -59,7 +82,12 @@ export default class Home extends Vue {
             }
         } catch (err) {
             if (isAxiosError(err)) {
-                this.$message.error(err.message);
+                this.message = {
+                    isShow: true,
+                    text: `Error (${err.message})`,
+                    description: `Access URL: ${err.config.url}`,
+                    type: 'error'
+                };
             }
             console.log('error: ', err);
         }
@@ -71,6 +99,10 @@ export default class Home extends Vue {
 }
 </script>
 <style scoped>
+.alert-message {
+    margin-bottom: 15px;
+}
+
 #home-title {
     text-align: center;
 }
