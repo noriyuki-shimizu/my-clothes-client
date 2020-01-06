@@ -2,6 +2,7 @@ import 'vuex';
 import * as Root from '@/store/type';
 import * as User from '@/store/user/type';
 import * as ImageAddress from '@/store/image/address/type';
+import * as Brand from '@/store/brand/type';
 
 declare module 'vuex' {
     type Getters<S, G> = {
@@ -45,11 +46,18 @@ declare module 'vuex' {
     type RootState = Root.State & {
         user: User.State;
         imageAddress: ImageAddress.State;
+        brand: Brand.State;
     };
 
-    type RootGetters = User.IRootGetters & ImageAddress.IRootGetters;
+    type RootGetters = User.IRootGetters &
+        ImageAddress.IRootGetters &
+        Brand.IRootGetters;
 
-    type RootMutations = User.IRootMutations & ImageAddress.IRootMutations;
+    type RootMutations = User.IRootMutations &
+        ImageAddress.IRootMutations &
+        Brand.IRootMutations;
 
-    type RootActions = User.IRootActions & ImageAddress.IRootActions;
+    type RootActions = User.IRootActions &
+        ImageAddress.IRootActions &
+        Brand.IRootActions;
 }
