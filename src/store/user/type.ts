@@ -1,12 +1,14 @@
+interface AppUser {
+    uid: string;
+    displayName: string | null;
+    email: string | null;
+    phoneNumber: string | null;
+    photoURL: string | null;
+}
+
 export interface State {
     id: number | null;
-    user: {
-        uid: string;
-        displayName: string | null;
-        email: string | null;
-        phoneNumber: string | null;
-        photoURL: string | null;
-    } | null;
+    user: AppUser | null;
     accessToken: string;
 }
 
