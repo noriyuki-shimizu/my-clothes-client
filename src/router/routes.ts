@@ -19,14 +19,20 @@ const routes: RouteConfig[] = [
         meta: { requiresAuth: false },
         children: [
             {
-                path: '*',
-                redirect: { name: 'home' },
-                meta: { requiresAuth: true }
-            },
-            {
                 path: '/home',
                 name: 'home',
                 component: () => import('../views/Home.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/maintenance/brand',
+                name: 'brand',
+                component: () => import('../views/maintenance/Brand.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '*',
+                redirect: { name: 'home' },
                 meta: { requiresAuth: true }
             }
         ]
