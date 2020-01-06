@@ -4,7 +4,7 @@
             <router-link to="/home">
                 <div class="logo" />
             </router-link>
-            <a-menu theme="dark" mode="inline" :defaultSelectedKeys="['1']">
+            <a-menu theme="dark" mode="inline">
                 <a-menu-item key="1">
                     <a-icon type="smile" />
                     <span>My photo book</span>
