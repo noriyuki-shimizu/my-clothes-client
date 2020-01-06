@@ -5,7 +5,7 @@ import store from '@/store';
 const isRequiresAuth = (record: RouteRecord): boolean =>
     record.meta.requiresAuth;
 
-const guard: NavigationGuard<Vue> = (to, from, next) => {
+const guard: NavigationGuard<Vue> = (to, _, next) => {
     if (to.matched.some(isRequiresAuth)) {
         // Already authenticated.
         const currentUser: firebase.User | null =
