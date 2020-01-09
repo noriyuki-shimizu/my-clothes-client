@@ -86,20 +86,11 @@ import {
     DoneUploadFileInfo
 } from 'ant-design-vue/types/upload';
 
+import { getBase64 } from '@/util/file';
+
 type FormFields = {
     displayName: string;
     icon: DoneUploadFileInfo;
-};
-
-type ExPartial<T> = { [P in keyof T]?: Partial<T[P]> | undefined };
-
-const getBase64 = (
-    img: File,
-    callback: (imageURL: string | ArrayBuffer | null) => void
-) => {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result));
-    reader.readAsDataURL(img);
 };
 
 @Component

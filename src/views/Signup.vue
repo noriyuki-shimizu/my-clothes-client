@@ -66,6 +66,7 @@ import {
 
 import firebaseAuth, { isFirebaseAuthError } from '@/plugins/firebase/auth';
 import { FirebaseExternalApiAuthError } from '@/plugins/firebase/auth/type';
+import { AppMessage } from 'ant-design-vue/types/message';
 
 type FormFields = {
     name: string;
@@ -73,15 +74,6 @@ type FormFields = {
     password: string;
     confirm: string;
 };
-
-type Message = {
-    isShow: boolean;
-    text: string;
-    description: string;
-    type: 'warning' | 'error' | null;
-};
-
-type ExPartial<T> = { [P in keyof T]?: Partial<T[P]> | undefined };
 
 interface HTMLElementEvent<T extends HTMLElement> extends Event {
     target: T;
@@ -95,7 +87,7 @@ export default class SignUn extends Vue {
 
     private spinning = false;
 
-    private registerMessage: Message = {
+    private registerMessage: AppMessage = {
         isShow: false,
         text: '',
         description: '',

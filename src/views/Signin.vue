@@ -105,17 +105,11 @@ import {
 } from '@/plugins/firebase/auth';
 import { FirebaseExternalApiAuthError } from '@/plugins/firebase/auth/type';
 import { isAxiosError } from '../plugins/api';
+import { AppMessage } from 'ant-design-vue/types/message';
 
 type FormFields = {
     mailAddress: string;
     password: string;
-};
-
-type Message = {
-    isShow: boolean;
-    text: string;
-    description: string;
-    type: 'warning' | 'error' | null;
 };
 
 @Component
@@ -124,14 +118,14 @@ export default class SignIn extends Vue {
 
     private spinning = false;
 
-    private externalApiAuthMessage: Message = {
+    private externalApiAuthMessage: AppMessage = {
         isShow: false,
         text: '',
         description: '',
         type: null
     };
 
-    private normalAuthMessage: Message = {
+    private normalAuthMessage: AppMessage = {
         isShow: false,
         text: '',
         description: '',
@@ -170,7 +164,7 @@ export default class SignIn extends Vue {
         this.form = this.$form.createForm(this);
     }
 
-    private mappingMessage(err: FirebaseExternalApiAuthError): Message {
+    private mappingMessage(err: FirebaseExternalApiAuthError): AppMessage {
         return {
             isShow: true,
             text: `Error (${err.code})`,

@@ -54,19 +54,13 @@
 import { Vue, Component } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 import { isAxiosError } from '../plugins/api';
-
-type Message = {
-    isShow: boolean;
-    text: string;
-    description: string;
-    type: 'warning' | 'error' | null;
-};
+import { AppMessage } from 'ant-design-vue/types/message';
 
 @Component
 export default class Home extends Vue {
     $store!: Vuex.ExStore;
 
-    private message: Message = {
+    private message: AppMessage = {
         isShow: false,
         text: '',
         description: '',
