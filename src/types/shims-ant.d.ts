@@ -24,3 +24,12 @@ declare module 'ant-design-vue/types/form/form' {
         [k: string]: [string, FieldDecoratorOptions];
     };
 }
+
+declare module 'ant-design-vue/types/message' {
+    type AppMessage = {
+        isShow: boolean;
+        text: string;
+        description: string;
+        type: 'warning' | 'error' | null;
+    };
+}
