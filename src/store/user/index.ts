@@ -78,10 +78,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         await ctx.dispatch('linkUserToAPI');
     },
     async linkUserToAPI(ctx) {
-        const response = await api({
-            method: 'POST',
-            url: '/preLogin'
-        });
+        const response = await api.post('/preLogin');
         ctx.commit('onIdStateChanged', response.data);
     },
     async signOut(ctx) {

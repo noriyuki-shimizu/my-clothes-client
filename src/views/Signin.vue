@@ -220,7 +220,7 @@ export default class SignIn extends Vue {
         this.externalApiAuthMessage.isShow = false;
         this.normalAuthMessage.isShow = false;
 
-        this.form.validateFields(async (err: Error[], values: FormFields) => {
+        this.form.validateFields(async (err, values: FormFields) => {
             if (!err) {
                 this.spinning = true;
                 try {

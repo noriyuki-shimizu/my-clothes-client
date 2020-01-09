@@ -6,23 +6,23 @@ export const isAxiosError = (err: any): err is AxiosError => {
     return 'isAxiosError' in err;
 };
 
-export default async (option: AxiosRequestConfig) => {
-    const http = axios.create({
-        baseURL: process.env.VUE_APP_API_BASE_URL
-    });
+const http = axios.create({
+    baseURL: process.env.VUE_APP_API_BASE_URL
+});
 
-    http.interceptors.request.use(
-        async requestConfig => {
-            const accessToken = store.getters['user/accessToken'];
-            requestConfig.headers.Authorization = `Bearer ${accessToken}`;
-            return requestConfig;
-        },
-        error => {
-            throw error;
-        }
-    );
-
-    return http(option).catch((error: any) => {
+http.interceptors.request.use(
+    async requestConfig => {
+        const id = store.getters['user/id'];
+        const accessToken = store.getters['user/accessToken'];
+        requestConfig.headers = {
+            UserId: id,
+            Authorization: `Bearer ${accessToken}`
+        };
+        return requestConfig;
+    },
+    error => {
         throw error;
-    });
-};
+    }
+);
+
+export default http;

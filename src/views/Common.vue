@@ -71,7 +71,7 @@
                     <router-view />
                 </div>
             </a-layout-content>
-            <a-layout-footer style="textAlign: center">
+            <a-layout-footer id="main_layout_footer">
                 My Clothes ©2019 Created by Noriyuki Shimizu
             </a-layout-footer>
         </a-layout>
@@ -144,6 +144,11 @@ export default class Common extends Vue {
 #content {
     padding: 24px;
     background: #fff;
-    min-height: 80vh;
+    min-height: 82vh;
+}
+
+#main_layout_footer {
+    text-align: center;
+    padding: 15px 50px;
 }
 </style>

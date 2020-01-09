@@ -208,7 +208,7 @@ export default class SignUn extends Vue {
         e.preventDefault();
         this.registerMessage.isShow = false;
 
-        this.form.validateFields(async (err: Error[], values: FormFields) => {
+        this.form.validateFields(async (err, values: FormFields) => {
             if (!err) {
                 this.spinning = true;
                 try {

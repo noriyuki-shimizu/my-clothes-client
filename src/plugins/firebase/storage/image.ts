@@ -1,11 +1,13 @@
 import * as firebase from 'firebase/app';
 import * as url from 'url';
+import uuid from 'uuid/v4';
 
 const getImageRef = (name: string, subFolder: string) => {
     const storageRef = firebase.storage().ref();
 
-    const IMAGE_FOLDER_NAME = `images/${subFolder}`;
-    return storageRef.child(IMAGE_FOLDER_NAME + name);
+    const fileName = `${uuid()}_${name}`;
+
+    return storageRef.child(`images/${subFolder}${fileName}`);
 };
 
 const upload = async (

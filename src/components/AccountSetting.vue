@@ -37,7 +37,7 @@
                         listType="picture-card"
                         class="icon-uploader"
                         :showUploadList="false"
-                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                        action="http://www.mocky.io/v2/5cc8019d300000980a055e76"
                         :beforeUpload="beforeUpload"
                         @change="handleChange"
                         accept="image/*"
@@ -198,27 +198,25 @@ export default class AccountSetting extends Vue {
         this.registerLoading = true;
         e.preventDefault();
 
-        this.form.validateFieldsAndScroll(
-            async (err: any, values: FormFields) => {
-                if (!err) {
-                    try {
-                        const { displayName, icon } = values;
-                        const iconFile =
-                            icon && icon.file ? icon.file.originFileObj : null;
+        this.form.validateFieldsAndScroll(async (err, values: FormFields) => {
+            if (!err) {
+                try {
+                    const { displayName, icon } = values;
+                    const iconFile =
+                        icon && icon.file ? icon.file.originFileObj : null;
 
-                        await this.$store.dispatch('user/updateProfile', {
-                            displayName,
-                            iconFile
-                        });
-                        this.$message.success('Successfully updated account!');
-                        this.$emit('onClose');
-                    } catch (err) {
-                        console.log(err);
-                    }
+                    await this.$store.dispatch('user/updateProfile', {
+                        displayName,
+                        iconFile
+                    });
+                    this.$message.success('Successfully updated account!');
+                    this.$emit('onClose');
+                } catch (err) {
+                    console.log(err);
                 }
-                this.registerLoading = false;
             }
-        );
+            this.registerLoading = false;
+        });
     }
 }
 </script>

@@ -82,6 +82,10 @@ export default class Home extends Vue {
             }
         } catch (err) {
             if (isAxiosError(err)) {
+                if (err.response && err.response.status === 403) {
+                    this.$store.dispatch('user/signOut');
+                    this.$router.push({ name: 'signIn' });
+                }
                 this.message = {
                     isShow: true,
                     text: `Error (${err.message})`,

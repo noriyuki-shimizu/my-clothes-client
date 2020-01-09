@@ -27,7 +27,19 @@ const routes: RouteConfig[] = [
             {
                 path: '/maintenance/brand',
                 name: 'brand',
-                component: () => import('../views/maintenance/Brand.vue'),
+                component: () => import('../views/maintenance/brand/Index.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/maintenance/brand/new',
+                name: 'brandNew',
+                component: () => import('../views/maintenance/brand/New.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/maintenance/brand/:id',
+                name: 'brandEdit',
+                component: () => import('../views/maintenance/brand/Edit.vue'),
                 meta: { requiresAuth: true }
             },
             {

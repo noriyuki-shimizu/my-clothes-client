@@ -26,10 +26,7 @@ const mutations: Mutations<State, IMutations> = {
 
 const actions: Actions<State, IActions, IGetters, IMutations> = {
     async fetchImageAddresses(ctx) {
-        const response = await api({
-            method: 'GET',
-            url: '/images/street-fashion-snap/addresses'
-        });
+        const response = await api.get('/images/street-fashion-snap/addresses');
         const { data } = response;
 
         ctx.commit(
