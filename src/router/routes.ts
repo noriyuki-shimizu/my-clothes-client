@@ -15,7 +15,7 @@ const routes: RouteConfig[] = [
     },
     {
         path: '/',
-        component: () => import('../views/Common.vue'),
+        component: () => import('../views/Layout.vue'),
         meta: { requiresAuth: false },
         children: [
             {
