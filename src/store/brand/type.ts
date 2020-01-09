@@ -4,7 +4,7 @@ export interface Brand {
     link?: string;
     imageId?: number;
     imageLink?: string;
-    country?: string;
+    country: string;
     isDeleted: boolean;
 }
 
