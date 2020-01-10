@@ -59,6 +59,7 @@ export const columns: Partial<Column>[] = [
             { text: 'Deleted', value: 'Deleted' },
             { text: 'Not deleted', value: 'Not deleted' }
         ],
+        filterMultiple: false,
         onFilter: (value: string, record: Record) => record.deleted === value,
         width: 150
     },
