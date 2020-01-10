@@ -7,14 +7,31 @@
     >
         <a-form-item v-bind="formItemLayout" label="Name">
             <a-input
-                v-decorator="decorator.name"
+                v-decorator="[
+                    'name',
+                    {
+                        rules: [
+                            {
+                                max: 60
+                            },
+                            {
+                                required: true
+                            },
+                            {
+                                message:
+                                    'A brand with the same name already exists.',
+                                validator: nameValidator
+                            }
+                        ]
+                    }
+                ]"
                 placeholder="Please enter brand name"
             />
         </a-form-item>
 
         <a-form-item label="Image">
             <a-upload
-                v-decorator="decorator.image"
+                v-decorator="['image', {}]"
                 name="image"
                 listType="picture-card"
                 class="image-uploader"
@@ -39,14 +56,35 @@
 
         <a-form-item v-bind="formItemLayout" label="Link">
             <a-input
-                v-decorator="decorator.link"
+                v-decorator="[
+                    'link',
+                    {
+                        rules: [
+                            {
+                                max: 100
+                            }
+                        ]
+                    }
+                ]"
                 placeholder="Enter the link for the target brand"
             />
         </a-form-item>
 
         <a-form-item v-bind="formItemLayout" label="Country">
             <a-input
-                v-decorator="decorator.country"
+                v-decorator="[
+                    'country',
+                    {
+                        rules: [
+                            {
+                                max: 15
+                            },
+                            {
+                                required: true
+                            }
+                        ]
+                    }
+                ]"
                 placeholder="Enter the country for the target brand"
             />
         </a-form-item>
@@ -70,19 +108,32 @@ import {
     UploadingFileInfo,
     DoneUploadFileInfo
 } from 'ant-design-vue/types/upload';
+import * as Vuex from 'vuex';
 
-import { decorator, formItemLayout, FormFields } from '@/components/brand/form';
+import { formItemLayout, FormFields } from '@/components/brand/form';
 import { Brand } from '@/store/brand/type';
 import { getBase64 } from '@/util/file';
+import { Route } from 'vue-router';
 
 @Component
 export default class BrandForm extends Vue {
     @Prop({ type: Object as () => Brand })
     target?: Brand;
 
+    $store!: Vuex.ExStore;
+
     form!: WrappedFormUtils;
 
-    decorator = decorator;
+    nameValidator(_: any, value: string, cb: Function) {
+        const { id } = this.$route.params;
+        const brands = this.$store.getters['brand/brands'] as Readonly<Brand>[];
+
+        const someBrand = id
+            ? (brand: Brand) => brand.name === value && brand.id !== Number(id)
+            : (brand: Brand) => brand.name === value;
+
+        brands.some(someBrand) ? cb(true) : cb();
+    }
 
     formItemLayout = formItemLayout;
 
