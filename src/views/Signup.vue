@@ -67,6 +67,7 @@ import {
 import firebaseAuth, { isFirebaseAuthError } from '@/plugins/firebase/auth';
 import { FirebaseExternalApiAuthError } from '@/plugins/firebase/auth/type';
 import { AppMessage } from 'ant-design-vue/types/message';
+import { resetMessage } from '@/util/reset';
 
 type FormFields = {
     name: string;
@@ -81,20 +82,15 @@ interface HTMLElementEvent<T extends HTMLElement> extends Event {
 
 @Component
 export default class SignUn extends Vue {
-    private form!: WrappedFormUtils;
+    form!: WrappedFormUtils;
 
-    private confirmDirty = false;
+    confirmDirty = false;
 
-    private spinning = false;
+    spinning = false;
 
-    private registerMessage: AppMessage = {
-        isShow: false,
-        text: '',
-        description: '',
-        type: null
-    };
+    registerMessage: AppMessage = resetMessage();
 
-    private decorator: FieldDecorator = {
+    decorator: FieldDecorator = {
         name: [
             'name',
             {
@@ -151,7 +147,7 @@ export default class SignUn extends Vue {
         ]
     };
 
-    private formItemLayout: Readonly<ExPartial<Form>> = {
+    formItemLayout: Readonly<ExPartial<Form>> = {
         labelCol: {
             xs: { span: 24, offset: 0 },
             sm: { span: 8, offset: 0 }
@@ -198,7 +194,7 @@ export default class SignUn extends Vue {
 
     handleSubmit(e: Event): void {
         e.preventDefault();
-        this.registerMessage.isShow = false;
+        this.registerMessage = resetMessage();
 
         this.form.validateFields(async (err, values: FormFields) => {
             if (!err) {

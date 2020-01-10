@@ -55,20 +55,16 @@ import { Vue, Component } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 import { isAxiosError } from '../plugins/api';
 import { AppMessage } from 'ant-design-vue/types/message';
+import { resetMessage } from '@/util/reset';
 
 @Component
 export default class Home extends Vue {
     $store!: Vuex.ExStore;
 
-    private message: AppMessage = {
-        isShow: false,
-        text: '',
-        description: '',
-        type: null
-    };
+    message: AppMessage = resetMessage();
 
     async created() {
-        this.message.isShow = false;
+        this.message = resetMessage();
         try {
             const imageAddresses = this.imageAddresses;
             if (!(imageAddresses && imageAddresses.length)) {
@@ -77,13 +73,24 @@ export default class Home extends Vue {
         } catch (err) {
             if (isAxiosError(err)) {
                 if (err.response && err.response.status === 403) {
-                    this.$store.dispatch('user/signOut');
-                    this.$router.push({ name: 'signIn' });
+                    const { $store, $router } = this;
+                    this.$warning({
+                        title: 'Certification expired',
+                        content: 'Please sign in again.',
+                        onOk: () => {
+                            $store.dispatch('user/signOut');
+                            $router.push({ name: 'signIn' });
+                        }
+                    });
+                    return;
                 }
+
                 this.message = {
                     isShow: true,
                     text: `Error (${err.message})`,
-                    description: `Access URL: ${err.config.url}`,
+                    description: err.response
+                        ? err.response.data
+                        : `Access URL: ${err.config.url}`,
                     type: 'error'
                 };
             }

@@ -106,6 +106,7 @@ import {
 import { FirebaseExternalApiAuthError } from '@/plugins/firebase/auth/type';
 import { isAxiosError } from '../plugins/api';
 import { AppMessage } from 'ant-design-vue/types/message';
+import { resetMessage } from '@/util/reset';
 
 type FormFields = {
     mailAddress: string;
@@ -118,19 +119,9 @@ export default class SignIn extends Vue {
 
     private spinning = false;
 
-    private externalApiAuthMessage: AppMessage = {
-        isShow: false,
-        text: '',
-        description: '',
-        type: null
-    };
+    private externalApiAuthMessage: AppMessage = resetMessage();
 
-    private normalAuthMessage: AppMessage = {
-        isShow: false,
-        text: '',
-        description: '',
-        type: null
-    };
+    private normalAuthMessage: AppMessage = resetMessage();
 
     private decorator: FieldDecorator = {
         mailAddress: [
@@ -178,8 +169,8 @@ export default class SignIn extends Vue {
     }
 
     async signInWithGithub(): Promise<void> {
-        this.externalApiAuthMessage.isShow = false;
-        this.normalAuthMessage.isShow = false;
+        this.externalApiAuthMessage = resetMessage();
+        this.normalAuthMessage = resetMessage();
         this.spinning = true;
 
         try {
@@ -194,8 +185,8 @@ export default class SignIn extends Vue {
     }
 
     async signInWithGoogle(): Promise<void> {
-        this.externalApiAuthMessage.isShow = false;
-        this.normalAuthMessage.isShow = false;
+        this.externalApiAuthMessage = resetMessage();
+        this.normalAuthMessage = resetMessage();
         this.spinning = true;
 
         try {
@@ -211,8 +202,8 @@ export default class SignIn extends Vue {
 
     handleSubmit(e: Event): void {
         e.preventDefault();
-        this.externalApiAuthMessage.isShow = false;
-        this.normalAuthMessage.isShow = false;
+        this.externalApiAuthMessage = resetMessage();
+        this.normalAuthMessage = resetMessage();
 
         this.form.validateFields(async (err, values: FormFields) => {
             if (!err) {

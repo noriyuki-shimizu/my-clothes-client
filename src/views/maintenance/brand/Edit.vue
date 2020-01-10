@@ -24,6 +24,7 @@ import { AppMessage } from 'ant-design-vue/types/message';
 import { isAxiosError } from '@/plugins/api';
 import BrandForm from '@/components/brand/Form.vue';
 import { FormFields } from '@/components/brand/form';
+import { resetMessage } from '@/util/reset';
 
 @Component({
     components: {
@@ -31,12 +32,7 @@ import { FormFields } from '@/components/brand/form';
     }
 })
 export default class Edit extends Vue {
-    message: AppMessage = {
-        isShow: false,
-        text: '',
-        description: '',
-        type: null
-    };
+    message: AppMessage = resetMessage();
 
     $store!: Vuex.ExStore;
 
@@ -46,31 +42,31 @@ export default class Edit extends Vue {
     }
 
     onErrorHandle(err: any) {
-        this.message = {
-            isShow: false,
-            text: '',
-            description: '',
-            type: null
-        };
+        this.message = resetMessage();
         if (isAxiosError(err)) {
-            if (err.response && err.response.status === 403) {
-                const { $store, $router } = this;
-                this.$warning({
-                    title: 'Certification expired',
-                    content: 'Please sign in again.',
-                    onOk: () => {
-                        $store.dispatch('user/signOut');
-                        $router.push({ name: 'signIn' });
-                    }
-                });
-                return;
+            if (isAxiosError(err)) {
+                if (err.response && err.response.status === 403) {
+                    const { $store, $router } = this;
+                    this.$warning({
+                        title: 'Certification expired',
+                        content: 'Please sign in again.',
+                        onOk: () => {
+                            $store.dispatch('user/signOut');
+                            $router.push({ name: 'signIn' });
+                        }
+                    });
+                    return;
+                }
+
+                this.message = {
+                    isShow: true,
+                    text: `Error (${err.message})`,
+                    description: err.response
+                        ? err.response.data
+                        : `Access URL: ${err.config.url}`,
+                    type: 'error'
+                };
             }
-            this.message = {
-                isShow: true,
-                text: `Error (${err.message})`,
-                description: `Access URL: ${err.config.url}`,
-                type: 'error'
-            };
         }
     }
 
