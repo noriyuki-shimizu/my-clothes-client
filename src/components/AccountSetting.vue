@@ -37,7 +37,7 @@
                         listType="picture-card"
                         class="icon-uploader"
                         :showUploadList="false"
-                        action="http://www.mocky.io/v2/5cc8019d300000980a055e76"
+                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                         :beforeUpload="beforeUpload"
                         @change="handleChange"
                         accept="image/*"
