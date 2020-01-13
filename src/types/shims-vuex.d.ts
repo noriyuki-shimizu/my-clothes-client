@@ -3,6 +3,7 @@ import * as Root from '@/store/type';
 import * as User from '@/store/user/type';
 import * as ImageAddress from '@/store/image/address/type';
 import * as Brand from '@/store/brand/type';
+import * as Genre from '@/store/genre/type';
 
 declare module 'vuex' {
     type Getters<S, G> = {
@@ -47,17 +48,21 @@ declare module 'vuex' {
         user: User.State;
         imageAddress: ImageAddress.State;
         brand: Brand.State;
+        genre: Genre.State;
     };
 
     type RootGetters = User.IRootGetters &
         ImageAddress.IRootGetters &
-        Brand.IRootGetters;
+        Brand.IRootGetters &
+        Genre.IRootGetters;
 
     type RootMutations = User.IRootMutations &
         ImageAddress.IRootMutations &
-        Brand.IRootMutations;
+        Brand.IRootMutations &
+        Genre.IRootMutations;
 
     type RootActions = User.IRootActions &
         ImageAddress.IRootActions &
-        Brand.IRootActions;
+        Brand.IRootActions &
+        Genre.IRootActions;
 }
