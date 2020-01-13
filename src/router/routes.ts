@@ -43,6 +43,24 @@ const routes: RouteConfig[] = [
                 meta: { requiresAuth: true }
             },
             {
+                path: '/maintenance/genre',
+                name: 'genre',
+                component: () => import('../views/maintenance/genre/Index.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/maintenance/genre/new',
+                name: 'genreNew',
+                component: () => import('../views/maintenance/genre/New.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/maintenance/genre/:id',
+                name: 'genreEdit',
+                component: () => import('../views/maintenance/genre/Edit.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
                 path: '*',
                 redirect: { name: 'home' },
                 meta: { requiresAuth: true }
