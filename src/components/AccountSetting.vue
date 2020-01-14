@@ -86,7 +86,7 @@ import {
     DoneUploadFileInfo
 } from 'ant-design-vue/types/upload';
 
-import { getBase64 } from '@/util/file';
+import { getBase64, isLt5M } from '@/util/file';
 
 type FormFields = {
     displayName: string;
@@ -167,11 +167,11 @@ export default class AccountSetting extends Vue {
     }
 
     beforeUpload(file: File) {
-        const isLt5M = file.size < 5 * 1024 * 1024;
-        if (!isLt5M) {
+        const isBeforeCheck = isLt5M(file);
+        if (!isBeforeCheck) {
             this.$message.error('Image must smaller than 2MB!');
         }
-        return isLt5M;
+        return isBeforeCheck;
     }
 
     onInputResetAndClose() {

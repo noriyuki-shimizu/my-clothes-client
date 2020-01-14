@@ -112,7 +112,7 @@ import * as Vuex from 'vuex';
 
 import { formItemLayout, FormFields } from '@/components/brand/form';
 import { Brand } from '@/store/brand/type';
-import { getBase64 } from '@/util/file';
+import { getBase64, isLt5M } from '@/util/file';
 import { Route } from 'vue-router';
 
 @Component
@@ -166,11 +166,11 @@ export default class BrandForm extends Vue {
     }
 
     beforeUpload(file: File) {
-        const isLt5M = file.size < 5 * 1024 * 1024;
-        if (!isLt5M) {
+        const isBeforeCheck = isLt5M(file);
+        if (!isBeforeCheck) {
             this.$message.error('Image must smaller than 2MB!');
         }
-        return isLt5M;
+        return isBeforeCheck;
     }
 
     handleChange(info: UploadingFileInfo | DoneUploadFileInfo) {

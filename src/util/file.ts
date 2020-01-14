@@ -6,3 +6,7 @@ export const getBase64 = (
     reader.addEventListener('load', () => callback(reader.result));
     reader.readAsDataURL(img);
 };
+
+export const isLt5M = (file: File) => {
+    return file.size < 5 * 1024 * 1024;
+};
