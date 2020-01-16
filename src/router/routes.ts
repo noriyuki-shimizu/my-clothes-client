@@ -61,6 +61,24 @@ const routes: RouteConfig[] = [
                 meta: { requiresAuth: true }
             },
             {
+                path: '/maintenance/shop',
+                name: 'shop',
+                component: () => import('../views/maintenance/shop/Index.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/maintenance/shop/new',
+                name: 'shopNew',
+                component: () => import('../views/maintenance/shop/New.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/maintenance/shop/:id',
+                name: 'shopEdit',
+                component: () => import('../views/maintenance/shop/Edit.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
                 path: '*',
                 redirect: { name: 'home' },
                 meta: { requiresAuth: true }
