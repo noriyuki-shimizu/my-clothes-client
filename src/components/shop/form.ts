@@ -20,7 +20,7 @@ export type FormFields = {
     tel: string;
 };
 
-export type ConvertFormFields = {
+export type ConvertedFormFields = {
     name: string;
     link: string;
     stationName: string;
@@ -30,7 +30,7 @@ export type ConvertFormFields = {
     imageFile: File | null;
 };
 
-export const convertFormFields = (values: FormFields): ConvertFormFields => {
+export const convertFormFields = (values: FormFields): ConvertedFormFields => {
     const {
         name,
         image,

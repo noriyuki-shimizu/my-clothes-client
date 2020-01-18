@@ -192,7 +192,8 @@ import moment from 'moment';
 import {
     formItemLayout,
     FormFields,
-    convertFormFields
+    convertFormFields,
+    ConvertedFormFields
 } from '@/components/shop/form';
 import { Shop } from '@/store/shop/type';
 import { getBase64, isLt5M } from '@/util/file';
@@ -293,7 +294,10 @@ export default class ShopForm extends Vue {
         e.preventDefault();
         this.form.validateFields(async (err, values: FormFields) => {
             if (!err) {
-                this.$emit('onSubmit', convertFormFields(values));
+                this.$emit<ConvertedFormFields>(
+                    'onSubmit',
+                    convertFormFields(values)
+                );
             }
         });
     }

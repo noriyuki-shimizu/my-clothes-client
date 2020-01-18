@@ -147,7 +147,7 @@ export default class GenreForm extends Vue {
         e.preventDefault();
         this.form.validateFields(async (err, values: FormFields) => {
             if (!err) {
-                this.$emit('onSubmit', values);
+                this.$emit<FormFields>('onSubmit', values);
             }
         });
     }
