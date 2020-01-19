@@ -23,7 +23,7 @@ import { AppMessage } from 'ant-design-vue/types/message';
 
 import { isAxiosError } from '@/plugins/api';
 import ShopForm from '@/components/shop/Form.vue';
-import { ConvertFormFields } from '@/components/shop/form';
+import { ConvertedFormFields } from '@/components/shop/form';
 import { resetMessage } from '@/util/reset';
 import { timeFormat } from '@/util/date';
 
@@ -71,7 +71,7 @@ export default class Edit extends Vue {
         }
     }
 
-    async onRegister(values: ConvertFormFields) {
+    async onRegister(values: ConvertedFormFields) {
         const target = this.target;
         if (!target) {
             this.$router.push({ name: 'shop' });
@@ -94,7 +94,7 @@ export default class Edit extends Vue {
     }
 
     @Emit('onSubmit')
-    async onSubmit(values: ConvertFormFields) {
+    async onSubmit(values: ConvertedFormFields) {
         this.$confirm({
             title: 'Are you sure you want to register?',
             content: 'The entered information is registered.',
