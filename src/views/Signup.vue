@@ -59,13 +59,11 @@ import { Vue, Component } from 'vue-property-decorator';
 import {
     WrappedFormUtils,
     ValidationRule,
-    FieldDecoratorOptions,
     Form,
     FieldDecorator
 } from 'ant-design-vue/types/form/form';
 
 import firebaseAuth, { isFirebaseAuthError } from '@/plugins/firebase/auth';
-import { FirebaseExternalApiAuthError } from '@/plugins/firebase/auth/type';
 import { AppMessage } from 'ant-design-vue/types/message';
 import { resetMessage } from '@/util/reset';
 
@@ -206,7 +204,13 @@ export default class SignUn extends Vue {
                         mailAddress,
                         password
                     );
-                    this.$router.push({ name: 'signIn' });
+
+                    this.$success({
+                        title: 'Account created 👏',
+                        onOk: () => {
+                            this.$router.push({ name: 'signIn' });
+                        }
+                    });
                 } catch (err) {
                     if (isFirebaseAuthError(err)) {
                         this.registerMessage = {
