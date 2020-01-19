@@ -98,12 +98,12 @@ import {
     WrappedFormUtils,
     FieldDecorator
 } from 'ant-design-vue/types/form/form';
+import { FirebaseExternalApiAuthError } from 'firebase';
 
 import {
     isFirebaseAuthError,
     isFirebaseExternalApiAuthError
 } from '@/plugins/firebase/auth';
-import { FirebaseExternalApiAuthError } from '@/plugins/firebase/auth/type';
 import { isAxiosError } from '../plugins/api';
 import { AppMessage } from 'ant-design-vue/types/message';
 import { resetMessage } from '@/util/reset';

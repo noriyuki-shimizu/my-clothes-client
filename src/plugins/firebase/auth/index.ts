@@ -1,11 +1,10 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-
-import {
+import firebase, {
+    FirebaseStorageError,
     FirebaseExternalApiAuthError,
     FirebaseAuthError,
     ProfileState
-} from '@/plugins/firebase/auth/type';
+} from 'firebase/app';
+import 'firebase/auth';
 
 export const isFirebaseExternalApiAuthError = (
     err: any
@@ -15,6 +14,12 @@ export const isFirebaseExternalApiAuthError = (
 
 export const isFirebaseAuthError = (err: any): err is FirebaseAuthError => {
     return 'code' in err && 'message' in err;
+};
+
+export const isFirebaseStorageError = (
+    err: any
+): err is FirebaseStorageError => {
+    return 'name' in err && err.name.indexOf('storage/') === 0;
 };
 
 export default {

@@ -91,6 +91,7 @@ import {
 } from 'ant-design-vue/types/upload';
 
 import { getBase64, isLt5M } from '@/util/file';
+import { isFirebaseStorageError } from '../plugins/firebase/auth';
 
 type FormFields = {
     displayName: string;
@@ -208,6 +209,9 @@ export default class AccountSetting extends Vue {
                     this.$emit('onClose');
                 } catch (err) {
                     console.log(err);
+                    if (isFirebaseStorageError(err)) {
+                        this.$message.error(err.message);
+                    }
                 }
             }
             this.registerLoading = false;
