@@ -120,13 +120,11 @@ export default class GenreTable extends Vue {
     columns = columns;
 
     async created() {
-        if (!this.genres.length) {
-            this.loading = true;
-            try {
-                await this.$store.dispatch('genre/fetchGenres');
-            } catch (err) {
-                this.$emit('onError', err);
-            }
+        this.loading = true;
+        try {
+            await this.$store.dispatch('genre/fetchGenres');
+        } catch (err) {
+            this.$emit('onError', err);
         }
         this.loading = false;
     }
