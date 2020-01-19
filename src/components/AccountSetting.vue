@@ -62,7 +62,11 @@
                     >
                         Cancel
                     </a-button>
-                    <a-button html-type="submit" type="primary">
+                    <a-button
+                        html-type="submit"
+                        type="primary"
+                        :loading="registerLoading"
+                    >
                         Submit
                     </a-button>
                 </div>
