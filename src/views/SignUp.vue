@@ -18,7 +18,7 @@
                         <a-input v-decorator="decorator.mailAddress" />
                     </a-form-item>
                     <a-form-item v-bind="formItemLayout" label="Password">
-                        <a-input
+                        <a-input-password
                             v-decorator="decorator.password"
                             type="password"
                         />
@@ -27,7 +27,7 @@
                         v-bind="formItemLayout"
                         label="Confirm Password"
                     >
-                        <a-input
+                        <a-input-password
                             v-decorator="decorator.confirm"
                             type="password"
                             @blur="handleConfirmBlur"
