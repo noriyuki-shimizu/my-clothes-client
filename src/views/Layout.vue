@@ -31,8 +31,12 @@
                     </a-menu-item>
                 </a-sub-menu>
                 <a-menu-item key="3">
-                    <a-icon type="pie-chart" />
-                    <span>Pie chart</span>
+                    <router-link to="/total-price">
+                        <a-icon type="pie-chart" />
+                        <span>
+                            Pie chart
+                        </span>
+                    </router-link>
                 </a-menu-item>
                 <a-divider />
                 <a-menu-item @click="signOut" key="4">

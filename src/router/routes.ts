@@ -25,6 +25,12 @@ const routes: RouteConfig[] = [
                 meta: { requiresAuth: true }
             },
             {
+                path: '/total-price',
+                name: 'totalPrice',
+                component: () => import('../views/TotalPrice.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
                 path: '/maintenance/brand',
                 name: 'brand',
                 component: () => import('../views/maintenance/brand/Index.vue'),
