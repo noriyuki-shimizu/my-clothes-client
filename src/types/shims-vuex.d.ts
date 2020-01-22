@@ -5,6 +5,7 @@ import * as ImageAddress from '@/store/image/address/type';
 import * as Brand from '@/store/brand/type';
 import * as Genre from '@/store/genre/type';
 import * as Shop from '@/store/shop/type';
+import * as Clothes from '@/store/clothes/type';
 
 declare module 'vuex' {
     type Getters<S, G> = {
@@ -51,23 +52,27 @@ declare module 'vuex' {
         brand: Brand.State;
         genre: Genre.State;
         shop: Shop.State;
+        clothes: Clothes.State;
     };
 
     type RootGetters = User.IRootGetters &
         ImageAddress.IRootGetters &
         Brand.IRootGetters &
         Genre.IRootGetters &
-        Shop.IRootGetters;
+        Shop.IRootGetters &
+        Clothes.IRootGetters;
 
     type RootMutations = User.IRootMutations &
         ImageAddress.IRootMutations &
         Brand.IRootMutations &
         Genre.IRootMutations &
-        Shop.IRootMutations;
+        Shop.IRootMutations &
+        Clothes.IRootMutations;
 
     type RootActions = User.IRootActions &
         ImageAddress.IRootActions &
         Brand.IRootActions &
         Genre.IRootActions &
-        Shop.IRootActions;
+        Shop.IRootActions &
+        Clothes.IRootActions;
 }

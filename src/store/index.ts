@@ -7,6 +7,7 @@ import imageAddress from '@/store/image/address';
 import brand from '@/store/brand';
 import genre from '@/store/genre';
 import shop from '@/store/shop';
+import clothes from '@/store/clothes';
 
 Vue.use(Vuex);
 
@@ -16,7 +17,8 @@ export default new Vuex.Store({
         imageAddress,
         brand,
         genre,
-        shop
+        shop,
+        clothes
     },
     plugins: [
         createPersistedState({
