@@ -13,7 +13,11 @@
                     <span slot="title">
                         <a-icon type="setting" /><span>Maintenance</span>
                     </span>
-                    <a-menu-item key="2-1">Clothes</a-menu-item>
+                    <a-menu-item key="2-1">
+                        <router-link to="/maintenance/clothes">
+                            Clothes
+                        </router-link>
+                    </a-menu-item>
                     <a-menu-item key="2-2">
                         <router-link to="/maintenance/brand">
                             Brand
