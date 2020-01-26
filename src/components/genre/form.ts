@@ -1,5 +1,6 @@
 import { Form } from 'ant-design-vue/types/form/form';
 
+// FIXME: サーバから以下のデータを取得するよう修正すること（一旦をそのままにしていた、、、）
 export const colors: string[] = [
     'pink',
     'red',
