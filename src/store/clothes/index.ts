@@ -5,12 +5,24 @@ import api from '@/plugins/api';
 import firebaseImageStorage from '@/plugins/firebase/storage/image';
 
 const state: State = {
-    clothes: []
+    clothes: [],
+    assistGenres: [],
+    assistBrands: [],
+    assistShops: []
 };
 
 const getters: Getters<State, IGetters> = {
     clothes(state) {
         return state.clothes;
+    },
+    assistGenres(state) {
+        return state.assistGenres;
+    },
+    assistBrands(state) {
+        return state.assistBrands;
+    },
+    assistShops(state) {
+        return state.assistShops;
     }
 };
 
@@ -22,9 +34,18 @@ const mutations: Mutations<State, IMutations> = {
         state.clothes.push(payload);
     },
     onUpdateTargetClothes(state, payload) {
-        state.clothes = state.clothes.map(clothes =>
-            clothes.id === payload.id ? payload : clothes
+        state.clothes = state.clothes.map(c =>
+            c.id === payload.id ? payload : c
         );
+    },
+    onAssistGenreStateChange(state, payload) {
+        state.assistGenres = payload;
+    },
+    onAssistBrandStateChange(state, payload) {
+        state.assistBrands = payload;
+    },
+    onAssistShopStateChange(state, payload) {
+        state.assistShops = payload;
     }
 };
 
@@ -36,6 +57,30 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         const { data } = response;
 
         ctx.commit('onClothesStateChange', data.clothes);
+    },
+    async fetchAssistGenres(ctx) {
+        const response = await api.get(
+            `/${ctx.rootGetters['user/id']}/genres/keyValues`
+        );
+        const { data } = response;
+
+        ctx.commit('onAssistGenreStateChange', data.assistGenres);
+    },
+    async fetchAssistBrands(ctx) {
+        const response = await api.get(
+            `/${ctx.rootGetters['user/id']}/brands/keyValues`
+        );
+        const { data } = response;
+
+        ctx.commit('onAssistBrandStateChange', data.assistBrands);
+    },
+    async fetchAssistShops(ctx) {
+        const response = await api.get(
+            `/${ctx.rootGetters['user/id']}/shops/keyValues`
+        );
+        const { data } = response;
+
+        ctx.commit('onAssistShopStateChange', data.assistShops);
     },
     async onAddClothes(
         ctx,
