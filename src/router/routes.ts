@@ -2,15 +2,21 @@ import { RouteConfig } from 'vue-router';
 
 const routes: RouteConfig[] = [
     {
-        path: '/signIn',
+        path: '/sign-in',
         name: 'signIn',
         component: () => import('../views/SignIn.vue'),
         meta: { requiresAuth: false }
     },
     {
-        path: '/signUp',
+        path: '/sign-up',
         name: 'signUp',
         component: () => import('../views/SignUp.vue'),
+        meta: { requiresAuth: false }
+    },
+    {
+        path: '/reset-password',
+        name: 'resetPassword',
+        component: () => import('../views/ResetPassword.vue'),
         meta: { requiresAuth: false }
     },
     {
@@ -33,75 +39,73 @@ const routes: RouteConfig[] = [
             {
                 path: '/maintenance/brand',
                 name: 'brand',
-                component: () => import('../views/maintenance/brand/Index.vue'),
+                component: () => import('../views/parts/brand/Index.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/brand/new',
                 name: 'brandNew',
-                component: () => import('../views/maintenance/brand/New.vue'),
+                component: () => import('../views/parts/brand/New.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/brand/:id',
                 name: 'brandEdit',
-                component: () => import('../views/maintenance/brand/Edit.vue'),
+                component: () => import('../views/parts/brand/Edit.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/genre',
                 name: 'genre',
-                component: () => import('../views/maintenance/genre/Index.vue'),
+                component: () => import('../views/parts/genre/Index.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/genre/new',
                 name: 'genreNew',
-                component: () => import('../views/maintenance/genre/New.vue'),
+                component: () => import('../views/parts/genre/New.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/genre/:id',
                 name: 'genreEdit',
-                component: () => import('../views/maintenance/genre/Edit.vue'),
+                component: () => import('../views/parts/genre/Edit.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/shop',
                 name: 'shop',
-                component: () => import('../views/maintenance/shop/Index.vue'),
+                component: () => import('../views/parts/shop/Index.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/shop/new',
                 name: 'shopNew',
-                component: () => import('../views/maintenance/shop/New.vue'),
+                component: () => import('../views/parts/shop/New.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/shop/:id',
                 name: 'shopEdit',
-                component: () => import('../views/maintenance/shop/Edit.vue'),
+                component: () => import('../views/parts/shop/Edit.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/clothes',
                 name: 'clothes',
-                component: () =>
-                    import('../views/maintenance/clothes/Index.vue'),
+                component: () => import('../views/parts/clothes/Index.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/clothes/new',
                 name: 'clothesNew',
-                component: () => import('../views/maintenance/clothes/New.vue'),
+                component: () => import('../views/parts/clothes/New.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/clothes/:id',
                 name: 'clothesEdit',
-                component: () =>
-                    import('../views/maintenance/clothes/Edit.vue'),
+                component: () => import('../views/parts/clothes/Edit.vue'),
                 meta: { requiresAuth: true }
             },
             {
