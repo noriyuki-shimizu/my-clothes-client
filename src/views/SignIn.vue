@@ -77,12 +77,15 @@
                             Log in
                         </a-button>
                         Or
-                        <router-link to="/signUp">
+                        <router-link to="/sign-up">
                             register now!
                         </router-link>
-                        <a class="login-form-forgot" href="">
+                        <router-link
+                            class="login-form-forgot"
+                            to="/reset-password"
+                        >
                             Forgot password
-                        </a>
+                        </router-link>
                     </a-form-item>
                 </a-form>
             </a-card>
@@ -99,13 +102,13 @@ import {
     FieldDecorator
 } from 'ant-design-vue/types/form/form';
 import { FirebaseExternalApiAuthError } from 'firebase';
+import { AppMessage } from 'ant-design-vue/types/message';
 
-import {
+import firebaseAuth, {
     isFirebaseAuthError,
     isFirebaseExternalApiAuthError
 } from '@/plugins/firebase/auth';
-import { isAxiosError } from '../plugins/api';
-import { AppMessage } from 'ant-design-vue/types/message';
+import { isAxiosError } from '@/plugins/api';
 import { resetMessage } from '@/util/reset';
 
 type FormFields = {

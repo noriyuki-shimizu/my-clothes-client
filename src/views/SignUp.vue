@@ -43,7 +43,7 @@
                                 Register
                             </a-button>
                             Do you have an account?
-                            <router-link to="/signIn">
+                            <router-link to="/sign-in">
                                 Then sign in now!
                             </router-link>
                         </div>
