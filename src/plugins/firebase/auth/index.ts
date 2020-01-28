@@ -42,6 +42,18 @@ export default {
         return firebase.auth().currentUser;
     },
 
+    async resetPassword(emailAddress: string) {
+        const actionCodeSettings: firebase.auth.ActionCodeSettings = {
+            url:
+                process.env.VUE_APP_SIGN_IN_PATH ||
+                'http://localhost:8888/sign-in',
+            handleCodeInApp: true
+        };
+        await firebase
+            .auth()
+            .sendPasswordResetEmail(emailAddress, actionCodeSettings);
+    },
+
     async createUserWithEmailAndPassword(
         displayName: string,
         mailAddress: string,
