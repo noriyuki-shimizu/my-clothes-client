@@ -60,7 +60,10 @@ export default class Genre extends Vue {
                     content: 'Please sign in again.',
                     onOk: () => {
                         $store.dispatch('user/signOut');
-                        $router.push({ name: 'signIn' });
+                        $router.push({
+                            name: 'signIn',
+                            params: { again: 'again' }
+                        });
                     }
                 });
                 return;

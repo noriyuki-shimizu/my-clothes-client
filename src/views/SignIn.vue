@@ -168,6 +168,10 @@ export default class SignIn extends Vue {
     }
 
     private toHome(): void {
+        if (this.$route.params.again) {
+            this.$router.back();
+            return;
+        }
         this.$router.push({ name: 'home' });
     }
 
