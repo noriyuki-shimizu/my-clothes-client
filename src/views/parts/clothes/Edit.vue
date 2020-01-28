@@ -37,6 +37,12 @@ export default class Edit extends Vue {
 
     $store!: Vuex.ExStore;
 
+    created() {
+        if (!this.target) {
+            this.$router.push({ name: 'clothes' });
+        }
+    }
+
     get target() {
         const clothes = this.$store.getters['clothes/clothes'];
         return clothes.find(

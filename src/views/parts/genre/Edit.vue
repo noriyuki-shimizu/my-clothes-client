@@ -36,6 +36,12 @@ export default class Edit extends Vue {
 
     $store!: Vuex.ExStore;
 
+    created() {
+        if (!this.target) {
+            this.$router.push({ name: 'genre' });
+        }
+    }
+
     get target() {
         const genres = this.$store.getters['genre/genres'];
         return genres.find(genre => Number(this.$route.params.id) === genre.id);
