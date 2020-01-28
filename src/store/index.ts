@@ -22,7 +22,13 @@ export default new Vuex.Store({
     },
     plugins: [
         createPersistedState({
-            key: 'mcm-client'
+            key: 'mcm-client',
+            paths: [
+                'user.id',
+                'user.user',
+                'user.accessToken',
+                'imageAddress.values'
+            ]
         })
     ]
 });
