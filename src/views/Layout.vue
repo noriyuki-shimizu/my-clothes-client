@@ -117,7 +117,7 @@ export default class Common extends Vue {
 
     signOut() {
         this.$store.dispatch('user/signOut');
-        this.$router.push({ name: 'signIn', params: { again: 'again' } });
+        this.$router.push({ name: 'signIn' });
     }
 
     showDrawer() {

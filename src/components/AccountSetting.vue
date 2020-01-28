@@ -120,7 +120,7 @@ export default class AccountSetting extends Vue {
                 rules: [
                     {
                         max: 30,
-                        message: 'Name cannot be longer than 30 characters!'
+                        message: 'Name cannot be longer than 30 characters'
                     }
                 ]
             }
@@ -174,7 +174,7 @@ export default class AccountSetting extends Vue {
     beforeUpload(file: File) {
         const isBeforeCheck = isLt5M(file);
         if (!isBeforeCheck) {
-            this.$message.error('Image must smaller than 2MB!');
+            this.$message.error('Image must smaller than 2MB');
         }
         return isBeforeCheck;
     }
@@ -205,7 +205,7 @@ export default class AccountSetting extends Vue {
                         displayName,
                         iconFile
                     });
-                    this.$message.success('Successfully updated account!');
+                    this.$message.success('Successfully updated account');
                     this.$emit('onClose');
                 } catch (err) {
                     console.log(err);

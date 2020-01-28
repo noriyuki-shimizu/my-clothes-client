@@ -103,18 +103,6 @@ export default class ClothesTable extends Vue {
         ]).catch(err => {
             this.$emit('onErrorHandle', err);
         });
-        if (!this.assistBrands.length) {
-            this.toRegistrationTransfer('brand', 'brandNew');
-            return;
-        }
-        if (!this.assistShops.length) {
-            this.toRegistrationTransfer('shop', 'shopNew');
-            return;
-        }
-        if (!this.assistGenres.length) {
-            this.toRegistrationTransfer('genre', 'genreNew');
-            return;
-        }
     }
 
     async created() {
@@ -168,16 +156,6 @@ export default class ClothesTable extends Vue {
 
     get assistShops() {
         return this.$store.getters['clothes/assistShops'];
-    }
-
-    toRegistrationTransfer(registrationName: string, routerName: string) {
-        this.$warning({
-            title: 'Have you registered?',
-            content: `It looks like no ${registrationName} has been registered. Please register first.`,
-            onOk: () => {
-                this.$router.push({ name: routerName });
-            }
-        });
     }
 
     handleSearch(selectedKeys: string[], confirm: Function) {

@@ -95,7 +95,7 @@ export default class SignUn extends Vue {
                 rules: [
                     {
                         required: true,
-                        message: 'Please input your name!'
+                        message: 'Please input your name'
                     }
                 ]
             }
@@ -106,11 +106,11 @@ export default class SignUn extends Vue {
                 rules: [
                     {
                         type: 'email',
-                        message: 'The input is not valid mail address!'
+                        message: 'The input is not valid mail address'
                     },
                     {
                         required: true,
-                        message: 'Please input your mail address!'
+                        message: 'Please input your mail address'
                     }
                 ]
             }
@@ -121,7 +121,7 @@ export default class SignUn extends Vue {
                 rules: [
                     {
                         required: true,
-                        message: 'Please input your password!'
+                        message: 'Please input your password'
                     },
                     {
                         validator: this.validateToNextPassword
@@ -135,7 +135,7 @@ export default class SignUn extends Vue {
                 rules: [
                     {
                         required: true,
-                        message: 'Please confirm your password!'
+                        message: 'Please confirm your password'
                     },
                     {
                         validator: this.compareToFirstPassword
@@ -172,7 +172,7 @@ export default class SignUn extends Vue {
     ): void {
         const form = this.form;
         if (value && value !== form.getFieldValue('password')) {
-            callback('Two passwords that you enter is inconsistent!');
+            callback('Two passwords that you enter is inconsistent');
         } else {
             callback();
         }

@@ -57,7 +57,7 @@ Thank you
                                             {
                                                 type: 'email',
                                                 message:
-                                                    'The input is not valid mail address!'
+                                                    'The input is not valid mail address'
                                             }
                                         ]
                                     }
@@ -153,7 +153,7 @@ export default class ResetPassword extends Vue {
 
         if (!mailAddressValue) {
             this.validateStatus = 'error';
-            this.help = 'Please input your mail address!';
+            this.help = 'Please input your mail address';
             return false;
         }
 

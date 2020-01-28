@@ -133,11 +133,11 @@ export default class SignIn extends Vue {
                 rules: [
                     {
                         type: 'email',
-                        message: 'The input is not valid mail address!'
+                        message: 'The input is not valid mail address'
                     },
                     {
                         required: true,
-                        message: 'Please input your email address!'
+                        message: 'Please input your email address'
                     }
                 ]
             }
@@ -146,7 +146,7 @@ export default class SignIn extends Vue {
             'password',
             {
                 rules: [
-                    { required: true, message: 'Please input your Password!' }
+                    { required: true, message: 'Please input your Password' }
                 ]
             }
         ]

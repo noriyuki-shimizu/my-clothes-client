@@ -15,7 +15,7 @@ const upload = async (
     subFolder: string = ''
 ): Promise<string> => {
     if (!file) {
-        throw new Error('Necessary information is missing!!');
+        throw new Error('Necessary information is missing');
     }
 
     const imageRef = getImageRef(file.name, subFolder);

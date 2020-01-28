@@ -271,7 +271,7 @@ export default class ShopForm extends Vue {
     beforeUpload(file: File) {
         const isBeforeCheck = isLt5M(file);
         if (!isBeforeCheck) {
-            this.$message.error('Image must smaller than 2MB!');
+            this.$message.error('Image must smaller than 2MB');
         }
         return isBeforeCheck;
     }

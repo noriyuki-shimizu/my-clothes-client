@@ -47,7 +47,7 @@
                         rules: [
                             {
                                 required: true,
-                                message: 'Please select your brand!'
+                                message: 'Please select your brand'
                             }
                         ]
                     }
@@ -72,7 +72,7 @@
                         rules: [
                             {
                                 required: true,
-                                message: 'Please select your shop!'
+                                message: 'Please select your shop'
                             }
                         ]
                     }
@@ -97,7 +97,7 @@
                         rules: [
                             {
                                 required: true,
-                                message: 'Please select your genre!'
+                                message: 'Please select your genre'
                             }
                         ]
                     }
@@ -129,7 +129,7 @@
                         rules: [
                             {
                                 required: true,
-                                message: 'Please input price!'
+                                message: 'Please input price'
                             }
                         ]
                     }
@@ -148,7 +148,7 @@
                             {
                                 type: 'object',
                                 required: true,
-                                message: 'Please select buy date!'
+                                message: 'Please select buy date'
                             }
                         ]
                     }
@@ -235,18 +235,6 @@ export default class ClothesForm extends Vue {
         ]).catch(err => {
             this.$emit('onErrorHandle', err);
         });
-        if (!this.assistBrands.length) {
-            this.toRegistrationTransfer('brand', 'brandNew');
-            return;
-        }
-        if (!this.assistShops.length) {
-            this.toRegistrationTransfer('shop', 'shopNew');
-            return;
-        }
-        if (!this.assistGenres.length) {
-            this.toRegistrationTransfer('genre', 'genreNew');
-            return;
-        }
     }
 
     created() {
@@ -298,20 +286,10 @@ export default class ClothesForm extends Vue {
         return this.$store.getters['clothes/assistShops'];
     }
 
-    toRegistrationTransfer(registrationName: string, routerName: string) {
-        this.$warning({
-            title: 'Have you registered?',
-            content: `It looks like no ${registrationName} has been registered. Please register first.`,
-            onOk: () => {
-                this.$router.push({ name: routerName });
-            }
-        });
-    }
-
     beforeUpload(file: File) {
         const isBeforeCheck = isLt5M(file);
         if (!isBeforeCheck) {
-            this.$message.error('Image must smaller than 2MB!');
+            this.$message.error('Image must smaller than 2MB');
         }
         return isBeforeCheck;
     }
