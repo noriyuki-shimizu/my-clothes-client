@@ -2,7 +2,7 @@
     <div>
         <a-drawer
             title="Your account setting"
-            :width="600"
+            :width="450"
             :visible="visible"
             @close="onInputResetAndClose"
             :wrapStyle="{
