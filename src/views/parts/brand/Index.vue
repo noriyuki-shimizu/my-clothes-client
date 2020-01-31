@@ -1,15 +1,5 @@
 <template>
     <div>
-        <h1>Brand</h1>
-        <a-divider />
-        <a-alert
-            class="alert-message"
-            v-if="message.isShow"
-            :message="message.text"
-            :description="message.description"
-            :type="message.type"
-            showIcon
-        />
         <div id="operation_field">
             <a-button
                 type="primary"
@@ -20,6 +10,16 @@
                 New
             </a-button>
         </div>
+        <h1>Brand</h1>
+        <a-divider />
+        <a-alert
+            class="alert-message"
+            v-if="message.isShow"
+            :message="message.text"
+            :description="message.description"
+            :type="message.type"
+            showIcon
+        />
 
         <brand-table v-on:onError="onError" />
     </div>
@@ -88,5 +88,13 @@ export default class Brand extends Vue {
 
 #operation_field {
     padding-bottom: 20px;
+}
+
+#operation_field {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    padding-right: 60px;
+    text-align: right;
 }
 </style>
