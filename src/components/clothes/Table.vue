@@ -189,8 +189,8 @@ export default class ClothesTable extends Vue {
 
 <style scoped>
 .clothes-image {
-    height: 80px;
-    width: 80px;
+    height: 140px;
+    width: 110px;
 }
 
 .highlight {

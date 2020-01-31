@@ -188,8 +188,8 @@ export default class BrandTable extends Vue {
 
 <style scoped>
 .brand-image {
-    height: 80px;
-    width: 80px;
+    height: 110px;
+    width: 110px;
 }
 
 .highlight {
