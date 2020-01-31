@@ -2,7 +2,7 @@
     <a-table
         :dataSource="dataSource"
         :columns="columns"
-        :scroll="{ x: 1800, y: 330 }"
+        :scroll="{ x: 1800, y: 390 }"
         :pagination="{ pageSize: 50 }"
         :loading="loading"
     >
@@ -95,24 +95,19 @@ export default class ClothesTable extends Vue {
         this.assistGenres
     );
 
-    async beforeCreate() {
+    async created() {
+        this.$emit('onResetMessage');
+        this.loading = true;
+
         await Promise.all([
+            this.$store.dispatch('clothes/fetchClothes'),
             this.$store.dispatch('clothes/fetchAssistGenres'),
             this.$store.dispatch('clothes/fetchAssistBrands'),
             this.$store.dispatch('clothes/fetchAssistShops')
         ]).catch(err => {
             this.$emit('onErrorHandle', err);
         });
-    }
 
-    async created() {
-        this.$emit('onResetMessage');
-        this.loading = true;
-        try {
-            await this.$store.dispatch('clothes/fetchClothes');
-        } catch (err) {
-            this.$emit('onError', err);
-        }
         this.loading = false;
     }
 
@@ -137,7 +132,7 @@ export default class ClothesTable extends Vue {
                 brandName: brand.name,
                 shopName: shop.name,
                 genres: genres,
-                price: Number(price).toLocaleString(),
+                price: price.toLocaleString(),
                 buyDate,
                 comment,
                 satisfaction,
