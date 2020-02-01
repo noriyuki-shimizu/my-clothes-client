@@ -8,6 +8,7 @@ import brand from '@/store/brand';
 import genre from '@/store/genre';
 import shop from '@/store/shop';
 import clothes from '@/store/clothes';
+import coordinate from '@/store/coordinate';
 
 Vue.use(Vuex);
 
@@ -18,7 +19,8 @@ export default new Vuex.Store({
         brand,
         genre,
         shop,
-        clothes
+        clothes,
+        coordinate
     },
     plugins: [
         createPersistedState({
