@@ -37,6 +37,24 @@ const routes: RouteConfig[] = [
                 meta: { requiresAuth: true }
             },
             {
+                path: '/coordinate',
+                name: 'coordinate',
+                component: () => import('../views/coordinate/Index.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/coordinate/new',
+                name: 'coordinateNew',
+                component: () => import('../views/coordinate/New.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/coordinate/:id',
+                name: 'coordinateEdit',
+                component: () => import('../views/coordinate/Edit.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
                 path: '/maintenance/brand',
                 name: 'brand',
                 component: () => import('../views/parts/brand/Index.vue'),

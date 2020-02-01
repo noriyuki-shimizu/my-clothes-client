@@ -6,8 +6,12 @@
             </router-link>
             <a-menu theme="dark" mode="inline">
                 <a-menu-item key="1">
-                    <a-icon type="smile" />
-                    <span>Coordinate</span>
+                    <router-link to="/coordinate">
+                        <a-icon type="smile" />
+                        <span>
+                            Coordinate
+                        </span>
+                    </router-link>
                 </a-menu-item>
                 <a-sub-menu key="2">
                     <span slot="title">
