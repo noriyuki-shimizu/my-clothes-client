@@ -12,7 +12,7 @@
                     {
                         rules: [
                             {
-                                required: true
+                                required: !this.target
                             }
                         ]
                     }
