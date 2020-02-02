@@ -4,18 +4,25 @@ import { State, IGetters, IMutations, IActions } from '@/store/genre/type';
 import api from '@/plugins/api';
 
 const state: State = {
-    genres: []
+    genres: [],
+    totalPricePerGenres: []
 };
 
 const getters: Getters<State, IGetters> = {
     genres(state) {
         return state.genres;
+    },
+    totalPricePerGenres(state) {
+        return state.totalPricePerGenres;
     }
 };
 
 const mutations: Mutations<State, IMutations> = {
     onGenresStateChange(state, payload) {
         state.genres = payload;
+    },
+    onTotalPricePerGenreStateChange(state, payload) {
+        state.totalPricePerGenres = payload;
     },
     onAddGenre(state, payload) {
         state.genres.push(payload);
@@ -36,6 +43,14 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         const { data } = response;
 
         ctx.commit('onGenresStateChange', data.genres);
+    },
+    async fetchTotalPricePerGenres(ctx) {
+        const response = await api.get(
+            `/${ctx.rootGetters['user/id']}/genres/clothes/total-price`
+        );
+        const { data } = response;
+
+        ctx.commit('onTotalPricePerGenreStateChange', data.totalPricePerGenres);
     },
     async onAddGenre(ctx, { genre }) {
         const response = await api.post(
