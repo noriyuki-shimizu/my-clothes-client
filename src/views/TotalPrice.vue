@@ -1,13 +1,41 @@
 <template>
     <div class="total-price">
-        <pie-chart :chartData="chartData" :chartOptions="chartOptions" />
+        <a-alert
+            class="message"
+            v-if="message.isShow"
+            :message="message.text"
+            :description="message.description"
+            :type="message.type"
+            showIcon
+        />
+        <a-empty class="empty-data" v-if="!totalPricePerGenres.length" />
+        <pie-chart v-else :chartData="chartData" :chartOptions="chartOptions" />
+
+        <a-divider />
+
+        <a-statistic
+            title="Total price"
+            :value="totalPrice"
+            class="field-total-price"
+        />
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import * as Vuex from 'vuex';
 import Chart from 'chart.js';
 import PieChart from '@/components/maps/PieChart';
+
+import { AppMessage } from 'ant-design-vue/types/message';
+import { resetMessage } from '@/util/reset';
+import { isAxiosError } from '../plugins/api';
+
+type ChartDataParts = {
+    labels: string[];
+    backgroundColor: string[];
+    data: number[];
+};
 
 @Component({
     components: {
@@ -15,58 +43,53 @@ import PieChart from '@/components/maps/PieChart';
     }
 })
 export default class TotalPrice extends Vue {
-    private totalPricePerGenreList: any[] = [
-        {
-            genre: 'Tops',
-            totalPrice: 10000
-        },
-        {
-            genre: 'Tee',
-            totalPrice: 10000
-        },
-        {
-            genre: 'Outer',
-            totalPrice: 10000
-        },
-        {
-            genre: 'Bottoms',
-            totalPrice: 10000
-        },
-        {
-            genre: 'Hat',
-            totalPrice: 10000
-        }
-    ];
+    $store!: Vuex.ExStore;
 
-    private chartData: Chart.ChartData = {
-        labels: [
-            'Tops',
-            'Tee',
-            'Outer',
-            'Bottoms',
-            'Hat',
-            'Bag',
-            'Accessories',
-            'Shoes & Boots'
-        ],
-        datasets: [
-            {
-                backgroundColor: [
-                    '#2ecc71',
-                    '#3498db',
-                    '#95a5a6',
-                    '#9b59b6',
-                    '#f1c40f',
-                    '#e74c3c',
-                    '#34495e',
-                    '#e4495e'
-                ],
-                data: [12, 19, 3, 17, 28, 24, 7, 10]
-            }
-        ]
-    };
+    message = resetMessage();
 
-    private chartOptions: Chart.ChartOptions = {
+    async beforeCreate() {
+        await this.$store
+            .dispatch('genre/fetchTotalPricePerGenres')
+            .catch(this.onError);
+    }
+
+    get totalPricePerGenres() {
+        return this.$store.getters['genre/totalPricePerGenres'];
+    }
+
+    get totalPrice() {
+        return this.totalPricePerGenres.reduce(
+            (accumulator, { totalPrice }) => accumulator + totalPrice,
+            0
+        );
+    }
+
+    get chartData() {
+        const {
+            labels,
+            backgroundColor,
+            data
+        } = this.totalPricePerGenres.reduce(
+            (accumulator: ChartDataParts, currentValue) => {
+                accumulator.labels.push(currentValue.name);
+                accumulator.backgroundColor.push(currentValue.color);
+                accumulator.data.push(currentValue.totalPrice);
+                return accumulator;
+            },
+            { labels: [], backgroundColor: [], data: [] }
+        );
+        return {
+            labels,
+            datasets: [
+                {
+                    backgroundColor,
+                    data
+                }
+            ]
+        };
+    }
+
+    chartOptions: Chart.ChartOptions = {
         legend: {
             labels: {
                 boxWidth: 30,
@@ -74,17 +97,63 @@ export default class TotalPrice extends Vue {
             }
         },
         tooltips: {
-            bodyFontSize: 30
+            bodyFontSize: 50
         }
     };
+
+    onError(err: any) {
+        this.message = resetMessage();
+        if (isAxiosError(err)) {
+            if (err.response && err.response.status === 403) {
+                const { $store, $router } = this;
+                this.$warning({
+                    title: 'Certification expired',
+                    content: 'Please sign in again.',
+                    onOk: () => {
+                        $store.dispatch('user/signOut');
+                        $router.push({
+                            name: 'signIn',
+                            params: { again: 'again' }
+                        });
+                    }
+                });
+                return;
+            }
+
+            this.message = {
+                isShow: true,
+                text: `Error (${err.message})`,
+                description: err.response
+                    ? err.response.data
+                    : `Access URL: ${err.config.url}`,
+                type: 'error'
+            };
+        }
+    }
 }
 </script>
 
 <style>
+.message {
+    margin-bottom: 20px;
+}
+
+.empty-data {
+    padding-top: 25vh;
+}
+
 #pie-chart {
-    height: 70vh !important;
-    width: 40vw !important;
+    height: 60vh !important;
+    width: 35vw !important;
     margin-left: auto;
     margin-right: auto;
+}
+
+.field-total-price {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 10px 16px;
+    text-align: right;
 }
 </style>
