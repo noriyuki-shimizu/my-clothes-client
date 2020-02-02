@@ -164,7 +164,7 @@ export default class Common extends Vue {
 #content {
     padding: 24px;
     background: #fff;
-    min-height: 82vh;
+    min-height: 85vh;
 }
 
 #main_layout_footer {

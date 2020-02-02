@@ -10,7 +10,7 @@
                 md: 2,
                 lg: 3,
                 xl: 4,
-                xxl: 3
+                xxl: 6
             }"
             :dataSource="dataSource"
         >

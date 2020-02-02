@@ -2,7 +2,7 @@
     <a-table
         :dataSource="dataSource"
         :columns="columns"
-        :scroll="{ x: 1800, y: 390 }"
+        :scroll="{ x: 1800, y: 570 }"
         :pagination="{ pageSize: 50 }"
         :loading="loading"
     >
