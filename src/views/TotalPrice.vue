@@ -139,7 +139,7 @@ export default class TotalPrice extends Vue {
 }
 
 .empty-data {
-    padding-top: 25vh;
+    padding: 24vh 0;
 }
 
 #pie-chart {
