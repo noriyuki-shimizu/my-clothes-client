@@ -191,13 +191,12 @@ export default class ResetPassword extends Vue {
             const mailAddressValue = this.form.getFieldValue('mailAddress');
             const mailAddressErrors = this.form.getFieldError('mailAddress');
             if (
-                !this.isCorrectMailAddress(mailAddressValue, mailAddressErrors)
+                this.isCorrectMailAddress(mailAddressValue, mailAddressErrors)
             ) {
-                return;
+                this.handleResetPassword(mailAddressValue);
+                this.currentIndex++;
             }
-            this.handleResetPassword(mailAddressValue);
         }
-        this.currentIndex++;
     }
 
     prev() {
