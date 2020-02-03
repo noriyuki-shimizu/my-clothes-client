@@ -53,7 +53,7 @@ export default class Shop extends Vue {
         this.message = resetMessage();
     }
 
-    @Emit('onError')
+    @Emit('onErrorHandle')
     onError(err: any) {
         if (isAxiosError(err)) {
             if (err.response && err.response.status === 403) {
