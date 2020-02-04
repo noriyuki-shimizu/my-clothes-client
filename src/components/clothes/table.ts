@@ -30,7 +30,7 @@ export const getColumns = (
             key: 'imageLink',
             fixed: 'left',
             scopedSlots: { customRender: 'imageLink' },
-            width: 120
+            width: 170
         },
         {
             title: 'Brand name',

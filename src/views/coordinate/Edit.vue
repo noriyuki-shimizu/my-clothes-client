@@ -447,7 +447,7 @@ export default class Edit extends Vue {
 
 .coordinate-item-table-image {
     height: 140px;
-    width: 110px;
+    width: 120px;
 }
 
 .selected-item-image {

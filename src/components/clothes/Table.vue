@@ -2,7 +2,7 @@
     <a-table
         :dataSource="dataSource"
         :columns="columns"
-        :scroll="{ x: 1800, y: 570 }"
+        :scroll="{ x: 1850, y: 570 }"
         :pagination="{ pageSize: 50 }"
         :loading="loading"
     >
@@ -190,7 +190,7 @@ export default class ClothesTable extends Vue {
 <style scoped>
 .clothes-image {
     height: 140px;
-    width: 110px;
+    width: 120px;
 }
 
 .highlight {
