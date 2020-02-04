@@ -44,9 +44,7 @@ export default {
 
     async resetPassword(emailAddress: string) {
         const actionCodeSettings: firebase.auth.ActionCodeSettings = {
-            url:
-                process.env.VUE_APP_SIGN_IN_PATH ||
-                'http://localhost:8888/sign-in',
+            url: `${process.env.VUE_APP_API_BASE_URL}/sign-in`,
             handleCodeInApp: true
         };
         await firebase
