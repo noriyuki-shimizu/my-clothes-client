@@ -30,7 +30,8 @@ export default new Vuex.Store({
                 'user.user',
                 'user.accessToken',
                 'imageAddress.values'
-            ]
+            ],
+            storage: window.sessionStorage
         })
     ]
 });
