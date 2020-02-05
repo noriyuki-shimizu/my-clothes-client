@@ -196,7 +196,9 @@ export default class ResetPassword extends Vue {
                 this.handleResetPassword(mailAddressValue);
                 this.currentIndex++;
             }
+            return;
         }
+        this.currentIndex++;
     }
 
     prev() {
