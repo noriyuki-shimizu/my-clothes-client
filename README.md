@@ -1,4 +1,4 @@
-# replace-mcm
+# My clothes client
 
 ## Project setup
 ```
