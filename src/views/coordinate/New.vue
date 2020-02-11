@@ -11,7 +11,10 @@
             showIcon
         />
 
-        <coordinate-form v-on:onRegister="onRegister" v-on:onError="onError" />
+        <coordinate-form
+            v-on:on-register="onRegister"
+            v-on:on-error="onError"
+        />
     </div>
 </template>
 
@@ -36,7 +39,7 @@ export default class New extends Vue {
 
     message: AppMessage = resetMessage();
 
-    @Emit('onRegister')
+    @Emit('on-register')
     async onRegister(values: FormFields) {
         const { season, clothingIds, image } = values;
 
@@ -62,7 +65,7 @@ export default class New extends Vue {
         this.message = resetMessage();
     }
 
-    @Emit('onError')
+    @Emit('on-error')
     onError(err: any) {
         if (isAxiosError(err)) {
             if (err.response && err.response.status === 403) {

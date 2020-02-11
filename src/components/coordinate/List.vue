@@ -31,7 +31,9 @@
                                     :style="{
                                         marginRight: '8px'
                                     }"
-                                    @click="() => $emit('showCoordinate', item)"
+                                    @click="
+                                        () => $emit('show-coordinate', item)
+                                    "
                                 />
                                 <a-popconfirm
                                     placement="topRight"

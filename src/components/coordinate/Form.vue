@@ -205,7 +205,7 @@ export default class CoordinateForm extends Vue {
             this.$store.dispatch('clothes/fetchAssistBrands'),
             this.$store.dispatch('clothes/fetchAssistShops')
         ]).catch(err => {
-            this.$emit('onError', err);
+            this.$emit('on-error', err);
         });
 
         this.tableLoading = false;
@@ -313,9 +313,9 @@ export default class CoordinateForm extends Vue {
                     content: 'The entered information is registered.',
                     onOk: async () => {
                         try {
-                            await this.$emit<FormFields>('onRegister', values);
+                            await this.$emit<FormFields>('on-register', values);
                         } catch (err) {
-                            this.$emit('onError', err);
+                            this.$emit('on-error', err);
                         }
                     },
                     onCancel() {}

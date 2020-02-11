@@ -13,8 +13,8 @@
 
         <coordinate-form
             :target="target"
-            v-on:onRegister="onRegister"
-            v-on:onError="onError"
+            v-on:on-register="onRegister"
+            v-on:on-error="onError"
         />
     </div>
 </template>
@@ -46,7 +46,7 @@ export default class Edit extends Vue {
         );
     }
 
-    @Emit('onRegister')
+    @Emit('on-register')
     async onRegister(values: FormFields) {
         const { target } = this;
         if (!target) {
@@ -80,7 +80,7 @@ export default class Edit extends Vue {
         this.message = resetMessage();
     }
 
-    @Emit('onError')
+    @Emit('on-error')
     onError(err: any) {
         if (isAxiosError(err)) {
             if (err.response && err.response.status === 403) {
