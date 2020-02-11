@@ -101,13 +101,6 @@ export default class CoordinateItemDrawer extends Vue {
     width: 220;
 }
 
-#operation_field {
-    position: absolute;
-    right: 50px;
-    width: 100%;
-    text-align: right;
-}
-
 #update-coordinate-button {
     position: absolute;
     left: 0;
@@ -117,9 +110,5 @@ export default class CoordinateItemDrawer extends Vue {
     padding: 10px 16px;
     background: #fff;
     text-align: right;
-}
-
-.alert-message {
-    margin-bottom: 20px;
 }
 </style>

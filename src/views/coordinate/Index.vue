@@ -152,26 +152,10 @@ export default class Index extends Vue {
 </script>
 
 <style scoped>
-.coordinate-item-image {
-    height: 250px;
-    width: 220;
-}
-
 #operation_field {
     position: absolute;
     right: 50px;
     width: 100%;
-    text-align: right;
-}
-
-#update-coordinate-button {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    border-top: 1px solid #e9e9e9;
-    padding: 10px 16px;
-    background: #fff;
     text-align: right;
 }
 
