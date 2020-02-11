@@ -81,7 +81,7 @@ import { Form } from 'ant-design-vue';
 import { WrappedFormUtils } from 'ant-design-vue/types/form/form';
 import * as Vuex from 'vuex';
 
-import { colors, formItemLayout, FormFields } from '@/components/genre/form';
+import { formItemLayout, FormFields } from '@/components/genre/form';
 import { Genre } from '@/store/genre/type';
 import { getBase64 } from '@/util/file';
 import { Route } from 'vue-router';
@@ -96,6 +96,14 @@ export default class GenreForm extends Vue {
     form!: WrappedFormUtils;
 
     formItemLayout = formItemLayout;
+
+    async beforeCreate() {
+        const { id } = this.$route.params;
+        await this.$store.dispatch(
+            'genre/fetchCanSelectedColorsStateChange',
+            id ? Number(id) : ''
+        );
+    }
 
     created() {
         if (this.target) {
@@ -122,15 +130,7 @@ export default class GenreForm extends Vue {
     }
 
     get remainingColors() {
-        const { id } = this.$route.params;
-
-        const genreColors = id
-            ? this.genres
-                  .filter(genre => genre.id !== Number(id))
-                  .map(genre => genre.color)
-            : this.genres.map(genre => genre.color);
-
-        return colors.filter(color => genreColors.indexOf(color) < 0);
+        return this.$store.getters['genre/canSelectedColors'];
     }
 
     nameValidator(_: any, value: string, cb: Function) {

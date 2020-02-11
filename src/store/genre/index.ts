@@ -5,7 +5,8 @@ import api from '@/plugins/api';
 
 const state: State = {
     genres: [],
-    totalPricePerGenres: []
+    totalPricePerGenres: [],
+    canSelectedColors: []
 };
 
 const getters: Getters<State, IGetters> = {
@@ -14,6 +15,9 @@ const getters: Getters<State, IGetters> = {
     },
     totalPricePerGenres(state) {
         return state.totalPricePerGenres;
+    },
+    canSelectedColors(state) {
+        return state.canSelectedColors;
     }
 };
 
@@ -23,6 +27,9 @@ const mutations: Mutations<State, IMutations> = {
     },
     onTotalPricePerGenreStateChange(state, payload) {
         state.totalPricePerGenres = payload;
+    },
+    onCanSelectedColorsStateChange(state, payload) {
+        state.canSelectedColors = payload;
     },
     onAddGenre(state, payload) {
         state.genres.push(payload);
@@ -51,6 +58,19 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         const { data } = response;
 
         ctx.commit('onTotalPricePerGenreStateChange', data.totalPricePerGenres);
+    },
+    async fetchCanSelectedColorsStateChange(ctx, id) {
+        const response = await api.get(
+            `/${ctx.rootGetters['user/id']}/genres/colors`,
+            {
+                params: {
+                    id
+                }
+            }
+        );
+        const { data } = response;
+
+        ctx.commit('onCanSelectedColorsStateChange', data.canSelectedColors);
     },
     async onAddGenre(ctx, { genre }) {
         const response = await api.post(
