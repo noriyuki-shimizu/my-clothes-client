@@ -50,81 +50,12 @@
             </a-tab-pane>
         </a-tabs>
 
-        <a-drawer
-            title="Coordinate item"
-            placement="bottom"
-            height="600"
-            :closable="false"
-            @close="onClose"
+        <coordinate-item-drawer
+            :coordinateId="coordinateId"
+            :coordinateItems="coordinateItems"
             :visible="visible"
-            :wrapStyle="{
-                height: '95%',
-                overflow: 'auto'
-            }"
-        >
-            <a-list
-                :grid="{
-                    gutter: 16,
-                    xs: 1,
-                    sm: 2,
-                    md: 4,
-                    lg: 4,
-                    xl: 6,
-                    xxl: 6
-                }"
-                :dataSource="coordinateItems"
-            >
-                <a-list-item slot="renderItem" slot-scope="item">
-                    <a-card hoverable style="width: 220px">
-                        <img
-                            class="coordinate-item-image"
-                            :src="item.imageLink"
-                            slot="cover"
-                        />
-                        <a-card-meta>
-                            <template slot="description">
-                                <div>Brand ... {{ item.brandName }}</div>
-                                <div>Shop ... {{ item.shopName }}</div>
-                                <div>
-                                    Price ... {{ item.price.toLocaleString() }}
-                                </div>
-                                <div>
-                                    Genre ...
-                                    <a-tag
-                                        v-for="(genre, index) in item.genres"
-                                        :key="index"
-                                        :color="genre.color"
-                                    >
-                                        {{ genre.name }}
-                                    </a-tag>
-                                </div>
-                                <div>Buy date ... {{ item.buyDate }}</div>
-                                <div>
-                                    <a-rate
-                                        :defaultValue="item.satisfaction"
-                                        disabled
-                                    />
-                                </div>
-                            </template>
-                        </a-card-meta>
-                    </a-card>
-                </a-list-item>
-            </a-list>
-            <div id="update-coordinate-button">
-                <a-button
-                    type="primary"
-                    icon="edit"
-                    @click="
-                        $router.push({
-                            name: 'coordinateEdit',
-                            params: { id: selectedCoordinateId }
-                        })
-                    "
-                >
-                    Edit
-                </a-button>
-            </div>
-        </a-drawer>
+            v-on:on-close="onClose"
+        />
     </div>
 </template>
 
@@ -134,6 +65,7 @@ import * as Vuex from 'vuex';
 import { AppMessage } from 'ant-design-vue/types/message';
 
 import CoordinateList from '@/components/coordinate/List.vue';
+import CoordinateItemDrawer from '@/components/coordinate/item/Drawer.vue';
 import { CoordinateItem, Coordinate } from '@/store/coordinate/type';
 import { getSeason } from '@/util/date';
 import { resetMessage } from '@/util/reset';
@@ -141,15 +73,16 @@ import { isAxiosError } from '@/plugins/api';
 
 @Component({
     components: {
-        CoordinateList
+        CoordinateList,
+        CoordinateItemDrawer
     }
 })
 export default class Index extends Vue {
     $store!: Vuex.ExStore;
 
-    selectedCoordinateId?: number;
+    coordinateId: number | null = null;
 
-    selectedCoordinateItem: CoordinateItem[] = [];
+    coordinateItems: CoordinateItem[] = [];
 
     message: AppMessage = resetMessage();
 
@@ -170,14 +103,10 @@ export default class Index extends Vue {
         );
     }
 
-    get coordinateItems() {
-        return this.selectedCoordinateItem;
-    }
-
     @Emit('showCoordinate')
-    showCoordinate({ id, usedCoordinates }: Coordinate) {
-        this.selectedCoordinateId = id;
-        this.selectedCoordinateItem = usedCoordinates;
+    showCoordinate({ id, usedCoordinates }: Required<Coordinate>) {
+        this.coordinateId = id;
+        this.coordinateItems = usedCoordinates;
         this.visible = true;
     }
 
@@ -211,6 +140,7 @@ export default class Index extends Vue {
         }
     }
 
+    @Emit('onClose')
     onClose() {
         this.visible = false;
     }
