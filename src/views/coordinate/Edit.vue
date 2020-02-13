@@ -39,6 +39,12 @@ export default class Edit extends Vue {
 
     message: AppMessage = resetMessage();
 
+    created() {
+        if (!this.target) {
+            this.$router.push({ name: 'coordinate' });
+        }
+    }
+
     get target() {
         const coordinates = this.$store.getters['coordinate/coordinates'];
         return coordinates.find(
