@@ -24,6 +24,11 @@ const getters: Getters<State, IGetters> = {
 };
 
 const mutations: Mutations<State, IMutations> = {
+    allStateReset(state) {
+        state.id = null;
+        state.user = null;
+        state.accessToken = '';
+    },
     onIdStateChanged(state, payload) {
         state.id = payload;
     },
@@ -83,9 +88,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
     },
     async signOut(ctx) {
         await firebaseAuth.signOut();
-        ctx.commit('onIdStateChanged', null);
-        ctx.commit('onCurrentUserStateChanged', null);
-        ctx.commit('onAccessTokenStateChanged', '');
+        ctx.commit('allStateReset');
     },
     async updateProfile(ctx, { displayName, iconFile }) {
         const user = ctx.getters['currentUser'] as firebase.User;

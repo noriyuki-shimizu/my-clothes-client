@@ -1,3 +1,5 @@
+import { IModuleRootMutations } from '@/store/type';
+
 export interface Genre {
     id?: number;
     name: string;
@@ -27,7 +29,7 @@ export interface IRootGetters {
     'genre/canSelectedColors': IGetters['canSelectedColors'];
 }
 
-export interface IMutations {
+export interface IMutations extends IModuleRootMutations {
     onGenresStateChange: Genre[];
     onTotalPricePerGenreStateChange: TotalPricePerGenre[];
     onCanSelectedColorsStateChange: string[];
@@ -36,6 +38,7 @@ export interface IMutations {
     onDeleteGenre: number;
 }
 export interface IRootMutations {
+    'genre/allStateReset': IMutations['allStateReset'];
     'genre/onGenresStateChange': IMutations['onGenresStateChange'];
     'genre/onTotalPricePerGenreStateChange': IMutations['onTotalPricePerGenreStateChange'];
     'genre/onCanSelectedColorsStateChange': IMutations['onCanSelectedColorsStateChange'];

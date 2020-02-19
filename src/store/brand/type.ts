@@ -1,3 +1,5 @@
+import { IModuleRootMutations } from '@/store/type';
+
 export interface Brand {
     id?: number;
     name: string;
@@ -19,12 +21,13 @@ export interface IRootGetters {
     'brand/brands': IGetters['brands'];
 }
 
-export interface IMutations {
+export interface IMutations extends IModuleRootMutations {
     onBrandsStateChange: Brand[];
     onAddBrand: Brand;
     onUpdateTargetBrand: Brand;
 }
 export interface IRootMutations {
+    'brand/allStateReset': IMutations['allStateReset'];
     'brand/onBrandsStateChange': IMutations['onBrandsStateChange'];
     'brand/onAddBrand': IMutations['onAddBrand'];
     'brand/onUpdateTargetBrand': IMutations['onUpdateTargetBrand'];

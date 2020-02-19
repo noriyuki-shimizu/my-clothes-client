@@ -19,6 +19,9 @@ const getters: Getters<State, IGetters> = {
 };
 
 const mutations: Mutations<State, IMutations> = {
+    allStateReset(state) {
+        state.values = [];
+    },
     onValueStateChange(state, payload) {
         state.values = payload;
     }

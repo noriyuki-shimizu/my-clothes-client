@@ -19,6 +19,10 @@ const getters: Getters<State, IGetters> = {
 };
 
 const mutations: Mutations<State, IMutations> = {
+    allStateReset(state) {
+        state.coordinates = [];
+        state.coordinateItems = [];
+    },
     onCoordinateStateChange(state, payload) {
         state.coordinates = payload;
     },

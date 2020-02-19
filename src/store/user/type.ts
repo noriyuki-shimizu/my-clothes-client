@@ -1,3 +1,5 @@
+import { IModuleRootMutations } from '@/store/type';
+
 interface AppUser {
     uid: string;
     displayName: string | null;
@@ -23,12 +25,13 @@ export interface IRootGetters {
     'user/accessToken': IGetters['accessToken'];
 }
 
-export interface IMutations {
+export interface IMutations extends IModuleRootMutations {
     onIdStateChanged: number | null;
     onCurrentUserStateChanged: State['user'] | null;
     onAccessTokenStateChanged: string;
 }
 export interface IRootMutations {
+    'user/allStateReset': IMutations['allStateReset'];
     'user/onIdStateChange': IMutations['onIdStateChanged'];
     'user/onCurrentUserStateChanged': IMutations['onCurrentUserStateChanged'];
     'user/onAccessTokenStateChanged': IMutations['onAccessTokenStateChanged'];

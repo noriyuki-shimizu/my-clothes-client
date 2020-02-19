@@ -1,4 +1,5 @@
 import { Genre } from '../genre/type';
+import { IModuleRootMutations } from '@/store/type';
 
 export interface CoordinateItem {
     id: number;
@@ -34,7 +35,7 @@ export interface IRootGetters {
     'coordinate/coordinateItems': IGetters['coordinateItems'];
 }
 
-export interface IMutations {
+export interface IMutations extends IModuleRootMutations {
     onCoordinateStateChange: Coordinate[];
     onAddCoordinate: Coordinate;
     onUpdateTargetCoordinate: Coordinate;
@@ -42,6 +43,7 @@ export interface IMutations {
     onAssistCoordinateItemStateChange: CoordinateItem[];
 }
 export interface IRootMutations {
+    'coordinate/allStateReset': IMutations['allStateReset'];
     'coordinate/onCoordinateStateChange': IMutations['onCoordinateStateChange'];
     'coordinate/onAddCoordinate': IMutations['onAddCoordinate'];
     'coordinate/onUpdateTargetCoordinate': IMutations['onUpdateTargetCoordinate'];

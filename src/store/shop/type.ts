@@ -1,3 +1,5 @@
+import { IModuleRootMutations } from '@/store/type';
+
 export interface Shop {
     id?: number;
     name: string;
@@ -22,12 +24,13 @@ export interface IRootGetters {
     'shop/shops': IGetters['shops'];
 }
 
-export interface IMutations {
+export interface IMutations extends IModuleRootMutations {
     onShopsStateChange: Shop[];
     onAddShop: Shop;
     onUpdateTargetShop: Shop;
 }
 export interface IRootMutations {
+    'shop/allStateReset': IMutations['allStateReset'];
     'shop/onShopsStateChange': IMutations['onShopsStateChange'];
     'shop/onAddShop': IMutations['onAddShop'];
     'shop/onUpdateTargetShop': IMutations['onUpdateTargetShop'];

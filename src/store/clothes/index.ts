@@ -27,6 +27,12 @@ const getters: Getters<State, IGetters> = {
 };
 
 const mutations: Mutations<State, IMutations> = {
+    allStateReset(state) {
+        state.assistBrands = [];
+        state.assistGenres = [];
+        state.assistShops = [];
+        state.clothes = [];
+    },
     onClothesStateChange(state, payload) {
         state.clothes = payload;
     },

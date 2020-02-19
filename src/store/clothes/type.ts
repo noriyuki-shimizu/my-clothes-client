@@ -1,6 +1,7 @@
 import { Brand } from '../brand/type';
 import { Shop } from '../shop/type';
 import { Genre } from '../genre/type';
+import { IModuleRootMutations } from '@/store/type';
 
 export interface Clothes {
     id?: number;
@@ -51,7 +52,7 @@ export interface IRootGetters {
     'clothes/assistShops': IGetters['assistShops'];
 }
 
-export interface IMutations {
+export interface IMutations extends IModuleRootMutations {
     onClothesStateChange: Clothes[];
     onAddClothes: Clothes;
     onUpdateTargetClothes: Clothes;
@@ -60,6 +61,7 @@ export interface IMutations {
     onAssistShopStateChange: AssistShop[];
 }
 export interface IRootMutations {
+    'clothes/allStateReset': IMutations['allStateReset'];
     'clothes/onClothesStateChange': IMutations['onClothesStateChange'];
     'clothes/onAddClothes': IMutations['onAddClothes'];
     'clothes/onUpdateTargetClothes': IMutations['onUpdateTargetClothes'];

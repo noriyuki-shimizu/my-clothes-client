@@ -22,6 +22,11 @@ const getters: Getters<State, IGetters> = {
 };
 
 const mutations: Mutations<State, IMutations> = {
+    allStateReset(state) {
+        state.genres = [];
+        state.totalPricePerGenres = [];
+        state.canSelectedColors = [];
+    },
     onGenresStateChange(state, payload) {
         state.genres = payload;
     },
