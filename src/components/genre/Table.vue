@@ -120,13 +120,13 @@ export default class GenreTable extends Vue {
     columns = columns;
 
     async created() {
-        this.loading = true;
-        try {
-            await this.$store.dispatch('genre/fetchGenres');
-        } catch (err) {
-            this.$emit('onError', err);
+        if (!this.genres.length) {
+            this.loading = true;
+            await this.$store
+                .dispatch('genre/fetchGenres')
+                .catch((err: any) => this.$emit('onError', err));
+            this.loading = false;
         }
-        this.loading = false;
     }
 
     get genres() {
@@ -152,11 +152,11 @@ export default class GenreTable extends Vue {
 
     async onDelete(id: number) {
         this.loading = true;
-        try {
-            await this.$store.dispatch('genre/onDeleteGenre', { id });
-        } catch (err) {
-            this.$emit('onError', err);
-        }
+
+        await this.$store
+            .dispatch('genre/onDeleteGenre', { id })
+            .catch((err: any) => this.$emit('onError', err));
+
         this.loading = false;
     }
 }

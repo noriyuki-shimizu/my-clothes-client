@@ -71,7 +71,7 @@
                     </template>
                     <a-badge :count="0">
                         <a-avatar
-                            v-if="currentUser ? currentUser.photoURL : ''"
+                            v-if="currentUser && currentUser.photoURL"
                             shape="square"
                             size="large"
                             :src="currentUser ? currentUser.photoURL : ''"
@@ -120,6 +120,12 @@ export default class Common extends Vue {
     }
 
     signOut() {
+        this.$store.commit('brand/allStateReset');
+        this.$store.commit('clothes/allStateReset');
+        this.$store.commit('coordinate/allStateReset');
+        this.$store.commit('genre/allStateReset');
+        this.$store.commit('imageAddress/allStateReset');
+        this.$store.commit('shop/allStateReset');
         this.$store.dispatch('user/signOut');
         this.$router.push({ name: 'signIn' });
     }

@@ -90,17 +90,21 @@ export default class ClothesTable extends Vue {
     searchText = '';
 
     columns = getColumns(
-        this.assistBrands,
-        this.assistShops,
-        this.assistGenres
+        this.$store.getters['clothes/assistBrands'],
+        this.$store.getters['clothes/assistShops'],
+        this.$store.getters['clothes/assistGenres']
     );
 
     async created() {
         this.$emit('onResetMessage');
         this.loading = true;
 
+        if (!this.clothes.length) {
+            await this.$store
+                .dispatch('clothes/fetchClothes')
+                .catch((err: any) => this.$emit('onErrorHandle', err));
+        }
         await Promise.all([
-            this.$store.dispatch('clothes/fetchClothes'),
             this.$store.dispatch('clothes/fetchAssistGenres'),
             this.$store.dispatch('clothes/fetchAssistBrands'),
             this.$store.dispatch('clothes/fetchAssistShops')
@@ -111,8 +115,12 @@ export default class ClothesTable extends Vue {
         this.loading = false;
     }
 
+    get clothes() {
+        return this.$store.getters['clothes/clothes'];
+    }
+
     get dataSource() {
-        const clothes = this.$store.getters['clothes/clothes'];
+        const { clothes } = this;
         return clothes.map(c => {
             const {
                 id,
@@ -141,18 +149,6 @@ export default class ClothesTable extends Vue {
         }) as Record[];
     }
 
-    get assistGenres() {
-        return this.$store.getters['clothes/assistGenres'];
-    }
-
-    get assistBrands() {
-        return this.$store.getters['clothes/assistBrands'];
-    }
-
-    get assistShops() {
-        return this.$store.getters['clothes/assistShops'];
-    }
-
     handleSearch(selectedKeys: string[], confirm: Function) {
         confirm();
         [this.searchText] = selectedKeys;
@@ -166,22 +162,22 @@ export default class ClothesTable extends Vue {
     async onDelete(id: number) {
         this.$emit('onResetMessage');
         this.loading = true;
-        try {
-            await this.$store.dispatch('clothes/onDeleteClothes', { id });
-        } catch (err) {
-            this.$emit('onError', err);
-        }
+
+        await this.$store
+            .dispatch('clothes/onDeleteClothes', { id })
+            .catch((err: any) => this.$emit('onError', err));
+
         this.loading = false;
     }
 
     async onRestoration(id: number) {
         this.$emit('onResetMessage');
         this.loading = true;
-        try {
-            await this.$store.dispatch('clothes/onRestorationClothes', { id });
-        } catch (err) {
-            this.$emit('onError', err);
-        }
+
+        await this.$store
+            .dispatch('clothes/onRestorationClothes', { id })
+            .catch((err: any) => this.$emit('onError', err));
+
         this.loading = false;
     }
 }

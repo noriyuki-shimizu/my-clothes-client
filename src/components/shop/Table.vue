@@ -134,13 +134,14 @@ export default class ShopTable extends Vue {
 
     async created() {
         this.$emit('onResetMessage');
-        this.loading = true;
-        try {
-            await this.$store.dispatch('shop/fetchShops');
-        } catch (err) {
-            this.$emit('onError', err);
+
+        if (!this.shops.length) {
+            this.loading = true;
+            await this.$store
+                .dispatch('shop/fetchShops')
+                .catch((err: any) => this.$emit('onError', err));
+            this.loading = false;
         }
-        this.loading = false;
     }
 
     get shops() {
@@ -168,22 +169,22 @@ export default class ShopTable extends Vue {
     async onDelete(id: number) {
         this.$emit('onResetMessage');
         this.loading = true;
-        try {
-            await this.$store.dispatch('shop/onDeleteShop', { id });
-        } catch (err) {
-            this.$emit('onError', err);
-        }
+
+        await this.$store
+            .dispatch('shop/onDeleteShop', { id })
+            .catch((err: any) => this.$emit('onError', err));
+
         this.loading = false;
     }
 
     async onRestoration(id: number) {
         this.$emit('onResetMessage');
         this.loading = true;
-        try {
-            await this.$store.dispatch('shop/onRestorationShop', { id });
-        } catch (err) {
-            this.$emit('onError', err);
-        }
+
+        await this.$store
+            .dispatch('shop/onRestorationShop', { id })
+            .catch((err: any) => this.$emit('onError', err));
+
         this.loading = false;
     }
 }

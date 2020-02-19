@@ -133,13 +133,13 @@ export default class BrandTable extends Vue {
     columns = columns;
 
     async created() {
-        this.loading = true;
-        try {
-            await this.$store.dispatch('brand/fetchBrands');
-        } catch (err) {
-            this.$emit('onError', err);
+        if (!this.brands.length) {
+            this.loading = true;
+            await this.$store
+                .dispatch('brand/fetchBrands')
+                .catch((err: any) => this.$emit('onError', err));
+            this.loading = false;
         }
-        this.loading = false;
     }
 
     get brands() {
