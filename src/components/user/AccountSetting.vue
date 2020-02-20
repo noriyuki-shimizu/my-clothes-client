@@ -91,7 +91,7 @@ import {
 } from 'ant-design-vue/types/upload';
 
 import { getBase64, isLt5M } from '@/util/file';
-import { isFirebaseStorageError } from '../plugins/firebase/auth';
+import { isFirebaseStorageError } from '@/plugins/firebase/auth';
 
 type FormFields = {
     displayName: string;

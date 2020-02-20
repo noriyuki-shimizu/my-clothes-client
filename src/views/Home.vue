@@ -53,9 +53,9 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
-import { isAxiosError } from '../plugins/api';
 import { AppMessage } from 'ant-design-vue/types/message';
 import { resetMessage } from '@/util/reset';
+import { handleForbiddenError } from '@/components/errorHandle';
 
 @Component
 export default class Home extends Vue {
@@ -65,39 +65,22 @@ export default class Home extends Vue {
 
     async created() {
         this.message = resetMessage();
-        try {
-            const imageAddresses = this.imageAddresses;
-            if (!(imageAddresses && imageAddresses.length)) {
-                await this.$store.dispatch('imageAddress/fetchImageAddresses');
-            }
-        } catch (err) {
-            if (isAxiosError(err)) {
-                if (err.response && err.response.status === 403) {
-                    const { $store, $router } = this;
-                    this.$warning({
-                        title: 'Certification expired',
-                        content: 'Please sign in again.',
-                        onOk: () => {
-                            $store.dispatch('user/signOut');
-                            $router.push({
-                                name: 'signIn',
-                                params: { again: 'again' }
-                            });
-                        }
-                    });
-                    return;
-                }
+        const { imageAddresses } = this;
+        if (!imageAddresses.length) {
+            await this.$store
+                .dispatch('imageAddress/fetchImageAddresses')
+                .catch((err: any) => {
+                    handleForbiddenError(err, this.$store, this.$router);
 
-                this.message = {
-                    isShow: true,
-                    text: `Error (${err.message})`,
-                    description: err.response
-                        ? err.response.data
-                        : `Access URL: ${err.config.url}`,
-                    type: 'error'
-                };
-            }
-            console.log('error: ', err);
+                    this.message = {
+                        isShow: true,
+                        text: `Error (${err.message})`,
+                        description: err.response
+                            ? err.response.data
+                            : `Access URL: ${err.config.url}`,
+                        type: 'error'
+                    };
+                });
         }
     }
 

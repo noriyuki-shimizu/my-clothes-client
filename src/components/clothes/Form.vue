@@ -233,7 +233,7 @@ export default class ClothesForm extends Vue {
             this.$store.dispatch('clothes/fetchAssistBrands'),
             this.$store.dispatch('clothes/fetchAssistShops')
         ]).catch(err => {
-            this.$emit('onErrorHandle', err);
+            this.$emit('onError', err);
         });
     }
 

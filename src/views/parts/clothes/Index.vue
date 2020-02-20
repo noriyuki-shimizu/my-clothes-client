@@ -30,13 +30,12 @@
 
 <script lang="ts">
 import { Vue, Component, Emit } from 'vue-property-decorator';
-import { isAxiosError } from '@/plugins/api';
 import { AppMessage } from 'ant-design-vue/types/message';
 import * as Vuex from 'vuex';
 
 import ClothesTable from '@/components/clothes/Table.vue';
-import { Record } from '@/components/clothes/table';
 import { resetMessage } from '@/util/reset';
+import { handleForbiddenError } from '@/components/errorHandle';
 
 @Component({
     components: {
@@ -53,34 +52,19 @@ export default class Shop extends Vue {
         this.message = resetMessage();
     }
 
-    @Emit('onErrorHandle')
+    @Emit('onError')
     onError(err: any) {
-        if (isAxiosError(err)) {
-            if (err.response && err.response.status === 403) {
-                const { $store, $router } = this;
-                this.$warning({
-                    title: 'Certification expired',
-                    content: 'Please sign in again.',
-                    onOk: () => {
-                        $store.dispatch('user/signOut');
-                        $router.push({
-                            name: 'signIn',
-                            params: { again: 'again' }
-                        });
-                    }
-                });
-                return;
-            }
+        this.message = resetMessage();
+        handleForbiddenError(err, this.$store, this.$router);
 
-            this.message = {
-                isShow: true,
-                text: `Error (${err.message})`,
-                description: err.response
-                    ? err.response.data
-                    : `Access URL: ${err.config.url}`,
-                type: 'error'
-            };
-        }
+        this.message = {
+            isShow: true,
+            text: `Error (${err.message})`,
+            description: err.response
+                ? err.response.data
+                : `Access URL: ${err.config.url}`,
+            type: 'error'
+        };
     }
 
     onNew() {

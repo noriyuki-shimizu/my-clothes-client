@@ -27,9 +27,8 @@ import * as Vuex from 'vuex';
 import Chart from 'chart.js';
 import PieChart from '@/components/maps/PieChart';
 
-import { AppMessage } from 'ant-design-vue/types/message';
 import { resetMessage } from '@/util/reset';
-import { isAxiosError } from '../plugins/api';
+import { handleForbiddenError } from '@/components/errorHandle';
 
 type ChartDataParts = {
     labels: string[];
@@ -103,32 +102,16 @@ export default class TotalPrice extends Vue {
 
     onError(err: any) {
         this.message = resetMessage();
-        if (isAxiosError(err)) {
-            if (err.response && err.response.status === 403) {
-                const { $store, $router } = this;
-                this.$warning({
-                    title: 'Certification expired',
-                    content: 'Please sign in again.',
-                    onOk: () => {
-                        $store.dispatch('user/signOut');
-                        $router.push({
-                            name: 'signIn',
-                            params: { again: 'again' }
-                        });
-                    }
-                });
-                return;
-            }
+        handleForbiddenError(err, this.$store, this.$router);
 
-            this.message = {
-                isShow: true,
-                text: `Error (${err.message})`,
-                description: err.response
-                    ? err.response.data
-                    : `Access URL: ${err.config.url}`,
-                type: 'error'
-            };
-        }
+        this.message = {
+            isShow: true,
+            text: `Error (${err.message})`,
+            description: err.response
+                ? err.response.data
+                : `Access URL: ${err.config.url}`,
+            type: 'error'
+        };
     }
 }
 </script>

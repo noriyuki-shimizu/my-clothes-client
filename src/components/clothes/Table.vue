@@ -102,14 +102,14 @@ export default class ClothesTable extends Vue {
         if (!this.clothes.length) {
             await this.$store
                 .dispatch('clothes/fetchClothes')
-                .catch((err: any) => this.$emit('onErrorHandle', err));
+                .catch((err: any) => this.$emit('onError', err));
         }
         await Promise.all([
             this.$store.dispatch('clothes/fetchAssistGenres'),
             this.$store.dispatch('clothes/fetchAssistBrands'),
             this.$store.dispatch('clothes/fetchAssistShops')
         ]).catch(err => {
-            this.$emit('onErrorHandle', err);
+            this.$emit('onError', err);
         });
 
         this.loading = false;

@@ -10,10 +10,7 @@
             :type="message.type"
             showIcon
         />
-        <clothes-form
-            v-on:onSubmit="onSubmit"
-            v-on:onErrorHandle="onErrorHandle"
-        />
+        <clothes-form v-on:onSubmit="onSubmit" v-on:onError="onError" />
     </div>
 </template>
 
@@ -23,11 +20,10 @@ import * as Vuex from 'vuex';
 import { DoneUploadFileInfo } from 'ant-design-vue/types/upload';
 import { AppMessage } from 'ant-design-vue/types/message';
 
-import { isAxiosError } from '@/plugins/api';
 import ClothesForm from '@/components/clothes/Form.vue';
 import { ConvertedFormFields } from '@/components/clothes/form';
 import { resetMessage } from '@/util/reset';
-import { timeFormat } from '@/util/date';
+import { handleForbiddenError } from '@/components/errorHandle';
 
 @Component({
     components: {
@@ -50,35 +46,19 @@ export default class New extends Vue {
         });
     }
 
-    @Emit('onErrorHandle')
-    onErrorHandle(err: any) {
+    @Emit('onError')
+    onError(err: any) {
         this.message = resetMessage();
-        if (isAxiosError(err)) {
-            if (err.response && err.response.status === 403) {
-                const { $store, $router } = this;
-                this.$warning({
-                    title: 'Certification expired',
-                    content: 'Please sign in again.',
-                    onOk: () => {
-                        $store.dispatch('user/signOut');
-                        $router.push({
-                            name: 'signIn',
-                            params: { again: 'again' }
-                        });
-                    }
-                });
-                return;
-            }
+        handleForbiddenError(err, this.$store, this.$router);
 
-            this.message = {
-                isShow: true,
-                text: `Error (${err.message})`,
-                description: err.response
-                    ? err.response.data
-                    : `Access URL: ${err.config.url}`,
-                type: 'error'
-            };
-        }
+        this.message = {
+            isShow: true,
+            text: `Error (${err.message})`,
+            description: err.response
+                ? err.response.data
+                : `Access URL: ${err.config.url}`,
+            type: 'error'
+        };
     }
 
     @Emit('onSubmit')
@@ -87,11 +67,7 @@ export default class New extends Vue {
             title: 'Are you sure you want to register?',
             content: 'The entered information is registered.',
             onOk: async () => {
-                try {
-                    await this.onRegister(values);
-                } catch (err) {
-                    this.onErrorHandle(err);
-                }
+                await this.onRegister(values).catch(this.onError);
             },
             onCancel() {}
         });

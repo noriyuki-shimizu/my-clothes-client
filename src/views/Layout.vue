@@ -104,7 +104,7 @@ import * as Vuex from 'vuex';
 import VueRoute from 'vue-router';
 import { WrappedFormUtils, Form } from 'ant-design-vue/types/form/form';
 
-import AccountSetting from '@/components/AccountSetting.vue';
+import AccountSetting from '@/components/user/AccountSetting.vue';
 
 @Component({
     components: {

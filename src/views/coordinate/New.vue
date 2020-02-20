@@ -22,12 +22,11 @@
 import { Vue, Component, Emit } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 import { AppMessage } from 'ant-design-vue/types/message';
-import { WrappedFormUtils } from 'ant-design-vue/types/form/form';
 
 import CoordinateForm from '@/components/coordinate/Form.vue';
-import { isAxiosError } from '@/plugins/api';
 import { resetMessage } from '@/util/reset';
 import { FormFields } from '@/components/coordinate/form';
+import { handleForbiddenError } from '@/components/errorHandle';
 
 @Component({
     components: {
@@ -67,32 +66,16 @@ export default class New extends Vue {
 
     @Emit('on-error')
     onError(err: any) {
-        if (isAxiosError(err)) {
-            if (err.response && err.response.status === 403) {
-                const { $store, $router } = this;
-                this.$warning({
-                    title: 'Certification expired',
-                    content: 'Please sign in again.',
-                    onOk: () => {
-                        $store.dispatch('user/signOut');
-                        $router.push({
-                            name: 'signIn',
-                            params: { again: 'again' }
-                        });
-                    }
-                });
-                return;
-            }
+        handleForbiddenError(err, this.$store, this.$router);
 
-            this.message = {
-                isShow: true,
-                text: `Error (${err.message})`,
-                description: err.response
-                    ? err.response.data
-                    : `Access URL: ${err.config.url}`,
-                type: 'error'
-            };
-        }
+        this.message = {
+            isShow: true,
+            text: `Error (${err.message})`,
+            description: err.response
+                ? err.response.data
+                : `Access URL: ${err.config.url}`,
+            type: 'error'
+        };
     }
 }
 </script>
