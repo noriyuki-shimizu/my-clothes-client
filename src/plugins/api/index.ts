@@ -2,10 +2,6 @@ import axios, { AxiosRequestConfig, AxiosError } from 'axios';
 
 import store from '@/store';
 
-export const isAxiosError = (err: any): err is AxiosError => {
-    return 'isAxiosError' in err;
-};
-
 const http = axios.create({
     baseURL: process.env.VUE_APP_API_BASE_URL
 });
