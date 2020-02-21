@@ -166,21 +166,17 @@ export default class BrandTable extends Vue {
 
     async onDelete(id: number) {
         this.loading = true;
-        try {
-            await this.$store.dispatch('brand/onDeleteBrand', { id });
-        } catch (err) {
-            this.$emit('onError', err);
-        }
+        await this.$store
+            .dispatch('brand/onDeleteBrand', { id })
+            .catch(err => this.$emit('onError', err));
         this.loading = false;
     }
 
     async onRestoration(id: number) {
         this.loading = true;
-        try {
-            await this.$store.dispatch('brand/onRestorationBrand', { id });
-        } catch (err) {
-            this.$emit('onError', err);
-        }
+        await this.$store
+            .dispatch('brand/onRestorationBrand', { id })
+            .catch(err => this.$emit('onError', err));
         this.loading = false;
     }
 }

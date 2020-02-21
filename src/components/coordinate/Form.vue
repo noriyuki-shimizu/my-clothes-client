@@ -312,11 +312,10 @@ export default class CoordinateForm extends Vue {
                     title: 'Are you sure you want to register?',
                     content: 'The entered information is registered.',
                     onOk: async () => {
-                        try {
-                            await this.$emit<FormFields>('on-register', values);
-                        } catch (err) {
-                            this.$emit('on-error', err);
-                        }
+                        await this.$emit<FormFields>(
+                            'on-register',
+                            values
+                        ).catch(err => this.$emit('on-error', err));
                     },
                     onCancel() {}
                 });

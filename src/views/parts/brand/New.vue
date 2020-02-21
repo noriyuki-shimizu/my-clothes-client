@@ -75,11 +75,7 @@ export default class New extends Vue {
             title: 'Are you sure you want to register?',
             content: 'The entered information is registered.',
             onOk: async () => {
-                try {
-                    await this.onRegister(values);
-                } catch (err) {
-                    this.onError(err);
-                }
+                await this.onRegister(values).catch(this.onError);
             },
             onCancel() {}
         });
