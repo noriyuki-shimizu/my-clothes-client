@@ -108,7 +108,6 @@ import firebaseAuth, {
     isFirebaseAuthError,
     isFirebaseExternalApiAuthError
 } from '@/plugins/firebase/auth';
-import { isAxiosError } from '@/plugins/api';
 import { resetMessage } from '@/util/reset';
 
 type FormFields = {
@@ -222,7 +221,7 @@ export default class SignIn extends Vue {
                     );
                     this.toHome();
                 } catch (err) {
-                    if (isAxiosError(err)) {
+                    if ('config' in err) {
                         this.normalAuthMessage = {
                             isShow: true,
                             text: `Error (${err.message})`,
