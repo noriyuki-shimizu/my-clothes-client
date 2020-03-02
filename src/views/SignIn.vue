@@ -2,246 +2,38 @@
     <div id="sign_in">
         <a-spin id="sign_in_card" :spinning="spinning" size="large">
             <a-card title="Sign in" :bordered="false">
-                <a-alert
-                    class="external-api-login-message"
-                    v-if="externalApiAuthMessage.isShow"
-                    :message="externalApiAuthMessage.text"
-                    :description="externalApiAuthMessage.description"
-                    :type="externalApiAuthMessage.type"
-                    showIcon
-                />
-                <a-button
-                    icon="github"
-                    shape="round"
-                    class="external-api-login-button"
-                    id="github_login_button"
-                    @click="signInWithGithub"
-                >
-                    Log in for Github
-                </a-button>
-                <a-button
-                    icon="google"
-                    shape="round"
-                    class="external-api-login-button"
-                    id="google_login_button"
-                    @click="signInWithGoogle"
-                >
-                    Log in for Google
-                </a-button>
-                <a-divider />
-                <a-form
-                    id="components-form-normal-login"
-                    :form="form"
-                    class="login-form"
-                    @submit="handleSubmit"
-                >
-                    <a-alert
-                        class="normal-login-message"
-                        v-if="normalAuthMessage.isShow"
-                        :message="normalAuthMessage.text"
-                        :description="normalAuthMessage.description"
-                        :type="normalAuthMessage.type"
-                        showIcon
-                    />
-                    <a-form-item>
-                        <a-input
-                            v-decorator="decorator.mailAddress"
-                            placeholder="Mail address"
-                        >
-                            <a-icon
-                                slot="prefix"
-                                type="mail"
-                                style="color: rgba(0,0,0,.25)"
-                            />
-                        </a-input>
-                    </a-form-item>
-                    <a-form-item>
-                        <a-input
-                            v-decorator="decorator.password"
-                            type="password"
-                            placeholder="Password"
-                        >
-                            <a-icon
-                                slot="prefix"
-                                type="lock"
-                                style="color: rgba(0,0,0,.25)"
-                            />
-                        </a-input>
-                    </a-form-item>
-                    <a-form-item>
-                        <a-button
-                            type="primary"
-                            html-type="submit"
-                            class="login-form-button"
-                        >
-                            Log in
-                        </a-button>
-                        Or
-                        <router-link to="/sign-up">
-                            register now!
-                        </router-link>
-                        <router-link
-                            class="login-form-forgot"
-                            to="/reset-password"
-                        >
-                            Forgot password
-                        </router-link>
-                    </a-form-item>
-                </a-form>
+                <ExternalApi v-on:set-loading="setLoading" />
+                <SignInForm v-on:set-loading="setLoading" />
+                Or
+                <router-link to="/sign-up">
+                    register now!
+                </router-link>
+                <router-link class="login-form-forgot" to="/reset-password">
+                    Forgot password
+                </router-link>
             </a-card>
         </a-spin>
     </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import * as Vuex from 'vuex';
-import {
-    FieldDecoratorOptions,
-    WrappedFormUtils,
-    FieldDecorator
-} from 'ant-design-vue/types/form/form';
-import { FirebaseExternalApiAuthError } from 'firebase';
-import { AppMessage } from 'ant-design-vue/types/message';
+import { Vue, Component, Emit } from 'vue-property-decorator';
 
-import firebaseAuth, {
-    isFirebaseAuthError,
-    isFirebaseExternalApiAuthError
-} from '@/plugins/firebase/auth';
-import { resetMessage } from '@/util/reset';
+import SignInForm from '@/components/auth/SignInForm.vue';
+import ExternalApi from '@/components/auth/ExternalApi.vue';
 
-type FormFields = {
-    mailAddress: string;
-    password: string;
-};
-
-@Component
+@Component({
+    components: {
+        SignInForm,
+        ExternalApi
+    }
+})
 export default class SignIn extends Vue {
-    private form!: WrappedFormUtils;
+    spinning = false;
 
-    private spinning = false;
-
-    private externalApiAuthMessage: AppMessage = resetMessage();
-
-    private normalAuthMessage: AppMessage = resetMessage();
-
-    private decorator: FieldDecorator = {
-        mailAddress: [
-            'mailAddress',
-            {
-                rules: [
-                    {
-                        type: 'email',
-                        message: 'The input is not valid mail address'
-                    },
-                    {
-                        required: true,
-                        message: 'Please input your email address'
-                    }
-                ]
-            }
-        ],
-        password: [
-            'password',
-            {
-                rules: [
-                    { required: true, message: 'Please input your Password' }
-                ]
-            }
-        ]
-    };
-
-    $store!: Vuex.ExStore;
-
-    beforeCreate() {
-        this.form = this.$form.createForm(this);
-    }
-
-    private mappingMessage(err: FirebaseExternalApiAuthError): AppMessage {
-        return {
-            isShow: true,
-            text: `Error (${err.code})`,
-            description: `${err.message} ProviderId is "${err.credential.providerId}", Email is "${err.email}"`,
-            type: 'error'
-        };
-    }
-
-    private toHome(): void {
-        if (this.$route.params.again) {
-            this.$router.back();
-            return;
-        }
-        this.$router.push({ name: 'home' });
-    }
-
-    async signInWithGithub(): Promise<void> {
-        this.externalApiAuthMessage = resetMessage();
-        this.normalAuthMessage = resetMessage();
-        this.spinning = true;
-
-        try {
-            await this.$store.dispatch('user/signInWithGithub');
-            this.toHome();
-        } catch (err) {
-            if (isFirebaseExternalApiAuthError(err)) {
-                this.spinning = false;
-                this.externalApiAuthMessage = this.mappingMessage(err);
-            }
-        }
-    }
-
-    async signInWithGoogle(): Promise<void> {
-        this.externalApiAuthMessage = resetMessage();
-        this.normalAuthMessage = resetMessage();
-        this.spinning = true;
-
-        try {
-            await this.$store.dispatch('user/signInWithGoogle');
-            this.toHome();
-        } catch (err) {
-            if (isFirebaseExternalApiAuthError(err)) {
-                this.spinning = false;
-                this.externalApiAuthMessage = this.mappingMessage(err);
-            }
-        }
-    }
-
-    handleSubmit(e: Event): void {
-        e.preventDefault();
-        this.externalApiAuthMessage = resetMessage();
-        this.normalAuthMessage = resetMessage();
-
-        this.form.validateFields(async (err, values: FormFields) => {
-            if (!err) {
-                this.spinning = true;
-                try {
-                    await this.$store.dispatch(
-                        'user/signInWithMailAddressAndPassword',
-                        values
-                    );
-                    this.toHome();
-                } catch (err) {
-                    if ('config' in err) {
-                        this.normalAuthMessage = {
-                            isShow: true,
-                            text: `Error (${err.message})`,
-                            description: `Access URL: ${err.config.url}`,
-                            type: 'error'
-                        };
-                    }
-                    if (isFirebaseAuthError(err)) {
-                        this.normalAuthMessage = {
-                            isShow: true,
-                            text: `Error (${err.code})`,
-                            description: err.message,
-                            type: 'error'
-                        };
-                    }
-                    this.spinning = false;
-                    this.form.resetFields();
-                }
-            }
-        });
+    @Emit('set-loading')
+    setLoading(spinning: boolean) {
+        this.spinning = spinning;
     }
 }
 </script>
@@ -257,34 +49,7 @@ export default class SignIn extends Vue {
     width: 30vw;
     margin: auto;
 }
-#components-form-normal-login .login-form {
-    max-width: 300px;
-}
-#components-form-normal-login .login-form-forgot {
+.login-form-forgot {
     float: right;
-}
-#components-form-normal-login .login-form-button {
-    width: 100%;
-}
-.external-api-login-button {
-    margin-top: 2%;
-    margin-bottom: 2%;
-    color: white;
-    height: 6vh;
-    width: 100%;
-}
-#github_login_button {
-    background-color: black;
-}
-#google_login_button {
-    background-color: blue;
-}
-.external-api-login-message {
-    margin-top: 2%;
-    margin-bottom: 2%;
-}
-.normal-login-message {
-    margin-top: 2%;
-    margin-bottom: 4%;
 }
 </style>
