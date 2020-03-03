@@ -63,27 +63,61 @@
                         {
                             rules: [
                                 {
-                                    required: true
+                                    required: true,
+                                    message: 'Clothes item is required'
                                 }
                             ]
                         }
                     ]"
                     style="width: 100%;"
                 >
-                    <a-empty v-if="!coordinateCheckboxGroupItems.length" />
+                    <a-empty v-if="!checkboxGroupItems.length" />
                     <a-row v-else>
                         <a-col :span="30">
                             <a-checkbox
-                                v-for="(item,
-                                i) in coordinateCheckboxGroupItems"
+                                v-for="(item, i) in checkboxGroupItems"
                                 :key="i"
                                 :value="item.key"
                                 @change="() => onRemoveItemKey(item.key)"
                             >
-                                <img
-                                    class="selected-item-image"
-                                    :src="item.imageLink"
-                                />
+                                <a-popover title="Clothes item">
+                                    <template slot="content">
+                                        <div>
+                                            Brand ... {{ item.brandName }}
+                                        </div>
+                                        <div>Shop ... {{ item.shopName }}</div>
+                                        <div>
+                                            Price ...
+                                            {{ item.price.toLocaleString() }}
+                                        </div>
+                                        <div>
+                                            Genre ...
+                                            <a-tag
+                                                v-for="(genre,
+                                                index) in item.genres"
+                                                :key="index"
+                                                :color="genre.color"
+                                            >
+                                                {{ genre.name }}
+                                            </a-tag>
+                                        </div>
+                                        <div>
+                                            Buy date ... {{ item.buyDate }}
+                                        </div>
+                                        <div>
+                                            <a-rate
+                                                :defaultValue="
+                                                    item.satisfaction
+                                                "
+                                                disabled
+                                            />
+                                        </div>
+                                    </template>
+                                    <img
+                                        class="selected-item-image"
+                                        :src="item.imageLink"
+                                    />
+                                </a-popover>
                             </a-checkbox>
                         </a-col>
                     </a-row>
@@ -92,7 +126,7 @@
 
             <a-table
                 class="select-item-table"
-                :dataSource="coordinateTableItems"
+                :dataSource="tableItems"
                 :columns="columns"
                 :scroll="{ x: 1200, y: 500 }"
                 :pagination="{ pageSize: 50 }"
@@ -239,14 +273,14 @@ export default class CoordinateForm extends Vue {
         this.form = this.$form.createForm(this);
     }
 
-    get coordinateTableItems() {
+    get tableItems() {
         return this.dataSource.filter(
             coordinateItem =>
                 this.selectedRowKeys.indexOf(coordinateItem.key) === -1
         );
     }
 
-    get coordinateCheckboxGroupItems() {
+    get checkboxGroupItems() {
         return this.dataSource.filter(
             coordinateItem =>
                 this.selectedRowKeys.indexOf(coordinateItem.key) !== -1
@@ -352,8 +386,9 @@ export default class CoordinateForm extends Vue {
 }
 
 .selected-item-image {
-    height: 140px;
-    width: 110px;
+    height: 180px;
+    width: 150px;
+    margin-bottom: 20px;
 }
 
 .select-item-table {
