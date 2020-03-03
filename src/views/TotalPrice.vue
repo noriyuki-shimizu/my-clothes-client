@@ -46,7 +46,7 @@ export default class TotalPrice extends Vue {
 
     message = resetMessage();
 
-    async beforeCreate() {
+    async created() {
         await this.$store
             .dispatch('genre/fetchTotalPricePerGenres')
             .catch(this.onError);
