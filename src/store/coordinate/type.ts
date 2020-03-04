@@ -14,7 +14,7 @@ export interface CoordinateItem {
 }
 
 export interface Coordinate {
-    id?: number;
+    id: number;
     season: string;
     imageId: number;
     imageLink: string;
@@ -39,7 +39,7 @@ export interface IMutations extends IModuleRootMutations {
     onCoordinateStateChange: Coordinate[];
     onAddCoordinate: Coordinate;
     onUpdateTargetCoordinate: Coordinate;
-    onDeleteCoordinate: number;
+    onDeleteCoordinate: Coordinate['id'];
     onAssistCoordinateItemStateChange: CoordinateItem[];
 }
 export interface IRootMutations {
@@ -51,24 +51,28 @@ export interface IRootMutations {
     'coordinate/onAssistCoordinateItemStateChange': IMutations['onAssistCoordinateItemStateChange'];
 }
 
+type AddValue = {
+    coordinate: {
+        season: Coordinate['season'];
+        clothingIds: CoordinateItem['id'][];
+    };
+    imageFile: File | null;
+};
+
+type UpdateValue = {
+    id: Coordinate['id'];
+    coordinate: Pick<Coordinate, 'season' | 'imageId' | 'imageLink'> & {
+        clothingIds: CoordinateItem['id'][];
+    };
+    imageFile: File | null;
+};
+
 export interface IActions {
     fetchCoordinates: void;
     fetchCoordinateItems: void;
-    onAddCoordinate: {
-        coordinate: {
-            season: Coordinate['season'];
-            clothingIds: CoordinateItem['id'][];
-        };
-        imageFile: File | null;
-    };
-    onUpdateCoordinate: {
-        id: Coordinate['id'];
-        coordinate: Pick<Coordinate, 'season' | 'imageId' | 'imageLink'> & {
-            clothingIds: CoordinateItem['id'][];
-        };
-        imageFile: File | null;
-    };
-    onDeleteCoordinate: number;
+    onAddCoordinate: AddValue;
+    onUpdateCoordinate: UpdateValue;
+    onDeleteCoordinate: Coordinate['id'];
 }
 export interface IRootActions {
     'coordinate/fetchCoordinates': IActions['fetchCoordinates'];

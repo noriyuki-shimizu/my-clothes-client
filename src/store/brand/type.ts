@@ -1,11 +1,11 @@
 import { IModuleRootMutations } from '@/store/type';
 
 export interface Brand {
-    id?: number;
+    id: number;
     name: string;
-    link?: string;
-    imageId?: number;
-    imageLink?: string;
+    link: string | null;
+    imageId: number | null;
+    imageLink: string | null;
     country: string;
     isDeleted: boolean;
 }
@@ -33,26 +33,23 @@ export interface IRootMutations {
     'brand/onUpdateTargetBrand': IMutations['onUpdateTargetBrand'];
 }
 
+type AddValue = {
+    brand: Pick<Brand, 'name' | 'link' | 'country'>;
+    imageFile: File | null;
+};
+
+type UpdateValue = {
+    id: Brand['id'];
+    brand: Pick<Brand, 'name' | 'link' | 'country' | 'imageId' | 'imageLink'>;
+    imageFile: File | null;
+};
+
 export interface IActions {
     fetchBrands: void;
-    onAddBrand: {
-        brand: Pick<Brand, 'name' | 'link' | 'country'>;
-        imageFile: File | null;
-    };
-    onUpdateBrand: {
-        id: Brand['id'];
-        brand: Pick<
-            Brand,
-            'name' | 'link' | 'country' | 'imageId' | 'imageLink'
-        >;
-        imageFile: File | null;
-    };
-    onDeleteBrand: {
-        id: Brand['id'];
-    };
-    onRestorationBrand: {
-        id: Brand['id'];
-    };
+    onAddBrand: AddValue;
+    onUpdateBrand: UpdateValue;
+    onDeleteBrand: Brand['id'];
+    onRestorationBrand: Brand['id'];
 }
 export interface IRootActions {
     'brand/fetchBrands': IActions['fetchBrands'];

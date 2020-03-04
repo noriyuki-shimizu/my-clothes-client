@@ -97,7 +97,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
 
         ctx.commit('onUpdateTargetGenre', response.data.genre);
     },
-    async onDeleteGenre(ctx, { id }) {
+    async onDeleteGenre(ctx, id) {
         await api.delete(`/${ctx.rootGetters['user/id']}/genres/${id}`);
         ctx.commit('onDeleteGenre', id);
     }

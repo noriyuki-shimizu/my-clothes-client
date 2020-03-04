@@ -171,7 +171,7 @@ export default class ShopTable extends Vue {
         this.loading = true;
 
         await this.$store
-            .dispatch('shop/onDeleteShop', { id })
+            .dispatch('shop/onDeleteShop', id)
             .catch((err: any) => this.$emit('onError', err));
 
         this.loading = false;
@@ -182,7 +182,7 @@ export default class ShopTable extends Vue {
         this.loading = true;
 
         await this.$store
-            .dispatch('shop/onRestorationShop', { id })
+            .dispatch('shop/onRestorationShop', id)
             .catch((err: any) => this.$emit('onError', err));
 
         this.loading = false;

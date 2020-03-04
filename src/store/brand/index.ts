@@ -72,13 +72,13 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
 
         ctx.commit('onUpdateTargetBrand', response.data.brand);
     },
-    async onDeleteBrand(ctx, { id }) {
+    async onDeleteBrand(ctx, id) {
         const response = await api.delete(
             `/${ctx.rootGetters['user/id']}/brands/${id}`
         );
         ctx.commit('onUpdateTargetBrand', response.data.brand);
     },
-    async onRestorationBrand(ctx, { id }) {
+    async onRestorationBrand(ctx, id) {
         const response = await api.put(
             `/${ctx.rootGetters['user/id']}/brands/${id}/restoration`
         );

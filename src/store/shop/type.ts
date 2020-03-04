@@ -1,12 +1,12 @@
 import { IModuleRootMutations } from '@/store/type';
 
 export interface Shop {
-    id?: number;
+    id: number;
     name: string;
-    link?: string;
+    link: string | null;
     stationName: string;
-    imageId?: number;
-    imageLink?: string;
+    imageId: number | null;
+    imageLink: string | null;
     address: string;
     businessHours: string;
     tel: string;
@@ -36,15 +36,18 @@ export interface IRootMutations {
     'shop/onUpdateTargetShop': IMutations['onUpdateTargetShop'];
 }
 
-export interface IActions {
-    fetchShops: void;
-    onAddShop: Pick<
+type AddValue = {
+    shop: Pick<
         Shop,
         'name' | 'link' | 'stationName' | 'address' | 'businessHours' | 'tel'
-    > & { imageFile: File | null };
-    onUpdateShop: Pick<
+    >;
+    imageFile: File | null;
+};
+
+type UpdateValue = {
+    id: Shop['id'];
+    shop: Pick<
         Shop,
-        | 'id'
         | 'name'
         | 'link'
         | 'stationName'
@@ -53,13 +56,16 @@ export interface IActions {
         | 'address'
         | 'businessHours'
         | 'tel'
-    > & { imageFile: File | null };
-    onDeleteShop: {
-        id: Shop['id'];
-    };
-    onRestorationShop: {
-        id: Shop['id'];
-    };
+    >;
+    imageFile: File | null;
+};
+
+export interface IActions {
+    fetchShops: void;
+    onAddShop: AddValue;
+    onUpdateShop: UpdateValue;
+    onDeleteShop: Shop['id'];
+    onRestorationShop: Shop['id'];
 }
 export interface IRootActions {
     'shop/fetchShops': IActions['fetchShops'];

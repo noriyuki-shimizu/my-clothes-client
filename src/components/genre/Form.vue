@@ -101,7 +101,7 @@ export default class GenreForm extends Vue {
         const { id } = this.$route.params;
         await this.$store.dispatch(
             'genre/fetchCanSelectedColorsStateChange',
-            id ? Number(id) : ''
+            id ? Number(id) : null
         );
     }
 

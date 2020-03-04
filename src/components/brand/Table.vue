@@ -167,7 +167,7 @@ export default class BrandTable extends Vue {
     async onDelete(id: number) {
         this.loading = true;
         await this.$store
-            .dispatch('brand/onDeleteBrand', { id })
+            .dispatch('brand/onDeleteBrand', id)
             .catch((err: any) => this.$emit('onError', err));
         this.loading = false;
     }
@@ -175,7 +175,7 @@ export default class BrandTable extends Vue {
     async onRestoration(id: number) {
         this.loading = true;
         await this.$store
-            .dispatch('brand/onRestorationBrand', { id })
+            .dispatch('brand/onRestorationBrand', id)
             .catch((err: any) => this.$emit('onError', err));
         this.loading = false;
     }

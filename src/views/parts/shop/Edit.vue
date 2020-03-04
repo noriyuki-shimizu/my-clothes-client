@@ -68,11 +68,15 @@ export default class Edit extends Vue {
             return;
         }
 
+        const { shop, imageFile } = values;
         await this.$store.dispatch('shop/onUpdateShop', {
-            imageId: target.imageId,
-            imageLink: target.imageLink,
             id: target.id,
-            ...values
+            shop: {
+                ...shop,
+                imageId: target.imageId,
+                imageLink: target.imageLink
+            },
+            imageFile
         });
 
         this.$success({

@@ -21,12 +21,14 @@ export type FormFields = {
 };
 
 export type ConvertedFormFields = {
-    name: string;
-    link: string;
-    stationName: string;
-    address: string;
-    businessHours: string;
-    tel: string;
+    shop: {
+        name: string;
+        link: string;
+        stationName: string;
+        address: string;
+        businessHours: string;
+        tel: string;
+    };
     imageFile: File | null;
 };
 
@@ -49,12 +51,7 @@ export const convertFormFields = (values: FormFields): ConvertedFormFields => {
     )}~${endBusinessHours.format(timeFormat)}`;
 
     return {
-        name,
-        link,
-        stationName,
-        address,
-        tel,
-        imageFile,
-        businessHours
+        shop: { name, link, stationName, address, tel, businessHours },
+        imageFile
     };
 };

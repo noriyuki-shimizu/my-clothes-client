@@ -1,7 +1,7 @@
 import { IModuleRootMutations } from '@/store/type';
 
 export interface Genre {
-    id?: number;
+    id: number;
     name: string;
     color: string;
 }
@@ -34,8 +34,10 @@ export interface IMutations extends IModuleRootMutations {
     onTotalPricePerGenreStateChange: TotalPricePerGenre[];
     onCanSelectedColorsStateChange: string[];
     onAddGenre: Genre;
-    onUpdateTargetGenre: Genre;
-    onDeleteGenre: number;
+    onUpdateTargetGenre: Genre & {
+        id: Genre['id'];
+    };
+    onDeleteGenre: Genre['id'];
 }
 export interface IRootMutations {
     'genre/allStateReset': IMutations['allStateReset'];
@@ -50,7 +52,7 @@ export interface IRootMutations {
 export interface IActions {
     fetchGenres: void;
     fetchTotalPricePerGenres: void;
-    fetchCanSelectedColorsStateChange: number | '';
+    fetchCanSelectedColorsStateChange: Genre['id'] | null;
     onAddGenre: {
         genre: Pick<Genre, 'name' | 'color'>;
     };
@@ -58,9 +60,7 @@ export interface IActions {
         id: Genre['id'];
         genre: Pick<Genre, 'name' | 'color'>;
     };
-    onDeleteGenre: {
-        id: Genre['id'];
-    };
+    onDeleteGenre: Genre['id'];
 }
 export interface IRootActions {
     'genre/fetchGenres': IActions['fetchGenres'];

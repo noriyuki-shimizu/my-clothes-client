@@ -40,7 +40,10 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
     },
     async onAddShop(
         ctx,
-        { name, link, stationName, address, businessHours, tel, imageFile }
+        {
+            shop: { name, link, stationName, address, businessHours, tel },
+            imageFile
+        }
     ) {
         const imageLink = imageFile
             ? await firebaseImageStorage.upload(imageFile, 'shop/')
@@ -65,14 +68,16 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         ctx,
         {
             id,
-            name,
-            link,
-            stationName,
-            imageId,
-            imageLink,
-            address,
-            businessHours,
-            tel,
+            shop: {
+                name,
+                link,
+                stationName,
+                imageId,
+                imageLink,
+                address,
+                businessHours,
+                tel
+            },
             imageFile
         }
     ) {
@@ -100,13 +105,13 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
 
         ctx.commit('onUpdateTargetShop', response.data.shop);
     },
-    async onDeleteShop(ctx, { id }) {
+    async onDeleteShop(ctx, id) {
         const response = await api.delete(
             `/${ctx.rootGetters['user/id']}/shops/${id}`
         );
         ctx.commit('onUpdateTargetShop', response.data.shop);
     },
-    async onRestorationShop(ctx, { id }) {
+    async onRestorationShop(ctx, id) {
         const response = await api.put(
             `/${ctx.rootGetters['user/id']}/shops/${id}/restoration`
         );

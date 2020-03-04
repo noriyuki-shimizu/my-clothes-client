@@ -91,13 +91,15 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
     async onAddClothes(
         ctx,
         {
-            brandId,
-            shopId,
-            genreIds,
-            price,
-            buyDate,
-            comment,
-            satisfaction,
+            clothes: {
+                brandId,
+                shopId,
+                genreIds,
+                price,
+                buyDate,
+                comment,
+                satisfaction
+            },
             imageFile
         }
     ) {
@@ -125,15 +127,17 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         ctx,
         {
             id,
-            imageId,
-            imageLink,
-            brandId,
-            shopId,
-            genreIds,
-            price,
-            buyDate,
-            comment,
-            satisfaction,
+            clothes: {
+                imageId,
+                imageLink,
+                brandId,
+                shopId,
+                genreIds,
+                price,
+                buyDate,
+                comment,
+                satisfaction
+            },
             imageFile
         }
     ) {
@@ -162,13 +166,13 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
 
         ctx.commit('onUpdateTargetClothes', response.data.clothes);
     },
-    async onDeleteClothes(ctx, { id }) {
+    async onDeleteClothes(ctx, id) {
         const response = await api.delete(
             `/${ctx.rootGetters['user/id']}/clothes/${id}`
         );
         ctx.commit('onUpdateTargetClothes', response.data.clothes);
     },
-    async onRestorationClothes(ctx, { id }) {
+    async onRestorationClothes(ctx, id) {
         const response = await api.put(
             `/${ctx.rootGetters['user/id']}/clothes/${id}/restoration`
         );

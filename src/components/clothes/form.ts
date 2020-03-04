@@ -21,13 +21,15 @@ export type FormFields = {
 };
 
 export type ConvertedFormFields = {
-    brandId: number;
-    shopId: number;
-    genreIds: number[];
-    price: number;
-    buyDate: string;
-    comment: string;
-    satisfaction: number;
+    clothes: {
+        brandId: number;
+        shopId: number;
+        genreIds: number[];
+        price: number;
+        buyDate: string;
+        comment: string;
+        satisfaction: number;
+    };
     imageFile: File | null;
 };
 
@@ -48,13 +50,15 @@ export const convertFormFields = (values: FormFields): ConvertedFormFields => {
     const formatBuyDate = buyDate.format(dateFormat);
 
     return {
-        imageFile,
-        brandId,
-        shopId,
-        genreIds,
-        price,
-        buyDate: formatBuyDate,
-        comment,
-        satisfaction
+        clothes: {
+            brandId,
+            shopId,
+            genreIds,
+            price,
+            buyDate: formatBuyDate,
+            comment,
+            satisfaction
+        },
+        imageFile
     };
 };

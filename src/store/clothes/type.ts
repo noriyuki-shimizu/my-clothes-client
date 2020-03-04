@@ -4,33 +4,23 @@ import { Genre } from '../genre/type';
 import { IModuleRootMutations } from '@/store/type';
 
 export interface Clothes {
-    id?: number;
-    imageId?: number;
-    imageLink?: string;
+    id: number;
+    imageId: number | null;
+    imageLink: string | null;
     brand: Pick<Brand, 'id' | 'name'>;
     shop: Pick<Shop, 'id' | 'name'>;
     genres: Pick<Genre, 'id' | 'name' | 'color'>[];
     price: number;
     buyDate: string;
-    comment?: string;
-    satisfaction?: number;
+    comment: string | null;
+    satisfaction: number | null;
     isDeleted: boolean;
 }
-export interface AssistGenre {
-    id: number;
-    name: string;
-    color: string;
-}
+export interface AssistGenre extends Genre {}
 
-export interface AssistBrand {
-    id: number;
-    name: string;
-}
+export interface AssistBrand extends Pick<Brand, 'id' | 'name'> {}
 
-export interface AssistShop {
-    id: number;
-    name: string;
-}
+export interface AssistShop extends Pick<Shop, 'id' | 'name'> {}
 
 export interface State {
     clothes: Clothes[];
@@ -70,23 +60,19 @@ export interface IRootMutations {
     'clothes/onAssistShopStateChange': IMutations['onAssistShopStateChange'];
 }
 
-export interface IActions {
-    fetchClothes: void;
-    fetchAssistGenres: void;
-    fetchAssistBrands: void;
-    fetchAssistShops: void;
-    onAddClothes: Pick<
-        Clothes,
-        'price' | 'buyDate' | 'comment' | 'satisfaction'
-    > & {
-        brandId: number;
-        shopId: number;
-        genreIds: number[];
-        imageFile: File | null;
+type AddValue = {
+    clothes: Pick<Clothes, 'price' | 'buyDate' | 'comment' | 'satisfaction'> & {
+        brandId: Brand['id'];
+        shopId: Shop['id'];
+        genreIds: Genre['id'][];
     };
-    onUpdateClothes: Pick<
+    imageFile: File | null;
+};
+
+type UpdateValue = {
+    id: Clothes['id'];
+    clothes: Pick<
         Clothes,
-        | 'id'
         | 'imageId'
         | 'imageLink'
         | 'price'
@@ -94,17 +80,22 @@ export interface IActions {
         | 'comment'
         | 'satisfaction'
     > & {
-        brandId: number;
-        shopId: number;
-        genreIds: number[];
-        imageFile: File | null;
+        brandId: Brand['id'];
+        shopId: Shop['id'];
+        genreIds: Genre['id'][];
     };
-    onDeleteClothes: {
-        id: Clothes['id'];
-    };
-    onRestorationClothes: {
-        id: Clothes['id'];
-    };
+    imageFile: File | null;
+};
+
+export interface IActions {
+    fetchClothes: void;
+    fetchAssistGenres: void;
+    fetchAssistBrands: void;
+    fetchAssistShops: void;
+    onAddClothes: AddValue;
+    onUpdateClothes: UpdateValue;
+    onDeleteClothes: Clothes['id'];
+    onRestorationClothes: Clothes['id'];
 }
 export interface IRootActions {
     'clothes/fetchClothes': IActions['fetchClothes'];

@@ -164,7 +164,7 @@ export default class ClothesTable extends Vue {
         this.loading = true;
 
         await this.$store
-            .dispatch('clothes/onDeleteClothes', { id })
+            .dispatch('clothes/onDeleteClothes', id)
             .catch((err: any) => this.$emit('onError', err));
 
         this.loading = false;
@@ -175,7 +175,7 @@ export default class ClothesTable extends Vue {
         this.loading = true;
 
         await this.$store
-            .dispatch('clothes/onRestorationClothes', { id })
+            .dispatch('clothes/onRestorationClothes', id)
             .catch((err: any) => this.$emit('onError', err));
 
         this.loading = false;
