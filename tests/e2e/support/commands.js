@@ -23,3 +23,23 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+// login sample
+Cypress.Commands.add('login', () => {
+    cy.request({
+        method: 'POST',
+        url: 'http://localhost:8889/api/login',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: {
+            email: 'admin@datacatalog.com',
+            password: 'password'
+        }
+    }).then(response => {
+        window.localStorage.setItem(
+            'credential',
+            response.headers.authorization
+        );
+    });
+});
