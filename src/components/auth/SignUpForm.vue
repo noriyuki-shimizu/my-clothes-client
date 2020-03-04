@@ -99,7 +99,7 @@ import {
 import firebaseAuth, { isFirebaseAuthError } from '@/plugins/firebase/auth';
 import { AppMessage } from 'ant-design-vue/types/message';
 import { resetMessage } from '@/util/reset';
-import { HTMLElementEvent, FormFields } from './signUpForm';
+import { HTMLElementEvent, SignUpFormFields } from './type';
 
 @Component
 export default class SignUn extends Vue {
@@ -156,7 +156,7 @@ export default class SignUn extends Vue {
         e.preventDefault();
         this.$emit<AppMessage>('set-message', resetMessage());
 
-        this.form.validateFields(async (err, values: FormFields) => {
+        this.form.validateFields(async (err, values: SignUpFormFields) => {
             if (!err) {
                 this.$emit<boolean>('set-loading', true);
                 try {

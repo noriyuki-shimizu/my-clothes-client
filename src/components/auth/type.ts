@@ -1,4 +1,9 @@
-export type FormFields = {
+export type SignInFormFields = {
+    mailAddress: string;
+    password: string;
+};
+
+export type SignUpFormFields = {
     name: string;
     mailAddress: string;
     password: string;
