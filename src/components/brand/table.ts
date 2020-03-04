@@ -1,10 +1,5 @@
 import { Column } from 'ant-design-vue/types/table/column';
-import { Brand } from '@/store/brand/type';
-
-export type Record = Pick<Brand, 'name' | 'link' | 'imageLink' | 'country'> & {
-    key?: number;
-    deleted: string;
-};
+import { Record } from './type';
 
 export const columns: Partial<Column>[] = [
     {

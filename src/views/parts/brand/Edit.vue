@@ -20,7 +20,7 @@ import * as Vuex from 'vuex';
 import { AppMessage } from 'ant-design-vue/types/message';
 
 import BrandForm from '@/components/brand/Form.vue';
-import { FormFields } from '@/components/brand/form';
+import { FormFields } from '@/components/brand/type';
 import { resetMessage } from '@/util/reset';
 import { handleForbiddenError } from '@/components/errorHandle';
 

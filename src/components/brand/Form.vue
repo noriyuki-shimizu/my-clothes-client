@@ -110,7 +110,8 @@ import {
 } from 'ant-design-vue/types/upload';
 import * as Vuex from 'vuex';
 
-import { formItemLayout, FormFields } from '@/components/brand/form';
+import { formItemLayout } from '@/components/brand/form';
+import { FormFields } from '@/components/brand/type';
 import { Brand } from '@/store/brand/type';
 import { getBase64, isLt5M } from '@/util/file';
 import { Route } from 'vue-router';

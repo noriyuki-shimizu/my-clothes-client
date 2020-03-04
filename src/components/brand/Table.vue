@@ -120,7 +120,8 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 
-import { columns, Record } from '@/components/brand/table';
+import { columns } from '@/components/brand/table';
+import { Record } from '@/components/brand/type';
 
 @Component
 export default class BrandTable extends Vue {
