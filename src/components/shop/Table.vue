@@ -120,7 +120,8 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 
-import { columns, Record } from '@/components/shop/table';
+import { columns } from '@/components/shop/table';
+import { Record } from '@/components/shop/type';
 
 @Component
 export default class ShopTable extends Vue {

@@ -189,12 +189,8 @@ import { Route } from 'vue-router';
 import * as Vuex from 'vuex';
 import moment from 'moment';
 
-import {
-    formItemLayout,
-    FormFields,
-    convertFormFields,
-    ConvertedFormFields
-} from '@/components/shop/form';
+import { formItemLayout, convertFormFields } from '@/components/shop/form';
+import { FormFields, ConvertedFormFields } from '@/components/shop/type';
 import { Shop } from '@/store/shop/type';
 import { getBase64, isLt5M } from '@/util/file';
 import { timeFormat } from '@/util/date';

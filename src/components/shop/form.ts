@@ -1,35 +1,11 @@
 import { Form } from 'ant-design-vue/types/form/form';
-import { DoneUploadFileInfo } from 'ant-design-vue/types/upload';
-import { Moment } from 'moment';
 
 import { timeFormat } from '@/util/date';
+import { FormFields, ConvertedFormFields } from './type';
 
 export const formItemLayout: Readonly<ExPartial<Form>> = {
     labelCol: { span: 6 },
     wrapperCol: { span: 14 }
-};
-
-export type FormFields = {
-    name: string;
-    image: DoneUploadFileInfo;
-    link: string;
-    stationName: string;
-    address: string;
-    startBusinessHours: Moment;
-    endBusinessHours: Moment;
-    tel: string;
-};
-
-export type ConvertedFormFields = {
-    shop: {
-        name: string;
-        link: string;
-        stationName: string;
-        address: string;
-        businessHours: string;
-        tel: string;
-    };
-    imageFile: File | null;
 };
 
 export const convertFormFields = (values: FormFields): ConvertedFormFields => {

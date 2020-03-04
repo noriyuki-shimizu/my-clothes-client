@@ -34,7 +34,7 @@ import { AppMessage } from 'ant-design-vue/types/message';
 import * as Vuex from 'vuex';
 
 import ShopTable from '@/components/shop/Table.vue';
-import { Record } from '@/components/shop/table';
+import { Record } from '@/components/shop/type';
 import { resetMessage } from '@/util/reset';
 import { handleForbiddenError } from '../../../components/errorHandle';
 

@@ -21,7 +21,7 @@ import { DoneUploadFileInfo } from 'ant-design-vue/types/upload';
 import { AppMessage } from 'ant-design-vue/types/message';
 
 import ShopForm from '@/components/shop/Form.vue';
-import { ConvertedFormFields } from '@/components/shop/form';
+import { ConvertedFormFields } from '@/components/shop/type';
 import { resetMessage } from '@/util/reset';
 import { timeFormat } from '@/util/date';
 import { handleForbiddenError } from '@/components/errorHandle';
