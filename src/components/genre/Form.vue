@@ -81,7 +81,8 @@ import { Form } from 'ant-design-vue';
 import { WrappedFormUtils } from 'ant-design-vue/types/form/form';
 import * as Vuex from 'vuex';
 
-import { formItemLayout, FormFields } from '@/components/genre/form';
+import { formItemLayout } from '@/components/genre/form';
+import { FormFields } from '@/components/genre/type';
 import { Genre } from '@/store/genre/type';
 import { getBase64 } from '@/util/file';
 import { Route } from 'vue-router';

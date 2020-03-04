@@ -107,7 +107,8 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 
-import { columns, Record } from '@/components/genre/table';
+import { columns } from '@/components/genre/table';
+import { Record } from '@/components/genre/type';
 
 @Component
 export default class GenreTable extends Vue {

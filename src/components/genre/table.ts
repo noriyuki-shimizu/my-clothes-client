@@ -1,9 +1,6 @@
 import { Column } from 'ant-design-vue/types/table/column';
-import { Genre } from '@/store/genre/type';
 
-export type Record = Pick<Genre, 'name' | 'color'> & {
-    key?: number;
-};
+import { Record } from './type';
 
 export const columns: Partial<Column>[] = [
     {
