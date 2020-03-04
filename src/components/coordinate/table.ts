@@ -1,12 +1,7 @@
 import moment from 'moment';
 
-import { CoordinateItem } from '@/store/coordinate/type';
 import { AssistBrand, AssistShop, AssistGenre } from '@/store/clothes/type';
-
-export type Record = Omit<CoordinateItem, 'id' | 'price'> & {
-    key: number;
-    price: string;
-};
+import { Record } from './type';
 
 export const getColumns = (
     brands: AssistBrand[],

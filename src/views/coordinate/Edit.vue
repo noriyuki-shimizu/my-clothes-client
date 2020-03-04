@@ -26,7 +26,7 @@ import { AppMessage } from 'ant-design-vue/types/message';
 
 import CoordinateForm from '@/components/coordinate/Form.vue';
 import { resetMessage } from '@/util/reset';
-import { FormFields } from '@/components/coordinate/form';
+import { FormFields } from '@/components/coordinate/type';
 import { handleForbiddenError } from '@/components/errorHandle';
 
 @Component({

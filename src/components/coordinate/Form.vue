@@ -172,8 +172,9 @@ import {
 import ClothesDetail from '@/components/clothes/Detail.vue';
 import { Coordinate } from '@/store/coordinate/type';
 import { getBase64, isLt5M } from '@/util/file';
-import { FormFields, formItemLayout, Season } from './form';
-import { Record, getColumns } from './table';
+import { formItemLayout } from './form';
+import { getColumns } from './table';
+import { FormFields, Season, Record } from './type';
 
 @Component({
     components: {
