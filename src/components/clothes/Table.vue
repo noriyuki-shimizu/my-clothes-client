@@ -79,7 +79,8 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 
-import { getColumns, Record } from '@/components/clothes/table';
+import { getColumns } from '@/components/clothes/table';
+import { Record } from '@/components/clothes/type';
 
 @Component
 export default class ClothesTable extends Vue {

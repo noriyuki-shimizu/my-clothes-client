@@ -65,7 +65,7 @@ import * as Vuex from 'vuex';
 import { AppMessage } from 'ant-design-vue/types/message';
 
 import CoordinateList from '@/components/coordinate/List.vue';
-import CoordinateItemDrawer from '@/components/coordinate/item/Drawer.vue';
+import CoordinateItemDrawer from '@/components/clothes/Drawer.vue';
 import { CoordinateItem, Coordinate } from '@/store/coordinate/type';
 import { getSeason } from '@/util/date';
 import { resetMessage } from '@/util/reset';

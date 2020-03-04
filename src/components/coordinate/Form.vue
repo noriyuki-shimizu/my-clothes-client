@@ -82,36 +82,7 @@
                             >
                                 <a-popover title="Clothes item">
                                     <template slot="content">
-                                        <div>
-                                            Brand ... {{ item.brandName }}
-                                        </div>
-                                        <div>Shop ... {{ item.shopName }}</div>
-                                        <div>
-                                            Price ...
-                                            {{ item.price.toLocaleString() }}
-                                        </div>
-                                        <div>
-                                            Genre ...
-                                            <a-tag
-                                                v-for="(genre,
-                                                index) in item.genres"
-                                                :key="index"
-                                                :color="genre.color"
-                                            >
-                                                {{ genre.name }}
-                                            </a-tag>
-                                        </div>
-                                        <div>
-                                            Buy date ... {{ item.buyDate }}
-                                        </div>
-                                        <div>
-                                            <a-rate
-                                                :defaultValue="
-                                                    item.satisfaction
-                                                "
-                                                disabled
-                                            />
-                                        </div>
+                                        <clothes-detail :item="item" />
                                     </template>
                                     <img
                                         class="selected-item-image"
@@ -198,12 +169,17 @@ import {
     DoneUploadFileInfo
 } from 'ant-design-vue/types/upload';
 
+import ClothesDetail from '@/components/clothes/Detail.vue';
 import { Coordinate } from '@/store/coordinate/type';
 import { getBase64, isLt5M } from '@/util/file';
 import { FormFields, formItemLayout, Season } from './form';
 import { Record, getColumns } from './table';
 
-@Component
+@Component({
+    components: {
+        ClothesDetail
+    }
+})
 export default class CoordinateForm extends Vue {
     $store!: Vuex.ExStore;
 

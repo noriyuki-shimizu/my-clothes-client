@@ -1,22 +1,7 @@
 import { Column } from 'ant-design-vue/types/table/column';
 import moment from 'moment';
-import {
-    Clothes,
-    AssistBrand,
-    AssistShop,
-    AssistGenre
-} from '@/store/clothes/type';
-
-export type Record = Pick<
-    Clothes,
-    'imageLink' | 'genres' | 'buyDate' | 'comment' | 'satisfaction'
-> & {
-    key?: number;
-    brandName: string;
-    shopName: string;
-    price: string;
-    deleted: string;
-};
+import { AssistBrand, AssistShop, AssistGenre } from '@/store/clothes/type';
+import { Record } from '@/components/clothes/type';
 
 export const getColumns = (
     brands: AssistBrand[],

@@ -33,28 +33,7 @@
                         />
                         <a-card-meta>
                             <template slot="description">
-                                <div>Brand ... {{ item.brandName }}</div>
-                                <div>Shop ... {{ item.shopName }}</div>
-                                <div>
-                                    Price ... {{ item.price.toLocaleString() }}
-                                </div>
-                                <div>
-                                    Genre ...
-                                    <a-tag
-                                        v-for="(genre, index) in item.genres"
-                                        :key="index"
-                                        :color="genre.color"
-                                    >
-                                        {{ genre.name }}
-                                    </a-tag>
-                                </div>
-                                <div>Buy date ... {{ item.buyDate }}</div>
-                                <div>
-                                    <a-rate
-                                        :defaultValue="item.satisfaction"
-                                        disabled
-                                    />
-                                </div>
+                                <clothes-detail :item="item" />
                             </template>
                         </a-card-meta>
                     </a-card>
@@ -82,7 +61,13 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { CoordinateItem } from '@/store/coordinate/type';
 
-@Component
+import ClothesDetail from '@/components/clothes/Detail.vue';
+
+@Component({
+    components: {
+        ClothesDetail
+    }
+})
 export default class CoordinateItemDrawer extends Vue {
     @Prop({ type: Number })
     coordinateId?: number;

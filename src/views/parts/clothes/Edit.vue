@@ -20,7 +20,7 @@ import * as Vuex from 'vuex';
 import { AppMessage } from 'ant-design-vue/types/message';
 
 import ClothesForm from '@/components/clothes/Form.vue';
-import { ConvertedFormFields } from '@/components/clothes/form';
+import { ConvertedFormFields } from '@/components/clothes/type';
 import { resetMessage } from '@/util/reset';
 import { handleForbiddenError } from '@/components/errorHandle';
 

@@ -21,9 +21,9 @@ import { DoneUploadFileInfo } from 'ant-design-vue/types/upload';
 import { AppMessage } from 'ant-design-vue/types/message';
 
 import ClothesForm from '@/components/clothes/Form.vue';
-import { ConvertedFormFields } from '@/components/clothes/form';
 import { resetMessage } from '@/util/reset';
 import { handleForbiddenError } from '@/components/errorHandle';
+import { ConvertedFormFields } from '@/components/clothes/type';
 
 @Component({
     components: {
