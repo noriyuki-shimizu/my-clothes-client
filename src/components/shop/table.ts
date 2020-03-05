@@ -31,7 +31,8 @@ export const columns: Partial<Column>[] = [
         title: 'Link',
         dataIndex: 'link',
         key: 'link',
-        width: 250
+        width: 250,
+        scopedSlots: { customRender: 'link' }
     },
     {
         title: 'Station name',
@@ -53,11 +54,7 @@ export const columns: Partial<Column>[] = [
         title: 'Address',
         dataIndex: 'address',
         key: 'address',
-        scopedSlots: {
-            filterDropdown: 'filterDropdown',
-            filterIcon: 'filterIcon',
-            customRender: 'customRender'
-        },
+        scopedSlots: { customRender: 'address' },
         onFilter: (value: string, record: Record) =>
             record.address
                 .toString()

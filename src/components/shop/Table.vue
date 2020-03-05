@@ -56,6 +56,30 @@
             />
         </span>
 
+        <span slot="link" slot-scope="link">
+            <a-tooltip v-if="link" placement="topLeft">
+                <template slot="title">
+                    Go web site
+                </template>
+                <a v-if="link" :href="link" target="_blank">{{ link }}</a>
+            </a-tooltip>
+        </span>
+
+        <span slot="address" slot-scope="address">
+            <a-tooltip v-if="address" placement="topLeft">
+                <template slot="title">
+                    Show Google map
+                </template>
+                <a
+                    :href="
+                        `https://maps.google.co.jp/maps?q=${encodeURI(address)}`
+                    "
+                    target="_blank"
+                    >{{ address }}</a
+                >
+            </a-tooltip>
+        </span>
+
         <template slot="operation" slot-scope="record">
             <router-link :to="`/maintenance/shop/${record.key}`">
                 <a-icon type="edit" />
