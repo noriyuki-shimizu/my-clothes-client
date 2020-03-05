@@ -56,6 +56,15 @@
             />
         </span>
 
+        <span slot="link" slot-scope="link">
+            <a-tooltip v-if="link" placement="topLeft">
+                <template slot="title">
+                    Go web site
+                </template>
+                <a v-if="link" :href="link" target="_blank">{{ link }}</a>
+            </a-tooltip>
+        </span>
+
         <template slot="operation" slot-scope="record">
             <router-link :to="`/maintenance/brand/${record.key}`">
                 <a-icon type="edit" />

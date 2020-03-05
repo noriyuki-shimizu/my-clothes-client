@@ -29,7 +29,8 @@ export const columns: Partial<Column>[] = [
     {
         title: 'Link',
         dataIndex: 'link',
-        key: 'link'
+        key: 'link',
+        scopedSlots: { customRender: 'link' }
     },
     {
         title: 'Country',
