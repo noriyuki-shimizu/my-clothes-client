@@ -26,28 +26,6 @@
                 </div>
             </a-carousel>
         </div>
-        <a-divider orientation="left">Services information</a-divider>
-        <a-timeline>
-            <a-timeline-item color="green"
-                >Create a services site 2019-12-01</a-timeline-item
-            >
-            <a-timeline-item color="green"
-                >Create a services site ????-??-??</a-timeline-item
-            >
-            <a-timeline-item color="red">
-                <p>Solve initial network problems 1</p>
-                <p>Solve initial network problems 2</p>
-                <p>Solve initial network problems 3 ????-??-??</p>
-            </a-timeline-item>
-            <a-timeline-item>
-                <p>Technical testing 1</p>
-                <p>Technical testing 2</p>
-                <p>Technical testing 3 ????-??-??</p>
-            </a-timeline-item>
-            <a-timeline-item color="green"
-                >v1 will be completed 2020-12-01</a-timeline-item
-            >
-        </a-timeline>
     </div>
 </template>
 <script lang="ts">
