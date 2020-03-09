@@ -31,3 +31,6 @@ ant-types
 
 # sonarqube
 .scannerwork
+
+# firebase
+.firebase
