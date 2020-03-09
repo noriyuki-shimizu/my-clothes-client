@@ -2,7 +2,7 @@ import { Getters, Mutations, Actions } from 'vuex';
 import { State, IGetters, IMutations, IActions } from '@/store/coordinate/type';
 
 import api from '@/plugins/api';
-import firebaseImageStorage from '@/plugins/firebase/storage/image';
+import firebaseStorage from '@/plugins/firebase/storage';
 
 const state: State = {
     coordinates: [],
@@ -65,7 +65,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         const { season, clothingIds } = coordinate;
 
         const imageLink = imageFile
-            ? await firebaseImageStorage.upload(imageFile, 'coordinate/')
+            ? await firebaseStorage.image.upload(imageFile, 'coordinate/')
             : null;
 
         const response = await api.post(
@@ -82,11 +82,11 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
     async onUpdateCoordinate(ctx, { id, coordinate, imageFile }) {
         const { season, imageId, imageLink, clothingIds } = coordinate;
         if (imageLink && imageFile) {
-            await firebaseImageStorage.deleteImageByFullPath(imageLink);
+            await firebaseStorage.image.deleteImageByFullPath(imageLink);
         }
 
         const updateImageLink = imageFile
-            ? await firebaseImageStorage.upload(imageFile, 'coordinate/')
+            ? await firebaseStorage.image.upload(imageFile, 'coordinate/')
             : imageLink;
 
         const response = await api.put(

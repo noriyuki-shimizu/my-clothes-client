@@ -91,7 +91,7 @@ import {
 } from 'ant-design-vue/types/upload';
 
 import { getBase64, isLt5M } from '@/util/file';
-import { isFirebaseStorageError } from '@/plugins/firebase/auth';
+import { isFirebaseStorageError } from '@/plugins/firebase/storage';
 
 type FormFields = {
     displayName: string;
@@ -187,7 +187,7 @@ export default class AccountSetting extends Vue {
         });
         this.imageURL = user.photoURL || '';
 
-        this.$emit('onClose');
+        this.$emit('on-close');
     }
 
     handleSubmit(e: Event) {
@@ -206,7 +206,7 @@ export default class AccountSetting extends Vue {
                         iconFile
                     });
                     this.$message.success('Successfully updated account');
-                    this.$emit('onClose');
+                    this.$emit('on-close');
                 } catch (err) {
                     console.log(err);
                     if (isFirebaseStorageError(err)) {

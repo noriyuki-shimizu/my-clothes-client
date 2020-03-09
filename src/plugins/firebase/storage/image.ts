@@ -7,7 +7,9 @@ const getImageRef = (name: string, subFolder: string) => {
 
     const fileName = `${uuid()}_${name}`;
 
-    return storageRef.child(`images/${subFolder}${fileName}`);
+    return storageRef.child(
+        `${process.env.VUE_APP_FIREBASE_STORAGE_DIR}${subFolder}${fileName}`
+    );
 };
 
 const upload = async (

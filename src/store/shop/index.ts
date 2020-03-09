@@ -2,7 +2,7 @@ import { Getters, Mutations, Actions } from 'vuex';
 import { State, IGetters, IMutations, IActions } from '@/store/shop/type';
 
 import api from '@/plugins/api';
-import firebaseImageStorage from '@/plugins/firebase/storage/image';
+import firebaseStorage from '@/plugins/firebase/storage';
 
 const state: State = {
     shops: []
@@ -46,7 +46,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         }
     ) {
         const imageLink = imageFile
-            ? await firebaseImageStorage.upload(imageFile, 'shop/')
+            ? await firebaseStorage.image.upload(imageFile, 'shop/')
             : null;
 
         const response = await api.post(
@@ -82,11 +82,11 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         }
     ) {
         if (imageLink && imageFile) {
-            await firebaseImageStorage.deleteImageByFullPath(imageLink);
+            await firebaseStorage.image.deleteImageByFullPath(imageLink);
         }
 
         const updateImageLink = imageFile
-            ? await firebaseImageStorage.upload(imageFile, 'shop/')
+            ? await firebaseStorage.image.upload(imageFile, 'shop/')
             : imageLink;
 
         const response = await api.put(

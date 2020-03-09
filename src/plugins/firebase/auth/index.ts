@@ -1,5 +1,4 @@
 import firebase, {
-    FirebaseStorageError,
     FirebaseExternalApiAuthError,
     FirebaseAuthError,
     ProfileState
@@ -14,12 +13,6 @@ export const isFirebaseExternalApiAuthError = (
 
 export const isFirebaseAuthError = (err: any): err is FirebaseAuthError => {
     return 'code' in err && 'message' in err;
-};
-
-export const isFirebaseStorageError = (
-    err: any
-): err is FirebaseStorageError => {
-    return 'name' in err && err.name.indexOf('storage/') === 0;
 };
 
 export default {
