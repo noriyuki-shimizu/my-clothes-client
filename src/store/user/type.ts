@@ -27,7 +27,7 @@ export interface IRootGetters {
 
 export interface IMutations extends IModuleRootMutations {
     onIdStateChanged: number | null;
-    onCurrentUserStateChanged: State['user'] | null;
+    onCurrentUserStateChanged: firebase.User | null;
     onAccessTokenStateChanged: string;
 }
 export interface IRootMutations {
@@ -38,7 +38,6 @@ export interface IRootMutations {
 }
 
 export interface IActions {
-    onSaveUserStateFromExternal: firebase.User | null;
     signInWithGithub: void;
     signInWithGoogle: void;
     signInWithMailAddressAndPassword: {
@@ -53,7 +52,6 @@ export interface IActions {
     };
 }
 export interface IRootActions {
-    'user/onSaveUserStateFromExternal': IActions['onSaveUserStateFromExternal'];
     'user/signInWithGithub': IActions['signInWithGithub'];
     'user/signInWithGoogle': IActions['signInWithGoogle'];
     'user/signInWithMailAddressAndPassword': IActions['signInWithMailAddressAndPassword'];
