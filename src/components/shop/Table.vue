@@ -158,13 +158,13 @@ export default class ShopTable extends Vue {
     columns = columns;
 
     async created() {
-        this.$emit('onResetMessage');
+        this.$emit('on-reset-message');
 
         if (!this.shops.length) {
             this.loading = true;
             await this.$store
                 .dispatch('shop/fetchShops')
-                .catch((err: any) => this.$emit('onError', err));
+                .catch((err: any) => this.$emit('on-error', err));
             this.loading = false;
         }
     }
@@ -192,23 +192,23 @@ export default class ShopTable extends Vue {
     }
 
     async onDelete(id: number) {
-        this.$emit('onResetMessage');
+        this.$emit('on-reset-message');
         this.loading = true;
 
         await this.$store
             .dispatch('shop/onDeleteShop', id)
-            .catch((err: any) => this.$emit('onError', err));
+            .catch((err: any) => this.$emit('on-error', err));
 
         this.loading = false;
     }
 
     async onRestoration(id: number) {
-        this.$emit('onResetMessage');
+        this.$emit('on-reset-message');
         this.loading = true;
 
         await this.$store
             .dispatch('shop/onRestorationShop', id)
-            .catch((err: any) => this.$emit('onError', err));
+            .catch((err: any) => this.$emit('on-error', err));
 
         this.loading = false;
     }

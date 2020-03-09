@@ -22,8 +22,8 @@
         />
 
         <shop-table
-            v-on:onError="onError"
-            v-on:onResetMessage="onResetMessage"
+            v-on:on-error="onError"
+            v-on:on-reset-message="onResetMessage"
         />
     </div>
 </template>
@@ -48,12 +48,12 @@ export default class Shop extends Vue {
 
     message: AppMessage = resetMessage();
 
-    @Emit('onResetMessage')
+    @Emit('on-reset-message')
     onResetMessage() {
         this.message = resetMessage();
     }
 
-    @Emit('onError')
+    @Emit('on-error')
     onError(err: any) {
         handleForbiddenError(err, this.$store, this.$router);
 

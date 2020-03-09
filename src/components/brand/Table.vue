@@ -147,7 +147,7 @@ export default class BrandTable extends Vue {
             this.loading = true;
             await this.$store
                 .dispatch('brand/fetchBrands')
-                .catch((err: any) => this.$emit('onError', err));
+                .catch((err: any) => this.$emit('on-error', err));
             this.loading = false;
         }
     }
@@ -178,7 +178,7 @@ export default class BrandTable extends Vue {
         this.loading = true;
         await this.$store
             .dispatch('brand/onDeleteBrand', id)
-            .catch((err: any) => this.$emit('onError', err));
+            .catch((err: any) => this.$emit('on-error', err));
         this.loading = false;
     }
 
@@ -186,7 +186,7 @@ export default class BrandTable extends Vue {
         this.loading = true;
         await this.$store
             .dispatch('brand/onRestorationBrand', id)
-            .catch((err: any) => this.$emit('onError', err));
+            .catch((err: any) => this.$emit('on-error', err));
         this.loading = false;
     }
 }

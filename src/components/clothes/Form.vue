@@ -223,17 +223,8 @@ export default class ClothesForm extends Vue {
 
     imageLoading = false;
 
-    async beforeCreate() {
-        await Promise.all([
-            this.$store.dispatch('clothes/fetchAssistGenres'),
-            this.$store.dispatch('clothes/fetchAssistBrands'),
-            this.$store.dispatch('clothes/fetchAssistShops')
-        ]).catch(err => {
-            this.$emit('onError', err);
-        });
-    }
-
     created() {
+        this.fetchAssists();
         if (this.target) {
             const { target } = this;
 
@@ -282,6 +273,16 @@ export default class ClothesForm extends Vue {
         return this.$store.getters['clothes/assistShops'];
     }
 
+    async fetchAssists() {
+        await Promise.all([
+            this.$store.dispatch('clothes/fetchAssistGenres'),
+            this.$store.dispatch('clothes/fetchAssistBrands'),
+            this.$store.dispatch('clothes/fetchAssistShops')
+        ]).catch(err => {
+            this.$emit('on-error', err);
+        });
+    }
+
     beforeUpload(file: File) {
         const isBeforeCheck = isLt5M(file);
         if (!isBeforeCheck) {
@@ -309,7 +310,7 @@ export default class ClothesForm extends Vue {
         this.form.validateFields(async (err, values: FormFields) => {
             if (!err) {
                 this.$emit<ConvertedFormFields>(
-                    'onSubmit',
+                    'on-submit',
                     convertFormFields(values)
                 );
             }

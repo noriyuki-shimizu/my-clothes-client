@@ -10,7 +10,7 @@
             :type="message.type"
             showIcon
         />
-        <brand-form v-on:onSubmit="onSubmit" />
+        <brand-form v-on:on-submit="onSubmit" />
     </div>
 </template>
 
@@ -69,7 +69,7 @@ export default class New extends Vue {
         });
     }
 
-    @Emit('onSubmit')
+    @Emit('on-submit')
     async onSubmit(values: FormFields) {
         this.$confirm({
             title: 'Are you sure you want to register?',

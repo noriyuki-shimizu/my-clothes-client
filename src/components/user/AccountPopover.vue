@@ -24,7 +24,7 @@
                 <a-avatar v-else shape="square" size="large" icon="user" />
             </a-badge>
         </a-popover>
-        <account-setting :visible="visible" v-on:onClose="onClose" />
+        <account-setting :visible="visible" v-on:on-close="onClose" />
     </div>
 </template>
 
@@ -52,7 +52,7 @@ export default class AccountPopover extends Vue {
         this.visible = true;
     }
 
-    @Emit('onClose')
+    @Emit('on-close')
     onClose() {
         this.visible = false;
     }

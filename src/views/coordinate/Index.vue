@@ -28,24 +28,28 @@
                 <coordinate-list
                     :tabKey="tabKey"
                     v-on:show-coordinate="showCoordinate"
+                    v-on:on-error="onError"
                 />
             </a-tab-pane>
             <a-tab-pane tab="Summer" key="summer">
                 <coordinate-list
                     :tabKey="tabKey"
                     v-on:show-coordinate="showCoordinate"
+                    v-on:on-error="onError"
                 />
             </a-tab-pane>
             <a-tab-pane tab="Autumn" key="autumn">
                 <coordinate-list
                     :tabKey="tabKey"
                     v-on:show-coordinate="showCoordinate"
+                    v-on:on-error="onError"
                 />
             </a-tab-pane>
             <a-tab-pane tab="Winter" key="winter">
                 <coordinate-list
                     :tabKey="tabKey"
                     v-on:show-coordinate="showCoordinate"
+                    v-on:on-error="onError"
                 />
             </a-tab-pane>
         </a-tabs>
@@ -110,6 +114,7 @@ export default class Index extends Vue {
         this.visible = true;
     }
 
+    @Emit('on-error')
     onError(err: any) {
         this.message = resetMessage();
         handleForbiddenError(err, this.$store, this.$router);

@@ -22,7 +22,7 @@
             showIcon
         />
 
-        <genre-table v-on:onError="onError" />
+        <genre-table v-on:on-error="onError" />
     </div>
 </template>
 
@@ -49,7 +49,7 @@ export default class Genre extends Vue {
         return this.$store.getters['genre/genres'].length;
     }
 
-    @Emit('onError')
+    @Emit('on-error')
     onError(err: any) {
         this.message = resetMessage();
         handleForbiddenError(err, this.$store, this.$router);

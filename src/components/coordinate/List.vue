@@ -79,7 +79,7 @@ export default class CoordinateList extends Vue {
         await this.$store
             .dispatch('coordinate/onDeleteCoordinate', id)
             .catch((err: any) => {
-                console.log(err);
+                this.$emit('on-error', err);
             });
         this.$message.success('Delete complate 👏');
     }

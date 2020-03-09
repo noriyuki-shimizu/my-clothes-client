@@ -10,7 +10,7 @@
             :type="message.type"
             showIcon
         />
-        <shop-form :target="target" v-on:onSubmit="onSubmit" />
+        <shop-form :target="target" v-on:on-submit="onSubmit" />
     </div>
 </template>
 
@@ -87,7 +87,7 @@ export default class Edit extends Vue {
         });
     }
 
-    @Emit('onSubmit')
+    @Emit('on-submit')
     async onSubmit(values: ConvertedFormFields) {
         this.$confirm({
             title: 'Are you sure you want to register?',

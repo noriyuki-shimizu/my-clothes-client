@@ -291,7 +291,7 @@ export default class ShopForm extends Vue {
         this.form.validateFields(async (err, values: FormFields) => {
             if (!err) {
                 this.$emit<ConvertedFormFields>(
-                    'onSubmit',
+                    'on-submit',
                     convertFormFields(values)
                 );
             }

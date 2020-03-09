@@ -125,7 +125,7 @@ export default class GenreTable extends Vue {
             this.loading = true;
             await this.$store
                 .dispatch('genre/fetchGenres')
-                .catch((err: any) => this.$emit('onError', err));
+                .catch((err: any) => this.$emit('on-error', err));
             this.loading = false;
         }
     }
@@ -156,7 +156,7 @@ export default class GenreTable extends Vue {
 
         await this.$store
             .dispatch('genre/onDeleteGenre', id)
-            .catch((err: any) => this.$emit('onError', err));
+            .catch((err: any) => this.$emit('on-error', err));
 
         this.loading = false;
     }

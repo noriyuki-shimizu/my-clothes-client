@@ -97,20 +97,20 @@ export default class ClothesTable extends Vue {
     );
 
     async created() {
-        this.$emit('onResetMessage');
+        this.$emit('on-reset-message');
         this.loading = true;
 
         if (!this.clothes.length) {
             await this.$store
                 .dispatch('clothes/fetchClothes')
-                .catch((err: any) => this.$emit('onError', err));
+                .catch((err: any) => this.$emit('on-error', err));
         }
         await Promise.all([
             this.$store.dispatch('clothes/fetchAssistGenres'),
             this.$store.dispatch('clothes/fetchAssistBrands'),
             this.$store.dispatch('clothes/fetchAssistShops')
         ]).catch(err => {
-            this.$emit('onError', err);
+            this.$emit('on-error', err);
         });
 
         this.loading = false;
@@ -161,23 +161,23 @@ export default class ClothesTable extends Vue {
     }
 
     async onDelete(id: number) {
-        this.$emit('onResetMessage');
+        this.$emit('on-reset-message');
         this.loading = true;
 
         await this.$store
             .dispatch('clothes/onDeleteClothes', id)
-            .catch((err: any) => this.$emit('onError', err));
+            .catch((err: any) => this.$emit('on-error', err));
 
         this.loading = false;
     }
 
     async onRestoration(id: number) {
-        this.$emit('onResetMessage');
+        this.$emit('on-reset-message');
         this.loading = true;
 
         await this.$store
             .dispatch('clothes/onRestorationClothes', id)
-            .catch((err: any) => this.$emit('onError', err));
+            .catch((err: any) => this.$emit('on-error', err));
 
         this.loading = false;
     }

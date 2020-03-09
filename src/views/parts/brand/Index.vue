@@ -21,7 +21,7 @@
             showIcon
         />
 
-        <brand-table v-on:onError="onError" />
+        <brand-table v-on:on-error="onError" />
     </div>
 </template>
 
@@ -44,7 +44,7 @@ export default class Brand extends Vue {
 
     message: AppMessage = resetMessage();
 
-    @Emit('onError')
+    @Emit('on-error')
     onError(err: any) {
         this.message = resetMessage();
         handleForbiddenError(err, this.$store, this.$router);

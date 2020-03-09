@@ -10,7 +10,7 @@
             :type="message.type"
             showIcon
         />
-        <clothes-form v-on:onSubmit="onSubmit" v-on:onError="onError" />
+        <clothes-form v-on:on-submit="onSubmit" v-on:on-error="onError" />
     </div>
 </template>
 
@@ -46,7 +46,7 @@ export default class New extends Vue {
         });
     }
 
-    @Emit('onError')
+    @Emit('on-error')
     onError(err: any) {
         this.message = resetMessage();
         handleForbiddenError(err, this.$store, this.$router);
@@ -61,7 +61,7 @@ export default class New extends Vue {
         };
     }
 
-    @Emit('onSubmit')
+    @Emit('on-submit')
     async onSubmit(values: ConvertedFormFields) {
         this.$confirm({
             title: 'Are you sure you want to register?',

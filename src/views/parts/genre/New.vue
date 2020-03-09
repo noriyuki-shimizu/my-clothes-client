@@ -10,7 +10,7 @@
             :type="message.type"
             showIcon
         />
-        <genre-form v-on:onSubmit="onSubmit" />
+        <genre-form v-on:on-submit="onSubmit" v-on:on-error="onError" />
     </div>
 </template>
 
@@ -34,6 +34,7 @@ export default class New extends Vue {
 
     $store!: Vuex.ExStore;
 
+    @Emit('on-error')
     onError(err: any) {
         this.message = resetMessage();
         handleForbiddenError(err, this.$store, this.$router);
@@ -66,7 +67,7 @@ export default class New extends Vue {
         });
     }
 
-    @Emit('onSubmit')
+    @Emit('on-submit')
     async onSubmit(values: FormFields) {
         this.$confirm({
             title: 'Are you sure you want to register?',

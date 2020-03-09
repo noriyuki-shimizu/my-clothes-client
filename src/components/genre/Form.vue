@@ -98,15 +98,8 @@ export default class GenreForm extends Vue {
 
     formItemLayout = formItemLayout;
 
-    async beforeCreate() {
-        const { id } = this.$route.params;
-        await this.$store.dispatch(
-            'genre/fetchCanSelectedColorsStateChange',
-            id ? Number(id) : null
-        );
-    }
-
     created() {
+        this.fetchCanSelectedColorsStateChange();
         if (this.target) {
             const { target } = this;
             this.form = this.$form.createForm(this, {
@@ -134,6 +127,16 @@ export default class GenreForm extends Vue {
         return this.$store.getters['genre/canSelectedColors'];
     }
 
+    async fetchCanSelectedColorsStateChange() {
+        const { id } = this.$route.params;
+        await this.$store
+            .dispatch(
+                'genre/fetchCanSelectedColorsStateChange',
+                id ? Number(id) : null
+            )
+            .catch((err: any) => this.$emit('on-error', err));
+    }
+
     nameValidator(_: any, value: string, cb: Function) {
         const { id } = this.$route.params;
 
@@ -148,7 +151,7 @@ export default class GenreForm extends Vue {
         e.preventDefault();
         this.form.validateFields(async (err, values: FormFields) => {
             if (!err) {
-                this.$emit<FormFields>('onSubmit', values);
+                this.$emit<FormFields>('on-submit', values);
             }
         });
     }
