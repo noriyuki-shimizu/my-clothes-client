@@ -39,8 +39,13 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         ctx.commit('onBrandsStateChange', data.brands);
     },
     async onAddBrand(ctx, { brand, imageFile }) {
+        const currentUser = ctx.rootGetters['user/currentUser'] as AppUser;
         const imageLink = imageFile
-            ? await firebaseStorage.image.upload(imageFile, 'brand/')
+            ? await firebaseStorage.image.upload(
+                  imageFile,
+                  currentUser.uid,
+                  'brand'
+              )
             : null;
 
         const response = await api.post(
@@ -58,8 +63,13 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
             await firebaseStorage.image.deleteImageByFullPath(brand.imageLink);
         }
 
+        const currentUser = ctx.rootGetters['user/currentUser'] as AppUser;
         const imageLink = imageFile
-            ? await firebaseStorage.image.upload(imageFile, 'brand/')
+            ? await firebaseStorage.image.upload(
+                  imageFile,
+                  currentUser.uid,
+                  'brand/'
+              )
             : brand.imageLink;
 
         const response = await api.put(

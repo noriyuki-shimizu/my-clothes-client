@@ -3,6 +3,7 @@ import { State, IGetters, IMutations, IActions } from '@/store/shop/type';
 
 import api from '@/plugins/api';
 import firebaseStorage from '@/plugins/firebase/storage';
+import { AppUser } from '@/store/user/type';
 
 const state: State = {
     shops: []
@@ -45,8 +46,13 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
             imageFile
         }
     ) {
+        const currentUser = ctx.rootGetters['user/currentUser'] as AppUser;
         const imageLink = imageFile
-            ? await firebaseStorage.image.upload(imageFile, 'shop/')
+            ? await firebaseStorage.image.upload(
+                  imageFile,
+                  currentUser.uid,
+                  'shop'
+              )
             : null;
 
         const response = await api.post(
@@ -85,8 +91,13 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
             await firebaseStorage.image.deleteImageByFullPath(imageLink);
         }
 
+        const currentUser = ctx.rootGetters['user/currentUser'] as AppUser;
         const updateImageLink = imageFile
-            ? await firebaseStorage.image.upload(imageFile, 'shop/')
+            ? await firebaseStorage.image.upload(
+                  imageFile,
+                  currentUser.uid,
+                  'shop'
+              )
             : imageLink;
 
         const response = await api.put(

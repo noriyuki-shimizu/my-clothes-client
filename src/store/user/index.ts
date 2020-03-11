@@ -96,7 +96,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         }
 
         const photoURL = iconFile
-            ? await firebaseStorage.image.upload(iconFile, 'user/')
+            ? await firebaseStorage.image.upload(iconFile, user.uid, 'me')
             : user.photoURL;
 
         const updatedUser = await firebaseAuth.updateProfile({

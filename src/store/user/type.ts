@@ -1,6 +1,6 @@
 import { IModuleRootMutations } from '@/store/type';
 
-interface AppUser {
+export interface AppUser {
     uid: string;
     displayName: string | null;
     email: string | null;
