@@ -1,9 +1,18 @@
 service firebase.storage {
   match /b/{bucket}/o {
-    match /images/{imageId} {
+    match /users/{userId}/{allPaths=**} {
       // Only allow uploads of any image file that's less than 5MB
       allow write: if request.resource.size < 5 * 1024 * 1024
-                   && request.resource.contentType.matches('image/.*');
+                   && request.resource.contentType.matches('image/.*')
+                   && request.auth != null;
+      allow read;
+      allow delete;
+    }
+    match /dev/users/{userId}/{allPaths=**} {
+      // Only allow uploads of any image file that's less than 5MB
+      allow write: if request.resource.size < 5 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*')
+                   && request.auth != null;
       allow read;
       allow delete;
     }
