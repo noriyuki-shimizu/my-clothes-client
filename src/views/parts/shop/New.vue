@@ -21,10 +21,10 @@ import { DoneUploadFileInfo } from 'ant-design-vue/types/upload';
 import { AppMessage } from 'ant-design-vue/types/message';
 
 import ShopForm from '@/components/shop/Form.vue';
-import { ConvertedFormFields } from '@/components/shop/type';
 import { resetMessage } from '@/util/reset';
 import { timeFormat } from '@/util/date';
 import { handleForbiddenError } from '@/components/errorHandle';
+import { FormFields } from '@/components/shop/type';
 
 @Component({
     components: {
@@ -50,7 +50,7 @@ export default class New extends Vue {
         };
     }
 
-    async onRegister(values: ConvertedFormFields) {
+    async onRegister(values: FormFields) {
         await this.$store.dispatch('shop/onAddShop', {
             ...values
         });
@@ -64,7 +64,7 @@ export default class New extends Vue {
     }
 
     @Emit('on-submit')
-    async onSubmit(values: ConvertedFormFields) {
+    async onSubmit(values: FormFields) {
         this.$confirm({
             title: 'Are you sure you want to register?',
             content: 'The entered information is registered.',

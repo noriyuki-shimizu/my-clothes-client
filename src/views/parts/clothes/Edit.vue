@@ -24,7 +24,7 @@ import * as Vuex from 'vuex';
 import { AppMessage } from 'ant-design-vue/types/message';
 
 import ClothesForm from '@/components/clothes/Form.vue';
-import { ConvertedFormFields } from '@/components/clothes/type';
+import { FormFields } from '@/components/clothes/type';
 import { resetMessage } from '@/util/reset';
 import { handleForbiddenError } from '@/components/errorHandle';
 
@@ -51,22 +51,16 @@ export default class Edit extends Vue {
         );
     }
 
-    async onRegister(values: ConvertedFormFields) {
+    async onRegister(values: FormFields) {
         const target = this.target;
         if (!target) {
             this.$router.push({ name: 'clothes' });
             return;
         }
 
-        const { clothes, imageFile } = values;
         await this.$store.dispatch('clothes/onUpdateClothes', {
             id: target.id,
-            clothes: {
-                ...clothes,
-                imageId: target.imageId,
-                imageLink: target.imageLink
-            },
-            imageFile
+            ...values
         });
 
         this.$success({
@@ -93,7 +87,7 @@ export default class Edit extends Vue {
     }
 
     @Emit('on-submit')
-    async onSubmit(values: ConvertedFormFields) {
+    async onSubmit(values: FormFields) {
         this.$confirm({
             title: 'Are you sure you want to register?',
             content: 'The entered information is registered.',

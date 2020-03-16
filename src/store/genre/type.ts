@@ -1,4 +1,5 @@
 import { IModuleRootMutations } from '@/store/type';
+import { FormFields } from '@/components/genre/type';
 
 export interface Genre {
     id: number;
@@ -30,36 +31,29 @@ export interface IRootGetters {
 }
 
 export interface IMutations extends IModuleRootMutations {
-    onGenresStateChange: Genre[];
-    onTotalPricePerGenreStateChange: TotalPricePerGenre[];
-    onCanSelectedColorsStateChange: string[];
-    onAddGenre: Genre;
-    onUpdateTargetGenre: Genre & {
-        id: Genre['id'];
-    };
-    onDeleteGenre: Genre['id'];
+    genresStateChange: Genre[];
+    totalPricePerGenreStateChange: TotalPricePerGenre[];
+    canSelectedColorsStateChange: string[];
+    addGenre: Genre;
+    updateTargetGenre: FormFields & Pick<Genre, 'id'>;
+    deleteGenre: Genre['id'];
 }
 export interface IRootMutations {
     'genre/allStateReset': IMutations['allStateReset'];
-    'genre/onGenresStateChange': IMutations['onGenresStateChange'];
-    'genre/onTotalPricePerGenreStateChange': IMutations['onTotalPricePerGenreStateChange'];
-    'genre/onCanSelectedColorsStateChange': IMutations['onCanSelectedColorsStateChange'];
-    'genre/onAddGenre': IMutations['onAddGenre'];
-    'genre/onUpdateTargetGenre': IMutations['onUpdateTargetGenre'];
-    'genre/onDeleteGenre': IMutations['onDeleteGenre'];
+    'genre/genresStateChange': IMutations['genresStateChange'];
+    'genre/totalPricePerGenreStateChange': IMutations['totalPricePerGenreStateChange'];
+    'genre/canSelectedColorsStateChange': IMutations['canSelectedColorsStateChange'];
+    'genre/addGenre': IMutations['addGenre'];
+    'genre/updateTargetGenre': IMutations['updateTargetGenre'];
+    'genre/deleteGenre': IMutations['deleteGenre'];
 }
 
 export interface IActions {
     fetchGenres: void;
     fetchTotalPricePerGenres: void;
     fetchCanSelectedColorsStateChange: Genre['id'] | null;
-    onAddGenre: {
-        genre: Pick<Genre, 'name' | 'color'>;
-    };
-    onUpdateGenre: {
-        id: Genre['id'];
-        genre: Pick<Genre, 'name' | 'color'>;
-    };
+    onAddGenre: FormFields;
+    onUpdateGenre: FormFields & Pick<Genre, 'id'>;
     onDeleteGenre: Genre['id'];
 }
 export interface IRootActions {

@@ -1,5 +1,6 @@
 import { Genre } from '../genre/type';
 import { IModuleRootMutations } from '@/store/type';
+import { FormFields } from '@/components/coordinate/type';
 
 export interface CoordinateItem {
     id: number;
@@ -36,42 +37,27 @@ export interface IRootGetters {
 }
 
 export interface IMutations extends IModuleRootMutations {
-    onCoordinateStateChange: Coordinate[];
-    onAddCoordinate: Coordinate;
-    onUpdateTargetCoordinate: Coordinate;
-    onDeleteCoordinate: Coordinate['id'];
-    onAssistCoordinateItemStateChange: CoordinateItem[];
+    coordinateStateChange: Coordinate[];
+    addCoordinate: Coordinate;
+    updateCoordinate: Omit<FormFields, 'image'> &
+        Pick<Coordinate, 'id' | 'imageLink'>;
+    deleteCoordinate: Coordinate['id'];
+    assistCoordinateItemStateChange: CoordinateItem[];
 }
 export interface IRootMutations {
     'coordinate/allStateReset': IMutations['allStateReset'];
-    'coordinate/onCoordinateStateChange': IMutations['onCoordinateStateChange'];
-    'coordinate/onAddCoordinate': IMutations['onAddCoordinate'];
-    'coordinate/onUpdateTargetCoordinate': IMutations['onUpdateTargetCoordinate'];
-    'coordinate/onDeleteCoordinate': IMutations['onDeleteCoordinate'];
-    'coordinate/onAssistCoordinateItemStateChange': IMutations['onAssistCoordinateItemStateChange'];
+    'coordinate/coordinateStateChange': IMutations['coordinateStateChange'];
+    'coordinate/addCoordinate': IMutations['addCoordinate'];
+    'coordinate/updateCoordinate': IMutations['updateCoordinate'];
+    'coordinate/deleteCoordinate': IMutations['deleteCoordinate'];
+    'coordinate/assistCoordinateItemStateChange': IMutations['assistCoordinateItemStateChange'];
 }
-
-type AddValue = {
-    coordinate: {
-        season: Coordinate['season'];
-        clothingIds: CoordinateItem['id'][];
-    };
-    imageFile: File | null;
-};
-
-type UpdateValue = {
-    id: Coordinate['id'];
-    coordinate: Pick<Coordinate, 'season' | 'imageId' | 'imageLink'> & {
-        clothingIds: CoordinateItem['id'][];
-    };
-    imageFile: File | null;
-};
 
 export interface IActions {
     fetchCoordinates: void;
     fetchCoordinateItems: void;
-    onAddCoordinate: AddValue;
-    onUpdateCoordinate: UpdateValue;
+    onAddCoordinate: FormFields;
+    onUpdateCoordinate: FormFields & Pick<Coordinate, 'id'>;
     onDeleteCoordinate: Coordinate['id'];
 }
 export interface IRootActions {

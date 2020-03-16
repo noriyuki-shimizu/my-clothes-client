@@ -26,15 +26,15 @@ export interface IRootGetters {
 }
 
 export interface IMutations extends IModuleRootMutations {
-    onIdStateChanged: number | null;
-    onCurrentUserStateChanged: firebase.User | null;
-    onAccessTokenStateChanged: string;
+    idStateChanged: number | null;
+    currentUserStateChanged: firebase.User | null;
+    accessTokenStateChanged: string;
 }
 export interface IRootMutations {
     'user/allStateReset': IMutations['allStateReset'];
-    'user/onIdStateChange': IMutations['onIdStateChanged'];
-    'user/onCurrentUserStateChanged': IMutations['onCurrentUserStateChanged'];
-    'user/onAccessTokenStateChanged': IMutations['onAccessTokenStateChanged'];
+    'user/idStateChanged': IMutations['idStateChanged'];
+    'user/currentUserStateChanged': IMutations['currentUserStateChanged'];
+    'user/accessTokenStateChanged': IMutations['accessTokenStateChanged'];
 }
 
 export interface IActions {

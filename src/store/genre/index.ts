@@ -1,6 +1,12 @@
 import { Getters, Mutations, Actions } from 'vuex';
 
-import { State, IGetters, IMutations, IActions } from '@/store/genre/type';
+import {
+    State,
+    IGetters,
+    IMutations,
+    IActions,
+    Genre
+} from '@/store/genre/type';
 import api from '@/plugins/api';
 
 const state: State = {
@@ -27,24 +33,32 @@ const mutations: Mutations<State, IMutations> = {
         state.totalPricePerGenres = [];
         state.canSelectedColors = [];
     },
-    onGenresStateChange(state, payload) {
+    genresStateChange(state, payload) {
         state.genres = payload;
     },
-    onTotalPricePerGenreStateChange(state, payload) {
+    totalPricePerGenreStateChange(state, payload) {
         state.totalPricePerGenres = payload;
     },
-    onCanSelectedColorsStateChange(state, payload) {
+    canSelectedColorsStateChange(state, payload) {
         state.canSelectedColors = payload;
     },
-    onAddGenre(state, payload) {
+    addGenre(state, payload) {
         state.genres.push(payload);
     },
-    onUpdateTargetGenre(state, payload) {
-        state.genres = state.genres.map(genre =>
-            genre.id === payload.id ? payload : genre
-        );
+    updateTargetGenre(state, payload) {
+        const { genres } = state;
+        const replaceIndex = genres.map(genre => genre.id).indexOf(payload.id);
+
+        const updateValue = {
+            ...genres[replaceIndex],
+            name: payload.name,
+            color: payload.color
+        };
+
+        genres.splice(replaceIndex, 1, updateValue);
+        state.genres = genres;
     },
-    onDeleteGenre(state, payload) {
+    deleteGenre(state, payload) {
         state.genres = state.genres.filter(genre => genre.id !== payload);
     }
 };
@@ -54,7 +68,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         const response = await api.get(`/${ctx.rootGetters['user/id']}/genres`);
         const { data } = response;
 
-        ctx.commit('onGenresStateChange', data.genres);
+        ctx.commit('genresStateChange', data.genres);
     },
     async fetchTotalPricePerGenres(ctx) {
         const response = await api.get(
@@ -62,7 +76,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         );
         const { data } = response;
 
-        ctx.commit('onTotalPricePerGenreStateChange', data.totalPricePerGenres);
+        ctx.commit('totalPricePerGenreStateChange', data.totalPricePerGenres);
     },
     async fetchCanSelectedColorsStateChange(ctx, id) {
         const response = await api.get(
@@ -75,31 +89,28 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         );
         const { data } = response;
 
-        ctx.commit('onCanSelectedColorsStateChange', data.canSelectedColors);
+        ctx.commit('canSelectedColorsStateChange', data.canSelectedColors);
     },
-    async onAddGenre(ctx, { genre }) {
-        const response = await api.post(
+    async onAddGenre(ctx, formFields) {
+        const response = await api.post<{ genre: Genre }>(
             `/${ctx.rootGetters['user/id']}/genres`,
-            {
-                ...genre
-            }
+            formFields
         );
 
-        ctx.commit('onAddGenre', response.data.genre);
+        ctx.commit('addGenre', response.data.genre);
     },
-    async onUpdateGenre(ctx, { id, genre }) {
-        const response = await api.put(
-            `/${ctx.rootGetters['user/id']}/genres/${id}`,
-            {
-                ...genre
-            }
-        );
+    async onUpdateGenre(ctx, updateValue) {
+        const { id, name, color } = updateValue;
+        await api.put(`/${ctx.rootGetters['user/id']}/genres/${id}`, {
+            name,
+            color
+        });
 
-        ctx.commit('onUpdateTargetGenre', response.data.genre);
+        ctx.commit('updateTargetGenre', updateValue);
     },
     async onDeleteGenre(ctx, id) {
         await api.delete(`/${ctx.rootGetters['user/id']}/genres/${id}`);
-        ctx.commit('onDeleteGenre', id);
+        ctx.commit('deleteGenre', id);
     }
 };
 

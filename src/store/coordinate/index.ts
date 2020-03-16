@@ -1,5 +1,12 @@
 import { Getters, Mutations, Actions } from 'vuex';
-import { State, IGetters, IMutations, IActions } from '@/store/coordinate/type';
+import {
+    State,
+    IGetters,
+    IMutations,
+    IActions,
+    Coordinate,
+    CoordinateItem
+} from '@/store/coordinate/type';
 
 import api from '@/plugins/api';
 import firebaseStorage from '@/plugins/firebase/storage';
@@ -24,23 +31,37 @@ const mutations: Mutations<State, IMutations> = {
         state.coordinates = [];
         state.coordinateItems = [];
     },
-    onCoordinateStateChange(state, payload) {
+    coordinateStateChange(state, payload) {
         state.coordinates = payload;
     },
-    onAddCoordinate(state, payload) {
+    addCoordinate(state, payload) {
         state.coordinates.push(payload);
     },
-    onUpdateTargetCoordinate(state, payload) {
-        state.coordinates = state.coordinates.map(c =>
-            c.id === payload.id ? payload : c
-        );
+    updateCoordinate(state, payload) {
+        const { coordinates } = state;
+        const replaceIndex = coordinates.map(c => c.id).indexOf(payload.id);
+
+        const updateValue: Coordinate = {
+            ...coordinates[replaceIndex],
+            usedCoordinates: payload.clothingIds.map(
+                clothingId =>
+                    state.coordinateItems.find(
+                        item => item.id === clothingId
+                    ) as CoordinateItem
+            ),
+            imageLink: payload.imageLink,
+            season: payload.season
+        };
+
+        coordinates.splice(replaceIndex, 1, updateValue);
+        state.coordinates = coordinates;
     },
-    onDeleteCoordinate(state, payload) {
+    deleteCoordinate(state, payload) {
         state.coordinates = state.coordinates.filter(
             coordinate => coordinate.id !== payload
         );
     },
-    onAssistCoordinateItemStateChange(state, payload) {
+    assistCoordinateItemStateChange(state, payload) {
         state.coordinateItems = payload;
     }
 };
@@ -52,7 +73,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         );
         const { data } = response;
 
-        ctx.commit('onCoordinateStateChange', data.coordinates);
+        ctx.commit('coordinateStateChange', data.coordinates);
     },
     async fetchCoordinateItems(ctx) {
         const response = await api.get(
@@ -60,10 +81,11 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         );
         const { data } = response;
 
-        ctx.commit('onAssistCoordinateItemStateChange', data.assistClothes);
+        ctx.commit('assistCoordinateItemStateChange', data.assistClothes);
     },
-    async onAddCoordinate(ctx, { coordinate, imageFile }) {
-        const { season, clothingIds } = coordinate;
+    async onAddCoordinate(ctx, formFields) {
+        const { season, clothingIds, image } = formFields;
+        const imageFile = image && image.file ? image.file.originFileObj : null;
 
         const currentUser = ctx.rootGetters['user/currentUser'] as AppUser;
         const imageLink = imageFile
@@ -74,7 +96,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
               )
             : null;
 
-        const response = await api.post(
+        const response = await api.post<{ coordinate: Coordinate }>(
             `/${ctx.rootGetters['user/id']}/coordinates`,
             {
                 season,
@@ -83,10 +105,15 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
             }
         );
 
-        ctx.commit('onAddCoordinate', response.data.coordinate);
+        ctx.commit('addCoordinate', response.data.coordinate);
     },
-    async onUpdateCoordinate(ctx, { id, coordinate, imageFile }) {
-        const { season, imageId, imageLink, clothingIds } = coordinate;
+    async onUpdateCoordinate(ctx, updateValue) {
+        const { id, season, clothingIds, image } = updateValue;
+        const imageFile = image && image.file ? image.file.originFileObj : null;
+
+        const { imageId, imageLink } = ctx.getters['coordinates'].find(
+            c => c.id === id
+        ) as Coordinate;
         if (imageLink && imageFile) {
             await firebaseStorage.image.deleteImageByFullPath(imageLink);
         }
@@ -100,21 +127,26 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
               )
             : imageLink;
 
-        const response = await api.put(
+        const updateItem = {
+            imageId,
+            imageLink: updateImageLink,
+            season,
+            clothingIds
+        };
+
+        await api.put(
             `/${ctx.rootGetters['user/id']}/coordinates/${id}`,
-            {
-                imageId,
-                imageLink: updateImageLink,
-                season,
-                clothingIds
-            }
+            updateItem
         );
 
-        ctx.commit('onUpdateTargetCoordinate', response.data.coordinate);
+        ctx.commit('updateCoordinate', {
+            id,
+            ...updateItem
+        });
     },
     async onDeleteCoordinate(ctx, id) {
         await api.delete(`/${ctx.rootGetters['user/id']}/coordinates/${id}`);
-        ctx.commit('onDeleteCoordinate', id);
+        ctx.commit('deleteCoordinate', id);
     }
 };
 

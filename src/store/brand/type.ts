@@ -1,4 +1,5 @@
 import { IModuleRootMutations } from '@/store/type';
+import { FormFields } from '@/components/brand/type';
 
 export interface Brand {
     id: number;
@@ -22,32 +23,25 @@ export interface IRootGetters {
 }
 
 export interface IMutations extends IModuleRootMutations {
-    onBrandsStateChange: Brand[];
-    onAddBrand: Brand;
-    onUpdateTargetBrand: Brand;
+    brandsStateChange: Brand[];
+    addBrand: Brand;
+    updateBrand: Omit<FormFields, 'image'> & Pick<Brand, 'id' | 'imageLink'>;
+    deleteBrand: Brand['id'];
+    restorationBrand: Brand['id'];
 }
 export interface IRootMutations {
     'brand/allStateReset': IMutations['allStateReset'];
-    'brand/onBrandsStateChange': IMutations['onBrandsStateChange'];
-    'brand/onAddBrand': IMutations['onAddBrand'];
-    'brand/onUpdateTargetBrand': IMutations['onUpdateTargetBrand'];
+    'brand/brandsStateChange': IMutations['brandsStateChange'];
+    'brand/addBrand': IMutations['addBrand'];
+    'brand/updateBrand': IMutations['updateBrand'];
+    'brand/deleteBrand': IMutations['deleteBrand'];
+    'brand/restorationBrand': IMutations['restorationBrand'];
 }
-
-type AddValue = {
-    brand: Pick<Brand, 'name' | 'link' | 'country'>;
-    imageFile: File | null;
-};
-
-type UpdateValue = {
-    id: Brand['id'];
-    brand: Pick<Brand, 'name' | 'link' | 'country' | 'imageId' | 'imageLink'>;
-    imageFile: File | null;
-};
 
 export interface IActions {
     fetchBrands: void;
-    onAddBrand: AddValue;
-    onUpdateBrand: UpdateValue;
+    onAddBrand: FormFields;
+    onUpdateBrand: FormFields & Pick<Brand, 'id'>;
     onDeleteBrand: Brand['id'];
     onRestorationBrand: Brand['id'];
 }

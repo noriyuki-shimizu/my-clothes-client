@@ -60,18 +60,9 @@ export default class Edit extends Vue {
             return;
         }
 
-        const { season, clothingIds, image } = values;
-        const imageFile = image && image.file ? image.file.originFileObj : null;
-
         await this.$store.dispatch('coordinate/onUpdateCoordinate', {
             id: target.id,
-            coordinate: {
-                season,
-                imageId: target.imageId,
-                imageLink: target.imageLink,
-                clothingIds
-            },
-            imageFile
+            ...values
         });
 
         this.$success({

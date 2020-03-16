@@ -1,8 +1,15 @@
 import { Getters, Mutations, Actions } from 'vuex';
-import { State, IGetters, IMutations, IActions } from '@/store/brand/type';
+import {
+    State,
+    IGetters,
+    IMutations,
+    IActions,
+    Brand
+} from '@/store/brand/type';
 
 import api from '@/plugins/api';
 import firebaseStorage from '@/plugins/firebase/storage';
+import { AppUser } from '@/store/user/type';
 
 const state: State = {
     brands: []
@@ -18,16 +25,38 @@ const mutations: Mutations<State, IMutations> = {
     allStateReset(state) {
         state.brands = [];
     },
-    onBrandsStateChange(state, payload) {
+    brandsStateChange(state, payload) {
         state.brands = payload;
     },
-    onAddBrand(state, payload) {
+    addBrand(state, payload) {
         state.brands.push(payload);
     },
-    onUpdateTargetBrand(state, payload) {
-        state.brands = state.brands.map(brand =>
-            brand.id === payload.id ? payload : brand
-        );
+    updateBrand(state, payload) {
+        const { brands } = state;
+        const replaceIndex = brands.map(brand => brand.id).indexOf(payload.id);
+
+        const updateValue = {
+            ...brands[replaceIndex],
+            name: payload.name,
+            link: payload.link,
+            country: payload.country,
+            imageLink: payload.imageLink
+        };
+
+        brands.splice(replaceIndex, 1, updateValue);
+        state.brands = brands;
+    },
+    deleteBrand(state, payload) {
+        const brand = state.brands.find(brand => brand.id === payload);
+        if (brand) {
+            brand.isDeleted = true;
+        }
+    },
+    restorationBrand(state, payload) {
+        const brand = state.brands.find(brand => brand.id === payload);
+        if (brand) {
+            brand.isDeleted = false;
+        }
     }
 };
 
@@ -36,9 +65,12 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         const response = await api.get(`/${ctx.rootGetters['user/id']}/brands`);
         const { data } = response;
 
-        ctx.commit('onBrandsStateChange', data.brands);
+        ctx.commit('brandsStateChange', data.brands);
     },
-    async onAddBrand(ctx, { brand, imageFile }) {
+    async onAddBrand(ctx, formFields) {
+        const { name, image, link, country } = formFields;
+        const imageFile = image && image.file ? image.file.originFileObj : null;
+
         const currentUser = ctx.rootGetters['user/currentUser'] as AppUser;
         const imageLink = imageFile
             ? await firebaseStorage.image.upload(
@@ -48,17 +80,23 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
               )
             : null;
 
-        const response = await api.post(
+        const response = await api.post<{ brand: Brand }>(
             `/${ctx.rootGetters['user/id']}/brands`,
             {
-                ...brand,
+                name,
+                link,
+                country,
                 imageLink
             }
         );
 
-        ctx.commit('onAddBrand', response.data.brand);
+        ctx.commit('addBrand', response.data.brand);
     },
-    async onUpdateBrand(ctx, { id, brand, imageFile }) {
+    async onUpdateBrand(ctx, updateValue) {
+        const { id, name, image, link, country } = updateValue;
+        const imageFile = image && image.file ? image.file.originFileObj : null;
+
+        const brand = ctx.getters['brands'].find(b => b.id === id) as Brand;
         if (brand.imageLink && imageFile) {
             await firebaseStorage.image.deleteImageByFullPath(brand.imageLink);
         }
@@ -72,27 +110,33 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
               )
             : brand.imageLink;
 
-        const response = await api.put(
+        const updateItem = {
+            name,
+            link,
+            imageId: brand.imageId,
+            imageLink,
+            country
+        };
+
+        await api.put(
             `/${ctx.rootGetters['user/id']}/brands/${id}`,
-            {
-                ...brand,
-                imageLink
-            }
+            updateItem
         );
 
-        ctx.commit('onUpdateTargetBrand', response.data.brand);
+        ctx.commit('updateBrand', {
+            id,
+            ...updateItem
+        });
     },
     async onDeleteBrand(ctx, id) {
-        const response = await api.delete(
-            `/${ctx.rootGetters['user/id']}/brands/${id}`
-        );
-        ctx.commit('onUpdateTargetBrand', response.data.brand);
+        await api.delete(`/${ctx.rootGetters['user/id']}/brands/${id}`);
+        ctx.commit('deleteBrand', id);
     },
     async onRestorationBrand(ctx, id) {
-        const response = await api.put(
+        await api.put(
             `/${ctx.rootGetters['user/id']}/brands/${id}/restoration`
         );
-        ctx.commit('onUpdateTargetBrand', response.data.brand);
+        ctx.commit('restorationBrand', id);
     }
 };
 

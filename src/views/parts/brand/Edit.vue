@@ -71,14 +71,7 @@ export default class Edit extends Vue {
 
         await this.$store.dispatch('brand/onUpdateBrand', {
             id: target.id,
-            brand: {
-                name,
-                link,
-                imageId: target.imageId,
-                imageLink: target.imageLink,
-                country
-            },
-            imageFile
+            ...values
         });
 
         this.$success({

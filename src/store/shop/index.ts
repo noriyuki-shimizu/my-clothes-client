@@ -1,9 +1,10 @@
 import { Getters, Mutations, Actions } from 'vuex';
-import { State, IGetters, IMutations, IActions } from '@/store/shop/type';
+import { State, IGetters, IMutations, IActions, Shop } from '@/store/shop/type';
 
 import api from '@/plugins/api';
 import firebaseStorage from '@/plugins/firebase/storage';
 import { AppUser } from '@/store/user/type';
+import { timeFormat } from '@/util/date';
 
 const state: State = {
     shops: []
@@ -19,16 +20,41 @@ const mutations: Mutations<State, IMutations> = {
     allStateReset(state) {
         state.shops = [];
     },
-    onShopsStateChange(state, payload) {
+    shopsStateChange(state, payload) {
         state.shops = payload;
     },
-    onAddShop(state, payload) {
+    addShop(state, payload) {
         state.shops.push(payload);
     },
-    onUpdateTargetShop(state, payload) {
-        state.shops = state.shops.map(shop =>
-            shop.id === payload.id ? payload : shop
-        );
+    updateShop(state, payload) {
+        const { shops } = state;
+        const replaceIndex = shops.map(shop => shop.id).indexOf(payload.id);
+
+        const updateValue = {
+            ...shops[replaceIndex],
+            imageLink: payload.imageLink,
+            businessHours: payload.businessHours,
+            name: payload.name,
+            link: payload.link,
+            stationName: payload.stationName,
+            address: payload.address,
+            tel: payload.tel
+        };
+
+        shops.splice(replaceIndex, 1, updateValue);
+        state.shops = shops;
+    },
+    deleteShop(state, payload) {
+        const shop = state.shops.find(shop => shop.id === payload);
+        if (shop) {
+            shop.isDeleted = true;
+        }
+    },
+    restorationShop(state, payload) {
+        const shop = state.shops.find(shop => shop.id === payload);
+        if (shop) {
+            shop.isDeleted = false;
+        }
     }
 };
 
@@ -37,15 +63,26 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         const response = await api.get(`/${ctx.rootGetters['user/id']}/shops`);
         const { data } = response;
 
-        ctx.commit('onShopsStateChange', data.shops);
+        ctx.commit('shopsStateChange', data.shops);
     },
-    async onAddShop(
-        ctx,
-        {
-            shop: { name, link, stationName, address, businessHours, tel },
-            imageFile
-        }
-    ) {
+    async onAddShop(ctx, formFields) {
+        const {
+            name,
+            image,
+            link,
+            stationName,
+            address,
+            startBusinessHours,
+            endBusinessHours,
+            tel
+        } = formFields;
+
+        const imageFile = image && image.file ? image.file.originFileObj : null;
+
+        const businessHours = `${startBusinessHours.format(
+            timeFormat
+        )}~${endBusinessHours.format(timeFormat)}`;
+
         const currentUser = ctx.rootGetters['user/currentUser'] as AppUser;
         const imageLink = imageFile
             ? await firebaseStorage.image.upload(
@@ -55,7 +92,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
               )
             : null;
 
-        const response = await api.post(
+        const response = await api.post<{ shop: Shop }>(
             `/${ctx.rootGetters['user/id']}/shops`,
             {
                 name,
@@ -68,27 +105,30 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
             }
         );
 
-        ctx.commit('onAddShop', response.data.shop);
+        ctx.commit('addShop', response.data.shop);
     },
-    async onUpdateShop(
-        ctx,
-        {
+    async onUpdateShop(ctx, updateValue) {
+        const {
             id,
-            shop: {
-                name,
-                link,
-                stationName,
-                imageId,
-                imageLink,
-                address,
-                businessHours,
-                tel
-            },
-            imageFile
-        }
-    ) {
-        if (imageLink && imageFile) {
-            await firebaseStorage.image.deleteImageByFullPath(imageLink);
+            name,
+            image,
+            link,
+            stationName,
+            address,
+            startBusinessHours,
+            endBusinessHours,
+            tel
+        } = updateValue;
+
+        const imageFile = image && image.file ? image.file.originFileObj : null;
+
+        const businessHours = `${startBusinessHours.format(
+            timeFormat
+        )}~${endBusinessHours.format(timeFormat)}`;
+
+        const shop = ctx.getters['shops'].find(s => s.id === id) as Shop;
+        if (shop.imageLink && imageFile) {
+            await firebaseStorage.image.deleteImageByFullPath(shop.imageLink);
         }
 
         const currentUser = ctx.rootGetters['user/currentUser'] as AppUser;
@@ -98,35 +138,33 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
                   currentUser.uid,
                   'shop'
               )
-            : imageLink;
+            : shop.imageLink;
 
-        const response = await api.put(
-            `/${ctx.rootGetters['user/id']}/shops/${id}`,
-            {
-                name,
-                link,
-                stationName,
-                imageId,
-                address,
-                businessHours,
-                tel,
-                imageLink: updateImageLink
-            }
-        );
+        const updateItem = {
+            name,
+            link,
+            stationName,
+            imageId: shop.imageId,
+            imageLink: updateImageLink,
+            address,
+            businessHours,
+            tel
+        };
 
-        ctx.commit('onUpdateTargetShop', response.data.shop);
+        await api.put(`/${ctx.rootGetters['user/id']}/shops/${id}`, updateItem);
+
+        ctx.commit('updateShop', {
+            id,
+            ...updateItem
+        });
     },
     async onDeleteShop(ctx, id) {
-        const response = await api.delete(
-            `/${ctx.rootGetters['user/id']}/shops/${id}`
-        );
-        ctx.commit('onUpdateTargetShop', response.data.shop);
+        await api.delete(`/${ctx.rootGetters['user/id']}/shops/${id}`);
+        ctx.commit('deleteShop', id);
     },
     async onRestorationShop(ctx, id) {
-        const response = await api.put(
-            `/${ctx.rootGetters['user/id']}/shops/${id}/restoration`
-        );
-        ctx.commit('onUpdateTargetShop', response.data.shop);
+        await api.put(`/${ctx.rootGetters['user/id']}/shops/${id}/restoration`);
+        ctx.commit('restorationShop', id);
     }
 };
 

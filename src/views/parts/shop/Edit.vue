@@ -22,9 +22,9 @@ import { DoneUploadFileInfo } from 'ant-design-vue/types/upload';
 import { AppMessage } from 'ant-design-vue/types/message';
 
 import ShopForm from '@/components/shop/Form.vue';
-import { ConvertedFormFields } from '@/components/shop/type';
 import { resetMessage } from '@/util/reset';
 import { handleForbiddenError } from '@/components/errorHandle';
+import { FormFields } from '@/components/shop/type';
 
 @Component({
     components: {
@@ -61,22 +61,16 @@ export default class Edit extends Vue {
         };
     }
 
-    async onRegister(values: ConvertedFormFields) {
+    async onRegister(values: FormFields) {
         const target = this.target;
         if (!target) {
             this.$router.push({ name: 'shop' });
             return;
         }
 
-        const { shop, imageFile } = values;
         await this.$store.dispatch('shop/onUpdateShop', {
             id: target.id,
-            shop: {
-                ...shop,
-                imageId: target.imageId,
-                imageLink: target.imageLink
-            },
-            imageFile
+            ...values
         });
 
         this.$success({
@@ -88,7 +82,7 @@ export default class Edit extends Vue {
     }
 
     @Emit('on-submit')
-    async onSubmit(values: ConvertedFormFields) {
+    async onSubmit(values: FormFields) {
         this.$confirm({
             title: 'Are you sure you want to register?',
             content: 'The entered information is registered.',

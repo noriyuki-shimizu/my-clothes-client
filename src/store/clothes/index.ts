@@ -1,9 +1,19 @@
 import { Getters, Mutations, Actions } from 'vuex';
-import { State, IGetters, IMutations, IActions } from '@/store/clothes/type';
+import {
+    State,
+    IGetters,
+    IMutations,
+    IActions,
+    Clothes,
+    AssistBrand,
+    AssistShop,
+    AssistGenre
+} from '@/store/clothes/type';
 
 import api from '@/plugins/api';
 import firebaseStorage from '@/plugins/firebase/storage';
 import { AppUser } from '@/store/user/type';
+import { dateFormat } from '@/util/date';
 
 const state: State = {
     clothes: [],
@@ -34,24 +44,59 @@ const mutations: Mutations<State, IMutations> = {
         state.assistShops = [];
         state.clothes = [];
     },
-    onClothesStateChange(state, payload) {
+    clothesStateChange(state, payload) {
         state.clothes = payload;
     },
-    onAddClothes(state, payload) {
+    addClothes(state, payload) {
         state.clothes.push(payload);
     },
-    onUpdateTargetClothes(state, payload) {
-        state.clothes = state.clothes.map(c =>
-            c.id === payload.id ? payload : c
-        );
+    updateClothes(state, payload) {
+        const { clothes } = state;
+        const replaceIndex = clothes.map(c => c.id).indexOf(payload.id);
+
+        const updateValue: Clothes = {
+            ...clothes[replaceIndex],
+            brand: state.assistBrands.find(
+                brand => brand.id === payload.brandId
+            ) as AssistBrand,
+            shop: state.assistShops.find(
+                shop => shop.id === payload.shopId
+            ) as AssistShop,
+            genres: payload.genreIds.map(
+                genreId =>
+                    state.assistGenres.find(
+                        genre => genre.id === genreId
+                    ) as AssistGenre
+            ),
+            imageLink: payload.imageLink,
+            buyDate: payload.buyDate,
+            price: payload.price,
+            comment: payload.comment,
+            satisfaction: payload.satisfaction
+        };
+
+        clothes.splice(replaceIndex, 1, updateValue);
+        state.clothes = clothes;
     },
-    onAssistGenreStateChange(state, payload) {
+    deleteClothes(state, payload) {
+        const c = state.clothes.find(c => c.id === payload);
+        if (c) {
+            c.isDeleted = true;
+        }
+    },
+    restorationClothes(state, payload) {
+        const c = state.clothes.find(c => c.id === payload);
+        if (c) {
+            c.isDeleted = true;
+        }
+    },
+    assistGenreStateChange(state, payload) {
         state.assistGenres = payload;
     },
-    onAssistBrandStateChange(state, payload) {
+    assistBrandStateChange(state, payload) {
         state.assistBrands = payload;
     },
-    onAssistShopStateChange(state, payload) {
+    assistShopStateChange(state, payload) {
         state.assistShops = payload;
     }
 };
@@ -63,7 +108,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         );
         const { data } = response;
 
-        ctx.commit('onClothesStateChange', data.clothes);
+        ctx.commit('clothesStateChange', data.clothes);
     },
     async fetchAssistGenres(ctx) {
         const response = await api.get(
@@ -71,7 +116,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         );
         const { data } = response;
 
-        ctx.commit('onAssistGenreStateChange', data.assistGenres);
+        ctx.commit('assistGenreStateChange', data.assistGenres);
     },
     async fetchAssistBrands(ctx) {
         const response = await api.get(
@@ -79,7 +124,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         );
         const { data } = response;
 
-        ctx.commit('onAssistBrandStateChange', data.assistBrands);
+        ctx.commit('assistBrandStateChange', data.assistBrands);
     },
     async fetchAssistShops(ctx) {
         const response = await api.get(
@@ -87,23 +132,23 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         );
         const { data } = response;
 
-        ctx.commit('onAssistShopStateChange', data.assistShops);
+        ctx.commit('assistShopStateChange', data.assistShops);
     },
-    async onAddClothes(
-        ctx,
-        {
-            clothes: {
-                brandId,
-                shopId,
-                genreIds,
-                price,
-                buyDate,
-                comment,
-                satisfaction
-            },
-            imageFile
-        }
-    ) {
+    async onAddClothes(ctx, formFields) {
+        const {
+            image,
+            brandId,
+            shopId,
+            genreIds,
+            price,
+            buyDate,
+            comment,
+            satisfaction
+        } = formFields;
+
+        const imageFile = image && image.file ? image.file.originFileObj : null;
+        const formatBuyDate = buyDate.format(dateFormat);
+
         const currentUser = ctx.rootGetters['user/currentUser'] as AppUser;
         const imageLink = imageFile
             ? await firebaseStorage.image.upload(
@@ -113,40 +158,43 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
               )
             : null;
 
-        const response = await api.post(
+        const response = await api.post<{ clothes: Clothes }>(
             `/${ctx.rootGetters['user/id']}/clothes`,
             {
-                brandId,
                 imageLink,
+                buyDate: formatBuyDate,
+                brandId,
                 shopId,
                 genreIds,
                 price,
-                buyDate,
                 comment,
                 satisfaction
             }
         );
 
-        ctx.commit('onAddClothes', response.data.clothes);
+        ctx.commit('addClothes', response.data.clothes);
     },
-    async onUpdateClothes(
-        ctx,
-        {
+    async onUpdateClothes(ctx, updateValue) {
+        const {
             id,
-            clothes: {
-                imageId,
-                imageLink,
-                brandId,
-                shopId,
-                genreIds,
-                price,
-                buyDate,
-                comment,
-                satisfaction
-            },
-            imageFile
-        }
-    ) {
+            image,
+            brandId,
+            shopId,
+            genreIds,
+            price,
+            buyDate,
+            comment,
+            satisfaction
+        } = updateValue;
+
+        const imageFile = image && image.file ? image.file.originFileObj : null;
+
+        const formatBuyDate = buyDate.format(dateFormat);
+
+        const clothes = ctx.getters['clothes'].find(
+            c => c.id === id
+        ) as Clothes;
+        const { imageLink } = clothes;
         if (imageLink && imageFile) {
             await firebaseStorage.image.deleteImageByFullPath(imageLink);
         }
@@ -160,34 +208,37 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
               )
             : imageLink;
 
-        const response = await api.put(
+        const updateItem = {
+            imageId: clothes.imageId,
+            imageLink: updateImageLink,
+            buyDate: formatBuyDate,
+            brandId,
+            shopId,
+            genreIds,
+            price,
+            comment,
+            satisfaction
+        };
+
+        await api.put(
             `/${ctx.rootGetters['user/id']}/clothes/${id}`,
-            {
-                imageId,
-                imageLink: updateImageLink,
-                brandId,
-                shopId,
-                genreIds,
-                price,
-                buyDate,
-                comment,
-                satisfaction
-            }
+            updateItem
         );
 
-        ctx.commit('onUpdateTargetClothes', response.data.clothes);
+        ctx.commit('updateClothes', {
+            id,
+            ...updateItem
+        });
     },
     async onDeleteClothes(ctx, id) {
-        const response = await api.delete(
-            `/${ctx.rootGetters['user/id']}/clothes/${id}`
-        );
-        ctx.commit('onUpdateTargetClothes', response.data.clothes);
+        await api.delete(`/${ctx.rootGetters['user/id']}/clothes/${id}`);
+        ctx.commit('deleteClothes', id);
     },
     async onRestorationClothes(ctx, id) {
-        const response = await api.put(
+        await api.put(
             `/${ctx.rootGetters['user/id']}/clothes/${id}/restoration`
         );
-        ctx.commit('onUpdateTargetClothes', response.data.clothes);
+        ctx.commit('restorationClothes', id);
     }
 };
 

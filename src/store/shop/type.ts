@@ -1,4 +1,5 @@
 import { IModuleRootMutations } from '@/store/type';
+import { FormFields } from '@/components/shop/type';
 
 export interface Shop {
     id: number;
@@ -25,45 +26,29 @@ export interface IRootGetters {
 }
 
 export interface IMutations extends IModuleRootMutations {
-    onShopsStateChange: Shop[];
-    onAddShop: Shop;
-    onUpdateTargetShop: Shop;
+    shopsStateChange: Shop[];
+    addShop: Shop;
+    updateShop: Omit<
+        FormFields,
+        'image' | 'startBusinessHours' | 'endBusinessHours'
+    > &
+        Pick<Shop, 'id' | 'imageLink' | 'businessHours'>;
+    deleteShop: Shop['id'];
+    restorationShop: Shop['id'];
 }
 export interface IRootMutations {
     'shop/allStateReset': IMutations['allStateReset'];
-    'shop/onShopsStateChange': IMutations['onShopsStateChange'];
-    'shop/onAddShop': IMutations['onAddShop'];
-    'shop/onUpdateTargetShop': IMutations['onUpdateTargetShop'];
+    'shop/shopsStateChange': IMutations['shopsStateChange'];
+    'shop/addShop': IMutations['addShop'];
+    'shop/updateShop': IMutations['updateShop'];
+    'shop/deleteShop': IMutations['deleteShop'];
+    'shop/restorationShop': IMutations['restorationShop'];
 }
-
-type AddValue = {
-    shop: Pick<
-        Shop,
-        'name' | 'link' | 'stationName' | 'address' | 'businessHours' | 'tel'
-    >;
-    imageFile: File | null;
-};
-
-type UpdateValue = {
-    id: Shop['id'];
-    shop: Pick<
-        Shop,
-        | 'name'
-        | 'link'
-        | 'stationName'
-        | 'imageId'
-        | 'imageLink'
-        | 'address'
-        | 'businessHours'
-        | 'tel'
-    >;
-    imageFile: File | null;
-};
 
 export interface IActions {
     fetchShops: void;
-    onAddShop: AddValue;
-    onUpdateShop: UpdateValue;
+    onAddShop: FormFields;
+    onUpdateShop: FormFields & Pick<Shop, 'id'>;
     onDeleteShop: Shop['id'];
     onRestorationShop: Shop['id'];
 }

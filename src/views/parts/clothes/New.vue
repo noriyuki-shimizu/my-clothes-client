@@ -23,7 +23,7 @@ import { AppMessage } from 'ant-design-vue/types/message';
 import ClothesForm from '@/components/clothes/Form.vue';
 import { resetMessage } from '@/util/reset';
 import { handleForbiddenError } from '@/components/errorHandle';
-import { ConvertedFormFields } from '@/components/clothes/type';
+import { FormFields } from '@/components/clothes/type';
 
 @Component({
     components: {
@@ -35,7 +35,7 @@ export default class New extends Vue {
 
     $store!: Vuex.ExStore;
 
-    async onRegister(values: ConvertedFormFields) {
+    async onRegister(values: FormFields) {
         await this.$store.dispatch('clothes/onAddClothes', values);
 
         this.$success({
@@ -62,7 +62,7 @@ export default class New extends Vue {
     }
 
     @Emit('on-submit')
-    async onSubmit(values: ConvertedFormFields) {
+    async onSubmit(values: FormFields) {
         this.$confirm({
             title: 'Are you sure you want to register?',
             content: 'The entered information is registered.',

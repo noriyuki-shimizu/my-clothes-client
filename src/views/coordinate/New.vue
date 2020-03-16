@@ -40,17 +40,7 @@ export default class New extends Vue {
 
     @Emit('on-register')
     async onRegister(values: FormFields) {
-        const { season, clothingIds, image } = values;
-
-        const imageFile = image && image.file ? image.file.originFileObj : null;
-
-        await this.$store.dispatch('coordinate/onAddCoordinate', {
-            coordinate: {
-                season,
-                clothingIds
-            },
-            imageFile
-        });
+        await this.$store.dispatch('coordinate/onAddCoordinate', values);
 
         this.$success({
             title: 'Create success 👏',

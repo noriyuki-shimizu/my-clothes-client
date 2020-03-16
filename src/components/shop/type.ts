@@ -20,15 +20,3 @@ export type FormFields = {
     endBusinessHours: Moment;
     tel: string;
 };
-
-export type ConvertedFormFields = {
-    shop: {
-        name: string;
-        link: string;
-        stationName: string;
-        address: string;
-        businessHours: string;
-        tel: string;
-    };
-    imageFile: File | null;
-};

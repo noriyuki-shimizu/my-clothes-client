@@ -202,8 +202,8 @@ import { Route } from 'vue-router';
 import * as Vuex from 'vuex';
 import moment from 'moment';
 
-import { formItemLayout, convertFormFields } from '@/components/clothes/form';
-import { FormFields, ConvertedFormFields } from '@/components/clothes/type';
+import { formItemLayout } from '@/components/clothes/form';
+import { FormFields } from '@/components/clothes/type';
 import { Clothes } from '@/store/clothes/type';
 import { getBase64, isLt5M } from '@/util/file';
 import { dateFormat } from '@/util/date';
@@ -309,10 +309,7 @@ export default class ClothesForm extends Vue {
         e.preventDefault();
         this.form.validateFields(async (err, values: FormFields) => {
             if (!err) {
-                this.$emit<ConvertedFormFields>(
-                    'on-submit',
-                    convertFormFields(values)
-                );
+                this.$emit<FormFields>('on-submit', values);
             }
         });
     }

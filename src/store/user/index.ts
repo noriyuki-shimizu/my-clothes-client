@@ -29,10 +29,10 @@ const mutations: Mutations<State, IMutations> = {
         state.user = null;
         state.accessToken = '';
     },
-    onIdStateChanged(state, payload) {
+    idStateChanged(state, payload) {
         state.id = payload;
     },
-    onCurrentUserStateChanged(state, payload) {
+    currentUserStateChanged(state, payload) {
         state.user = payload;
         if (payload) {
             const { uid, displayName, email, phoneNumber, photoURL } = payload;
@@ -47,7 +47,7 @@ const mutations: Mutations<State, IMutations> = {
         }
         state.user = null;
     },
-    onAccessTokenStateChanged(state, payload) {
+    accessTokenStateChanged(state, payload) {
         state.accessToken = payload;
     }
 };
@@ -57,17 +57,17 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         const userCredential: firebase.auth.UserCredential = await firebaseAuth.signInWithGithub();
         const user = userCredential.user as firebase.User;
 
-        ctx.commit('onAccessTokenStateChanged', await user.getIdToken(true));
+        ctx.commit('accessTokenStateChanged', await user.getIdToken(true));
         await ctx.dispatch('linkUserToAPI');
-        await ctx.commit('onCurrentUserStateChanged', user);
+        await ctx.commit('currentUserStateChanged', user);
     },
     async signInWithGoogle(ctx) {
         const userCredential = await firebaseAuth.signInWithGoogle();
         const user = userCredential.user as firebase.User;
 
-        ctx.commit('onAccessTokenStateChanged', await user.getIdToken(true));
+        ctx.commit('accessTokenStateChanged', await user.getIdToken(true));
         await ctx.dispatch('linkUserToAPI');
-        await ctx.commit('onCurrentUserStateChanged', user);
+        await ctx.commit('currentUserStateChanged', user);
     },
     async signInWithMailAddressAndPassword(ctx, { mailAddress, password }) {
         const userCredential = await firebaseAuth.signInWithEmailAndPassword(
@@ -76,13 +76,13 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         );
         const user = userCredential.user as firebase.User;
 
-        ctx.commit('onAccessTokenStateChanged', await user.getIdToken(true));
+        ctx.commit('accessTokenStateChanged', await user.getIdToken(true));
         await ctx.dispatch('linkUserToAPI');
-        await ctx.commit('onCurrentUserStateChanged', user);
+        await ctx.commit('currentUserStateChanged', user);
     },
     async linkUserToAPI(ctx) {
         const response = await api.post('/preLogin');
-        ctx.commit('onIdStateChanged', response.data);
+        ctx.commit('idStateChanged', response.data);
     },
     async signOut(ctx) {
         await firebaseAuth.signOut();
@@ -103,7 +103,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
             displayName,
             photoURL
         });
-        ctx.commit('onCurrentUserStateChanged', updatedUser);
+        ctx.commit('currentUserStateChanged', updatedUser);
     }
 };
 

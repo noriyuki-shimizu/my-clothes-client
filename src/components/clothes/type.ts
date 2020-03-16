@@ -13,19 +13,6 @@ export type FormFields = {
     satisfaction: number;
 };
 
-export type ConvertedFormFields = {
-    clothes: {
-        brandId: number;
-        shopId: number;
-        genreIds: number[];
-        price: number;
-        buyDate: string;
-        comment: string;
-        satisfaction: number;
-    };
-    imageFile: File | null;
-};
-
 export type Record = Pick<
     Clothes,
     'imageLink' | 'genres' | 'buyDate' | 'comment' | 'satisfaction'

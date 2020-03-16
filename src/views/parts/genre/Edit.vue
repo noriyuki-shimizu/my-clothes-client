@@ -70,10 +70,8 @@ export default class Edit extends Vue {
 
         await this.$store.dispatch('genre/onUpdateGenre', {
             id: target.id,
-            genre: {
-                name,
-                color
-            }
+            name,
+            color
         });
 
         this.$success({

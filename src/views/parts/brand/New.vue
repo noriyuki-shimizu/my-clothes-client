@@ -52,14 +52,7 @@ export default class New extends Vue {
         const { name, image, link, country } = values;
         const imageFile = image && image.file ? image.file.originFileObj : null;
 
-        await this.$store.dispatch('brand/onAddBrand', {
-            brand: {
-                name,
-                link,
-                country
-            },
-            imageFile
-        });
+        await this.$store.dispatch('brand/onAddBrand', values);
 
         this.$success({
             title: 'Create success 👏',

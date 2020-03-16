@@ -50,14 +50,7 @@ export default class New extends Vue {
     }
 
     async onRegister(values: FormFields) {
-        const { name, color } = values;
-
-        await this.$store.dispatch('genre/onAddGenre', {
-            genre: {
-                name,
-                color
-            }
-        });
+        await this.$store.dispatch('genre/onAddGenre', values);
 
         this.$success({
             title: 'Create success 👏',
