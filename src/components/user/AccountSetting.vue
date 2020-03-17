@@ -208,7 +208,6 @@ export default class AccountSetting extends Vue {
                     this.$message.success('Successfully updated account');
                     this.$emit('on-close');
                 } catch (err) {
-                    console.log(err);
                     if (isFirebaseStorageError(err)) {
                         this.$message.error(err.message);
                     }
