@@ -22,7 +22,12 @@
                     v-for="imageAddress in imageAddresses"
                     :key="imageAddress"
                 >
-                    <img class="slide-img" :src="imageAddress" />
+                    <img
+                        class="slide-img"
+                        :src="
+                            require(`@/assets/street-fashion-snap/${imageAddress}`)
+                        "
+                    />
                 </div>
             </a-carousel>
         </div>
