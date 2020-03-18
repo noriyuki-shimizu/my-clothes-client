@@ -20,6 +20,12 @@ const routes: RouteConfig[] = [
         meta: { requiresAuth: false }
     },
     {
+        path: '/privacy-policy',
+        name: 'privacyPolicy',
+        component: () => import('../views/PrivacyPolicy.vue'),
+        meta: { requiresAuth: false }
+    },
+    {
         path: '/',
         component: () => import('../views/Layout.vue'),
         meta: { requiresAuth: false },
