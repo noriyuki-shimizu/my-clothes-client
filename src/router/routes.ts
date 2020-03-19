@@ -8,18 +8,6 @@ const routes: RouteConfig[] = [
         meta: { requiresAuth: false }
     },
     {
-        path: '/sign-up',
-        name: 'signUp',
-        component: () => import('../views/SignUp.vue'),
-        meta: { requiresAuth: false }
-    },
-    {
-        path: '/reset-password',
-        name: 'resetPassword',
-        component: () => import('../views/ResetPassword.vue'),
-        meta: { requiresAuth: false }
-    },
-    {
         path: '/',
         component: () => import('../views/Layout.vue'),
         meta: { requiresAuth: false },
