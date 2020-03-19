@@ -38,12 +38,9 @@ export interface IRootMutations {
 }
 
 export interface IActions {
-    signInWithGithub: void;
     signInWithGoogle: void;
-    signInWithMailAddressAndPassword: {
-        mailAddress: string;
-        password: string;
-    };
+    signInWithTwitter: void;
+    signInWithFacebook: void;
     linkUserToAPI: void;
     signOut: void;
     updateProfile: {
@@ -52,9 +49,9 @@ export interface IActions {
     };
 }
 export interface IRootActions {
-    'user/signInWithGithub': IActions['signInWithGithub'];
     'user/signInWithGoogle': IActions['signInWithGoogle'];
-    'user/signInWithMailAddressAndPassword': IActions['signInWithMailAddressAndPassword'];
+    'user/signInWithTwitter': IActions['signInWithTwitter'];
+    'user/signInWithFacebook': IActions['signInWithFacebook'];
     'user/linkUserToAPI': IActions['linkUserToAPI'];
     'user/signOut': IActions['signOut'];
     'user/updateProfile': IActions['updateProfile'];

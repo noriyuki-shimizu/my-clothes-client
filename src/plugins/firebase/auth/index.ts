@@ -35,44 +35,18 @@ export default {
         return firebase.auth().currentUser;
     },
 
-    async resetPassword(emailAddress: string) {
-        const actionCodeSettings: firebase.auth.ActionCodeSettings = {
-            url: `${process.env.VUE_APP_API_BASE_URL}/sign-in`,
-            handleCodeInApp: true
-        };
-        await firebase
-            .auth()
-            .sendPasswordResetEmail(emailAddress, actionCodeSettings);
-    },
-
-    async createUserWithEmailAndPassword(
-        displayName: string,
-        mailAddress: string,
-        password: string
-    ): Promise<void> {
-        await firebase
-            .auth()
-            .createUserWithEmailAndPassword(mailAddress, password);
-
-        await this.updateProfile({ displayName });
-    },
-
-    async signInWithEmailAndPassword(
-        mailAddress: string,
-        password: string
-    ): Promise<firebase.auth.UserCredential> {
-        return firebase
-            .auth()
-            .signInWithEmailAndPassword(mailAddress, password);
-    },
-
     async signInWithGoogle(): Promise<firebase.auth.UserCredential> {
         const provider = new firebase.auth.GoogleAuthProvider();
         return firebase.auth().signInWithPopup(provider);
     },
 
-    async signInWithGithub(): Promise<firebase.auth.UserCredential> {
-        const provider = new firebase.auth.GithubAuthProvider();
+    async signInWithTwitter(): Promise<firebase.auth.UserCredential> {
+        const provider = new firebase.auth.TwitterAuthProvider();
+        return firebase.auth().signInWithPopup(provider);
+    },
+
+    async signInWithFacebook(): Promise<firebase.auth.UserCredential> {
+        const provider = new firebase.auth.FacebookAuthProvider();
         return firebase.auth().signInWithPopup(provider);
     },
 

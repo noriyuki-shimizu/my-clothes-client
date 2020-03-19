@@ -53,14 +53,6 @@ const mutations: Mutations<State, IMutations> = {
 };
 
 const actions: Actions<State, IActions, IGetters, IMutations> = {
-    async signInWithGithub(ctx) {
-        const userCredential: firebase.auth.UserCredential = await firebaseAuth.signInWithGithub();
-        const user = userCredential.user as firebase.User;
-
-        ctx.commit('accessTokenStateChanged', await user.getIdToken(true));
-        await ctx.dispatch('linkUserToAPI');
-        await ctx.commit('currentUserStateChanged', user);
-    },
     async signInWithGoogle(ctx) {
         const userCredential = await firebaseAuth.signInWithGoogle();
         const user = userCredential.user as firebase.User;
@@ -69,11 +61,16 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         await ctx.dispatch('linkUserToAPI');
         await ctx.commit('currentUserStateChanged', user);
     },
-    async signInWithMailAddressAndPassword(ctx, { mailAddress, password }) {
-        const userCredential = await firebaseAuth.signInWithEmailAndPassword(
-            mailAddress,
-            password
-        );
+    async signInWithTwitter(ctx) {
+        const userCredential = await firebaseAuth.signInWithTwitter();
+        const user = userCredential.user as firebase.User;
+
+        ctx.commit('accessTokenStateChanged', await user.getIdToken(true));
+        await ctx.dispatch('linkUserToAPI');
+        await ctx.commit('currentUserStateChanged', user);
+    },
+    async signInWithFacebook(ctx) {
+        const userCredential = await firebaseAuth.signInWithFacebook();
         const user = userCredential.user as firebase.User;
 
         ctx.commit('accessTokenStateChanged', await user.getIdToken(true));
