@@ -2,7 +2,7 @@
     <div>
         <a-drawer
             title="Your account setting"
-            :width="450"
+            :width="'calc(25rem + (2vw - 1.2rem) * 2)'"
             :visible="visible"
             @close="onInputResetAndClose"
             :wrapStyle="{
