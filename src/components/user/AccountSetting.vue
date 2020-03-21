@@ -25,14 +25,25 @@
 
                 <a-form-item v-bind="formItemLayout" label="Name">
                     <a-input
-                        v-decorator="decorator.displayName"
+                        v-decorator="[
+                            'displayName',
+                            {
+                                rules: [
+                                    {
+                                        max: 30,
+                                        message:
+                                            'Name cannot be longer than 30 characters'
+                                    }
+                                ]
+                            }
+                        ]"
                         placeholder="Please enter user name"
                     />
                 </a-form-item>
 
                 <a-form-item label="Icon">
                     <a-upload
-                        v-decorator="decorator.icon"
+                        v-decorator="['icon', {}]"
                         name="icon"
                         listType="picture-card"
                         class="icon-uploader"
@@ -92,6 +103,7 @@ import {
 
 import { getBase64, isLt5M } from '@/util/file';
 import { isFirebaseStorageError } from '@/plugins/firebase/storage';
+import { formItemLayout } from './form';
 
 type FormFields = {
     displayName: string;
@@ -113,31 +125,7 @@ export default class AccountSetting extends Vue {
     @Prop({ type: Boolean, required: true })
     visible!: boolean;
 
-    private decorator: FieldDecorator = {
-        displayName: [
-            'displayName',
-            {
-                rules: [
-                    {
-                        max: 30,
-                        message: 'Name cannot be longer than 30 characters'
-                    }
-                ]
-            }
-        ],
-        icon: ['icon', {}]
-    };
-
-    private formItemLayout: Readonly<ExPartial<Form>> = {
-        labelCol: {
-            xs: { span: 24, offset: 0 },
-            sm: { span: 8, offset: 0 }
-        },
-        wrapperCol: {
-            xs: { span: 24, offset: 0 },
-            sm: { span: 16, offset: 0 }
-        }
-    };
+    private formItemLayout = formItemLayout;
 
     created() {
         const user = this.currentUser as firebase.User;
