@@ -3,7 +3,7 @@
         class="select-item-table"
         :dataSource="tableItems"
         :columns="columns"
-        :scroll="{ x: 1200, y: 500 }"
+        :scroll="{ x: 1850, y: 570 }"
         :pagination="{ pageSize: 50 }"
         :loading="tableLoading"
         :rowSelection="{
