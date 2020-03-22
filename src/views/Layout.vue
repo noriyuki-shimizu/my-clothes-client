@@ -16,7 +16,10 @@
                 </div>
             </a-layout-content>
             <a-layout-footer id="main_layout_footer">
-                My Clothes ©2019 Created by Noriyuki Shimizu
+                My Clothes ©2019 Created by Noriyuki Shimizu.
+                <router-link to="/privacy-policy">
+                    privacy policy
+                </router-link>
             </a-layout-footer>
         </a-layout>
     </a-layout>
