@@ -95,6 +95,12 @@
                 </a-checkbox-group>
             </a-form-item>
 
+            <router-link
+                v-if="!dataSource.length"
+                :to="'/maintenance/clothes/new/again'"
+            >
+                Please create a clothes
+            </router-link>
             <clothes-form-table
                 :tableItems="tableItems"
                 :selectedRowKeys="selectedRowKeys"

@@ -41,6 +41,7 @@
 
         <a-form-item v-bind="formItemLayout" label="Brand">
             <a-select
+                v-if="assistBrands.length"
                 v-decorator="[
                     'brandId',
                     {
@@ -62,10 +63,14 @@
                     {{ assistBrand.name }}
                 </a-select-option>
             </a-select>
+            <router-link v-else :to="'/maintenance/brand/new/again'">
+                Please create a brand
+            </router-link>
         </a-form-item>
 
         <a-form-item v-bind="formItemLayout" label="Shop">
             <a-select
+                v-if="assistShops.length"
                 v-decorator="[
                     'shopId',
                     {
@@ -87,10 +92,14 @@
                     {{ assistShop.name }}
                 </a-select-option>
             </a-select>
+            <router-link v-else :to="'/maintenance/shop/new/again'">
+                Please create a shop
+            </router-link>
         </a-form-item>
 
         <a-form-item v-bind="formItemLayout" label="Genres">
             <a-checkbox-group
+                v-if="assistGenres.length"
                 v-decorator="[
                     'genreIds',
                     {
@@ -118,6 +127,9 @@
                     </a-col>
                 </a-row>
             </a-checkbox-group>
+            <router-link v-else :to="'/maintenance/genre/new/again'">
+                Please create a genre
+            </router-link>
         </a-form-item>
 
         <a-form-item v-bind="formItemLayout" label="Price">

@@ -58,6 +58,10 @@ export default class New extends Vue {
         this.$success({
             title: 'Create success 👏',
             onOk: () => {
+                if (this.$route.params.again) {
+                    this.$router.push({ name: 'clothesNew' });
+                    return;
+                }
                 this.$router.push({ name: 'shop' });
             }
         });
