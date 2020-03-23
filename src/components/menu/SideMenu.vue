@@ -41,11 +41,6 @@
                 </span>
             </router-link>
         </a-menu-item>
-        <a-divider />
-        <a-menu-item @click="signOut" key="4">
-            <a-icon type="logout" />
-            <span>Sign out</span>
-        </a-menu-item>
     </a-menu>
 </template>
 
@@ -54,20 +49,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 
 @Component
-export default class SideMenu extends Vue {
-    $store!: Vuex.ExStore;
-
-    signOut() {
-        this.$store.commit('brand/allStateReset');
-        this.$store.commit('clothes/allStateReset');
-        this.$store.commit('coordinate/allStateReset');
-        this.$store.commit('genre/allStateReset');
-        this.$store.commit('imageAddress/allStateReset');
-        this.$store.commit('shop/allStateReset');
-        this.$store.dispatch('user/signOut');
-        this.$router.push({ name: 'signIn' });
-    }
-}
+export default class SideMenu extends Vue {}
 </script>
 
 <style scoped></style>

@@ -1,8 +1,13 @@
 <template>
     <div>
-        <a-popover placement="bottomLeft">
+        <a-popover trigger="click" placement="bottomLeft">
             <template slot="content">
-                <a @click="showDrawer">Your account setting.</a>
+                <div class="account-menu">
+                    <a @click="showDrawer">Your account setting</a>
+                </div>
+                <div class="account-menu">
+                    <a @click="signOut">Sign out</a>
+                </div>
             </template>
             <template slot="title">
                 <span>
@@ -52,9 +57,26 @@ export default class AccountPopover extends Vue {
         this.visible = true;
     }
 
+    signOut() {
+        this.$store.commit('brand/allStateReset');
+        this.$store.commit('clothes/allStateReset');
+        this.$store.commit('coordinate/allStateReset');
+        this.$store.commit('genre/allStateReset');
+        this.$store.commit('imageAddress/allStateReset');
+        this.$store.commit('shop/allStateReset');
+        this.$store.dispatch('user/signOut');
+        this.$router.push({ name: 'signIn' });
+    }
+
     @Emit('on-close')
     onClose() {
         this.visible = false;
     }
 }
 </script>
+
+<style scoped>
+.account-menu {
+    padding-bottom: 8px;
+}
+</style>
