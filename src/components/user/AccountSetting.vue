@@ -112,20 +112,20 @@ type FormFields = {
 
 @Component
 export default class AccountSetting extends Vue {
-    private form!: WrappedFormUtils;
+    form!: WrappedFormUtils;
 
-    private imageLoading = false;
+    imageLoading = false;
 
-    private registerLoading = false;
+    registerLoading = false;
 
-    private imageURL: string | ArrayBuffer | null = '';
+    imageURL: string | ArrayBuffer | null = '';
 
     $store!: Vuex.ExStore;
 
     @Prop({ type: Boolean, required: true })
     visible!: boolean;
 
-    private formItemLayout = formItemLayout;
+    formItemLayout = formItemLayout;
 
     created() {
         const user = this.currentUser as firebase.User;

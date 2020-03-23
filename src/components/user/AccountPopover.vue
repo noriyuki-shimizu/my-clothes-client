@@ -47,7 +47,7 @@ import AccountSetting from '@/components/user/AccountSetting.vue';
 export default class AccountPopover extends Vue {
     $store!: Vuex.ExStore;
 
-    private visible = false;
+    visible = false;
 
     get currentUser() {
         return this.$store.getters['user/currentUser'];
