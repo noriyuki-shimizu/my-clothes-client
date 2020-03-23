@@ -26,7 +26,7 @@ import { AppMessage } from 'ant-design-vue/types/message';
 import ClothesForm from '@/components/clothes/Form.vue';
 import { FormFields } from '@/components/clothes/type';
 import { resetMessage } from '@/util/reset';
-import { handleForbiddenError } from '@/components/errorHandle';
+import { handleForbiddenError } from '@/util/errorHandle';
 
 @Component({
     components: {

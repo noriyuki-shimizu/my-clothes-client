@@ -32,7 +32,7 @@ import * as Vuex from 'vuex';
 
 import BrandTable from '@/components/brand/Table.vue';
 import { resetMessage } from '@/util/reset';
-import { handleForbiddenError } from '@/components/errorHandle';
+import { handleForbiddenError } from '@/util/errorHandle';
 
 @Component({
     components: {

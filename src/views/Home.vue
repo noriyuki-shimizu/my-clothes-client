@@ -38,7 +38,7 @@ import { Vue, Component } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 import { AppMessage } from 'ant-design-vue/types/message';
 import { resetMessage } from '@/util/reset';
-import { handleForbiddenError } from '@/components/errorHandle';
+import { handleForbiddenError } from '@/util/errorHandle';
 
 @Component
 export default class Home extends Vue {

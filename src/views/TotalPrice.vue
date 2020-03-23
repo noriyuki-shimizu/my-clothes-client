@@ -28,7 +28,7 @@ import Chart from 'chart.js';
 import PieChart from '@/components/maps/PieChart';
 
 import { resetMessage } from '@/util/reset';
-import { handleForbiddenError } from '@/components/errorHandle';
+import { handleForbiddenError } from '@/util/errorHandle';
 
 type ChartDataParts = {
     labels: string[];

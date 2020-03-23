@@ -22,7 +22,7 @@ import { AppMessage } from 'ant-design-vue/types/message';
 import GenreForm from '@/components/genre/Form.vue';
 import { FormFields } from '@/components/genre/type';
 import { resetMessage } from '@/util/reset';
-import { handleForbiddenError } from '@/components/errorHandle';
+import { handleForbiddenError } from '@/util/errorHandle';
 
 @Component({
     components: {

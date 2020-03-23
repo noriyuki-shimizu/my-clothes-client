@@ -33,7 +33,7 @@ import * as Vuex from 'vuex';
 
 import GenreTable from '@/components/genre/Table.vue';
 import { resetMessage } from '@/util/reset';
-import { handleForbiddenError } from '@/components/errorHandle';
+import { handleForbiddenError } from '@/util/errorHandle';
 
 @Component({
     components: {
