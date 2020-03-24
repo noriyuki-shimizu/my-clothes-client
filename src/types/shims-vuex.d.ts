@@ -1,7 +1,6 @@
 import 'vuex';
 import * as Root from '@/store/type';
 import * as User from '@/store/user/type';
-import * as ImageAddress from '@/store/image/address/type';
 import * as Brand from '@/store/brand/type';
 import * as Genre from '@/store/genre/type';
 import * as Shop from '@/store/shop/type';
@@ -49,7 +48,6 @@ declare module 'vuex' {
 
     type RootState = Root.State & {
         user: User.State;
-        imageAddress: ImageAddress.State;
         brand: Brand.State;
         genre: Genre.State;
         shop: Shop.State;
@@ -57,7 +55,6 @@ declare module 'vuex' {
     };
 
     type RootGetters = User.IRootGetters &
-        ImageAddress.IRootGetters &
         Brand.IRootGetters &
         Genre.IRootGetters &
         Shop.IRootGetters &
@@ -65,7 +62,6 @@ declare module 'vuex' {
         Coordinate.IRootGetters;
 
     type RootMutations = User.IRootMutations &
-        ImageAddress.IRootMutations &
         Brand.IRootMutations &
         Genre.IRootMutations &
         Shop.IRootMutations &
@@ -73,7 +69,6 @@ declare module 'vuex' {
         Coordinate.IRootMutations;
 
     type RootActions = User.IRootActions &
-        ImageAddress.IRootActions &
         Brand.IRootActions &
         Genre.IRootActions &
         Shop.IRootActions &

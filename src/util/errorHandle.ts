@@ -16,7 +16,6 @@ export const handleForbiddenError = (
                 store.commit('clothes/allStateReset');
                 store.commit('coordinate/allStateReset');
                 store.commit('genre/allStateReset');
-                store.commit('imageAddress/allStateReset');
                 store.commit('shop/allStateReset');
 
                 store.dispatch('user/signOut');

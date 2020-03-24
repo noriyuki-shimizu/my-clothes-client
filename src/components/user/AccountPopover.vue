@@ -62,7 +62,6 @@ export default class AccountPopover extends Vue {
         this.$store.commit('clothes/allStateReset');
         this.$store.commit('coordinate/allStateReset');
         this.$store.commit('genre/allStateReset');
-        this.$store.commit('imageAddress/allStateReset');
         this.$store.commit('shop/allStateReset');
         this.$store.dispatch('user/signOut');
         this.$router.push({ name: 'signIn' });

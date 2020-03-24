@@ -1,13 +1,5 @@
 <template>
     <div>
-        <a-alert
-            class="alert-message"
-            v-if="message.isShow"
-            :message="message.text"
-            :description="message.description"
-            :type="message.type"
-            showIcon
-        />
         <div id="home-title">
             <h1>My Clothes</h1>
             <a-carousel autoplay>
@@ -39,37 +31,17 @@ import * as Vuex from 'vuex';
 import { AppMessage } from 'ant-design-vue/types/message';
 import { resetMessage } from '@/util/reset';
 import { handleForbiddenError } from '@/util/errorHandle';
+import { getSeason } from '@/util/date';
+
+const now = new Date();
 
 @Component
 export default class Home extends Vue {
     $store!: Vuex.ExStore;
 
-    message: AppMessage = resetMessage();
-
-    async created() {
-        this.message = resetMessage();
-        const { imageAddresses } = this;
-        if (!imageAddresses.length) {
-            await this.$store
-                .dispatch('imageAddress/fetchImageAddresses')
-                .catch((err: any) => {
-                    handleForbiddenError(err, this.$store, this.$router);
-
-                    this.message = {
-                        isShow: true,
-                        text: `Error (${err.message})`,
-                        description: err.response
-                            ? err.response.data
-                            : `Access URL: ${err.config.url}`,
-                        type: 'error'
-                    };
-                });
-        }
-    }
-
-    get imageAddresses() {
-        return this.$store.getters['imageAddress/values'];
-    }
+    imageAddresses = [...Array(10)].map(
+        (_, i) => `${getSeason(now)}/${i + 1}.jpg`
+    );
 }
 </script>
 <style scoped>
