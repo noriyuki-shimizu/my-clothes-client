@@ -45,10 +45,6 @@ export default class Home extends Vue {
 }
 </script>
 <style scoped>
-.alert-message {
-    margin-bottom: 15px;
-}
-
 #home-title {
     text-align: center;
 }
