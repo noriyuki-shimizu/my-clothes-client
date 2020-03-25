@@ -150,7 +150,12 @@
     </div>
 </template>
 
-<script lang="ts"></script>
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+
+@Component
+export default class PrivacyPolicy extends Vue {}
+</script>
 
 <style scoped>
 #privacy_policy_back_ground {
