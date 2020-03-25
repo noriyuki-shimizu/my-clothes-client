@@ -7,19 +7,14 @@
             <side-menu />
         </a-layout-sider>
         <a-layout :style="{ marginLeft: '200px' }">
-            <a-layout-header id="header">
-                <account-popover />
+            <a-layout-header id="main_layout_header">
+                <app-header />
             </a-layout-header>
             <a-layout-content id="main_layout_content">
-                <div id="content">
-                    <router-view />
-                </div>
+                <app-content />
             </a-layout-content>
             <a-layout-footer id="main_layout_footer">
-                My Clothes ©2019 Created by Noriyuki Shimizu.
-                <router-link to="/privacy-policy">
-                    privacy policy
-                </router-link>
+                <app-footer />
             </a-layout-footer>
         </a-layout>
     </a-layout>
@@ -28,12 +23,16 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
-import AccountPopover from '@/components/user/AccountPopover.vue';
+import AppHeader from '@/components/layout/Header.vue';
+import AppContent from '@/components/layout/Content.vue';
+import AppFooter from '@/components/layout/Footer.vue';
 import SideMenu from '@/components/menu/SideMenu.vue';
 
 @Component({
     components: {
-        AccountPopover,
+        AppHeader,
+        AppFooter,
+        AppContent,
         SideMenu
     }
 })
@@ -56,7 +55,7 @@ export default class Layout extends Vue {}
     margin: 16px;
 }
 
-#header {
+#main_layout_header {
     background: #fff;
     padding: 0 5% 0;
 }
@@ -73,7 +72,6 @@ export default class Layout extends Vue {}
 }
 
 #main_layout_footer {
-    text-align: center;
     padding: 15px 50px;
 }
 </style>
