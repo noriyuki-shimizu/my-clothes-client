@@ -69,19 +69,18 @@ export default class SignIn extends Vue {
     }
 
     async signInWithTwitter(): Promise<void> {
-        // TODO: Twitter 側の設定を更新したら、以下のコメントアウトを外す
-        // this.externalApiAuthMessage = resetMessage();
-        // this.spinning = true;
-        //
-        // try {
-        //     await this.$store.dispatch('user/signInWithTwitter');
-        //     toHome(this.$route.params.again, this.$router);
-        // } catch (err) {
-        //     if (isFirebaseExternalApiAuthError(err)) {
-        //         this.spinning = false;
-        //         this.externalApiAuthMessage = mappingMessage(err);
-        //     }
-        // }
+        this.externalApiAuthMessage = resetMessage();
+        this.spinning = true;
+
+        try {
+            await this.$store.dispatch('user/signInWithTwitter');
+            toHome(this.$route.params.again, this.$router);
+        } catch (err) {
+            if (isFirebaseExternalApiAuthError(err)) {
+                this.spinning = false;
+                this.externalApiAuthMessage = mappingMessage(err);
+            }
+        }
     }
 
     async signInWithFacebook(): Promise<void> {
