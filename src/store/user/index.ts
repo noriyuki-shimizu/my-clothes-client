@@ -88,7 +88,12 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
     async updateProfile(ctx, { displayName, iconFile }) {
         const user = ctx.getters['currentUser'] as firebase.User;
 
-        if (user.photoURL && iconFile) {
+        if (
+            user.photoURL &&
+            iconFile &&
+            // TODO: ここのハードコードをいずれなんとかすること
+            user.photoURL.indexOf('https://firebasestorage.googleapis.com') > -1
+        ) {
             await firebaseStorage.image.deleteImageByFullPath(user.photoURL);
         }
 
