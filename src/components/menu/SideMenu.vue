@@ -3,14 +3,13 @@
         <a-menu-item key="1">
             <router-link to="/coordinate">
                 <a-icon type="smile" />
-                <span>
-                    Coordinate
-                </span>
+                <span>Coordinate</span>
             </router-link>
         </a-menu-item>
         <a-sub-menu key="2">
             <span slot="title">
-                <a-icon type="setting" /><span>Parts</span>
+                <a-icon type="setting" />
+                <span>Parts</span>
             </span>
             <a-menu-item key="2-1">
                 <router-link to="/maintenance/clothes">
@@ -36,9 +35,7 @@
         <a-menu-item key="3">
             <router-link to="/total-price">
                 <a-icon type="pie-chart" />
-                <span>
-                    Price chart
-                </span>
+                <span>Price chart</span>
             </router-link>
         </a-menu-item>
     </a-menu>
