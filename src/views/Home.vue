@@ -28,9 +28,6 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
-import { AppMessage } from 'ant-design-vue/types/message';
-import { resetMessage } from '@/util/message';
-import { handleForbiddenError } from '@/util/errorHandle';
 import { getSeason } from '@/util/date';
 
 const now = new Date();
