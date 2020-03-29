@@ -42,7 +42,12 @@ import { FirebaseExternalApiAuthError } from 'firebase';
 import { AppMessage } from 'ant-design-vue/types/message';
 
 import { isFirebaseExternalApiAuthError } from '@/plugins/firebase/auth';
-import { resetMessage } from '@/util/message';
+import {
+    resetMessage,
+    toErrorMessage,
+    toFirebaseErrorMessage
+} from '@/util/message';
+import { toHome } from './externalApi';
 
 @Component
 export default class SignIn extends Vue {
@@ -60,10 +65,10 @@ export default class SignIn extends Vue {
             await this.$store.dispatch('user/signInWithGoogle');
             toHome(this.$route.params.again, this.$router);
         } catch (err) {
-            if (isFirebaseExternalApiAuthError(err)) {
-                this.spinning = false;
-                this.message = mappingMessage(err);
-            }
+            this.spinning = false;
+            this.message = isFirebaseExternalApiAuthError(err)
+                ? toFirebaseErrorMessage(err)
+                : toErrorMessage(err);
         }
     }
 
@@ -75,10 +80,10 @@ export default class SignIn extends Vue {
             await this.$store.dispatch('user/signInWithTwitter');
             toHome(this.$route.params.again, this.$router);
         } catch (err) {
-            if (isFirebaseExternalApiAuthError(err)) {
-                this.spinning = false;
-                this.message = mappingMessage(err);
-            }
+            this.spinning = false;
+            this.message = isFirebaseExternalApiAuthError(err)
+                ? toFirebaseErrorMessage(err)
+                : toErrorMessage(err);
         }
     }
 
@@ -90,10 +95,10 @@ export default class SignIn extends Vue {
             await this.$store.dispatch('user/signInWithFacebook');
             toHome(this.$route.params.again, this.$router);
         } catch (err) {
-            if (isFirebaseExternalApiAuthError(err)) {
-                this.spinning = false;
-                this.message = mappingMessage(err);
-            }
+            this.spinning = false;
+            this.message = isFirebaseExternalApiAuthError(err)
+                ? toFirebaseErrorMessage(err)
+                : toErrorMessage(err);
         }
     }
 }
