@@ -2,10 +2,10 @@
     <a-spin id="external_api" :spinning="spinning" size="large">
         <a-alert
             class="external-api-login-message"
-            v-if="externalApiAuthMessage.isShow"
-            :message="externalApiAuthMessage.text"
-            :description="externalApiAuthMessage.description"
-            :type="externalApiAuthMessage.type"
+            v-if="message.isShow"
+            :message="message.text"
+            :description="message.description"
+            :type="message.type"
             showIcon
         />
         <a-button
@@ -49,12 +49,12 @@ import { toHome, mappingMessage } from './externalApi';
 export default class SignIn extends Vue {
     spinning = false;
 
-    externalApiAuthMessage: AppMessage = resetMessage();
+    message: AppMessage = resetMessage();
 
     $store!: Vuex.ExStore;
 
     async signInWithGoogle(): Promise<void> {
-        this.externalApiAuthMessage = resetMessage();
+        this.message = resetMessage();
         this.spinning = true;
 
         try {
@@ -63,13 +63,13 @@ export default class SignIn extends Vue {
         } catch (err) {
             if (isFirebaseExternalApiAuthError(err)) {
                 this.spinning = false;
-                this.externalApiAuthMessage = mappingMessage(err);
+                this.message = mappingMessage(err);
             }
         }
     }
 
     async signInWithTwitter(): Promise<void> {
-        this.externalApiAuthMessage = resetMessage();
+        this.message = resetMessage();
         this.spinning = true;
 
         try {
@@ -78,13 +78,13 @@ export default class SignIn extends Vue {
         } catch (err) {
             if (isFirebaseExternalApiAuthError(err)) {
                 this.spinning = false;
-                this.externalApiAuthMessage = mappingMessage(err);
+                this.message = mappingMessage(err);
             }
         }
     }
 
     async signInWithFacebook(): Promise<void> {
-        this.externalApiAuthMessage = resetMessage();
+        this.message = resetMessage();
         this.spinning = true;
 
         try {
@@ -93,7 +93,7 @@ export default class SignIn extends Vue {
         } catch (err) {
             if (isFirebaseExternalApiAuthError(err)) {
                 this.spinning = false;
-                this.externalApiAuthMessage = mappingMessage(err);
+                this.message = mappingMessage(err);
             }
         }
     }
