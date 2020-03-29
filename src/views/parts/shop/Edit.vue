@@ -22,7 +22,7 @@ import { DoneUploadFileInfo } from 'ant-design-vue/types/upload';
 import { AppMessage } from 'ant-design-vue/types/message';
 
 import ShopForm from '@/components/shop/Form.vue';
-import { resetMessage } from '@/util/reset';
+import { resetMessage } from '@/util/message';
 import { handleForbiddenError } from '@/util/errorHandle';
 import { FormFields } from '@/components/shop/type';
 

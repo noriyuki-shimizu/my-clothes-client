@@ -35,7 +35,7 @@ import * as Vuex from 'vuex';
 
 import ShopTable from '@/components/shop/Table.vue';
 import { Record } from '@/components/shop/type';
-import { resetMessage } from '@/util/reset';
+import { resetMessage } from '@/util/message';
 import { handleForbiddenError } from '@/util/errorHandle';
 
 @Component({

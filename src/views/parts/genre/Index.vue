@@ -32,7 +32,7 @@ import { AppMessage } from 'ant-design-vue/types/message';
 import * as Vuex from 'vuex';
 
 import GenreTable from '@/components/genre/Table.vue';
-import { resetMessage } from '@/util/reset';
+import { resetMessage } from '@/util/message';
 import { handleForbiddenError } from '@/util/errorHandle';
 
 @Component({

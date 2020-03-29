@@ -27,7 +27,7 @@ import * as Vuex from 'vuex';
 import Chart from 'chart.js';
 import PieChart from '@/components/maps/PieChart';
 
-import { resetMessage } from '@/util/reset';
+import { resetMessage } from '@/util/message';
 import { handleForbiddenError } from '@/util/errorHandle';
 
 type ChartDataParts = {

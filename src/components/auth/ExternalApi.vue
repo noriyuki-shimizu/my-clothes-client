@@ -42,8 +42,7 @@ import { FirebaseExternalApiAuthError } from 'firebase';
 import { AppMessage } from 'ant-design-vue/types/message';
 
 import { isFirebaseExternalApiAuthError } from '@/plugins/firebase/auth';
-import { resetMessage } from '@/util/reset';
-import { toHome, mappingMessage } from './externalApi';
+import { resetMessage } from '@/util/message';
 
 @Component
 export default class SignIn extends Vue {
