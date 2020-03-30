@@ -63,7 +63,7 @@
                     {{ assistBrand.name }}
                 </a-select-option>
             </a-select>
-            <router-link v-else :to="'/maintenance/brand/new/again'">
+            <router-link v-else :to="'/maintenance/brand/new?next=back'">
                 Please create a brand
             </router-link>
         </a-form-item>
@@ -92,7 +92,7 @@
                     {{ assistShop.name }}
                 </a-select-option>
             </a-select>
-            <router-link v-else :to="'/maintenance/shop/new/again'">
+            <router-link v-else :to="'/maintenance/shop/new?next=back'">
                 Please create a shop
             </router-link>
         </a-form-item>
@@ -127,7 +127,7 @@
                     </a-col>
                 </a-row>
             </a-checkbox-group>
-            <router-link v-else :to="'/maintenance/genre/new/again'">
+            <router-link v-else :to="'/maintenance/genre/new?next=back'">
                 Please create a genre
             </router-link>
         </a-form-item>

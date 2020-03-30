@@ -1,7 +1,10 @@
 import VueRouter from 'vue-router';
 
-export const toHome = (again: string, router: VueRouter): void => {
-    if (again) {
+export const toHome = (
+    next: string | (string | null)[],
+    router: VueRouter
+): void => {
+    if (next === 'back') {
         router.back();
         return;
     }

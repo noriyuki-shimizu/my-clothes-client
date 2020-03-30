@@ -2,7 +2,7 @@ import { RouteConfig } from 'vue-router';
 
 const routes: RouteConfig[] = [
     {
-        path: '/sign-in/:again',
+        path: '/sign-in',
         name: 'signIn',
         component: () => import('../views/SignIn.vue'),
         meta: { requiresAuth: false }
@@ -55,7 +55,7 @@ const routes: RouteConfig[] = [
                 meta: { requiresAuth: true }
             },
             {
-                path: '/maintenance/brand/new/:again',
+                path: '/maintenance/brand/new',
                 name: 'brandNew',
                 component: () => import('../views/parts/brand/New.vue'),
                 meta: { requiresAuth: true }
@@ -73,7 +73,7 @@ const routes: RouteConfig[] = [
                 meta: { requiresAuth: true }
             },
             {
-                path: '/maintenance/genre/new/:again',
+                path: '/maintenance/genre/new',
                 name: 'genreNew',
                 component: () => import('../views/parts/genre/New.vue'),
                 meta: { requiresAuth: true }
@@ -91,7 +91,7 @@ const routes: RouteConfig[] = [
                 meta: { requiresAuth: true }
             },
             {
-                path: '/maintenance/shop/new/:again',
+                path: '/maintenance/shop/new',
                 name: 'shopNew',
                 component: () => import('../views/parts/shop/New.vue'),
                 meta: { requiresAuth: true }
@@ -109,7 +109,7 @@ const routes: RouteConfig[] = [
                 meta: { requiresAuth: true }
             },
             {
-                path: '/maintenance/clothes/new/:again',
+                path: '/maintenance/clothes/new',
                 name: 'clothesNew',
                 component: () => import('../views/parts/clothes/New.vue'),
                 meta: { requiresAuth: true }

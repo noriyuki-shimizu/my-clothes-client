@@ -57,8 +57,8 @@ export default class New extends Vue {
         this.$success({
             title: 'Create success 👏',
             onOk: () => {
-                if (this.$route.params.again) {
-                    this.$router.push({ name: 'clothesNew' });
+                if (this.$route.query.next === 'back') {
+                    this.$router.back();
                     return;
                 }
                 this.$router.push({ name: 'brand' });

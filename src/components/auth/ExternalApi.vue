@@ -63,7 +63,7 @@ export default class SignIn extends Vue {
 
         try {
             await this.$store.dispatch('user/signInWithGoogle');
-            toHome(this.$route.params.again, this.$router);
+            toHome(this.$route.query.next, this.$router);
         } catch (err) {
             this.spinning = false;
             this.message = isFirebaseExternalApiAuthError(err)
@@ -78,7 +78,7 @@ export default class SignIn extends Vue {
 
         try {
             await this.$store.dispatch('user/signInWithTwitter');
-            toHome(this.$route.params.again, this.$router);
+            toHome(this.$route.query.next, this.$router);
         } catch (err) {
             this.spinning = false;
             this.message = isFirebaseExternalApiAuthError(err)
@@ -93,7 +93,7 @@ export default class SignIn extends Vue {
 
         try {
             await this.$store.dispatch('user/signInWithFacebook');
-            toHome(this.$route.params.again, this.$router);
+            toHome(this.$route.query.next, this.$router);
         } catch (err) {
             this.spinning = false;
             this.message = isFirebaseExternalApiAuthError(err)

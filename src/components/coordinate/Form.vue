@@ -97,7 +97,7 @@
 
             <router-link
                 v-if="!dataSource.length"
-                :to="'/maintenance/clothes/new/again'"
+                :to="'/maintenance/clothes/new?next=back'"
             >
                 Please create a clothes
             </router-link>
