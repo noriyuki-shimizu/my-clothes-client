@@ -202,17 +202,15 @@ export default class CoordinateForm extends Vue {
         const coordinateItems = this.$store.getters[
             'coordinate/coordinateItems'
         ];
-        return coordinateItems.map(coordinateItem => ({
-            key: coordinateItem.id,
-            price: String(coordinateItem.price),
-            imageLink: coordinateItem.imageLink,
-            brandName: coordinateItem.brandName,
-            shopName: coordinateItem.shopName,
-            genres: coordinateItem.genres,
-            buyDate: coordinateItem.buyDate,
-            comment: coordinateItem.comment,
-            satisfaction: coordinateItem.satisfaction
-        })) as Record[];
+
+        return coordinateItems.map(coordinateItem => {
+            const { id, price, ...items } = coordinateItem;
+            return {
+                key: coordinateItem.id,
+                price: String(coordinateItem.price),
+                ...items
+            };
+        }) as Record[];
     }
 
     @Emit('on-select')
