@@ -1,20 +1,28 @@
 import Vue from 'vue';
 import { NavigationGuard, RouteRecord } from 'vue-router';
 import store from '@/store';
+import api from '@/plugins/api';
+import { handleForbiddenError } from '@/util/errorHandle';
 
 const isRequiresAuth = (record: RouteRecord): boolean =>
     record.meta.requiresAuth;
 
 const guard: NavigationGuard<Vue> = (to, _, next) => {
-    if (to.matched.some(isRequiresAuth)) {
-        // Already authenticated.
-        const currentUser: firebase.User | null =
-            store.getters['user/currentUser'];
-        currentUser ? next() : next({ name: 'signIn' });
-
+    if (!to.matched.some(isRequiresAuth)) {
+        next();
         return;
     }
-    next();
+
+    if (!store.getters['user/currentUser']) {
+        next({ name: 'signIn' });
+        return;
+    }
+
+    api.post(`/${store.getters['user/id']}/routing`, to.fullPath)
+        .then(() => next())
+        .catch(err => {
+            handleForbiddenError(err, store, next);
+        });
 };
 
 export default guard;
