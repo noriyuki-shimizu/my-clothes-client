@@ -92,3 +92,5 @@ export const columns: Partial<Column>[] = [
         scopedSlots: { customRender: 'operation' }
     }
 ];
+
+export default {};

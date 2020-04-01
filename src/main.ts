@@ -1,11 +1,10 @@
 import Vue from 'vue';
-import App from './App.vue';
-import router from './router';
-import store from './store';
-
 import setAntdComponents from '@/plugins/antd/components';
 import firebaseApp from '@/plugins/firebase/app';
 import firebaseAuth from '@/plugins/firebase/auth';
+import App from './App.vue';
+import router from './router';
+import store from './store';
 
 setAntdComponents(Vue);
 Vue.config.productionTip = false;

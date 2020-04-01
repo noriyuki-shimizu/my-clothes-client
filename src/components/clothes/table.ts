@@ -118,3 +118,5 @@ export const getColumns = (
         }
     ];
 };
+
+export default {};

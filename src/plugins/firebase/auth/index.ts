@@ -35,17 +35,17 @@ export default {
         return firebase.auth().currentUser;
     },
 
-    async signInWithGoogle(): Promise<firebase.auth.UserCredential> {
+    signInWithGoogle(): Promise<firebase.auth.UserCredential> {
         const provider = new firebase.auth.GoogleAuthProvider();
         return firebase.auth().signInWithPopup(provider);
     },
 
-    async signInWithTwitter(): Promise<firebase.auth.UserCredential> {
+    signInWithTwitter(): Promise<firebase.auth.UserCredential> {
         const provider = new firebase.auth.TwitterAuthProvider();
         return firebase.auth().signInWithPopup(provider);
     },
 
-    async signInWithFacebook(): Promise<firebase.auth.UserCredential> {
+    signInWithFacebook(): Promise<firebase.auth.UserCredential> {
         const provider = new firebase.auth.FacebookAuthProvider();
         return firebase.auth().signInWithPopup(provider);
     },

@@ -10,3 +10,5 @@ export const formItemLayout: Readonly<ExPartial<Form>> = {
         sm: { span: 16, offset: 0 }
     }
 };
+
+export default {};

@@ -20,7 +20,8 @@ module.exports = {
             }
         ],
         'import/no-unresolved': 'off',
-        'import/extensions': 'off'
+        'import/extensions': 'off',
+        'import/no-cycle': 'off'
     },
     parserOptions: {
         parser: '@typescript-eslint/parser'

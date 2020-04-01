@@ -7,3 +7,5 @@ export const sleep = (waitMsec: number = 1000) => {
     const startMsec = new Date().getTime();
     while (new Date().getTime() - startMsec < waitMsec);
 };
+
+export default {};

@@ -10,3 +10,5 @@ export const toHome = (
     }
     router.push({ name: 'home' });
 };
+
+export default {};
