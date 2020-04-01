@@ -10,7 +10,7 @@
                 shape="circle"
                 icon="reload"
                 size="small"
-                @click="fetchGenres"
+                @click="reloadGenres"
                 :loading="loading"
             ></a-button>
         </a-tooltip>
@@ -146,7 +146,12 @@ export default class GenreTable extends Vue {
         }
     }
 
-    async fetchGenres() {
+    reloadGenres() {
+        this.$store.commit('genre/genresStateChange', []);
+        this.fetchGenres();
+    }
+
+    private async fetchGenres() {
         this.loading = true;
         await this.$store
             .dispatch('genre/fetchGenres')

@@ -10,7 +10,7 @@
                 shape="circle"
                 icon="reload"
                 size="small"
-                @click="fetchBrands"
+                @click="reloadBrand"
                 :loading="loading"
             ></a-button>
         </a-tooltip>
@@ -170,12 +170,17 @@ export default class BrandTable extends Vue {
         }
     }
 
-    async fetchBrands() {
+    private async fetchBrands() {
         this.loading = true;
         await this.$store
             .dispatch('brand/fetchBrands')
             .catch((err: any) => this.$emit('on-error', err));
         this.loading = false;
+    }
+
+    reloadBrand() {
+        this.$store.commit('brand/brandsStateChange', []);
+        this.fetchBrands();
     }
 
     get brands() {

@@ -33,7 +33,7 @@
                 shape="circle"
                 icon="reload"
                 size="small"
-                @click="fetchCoordinates"
+                @click="reloadCoordinates"
                 :loading="loading"
             ></a-button>
         </a-tooltip>
@@ -115,19 +115,17 @@ export default class Index extends Vue {
         this.fetchCoordinates();
     }
 
-    async fetchCoordinates() {
+    reloadCoordinates() {
+        this.$store.commit('coordinate/coordinateStateChange', []);
+        this.fetchCoordinates();
+    }
+
+    private async fetchCoordinates() {
         this.loading = true;
         await this.$store
             .dispatch('coordinate/fetchCoordinates')
             .catch(this.onError);
         this.loading = false;
-    }
-
-    get dataSource() {
-        const coordinates = this.$store.getters['coordinate/coordinates'];
-        return coordinates.filter(
-            coordinate => coordinate.season === this.tabKey
-        );
     }
 
     @Emit('show-coordinate')

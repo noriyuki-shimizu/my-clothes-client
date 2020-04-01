@@ -189,7 +189,12 @@ export default class ShopTable extends Vue {
         }
     }
 
-    async fetchShops() {
+    reloadShops() {
+        this.$store.commit('shop/shopsStateChange', []);
+        this.fetchShops();
+    }
+
+    private async fetchShops() {
         this.loading = true;
         await this.$store
             .dispatch('shop/fetchShops')

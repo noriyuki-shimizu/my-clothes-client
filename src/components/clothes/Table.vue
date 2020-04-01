@@ -141,6 +141,8 @@ export default class ClothesTable extends Vue {
     }
 
     reloadClothes() {
+        this.$store.commit('clothes/clothesStateChange', []);
+
         const despatches: ClothesDispatches[] = [
             'clothes/fetchAssistGenres',
             'clothes/fetchAssistBrands',
@@ -151,7 +153,7 @@ export default class ClothesTable extends Vue {
         this.fetchClothes(despatches);
     }
 
-    async fetchClothes(despatches: ClothesDispatches[]) {
+    private async fetchClothes(despatches: ClothesDispatches[]) {
         this.loading = true;
 
         await Promise.all(
