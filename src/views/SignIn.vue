@@ -3,7 +3,7 @@
         <div id="sign_in">
             <h1>Sign in</h1>
             <a-divider />
-            <ExternalApi />
+            <external-api />
         </div>
         <div id="sign_in_footer">
             <app-footer />
@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Emit } from 'vue-property-decorator';
+import { Vue, Component } from 'vue-property-decorator';
 
 import ExternalApi from '@/components/auth/ExternalApi.vue';
 import AppFooter from '@/components/layout/Footer.vue';
