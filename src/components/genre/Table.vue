@@ -1,106 +1,126 @@
 <template>
-    <a-table
-        :dataSource="dataSource"
-        :columns="columns"
-        :scroll="{ x: 700, y: 630 }"
-        :pagination="false"
-        :loading="loading"
-    >
-        <span slot="color" slot-scope="color">
-            <a-tag :color="color">
-                {{ color }}
-            </a-tag>
-        </span>
-
-        <div
-            slot="filterDropdown"
-            slot-scope="{
-                setSelectedKeys,
-                selectedKeys,
-                confirm,
-                clearFilters,
-                column
-            }"
-            style="padding: 8px"
-        >
-            <a-input
-                :placeholder="`Search ${column.dataIndex}`"
-                :value="selectedKeys[0]"
-                @change="
-                    e => setSelectedKeys(e.target.value ? [e.target.value] : [])
-                "
-                @pressEnter="() => handleSearch(selectedKeys, confirm)"
-                style="width: 188px; margin-bottom: 8px; display: block;"
-            />
+    <div>
+        <a-tooltip>
+            <template slot="title">
+                List reload
+            </template>
             <a-button
+                class="reload-button"
                 type="primary"
-                @click="() => handleSearch(selectedKeys, confirm)"
-                icon="search"
+                shape="circle"
+                icon="reload"
                 size="small"
-                style="width: 90px; margin-right: 8px"
-                >Search</a-button
-            >
-            <a-button
-                @click="() => handleReset(clearFilters)"
-                size="small"
-                style="width: 90px"
-                >Reset</a-button
-            >
-        </div>
-
-        <a-icon
-            slot="filterIcon"
-            slot-scope="filtered"
-            type="search"
-            :style="{ color: filtered ? '#108ee9' : undefined }"
-        />
-
-        <template slot="operation" slot-scope="record">
-            <router-link :to="`/maintenance/genre/${record.key}`">
-                <a-icon type="edit" />
-                edit
-            </router-link>
-            /
-            <a>
-                <a-popconfirm
-                    title="Are you sure delete this genre?"
-                    placement="topRight"
-                    @confirm="() => onDelete(record.key)"
-                    okText="Yes"
-                    cancelText="No"
-                >
-                    <a-icon type="delete" />
-                    delete
-                </a-popconfirm>
-            </a>
-        </template>
-
-        <template slot="customRender" slot-scope="text">
-            <span v-if="searchText">
-                <template
-                    v-for="(fragment, i) in text
-                        .toString()
-                        .split(
-                            new RegExp(
-                                `(?<=${searchText})|(?=${searchText})`,
-                                'i'
-                            )
-                        )"
-                >
-                    <mark
-                        v-if="
-                            fragment.toLowerCase() === searchText.toLowerCase()
-                        "
-                        :key="i"
-                        class="highlight"
-                        >{{ fragment }}</mark
-                    >
-                    <template v-else>{{ fragment }}</template>
-                </template>
+                @click="fetchGenres"
+                :loading="loading"
+            ></a-button>
+        </a-tooltip>
+        <a-table
+            :dataSource="dataSource"
+            :columns="columns"
+            :scroll="{ x: 700, y: 630 }"
+            :pagination="false"
+            :loading="loading"
+        >
+            <span slot="color" slot-scope="color">
+                <a-tag :color="color">
+                    {{ color }}
+                </a-tag>
             </span>
-            <template v-else>{{ text }}</template>
-        </template>
-    </a-table>
+
+            <div
+                slot="filterDropdown"
+                slot-scope="{
+                    setSelectedKeys,
+                    selectedKeys,
+                    confirm,
+                    clearFilters,
+                    column
+                }"
+                style="padding: 8px"
+            >
+                <a-input
+                    :placeholder="`Search ${column.dataIndex}`"
+                    :value="selectedKeys[0]"
+                    @change="
+                        e =>
+                            setSelectedKeys(
+                                e.target.value ? [e.target.value] : []
+                            )
+                    "
+                    @pressEnter="() => handleSearch(selectedKeys, confirm)"
+                    style="width: 188px; margin-bottom: 8px; display: block;"
+                />
+                <a-button
+                    type="primary"
+                    @click="() => handleSearch(selectedKeys, confirm)"
+                    icon="search"
+                    size="small"
+                    style="width: 90px; margin-right: 8px"
+                    >Search</a-button
+                >
+                <a-button
+                    @click="() => handleReset(clearFilters)"
+                    size="small"
+                    style="width: 90px"
+                    >Reset</a-button
+                >
+            </div>
+
+            <a-icon
+                slot="filterIcon"
+                slot-scope="filtered"
+                type="search"
+                :style="{ color: filtered ? '#108ee9' : undefined }"
+            />
+
+            <template slot="operation" slot-scope="record">
+                <router-link :to="`/maintenance/genre/${record.key}`">
+                    <a-icon type="edit" />
+                    edit
+                </router-link>
+                /
+                <a>
+                    <a-popconfirm
+                        title="Are you sure delete this genre?"
+                        placement="topRight"
+                        @confirm="() => onDelete(record.key)"
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <a-icon type="delete" />
+                        delete
+                    </a-popconfirm>
+                </a>
+            </template>
+
+            <template slot="customRender" slot-scope="text">
+                <span v-if="searchText">
+                    <template
+                        v-for="(fragment, i) in text
+                            .toString()
+                            .split(
+                                new RegExp(
+                                    `(?<=${searchText})|(?=${searchText})`,
+                                    'i'
+                                )
+                            )"
+                    >
+                        <mark
+                            v-if="
+                                fragment.toLowerCase() ===
+                                    searchText.toLowerCase()
+                            "
+                            :key="i"
+                            class="highlight"
+                            >{{ fragment }}</mark
+                        >
+                        <template v-else>{{ fragment }}</template>
+                    </template>
+                </span>
+                <template v-else>{{ text }}</template>
+            </template>
+        </a-table>
+    </div>
 </template>
 
 <script lang="ts">
@@ -120,14 +140,18 @@ export default class GenreTable extends Vue {
 
     columns = columns;
 
-    async created() {
+    created() {
         if (!this.genres.length) {
-            this.loading = true;
-            await this.$store
-                .dispatch('genre/fetchGenres')
-                .catch((err: any) => this.$emit('on-error', err));
-            this.loading = false;
+            this.fetchGenres();
         }
+    }
+
+    async fetchGenres() {
+        this.loading = true;
+        await this.$store
+            .dispatch('genre/fetchGenres')
+            .catch((err: any) => this.$emit('on-error', err));
+        this.loading = false;
     }
 
     get genres() {
@@ -172,5 +196,10 @@ export default class GenreTable extends Vue {
 .highlight {
     background-color: rgb(255, 192, 105);
     padding: 0px;
+}
+
+.reload-button {
+    margin-left: 15px;
+    margin-bottom: 15px;
 }
 </style>

@@ -1,78 +1,100 @@
 <template>
-    <a-table
-        :dataSource="dataSource"
-        :columns="columns"
-        :scroll="{ x: 1850, y: 570 }"
-        :pagination="{ pageSize: 50 }"
-        :loading="loading"
-    >
-        <span slot="genres" slot-scope="genres">
-            <a-tag v-for="(genre, i) in genres" :color="genre.color" :key="i">
-                {{ genre.name }}
-            </a-tag>
-        </span>
-
-        <span slot="price" slot-scope="price">
-            <div class="column-price">
-                {{ price }}
-            </div>
-        </span>
-
-        <span slot="satisfaction" slot-scope="satisfaction">
-            <a-rate
-                :defaultValue="satisfaction"
-                disabled
-                allow-half
-                style="text-align: center !important"
-            />
-        </span>
-
-        <a-icon
-            slot="filterIcon"
-            slot-scope="filtered"
-            type="search"
-            :style="{ color: filtered ? '#108ee9' : undefined }"
-        />
-
-        <span slot="imageLink" slot-scope="imageLink">
-            <img
-                class="clothes-image"
-                :src="imageLink ? imageLink : require('@/assets/no-img.png')"
-            />
-        </span>
-
-        <template slot="operation" slot-scope="record">
-            <router-link :to="`/maintenance/clothes/${record.key}`">
-                <a-icon type="edit" />
-                edit
-            </router-link>
-            /
-            <a>
-                <a-popconfirm
-                    v-if="record.deleted === 'Not deleted'"
-                    title="Are you sure delete this clothes?"
-                    placement="topRight"
-                    @confirm="() => onDelete(record.key)"
-                    okText="Yes"
-                    cancelText="No"
+    <div>
+        <a-tooltip>
+            <template slot="title">
+                List reload
+            </template>
+            <a-button
+                class="reload-button"
+                type="primary"
+                shape="circle"
+                icon="reload"
+                size="small"
+                @click="reloadClothes"
+                :loading="loading"
+            ></a-button>
+        </a-tooltip>
+        <a-table
+            :dataSource="dataSource"
+            :columns="columns"
+            :scroll="{ x: 1850, y: 570 }"
+            :pagination="{ pageSize: 50 }"
+            :loading="loading"
+        >
+            <span slot="genres" slot-scope="genres">
+                <a-tag
+                    v-for="(genre, i) in genres"
+                    :color="genre.color"
+                    :key="i"
                 >
-                    <a-icon type="delete" />
-                    delete
-                </a-popconfirm>
-                <a-popconfirm
-                    v-else
-                    title="Are you sure restoration this clothes?"
-                    @confirm="() => onRestoration(record.key)"
-                    placement="topRight"
-                    okText="Yes"
-                    cancelText="No"
-                >
-                    <a-icon type="undo" />
-                    restoration
-                </a-popconfirm>
-            </a>
-        </template>
-    </a-table>
+                    {{ genre.name }}
+                </a-tag>
+            </span>
+
+            <span slot="price" slot-scope="price">
+                <div class="column-price">
+                    {{ price }}
+                </div>
+            </span>
+
+            <span slot="satisfaction" slot-scope="satisfaction">
+                <a-rate
+                    :defaultValue="satisfaction"
+                    disabled
+                    allow-half
+                    style="text-align: center !important"
+                />
+            </span>
+
+            <a-icon
+                slot="filterIcon"
+                slot-scope="filtered"
+                type="search"
+                :style="{ color: filtered ? '#108ee9' : undefined }"
+            />
+
+            <span slot="imageLink" slot-scope="imageLink">
+                <img
+                    class="clothes-image"
+                    :src="
+                        imageLink ? imageLink : require('@/assets/no-img.png')
+                    "
+                />
+            </span>
+
+            <template slot="operation" slot-scope="record">
+                <router-link :to="`/maintenance/clothes/${record.key}`">
+                    <a-icon type="edit" />
+                    edit
+                </router-link>
+                /
+                <a>
+                    <a-popconfirm
+                        v-if="record.deleted === 'Not deleted'"
+                        title="Are you sure delete this clothes?"
+                        placement="topRight"
+                        @confirm="() => onDelete(record.key)"
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <a-icon type="delete" />
+                        delete
+                    </a-popconfirm>
+                    <a-popconfirm
+                        v-else
+                        title="Are you sure restoration this clothes?"
+                        @confirm="() => onRestoration(record.key)"
+                        placement="topRight"
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <a-icon type="undo" />
+                        restoration
+                    </a-popconfirm>
+                </a>
+            </template>
+        </a-table>
+    </div>
 </template>
 
 <script lang="ts">
@@ -81,6 +103,12 @@ import * as Vuex from 'vuex';
 
 import { getColumns } from '@/components/clothes/table';
 import { Record } from '@/components/clothes/type';
+
+type ClothesDispatches =
+    | 'clothes/fetchClothes'
+    | 'clothes/fetchAssistGenres'
+    | 'clothes/fetchAssistBrands'
+    | 'clothes/fetchAssistShops';
 
 @Component
 export default class ClothesTable extends Vue {
@@ -96,20 +124,39 @@ export default class ClothesTable extends Vue {
         this.$store.getters['clothes/assistGenres']
     );
 
-    async created() {
+    created() {
         this.$emit('on-reset-message');
-        this.loading = true;
+
+        const despatches: ClothesDispatches[] = [
+            'clothes/fetchAssistGenres',
+            'clothes/fetchAssistBrands',
+            'clothes/fetchAssistShops'
+        ];
 
         if (!this.clothes.length) {
-            await this.$store
-                .dispatch('clothes/fetchClothes')
-                .catch((err: any) => this.$emit('on-error', err));
+            despatches.push('clothes/fetchClothes');
         }
-        await Promise.all([
-            this.$store.dispatch('clothes/fetchAssistGenres'),
-            this.$store.dispatch('clothes/fetchAssistBrands'),
-            this.$store.dispatch('clothes/fetchAssistShops')
-        ]).catch(err => {
+
+        this.fetchClothes(despatches);
+    }
+
+    reloadClothes() {
+        const despatches: ClothesDispatches[] = [
+            'clothes/fetchAssistGenres',
+            'clothes/fetchAssistBrands',
+            'clothes/fetchAssistShops',
+            'clothes/fetchClothes'
+        ];
+
+        this.fetchClothes(despatches);
+    }
+
+    async fetchClothes(despatches: ClothesDispatches[]) {
+        this.loading = true;
+
+        await Promise.all(
+            despatches.map(despatch => this.$store.dispatch(despatch))
+        ).catch(err => {
             this.$emit('on-error', err);
         });
 
@@ -197,5 +244,10 @@ export default class ClothesTable extends Vue {
 
 .column-price {
     text-align: right !important;
+}
+
+.reload-button {
+    margin-left: 15px;
+    margin-bottom: 15px;
 }
 </style>

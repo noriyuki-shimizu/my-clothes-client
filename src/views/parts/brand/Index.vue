@@ -70,14 +70,11 @@ export default class Brand extends Vue {
 }
 
 #operation_field {
-    padding-bottom: 20px;
-}
-
-#operation_field {
     position: absolute;
     left: 0;
     width: 100%;
     padding-right: 60px;
+    padding-bottom: 20px;
     text-align: right;
 }
 </style>

@@ -23,6 +23,21 @@
             showIcon
         />
 
+        <a-tooltip>
+            <template slot="title">
+                List reload
+            </template>
+            <a-button
+                class="reload-button"
+                type="primary"
+                shape="circle"
+                icon="reload"
+                size="small"
+                @click="fetchCoordinates"
+                :loading="loading"
+            ></a-button>
+        </a-tooltip>
+
         <a-tabs :defaultActiveKey="tabKey" @change="callback" type="card">
             <a-tab-pane tab="Spring" key="spring">
                 <coordinate-list
@@ -92,12 +107,20 @@ export default class Index extends Vue {
 
     visible = false;
 
+    loading = false;
+
     tabKey = getSeason(new Date());
 
-    async created() {
+    created() {
+        this.fetchCoordinates();
+    }
+
+    async fetchCoordinates() {
+        this.loading = true;
         await this.$store
             .dispatch('coordinate/fetchCoordinates')
             .catch(this.onError);
+        this.loading = false;
     }
 
     get dataSource() {
@@ -150,5 +173,10 @@ export default class Index extends Vue {
 
 .alert-message {
     margin-bottom: 20px;
+}
+
+.reload-button {
+    margin-left: 15px;
+    margin-bottom: 15px;
 }
 </style>
