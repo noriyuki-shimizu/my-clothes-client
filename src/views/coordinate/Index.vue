@@ -2,6 +2,17 @@
     <div>
         <div id="operation_field">
             <a-button
+                class="reload-button"
+                type="primary"
+                size="large"
+                icon="reload"
+                :loading="loading"
+                @click="reloadCoordinates"
+            >
+                Reload list
+            </a-button>
+
+            <a-button
                 type="primary"
                 icon="edit"
                 size="large"
@@ -22,21 +33,6 @@
             :type="message.type"
             showIcon
         />
-
-        <a-tooltip>
-            <template slot="title">
-                List reload
-            </template>
-            <a-button
-                class="reload-button"
-                type="primary"
-                shape="circle"
-                icon="reload"
-                size="small"
-                @click="reloadCoordinates"
-                :loading="loading"
-            ></a-button>
-        </a-tooltip>
 
         <a-tabs :defaultActiveKey="tabKey" @change="callback" type="card">
             <a-tab-pane tab="Spring" key="spring">
@@ -174,7 +170,6 @@ export default class Index extends Vue {
 }
 
 .reload-button {
-    margin-left: 15px;
-    margin-bottom: 15px;
+    margin-right: 20px;
 }
 </style>

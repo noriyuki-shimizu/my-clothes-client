@@ -2,6 +2,17 @@
     <div>
         <div id="operation_field">
             <a-button
+                class="reload-button"
+                type="primary"
+                size="large"
+                icon="reload"
+                :loading="loading"
+                @click="reloadShops"
+            >
+                Reload list
+            </a-button>
+
+            <a-button
                 type="primary"
                 icon="file-add"
                 size="large"
@@ -22,6 +33,8 @@
         />
 
         <shop-table
+            :shops="shops"
+            :loading="loading"
             v-on:on-error="onError"
             v-on:on-reset-message="onResetMessage"
         />
@@ -47,6 +60,33 @@ export default class Shop extends Vue {
     $store!: Vuex.ExStore;
 
     message: AppMessage = resetMessage();
+
+    loading = false;
+
+    created() {
+        this.$emit('on-reset-message');
+
+        if (!this.shops.length) {
+            this.fetchShops();
+        }
+    }
+
+    reloadShops() {
+        this.$store.commit('shop/shopsStateChange', []);
+        this.fetchShops();
+    }
+
+    private async fetchShops() {
+        this.loading = true;
+        await this.$store
+            .dispatch('shop/fetchShops')
+            .catch((err: any) => this.$emit('on-error', err));
+        this.loading = false;
+    }
+
+    get shops() {
+        return this.$store.getters['shop/shops'];
+    }
 
     @Emit('on-reset-message')
     onResetMessage() {
@@ -87,5 +127,9 @@ export default class Shop extends Vue {
     width: 100%;
     padding-right: 60px;
     text-align: right;
+}
+
+.reload-button {
+    margin-right: 20px;
 }
 </style>

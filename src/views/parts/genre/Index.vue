@@ -2,6 +2,17 @@
     <div>
         <div id="operation_field">
             <a-button
+                class="reload-button"
+                type="primary"
+                size="large"
+                icon="reload"
+                :loading="loading"
+                @click="reloadGenres"
+            >
+                Reload list
+            </a-button>
+
+            <a-button
                 type="primary"
                 icon="file-add"
                 size="large"
@@ -22,7 +33,11 @@
             showIcon
         />
 
-        <genre-table v-on:on-error="onError" />
+        <genre-table
+            :genres="genres"
+            :loading="loading"
+            v-on:on-error="onError"
+        />
     </div>
 </template>
 
@@ -44,6 +59,31 @@ export default class Genre extends Vue {
     $store!: Vuex.ExStore;
 
     message: AppMessage = resetMessage();
+
+    loading = false;
+
+    created() {
+        if (!this.genres.length) {
+            this.fetchGenres();
+        }
+    }
+
+    reloadGenres() {
+        this.$store.commit('genre/genresStateChange', []);
+        this.fetchGenres();
+    }
+
+    private async fetchGenres() {
+        this.loading = true;
+        await this.$store
+            .dispatch('genre/fetchGenres')
+            .catch((err: any) => this.$emit('on-error', err));
+        this.loading = false;
+    }
+
+    get genres() {
+        return this.$store.getters['genre/genres'];
+    }
 
     get RegistrationNum() {
         return this.$store.getters['genre/genres'].length;
@@ -84,5 +124,9 @@ export default class Genre extends Vue {
     width: 100%;
     padding-right: 60px;
     text-align: right;
+}
+
+.reload-button {
+    margin-right: 20px;
 }
 </style>

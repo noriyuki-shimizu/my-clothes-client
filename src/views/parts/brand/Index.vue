@@ -2,6 +2,17 @@
     <div>
         <div id="operation_field">
             <a-button
+                class="reload-button"
+                type="primary"
+                size="large"
+                icon="reload"
+                :loading="loading"
+                @click="reloadBrand"
+            >
+                Reload list
+            </a-button>
+
+            <a-button
                 type="primary"
                 icon="file-add"
                 size="large"
@@ -11,7 +22,9 @@
             </a-button>
         </div>
         <h1>Brand</h1>
+
         <a-divider />
+
         <a-alert
             class="alert-message"
             v-if="message.isShow"
@@ -21,7 +34,11 @@
             showIcon
         />
 
-        <brand-table v-on:on-error="onError" />
+        <brand-table
+            :brands="brands"
+            :loading="loading"
+            v-on:on-error="onError"
+        />
     </div>
 </template>
 
@@ -33,6 +50,7 @@ import * as Vuex from 'vuex';
 import BrandTable from '@/components/brand/Table.vue';
 import { resetMessage } from '@/util/message';
 import { handleForbiddenError } from '@/util/errorHandle';
+import { Record } from '@/components/brand/type';
 
 @Component({
     components: {
@@ -43,6 +61,31 @@ export default class Brand extends Vue {
     $store!: Vuex.ExStore;
 
     message: AppMessage = resetMessage();
+
+    loading = false;
+
+    async created() {
+        if (!this.brands.length) {
+            this.fetchBrands();
+        }
+    }
+
+    private async fetchBrands() {
+        this.loading = true;
+        await this.$store
+            .dispatch('brand/fetchBrands')
+            .catch((err: any) => this.$emit('on-error', err));
+        this.loading = false;
+    }
+
+    reloadBrand() {
+        this.$store.commit('brand/brandsStateChange', []);
+        this.fetchBrands();
+    }
+
+    get brands() {
+        return this.$store.getters['brand/brands'];
+    }
 
     @Emit('on-error')
     onError(err: any) {
@@ -76,5 +119,9 @@ export default class Brand extends Vue {
     padding-right: 60px;
     padding-bottom: 20px;
     text-align: right;
+}
+
+.reload-button {
+    margin-right: 20px;
 }
 </style>

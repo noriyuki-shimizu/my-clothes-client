@@ -1,150 +1,128 @@
 <template>
-    <div>
-        <a-tooltip>
-            <template slot="title">
-                List reload
-            </template>
-            <a-button
-                class="reload-button"
-                type="primary"
-                shape="circle"
-                icon="reload"
-                size="small"
-                @click="reloadBrand"
-                :loading="loading"
-            ></a-button>
-        </a-tooltip>
-        <a-table
-            :dataSource="dataSource"
-            :columns="columns"
-            :scroll="{ x: 1000, y: 570 }"
-            :pagination="{ pageSize: 30 }"
-            :loading="loading"
+    <a-table
+        :dataSource="dataSource"
+        :columns="columns"
+        :scroll="{ x: 1000, y: 570 }"
+        :pagination="{ pageSize: 30 }"
+        :loading="loading"
+    >
+        <div
+            slot="filterDropdown"
+            slot-scope="{
+                setSelectedKeys,
+                selectedKeys,
+                confirm,
+                clearFilters,
+                column
+            }"
+            style="padding: 8px"
         >
-            <div
-                slot="filterDropdown"
-                slot-scope="{
-                    setSelectedKeys,
-                    selectedKeys,
-                    confirm,
-                    clearFilters,
-                    column
-                }"
-                style="padding: 8px"
-            >
-                <a-input
-                    :placeholder="`Search ${column.dataIndex}`"
-                    :value="selectedKeys[0]"
-                    @change="
-                        e =>
-                            setSelectedKeys(
-                                e.target.value ? [e.target.value] : []
-                            )
-                    "
-                    @pressEnter="() => handleSearch(selectedKeys, confirm)"
-                    style="width: 188px; margin-bottom: 8px; display: block;"
-                />
-                <a-button
-                    type="primary"
-                    @click="() => handleSearch(selectedKeys, confirm)"
-                    icon="search"
-                    size="small"
-                    style="width: 90px; margin-right: 8px"
-                    >Search</a-button
-                >
-                <a-button
-                    @click="() => handleReset(clearFilters)"
-                    size="small"
-                    style="width: 90px"
-                    >Reset</a-button
-                >
-            </div>
-
-            <a-icon
-                slot="filterIcon"
-                slot-scope="filtered"
-                type="search"
-                :style="{ color: filtered ? '#108ee9' : undefined }"
+            <a-input
+                :placeholder="`Search ${column.dataIndex}`"
+                :value="selectedKeys[0]"
+                @change="
+                    e => setSelectedKeys(e.target.value ? [e.target.value] : [])
+                "
+                @pressEnter="() => handleSearch(selectedKeys, confirm)"
+                style="width: 188px; margin-bottom: 8px; display: block;"
             />
+            <a-button
+                type="primary"
+                @click="() => handleSearch(selectedKeys, confirm)"
+                icon="search"
+                size="small"
+                style="width: 90px; margin-right: 8px"
+                >Search</a-button
+            >
+            <a-button
+                @click="() => handleReset(clearFilters)"
+                size="small"
+                style="width: 90px"
+                >Reset</a-button
+            >
+        </div>
 
-            <span slot="imageLink" slot-scope="imageLink">
-                <img
-                    class="brand-image"
-                    :src="
-                        imageLink ? imageLink : require('@/assets/no-img.png')
-                    "
-                />
+        <a-icon
+            slot="filterIcon"
+            slot-scope="filtered"
+            type="search"
+            :style="{ color: filtered ? '#108ee9' : undefined }"
+        />
+
+        <span slot="imageLink" slot-scope="imageLink">
+            <img
+                class="brand-image"
+                :src="imageLink ? imageLink : require('@/assets/no-img.png')"
+            />
+        </span>
+
+        <span slot="link" slot-scope="link">
+            <a-tooltip v-if="link" placement="topLeft">
+                <template slot="title">
+                    Go web site
+                </template>
+                <a v-if="link" :href="link" target="_blank">{{ link }}</a>
+            </a-tooltip>
+        </span>
+
+        <template slot="operation" slot-scope="record">
+            <router-link :to="`/maintenance/brand/${record.key}`">
+                <a-icon type="edit" />
+                edit
+            </router-link>
+            /
+            <a>
+                <a-popconfirm
+                    v-if="record.deleted === 'Not deleted'"
+                    title="Are you sure delete this brand?"
+                    placement="topRight"
+                    @confirm="() => onDelete(record.key)"
+                    okText="Yes"
+                    cancelText="No"
+                >
+                    <a-icon type="delete" />
+                    delete
+                </a-popconfirm>
+                <a-popconfirm
+                    v-else
+                    title="Are you sure restoration this brand?"
+                    @confirm="() => onRestoration(record.key)"
+                    placement="topRight"
+                    okText="Yes"
+                    cancelText="No"
+                >
+                    <a-icon type="undo" />
+                    restoration
+                </a-popconfirm>
+            </a>
+        </template>
+
+        <template slot="customRender" slot-scope="text">
+            <span v-if="searchText">
+                <template
+                    v-for="(fragment, i) in text
+                        .toString()
+                        .split(
+                            new RegExp(
+                                `(?<=${searchText})|(?=${searchText})`,
+                                'i'
+                            )
+                        )"
+                >
+                    <mark
+                        v-if="
+                            fragment.toLowerCase() === searchText.toLowerCase()
+                        "
+                        :key="i"
+                        class="highlight"
+                        >{{ fragment }}</mark
+                    >
+                    <template v-else>{{ fragment }}</template>
+                </template>
             </span>
-
-            <span slot="link" slot-scope="link">
-                <a-tooltip v-if="link" placement="topLeft">
-                    <template slot="title">
-                        Go web site
-                    </template>
-                    <a v-if="link" :href="link" target="_blank">{{ link }}</a>
-                </a-tooltip>
-            </span>
-
-            <template slot="operation" slot-scope="record">
-                <router-link :to="`/maintenance/brand/${record.key}`">
-                    <a-icon type="edit" />
-                    edit
-                </router-link>
-                /
-                <a>
-                    <a-popconfirm
-                        v-if="record.deleted === 'Not deleted'"
-                        title="Are you sure delete this brand?"
-                        placement="topRight"
-                        @confirm="() => onDelete(record.key)"
-                        okText="Yes"
-                        cancelText="No"
-                    >
-                        <a-icon type="delete" />
-                        delete
-                    </a-popconfirm>
-                    <a-popconfirm
-                        v-else
-                        title="Are you sure restoration this brand?"
-                        @confirm="() => onRestoration(record.key)"
-                        placement="topRight"
-                        okText="Yes"
-                        cancelText="No"
-                    >
-                        <a-icon type="undo" />
-                        restoration
-                    </a-popconfirm>
-                </a>
-            </template>
-
-            <template slot="customRender" slot-scope="text">
-                <span v-if="searchText">
-                    <template
-                        v-for="(fragment, i) in text
-                            .toString()
-                            .split(
-                                new RegExp(
-                                    `(?<=${searchText})|(?=${searchText})`,
-                                    'i'
-                                )
-                            )"
-                    >
-                        <mark
-                            v-if="
-                                fragment.toLowerCase() ===
-                                    searchText.toLowerCase()
-                            "
-                            :key="i"
-                            class="highlight"
-                            >{{ fragment }}</mark
-                        >
-                        <template v-else>{{ fragment }}</template>
-                    </template>
-                </span>
-                <template v-else>{{ text }}</template>
-            </template>
-        </a-table>
-    </div>
+            <template v-else>{{ text }}</template>
+        </template>
+    </a-table>
 </template>
 
 <script lang="ts">
@@ -153,46 +131,28 @@ import * as Vuex from 'vuex';
 
 import { columns } from '@/components/brand/table';
 import { Record } from '@/components/brand/type';
+import { Brand } from '@/store/brand/type';
 
 @Component
 export default class BrandTable extends Vue {
     $store!: Vuex.ExStore;
 
-    loading = false;
-
     searchText = '';
 
     columns = columns;
 
-    async created() {
-        if (!this.brands.length) {
-            this.fetchBrands();
-        }
-    }
+    @Prop({ type: Array as () => Brand[], required: true })
+    brands!: Brand[];
 
-    private async fetchBrands() {
-        this.loading = true;
-        await this.$store
-            .dispatch('brand/fetchBrands')
-            .catch((err: any) => this.$emit('on-error', err));
-        this.loading = false;
-    }
-
-    reloadBrand() {
-        this.$store.commit('brand/brandsStateChange', []);
-        this.fetchBrands();
-    }
-
-    get brands() {
-        return this.$store.getters['brand/brands'];
-    }
+    @Prop({ type: Boolean, required: true })
+    loading!: boolean;
 
     get dataSource() {
         return this.brands.map(brand => ({
             ...brand,
             key: brand.id,
             deleted: brand.isDeleted ? 'Deleted' : 'Not deleted'
-        }));
+        })) as Record[];
     }
 
     handleSearch(selectedKeys: string[], confirm: Function) {
@@ -232,10 +192,5 @@ export default class BrandTable extends Vue {
 .highlight {
     background-color: rgb(255, 192, 105);
     padding: 0px;
-}
-
-.reload-button {
-    margin-left: 15px;
-    margin-bottom: 15px;
 }
 </style>
