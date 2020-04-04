@@ -1,39 +1,24 @@
-# My clothes client
+# My Clothes (フロント)
 
-## Project setup
-```
-npm install
-```
+## Web site
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+* [My Clothes](https://shiminori.site/)
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Purpose
 
-### Run your tests
-```
-npm run test
-```
+* 自分の持っている洋服を管理します
+* 服に関わる情報 (店・ブランド・ジャンル) も同時に管理します
+* 持っている服を組み合わせたコーディネートも管理することができます
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Programming language
 
-### Run your end-to-end tests
-```
-npm run test:e2e
-```
+* Node.js ... v13.11.0
 
-### Run your unit tests
-```
-npm run test:unit
-```
+## Related technology
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+* Firebase ... v7~
+* Vue ... v2~
+
+## Created by
+
+* Noriyuki Shimizu
