@@ -3,7 +3,7 @@ import moment from 'moment';
 import { AssistBrand, AssistShop, AssistGenre } from '@/store/clothes/type';
 import { Record } from '@/components/clothes/type';
 
-export const getColumns = (
+const getColumns = (
     brands: AssistBrand[],
     shops: AssistShop[],
     genres: AssistGenre[]
@@ -108,7 +108,16 @@ export const getColumns = (
             onFilter: (value: string, record: Record) =>
                 record.deleted === value,
             width: 150
-        },
+        }
+    ];
+};
+
+export const getColumnsForTable = (
+    brands: AssistBrand[],
+    shops: AssistShop[],
+    genres: AssistGenre[]
+): Partial<Column>[] => {
+    return getColumns(brands, shops, genres).concat([
         {
             title: 'Operation',
             key: 'operation',
@@ -116,7 +125,15 @@ export const getColumns = (
             width: 200,
             scopedSlots: { customRender: 'operation' }
         }
-    ];
+    ]);
+};
+
+export const getColumnsForFormTable = (
+    brands: AssistBrand[],
+    shops: AssistShop[],
+    genres: AssistGenre[]
+): Partial<Column>[] => {
+    return getColumns(brands, shops, genres);
 };
 
 export default {};

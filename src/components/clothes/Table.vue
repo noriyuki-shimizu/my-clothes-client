@@ -79,7 +79,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 
-import { getColumns } from '@/components/clothes/table';
+import { getColumnsForTable } from '@/components/clothes/table';
 import { Record } from '@/components/clothes/type';
 import { Clothes } from '@/store/clothes/type';
 
@@ -95,7 +95,7 @@ export default class ClothesTable extends Vue {
 
     searchText = '';
 
-    columns = getColumns(
+    columns = getColumnsForTable(
         this.$store.getters['clothes/assistBrands'],
         this.$store.getters['clothes/assistShops'],
         this.$store.getters['clothes/assistGenres']
@@ -167,8 +167,8 @@ export default class ClothesTable extends Vue {
 
 <style scoped>
 .clothes-image {
-    height: 140px;
-    width: 120px;
+    height: 150px;
+    width: 130px;
 }
 
 .highlight {

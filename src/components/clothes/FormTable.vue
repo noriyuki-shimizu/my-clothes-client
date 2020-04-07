@@ -3,7 +3,7 @@
         class="select-item-table"
         :dataSource="tableItems"
         :columns="columns"
-        :scroll="{ x: 1850, y: 570 }"
+        :scroll="{ x: 1650, y: 570 }"
         :pagination="{ pageSize: 50 }"
         :loading="tableLoading"
         :rowSelection="{
@@ -53,7 +53,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 
 import { Record } from './type';
-import { getColumns } from './table';
+import { getColumnsForFormTable } from './table';
 
 @Component
 export default class ClothesFormTable extends Vue {
@@ -63,7 +63,7 @@ export default class ClothesFormTable extends Vue {
     @Prop({ type: Array as () => number[], default: [] })
     selectedRowKeys?: number[];
 
-    columns = getColumns(
+    columns = getColumnsForFormTable(
         this.$store.getters['clothes/assistBrands'],
         this.$store.getters['clothes/assistShops'],
         this.$store.getters['clothes/assistGenres']
