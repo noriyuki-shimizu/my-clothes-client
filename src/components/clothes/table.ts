@@ -15,7 +15,7 @@ const getColumns = (
             key: 'imageLink',
             fixed: 'left',
             scopedSlots: { customRender: 'imageLink' },
-            width: 170
+            width: 180
         },
         {
             title: 'Brand name',

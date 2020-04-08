@@ -90,14 +90,9 @@ export default class New extends Vue {
     color: #666;
 }
 
-.coordinate-item-table-image {
-    height: 140px;
-    width: 120px;
-}
-
 .selected-item-image {
-    height: 140px;
-    width: 110px;
+    height: 160px;
+    width: 140px;
 }
 
 .alert-message {

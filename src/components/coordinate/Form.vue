@@ -290,14 +290,9 @@ export default class CoordinateForm extends Vue {
     color: #666;
 }
 
-.coordinate-item-table-image {
-    height: 140px;
-    width: 120px;
-}
-
 .selected-item-image {
-    height: 180px;
-    width: 150px;
+    height: 160px;
+    width: 140px;
     margin-bottom: 20px;
 }
 
