@@ -32,6 +32,7 @@
             showIcon
         />
 
+        <p>total item: {{ clothes.length }}</p>
         <clothes-table
             :clothes="clothes"
             :loading="loading"

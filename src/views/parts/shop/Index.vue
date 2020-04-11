@@ -32,6 +32,7 @@
             showIcon
         />
 
+        <p>total item: {{ shops.length }}</p>
         <shop-table
             :shops="shops"
             :loading="loading"

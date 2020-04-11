@@ -33,6 +33,7 @@
             showIcon
         />
 
+        <p>total item: {{ genres.length }}</p>
         <genre-table
             :genres="genres"
             :loading="loading"

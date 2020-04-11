@@ -34,6 +34,7 @@
             showIcon
         />
 
+        <p>total item: {{ brands.length }}</p>
         <brand-table
             :brands="brands"
             :loading="loading"
