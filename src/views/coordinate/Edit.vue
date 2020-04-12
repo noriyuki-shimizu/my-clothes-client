@@ -13,7 +13,7 @@
 
         <coordinate-form
             :target="target"
-            v-on:on-register="onRegister"
+            v-on:on-submit="onSubmit"
             v-on:on-error="onError"
         />
     </div>
@@ -52,8 +52,7 @@ export default class Edit extends Vue {
         );
     }
 
-    @Emit('on-register')
-    async onRegister(values: FormFields) {
+    private async onRegister(values: FormFields) {
         const { target } = this;
         if (!target) {
             this.$router.push({ name: 'coordinate' });
@@ -89,6 +88,18 @@ export default class Edit extends Vue {
                 : `Access URL: ${err.config.url}`,
             type: 'error'
         };
+    }
+
+    @Emit('on-submit')
+    async onSubmit(values: FormFields) {
+        this.$confirm({
+            title: 'Are you sure you want to register?',
+            content: 'The entered information is registered.',
+            onOk: async () => {
+                await this.onRegister(values).catch(this.onError);
+            },
+            onCancel() {}
+        });
     }
 }
 </script>

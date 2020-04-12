@@ -11,10 +11,7 @@
             showIcon
         />
 
-        <coordinate-form
-            v-on:on-register="onRegister"
-            v-on:on-error="onError"
-        />
+        <coordinate-form v-on:on-submit="onSubmit" v-on:on-error="onError" />
     </div>
 </template>
 
@@ -38,8 +35,7 @@ export default class New extends Vue {
 
     message: AppMessage = resetMessage();
 
-    @Emit('on-register')
-    async onRegister(values: FormFields) {
+    private async onRegister(values: FormFields) {
         await this.$store.dispatch('coordinate/onAddCoordinate', values);
 
         this.$success({
@@ -66,6 +62,18 @@ export default class New extends Vue {
                 : `Access URL: ${err.config.url}`,
             type: 'error'
         };
+    }
+
+    @Emit('on-submit')
+    async onSubmit(values: FormFields) {
+        this.$confirm({
+            title: 'Are you sure you want to register?',
+            content: 'The entered information is registered.',
+            onOk: async () => {
+                await this.onRegister(values).catch(this.onError);
+            },
+            onCancel() {}
+        });
     }
 }
 </script>
