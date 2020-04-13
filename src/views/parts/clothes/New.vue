@@ -78,9 +78,3 @@ export default class New extends Vue {
     }
 }
 </script>
-
-<style>
-.alert-message {
-    margin-bottom: 20px;
-}
-</style>

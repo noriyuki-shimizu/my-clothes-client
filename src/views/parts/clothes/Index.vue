@@ -133,8 +133,3 @@ export default class Shop extends Vue {
     }
 }
 </script>
-<style scoped>
-.alert-message {
-    margin-bottom: 20px;
-}
-</style>

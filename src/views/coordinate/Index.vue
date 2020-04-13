@@ -154,20 +154,3 @@ export default class Index extends Vue {
     }
 }
 </script>
-
-<style scoped>
-#operation_field {
-    position: absolute;
-    right: 50px;
-    width: 100%;
-    text-align: right;
-}
-
-.alert-message {
-    margin-bottom: 20px;
-}
-
-.reload-button {
-    margin-right: 20px;
-}
-</style>

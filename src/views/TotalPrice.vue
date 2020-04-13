@@ -1,7 +1,7 @@
 <template>
     <div class="total-price">
         <a-alert
-            class="message"
+            class="alert-message"
             v-if="message.isShow"
             :message="message.text"
             :description="message.description"
@@ -115,28 +115,3 @@ export default class TotalPrice extends Vue {
     }
 }
 </script>
-
-<style>
-.message {
-    margin-bottom: 20px;
-}
-
-.empty-data {
-    padding: 24vh 0;
-}
-
-#pie-chart {
-    height: 60vh !important;
-    width: 35vw !important;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.field-total-price {
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    padding: 10px 16px;
-    text-align: right;
-}
-</style>

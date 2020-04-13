@@ -108,24 +108,3 @@ export default class Shop extends Vue {
     }
 }
 </script>
-<style scoped>
-.alert-message {
-    margin-bottom: 20px;
-}
-
-#operation_field {
-    padding-bottom: 20px;
-}
-
-#operation_field {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    padding-right: 60px;
-    text-align: right;
-}
-
-.reload-button {
-    margin-right: 20px;
-}
-</style>

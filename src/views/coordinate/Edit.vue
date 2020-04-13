@@ -103,8 +103,3 @@ export default class Edit extends Vue {
     }
 }
 </script>
-<style>
-.alert-message {
-    margin-bottom: 20px;
-}
-</style>

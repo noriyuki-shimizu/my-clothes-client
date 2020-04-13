@@ -110,8 +110,3 @@ export default class Genre extends Vue {
     }
 }
 </script>
-<style scoped>
-.alert-message {
-    margin-bottom: 20px;
-}
-</style>

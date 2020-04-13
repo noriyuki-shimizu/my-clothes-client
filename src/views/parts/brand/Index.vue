@@ -101,8 +101,3 @@ export default class Brand extends Vue {
     }
 }
 </script>
-<style scoped>
-.alert-message {
-    margin-bottom: 20px;
-}
-</style>
