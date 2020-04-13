@@ -17,7 +17,7 @@
                     <img
                         class="slide-img"
                         :src="
-                            require(`@/assets/street-fashion-snap/${imageAddress}`)
+                            require(`@/assets/image/street-fashion-snap/${imageAddress}`)
                         "
                     />
                 </div>

@@ -42,7 +42,9 @@
         <span slot="imageLink" slot-scope="imageLink">
             <img
                 class="coordinate-item-table-image"
-                :src="imageLink ? imageLink : require('@/assets/no-img.png')"
+                :src="
+                    imageLink ? imageLink : require('@/assets/image/no-img.png')
+                "
             />
         </span>
     </a-table>

@@ -49,7 +49,7 @@ export default class Layout extends Vue {}
 
 #components-layout-fixed-sider .logo {
     height: 112px;
-    background-image: url('../assets/icon.jpg');
+    background-image: url('../assets/image/icon.jpg');
     background-size: contain;
     background-repeat: space;
     margin: 16px;
