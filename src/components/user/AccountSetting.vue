@@ -6,7 +6,6 @@
             :visible="visible"
             @close="onInputResetAndClose"
             :wrapStyle="{
-                height: 'calc(100% - 108px)',
                 overflow: 'auto',
                 paddingBottom: '108px'
             }"
