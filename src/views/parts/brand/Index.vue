@@ -1,29 +1,22 @@
 <template>
     <div>
-        <div id="operation_field">
-            <a-button
-                class="reload-button"
-                type="primary"
-                size="large"
-                icon="reload"
-                :loading="loading"
-                @click="reloadBrand"
-            >
-                Reload list
-            </a-button>
-
-            <a-button
-                type="primary"
-                icon="file-add"
-                size="large"
-                @click="onNew"
-            >
-                New
-            </a-button>
-        </div>
-        <h1>Brand</h1>
-
-        <a-divider />
+        <a-page-header title="Brand" subTitle="item list">
+            <template slot="extra">
+                <a-button
+                    type="primary"
+                    icon="reload"
+                    key="2"
+                    :loading="loading"
+                    @click="reloadBrand"
+                >
+                    Reload list
+                </a-button>
+                <a-button type="primary" icon="file-add" key="1" @click="onNew">
+                    New
+                </a-button>
+            </template>
+        </a-page-header>
+        <a-divider class="pipe" />
 
         <a-alert
             class="alert-message"
@@ -111,18 +104,5 @@ export default class Brand extends Vue {
 <style scoped>
 .alert-message {
     margin-bottom: 20px;
-}
-
-#operation_field {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    padding-right: 60px;
-    padding-bottom: 20px;
-    text-align: right;
-}
-
-.reload-button {
-    margin-right: 20px;
 }
 </style>

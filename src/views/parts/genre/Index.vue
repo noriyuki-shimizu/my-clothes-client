@@ -1,29 +1,29 @@
 <template>
     <div>
-        <div id="operation_field">
-            <a-button
-                class="reload-button"
-                type="primary"
-                size="large"
-                icon="reload"
-                :loading="loading"
-                @click="reloadGenres"
-            >
-                Reload list
-            </a-button>
+        <a-page-header title="Genre" subTitle="item list">
+            <template slot="extra">
+                <a-button
+                    type="primary"
+                    icon="reload"
+                    key="2"
+                    :loading="loading"
+                    @click="reloadGenres"
+                >
+                    Reload list
+                </a-button>
+                <a-button
+                    type="primary"
+                    icon="file-add"
+                    key="1"
+                    @click="onNew"
+                    :disabled="RegistrationNum > 20"
+                >
+                    New
+                </a-button>
+            </template>
+        </a-page-header>
+        <a-divider class="pipe" />
 
-            <a-button
-                type="primary"
-                icon="file-add"
-                size="large"
-                @click="onNew"
-                :disabled="RegistrationNum > 20"
-            >
-                New
-            </a-button>
-        </div>
-        <h1>Genre</h1>
-        <a-divider />
         <a-alert
             class="alert-message"
             v-if="message.isShow"
@@ -113,21 +113,5 @@ export default class Genre extends Vue {
 <style scoped>
 .alert-message {
     margin-bottom: 20px;
-}
-
-#operation_field {
-    padding-bottom: 20px;
-}
-
-#operation_field {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    padding-right: 60px;
-    text-align: right;
-}
-
-.reload-button {
-    margin-right: 20px;
 }
 </style>

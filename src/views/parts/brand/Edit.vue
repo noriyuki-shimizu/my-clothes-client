@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h1>Update brand</h1>
-        <a-divider />
+        <a-page-header title="Brand" subTitle="update item" />
+        <a-divider class="pipe" />
         <a-alert
             class="alert-message"
             v-if="message.isShow"
@@ -99,30 +99,5 @@ export default class Edit extends Vue {
 <style>
 .alert-message {
     margin-bottom: 20px;
-}
-
-#components-form-validate-other .dropbox {
-    height: 180px;
-    line-height: 1.5;
-}
-
-#preview_image {
-    width: 150px;
-    height: 150px;
-}
-
-.image-uploader > .ant-upload {
-    width: 170px;
-    height: 170px;
-}
-
-.form-submit-button {
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    border-top: 1px solid #e9e9e9;
-    padding: 10px 16px;
-    background: #fff;
-    text-align: right;
 }
 </style>

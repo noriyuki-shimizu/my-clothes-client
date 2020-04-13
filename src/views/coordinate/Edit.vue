@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h1>Update coordinate</h1>
-        <a-divider />
+        <a-page-header title="Coordinate" subTitle="update item" />
+        <a-divider class="pipe" />
         <a-alert
             class="alert-message"
             v-if="message.isShow"

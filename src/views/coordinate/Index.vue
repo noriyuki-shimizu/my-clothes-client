@@ -1,29 +1,27 @@
 <template>
     <div>
-        <div id="operation_field">
-            <a-button
-                class="reload-button"
-                type="primary"
-                size="large"
-                icon="reload"
-                :loading="loading"
-                @click="reloadCoordinates"
-            >
-                Reload list
-            </a-button>
-
-            <a-button
-                type="primary"
-                icon="edit"
-                size="large"
-                @click="$router.push({ name: 'coordinateNew' })"
-            >
-                New
-            </a-button>
-        </div>
-
-        <h1>Coordinate</h1>
-        <a-divider />
+        <a-page-header title="Coordinate" subTitle="item list">
+            <template slot="extra">
+                <a-button
+                    type="primary"
+                    icon="reload"
+                    key="2"
+                    :loading="loading"
+                    @click="reloadCoordinates"
+                >
+                    Reload list
+                </a-button>
+                <a-button
+                    type="primary"
+                    icon="edit"
+                    key="1"
+                    @click="$router.push({ name: 'coordinateNew' })"
+                >
+                    New
+                </a-button>
+            </template>
+        </a-page-header>
+        <a-divider class="pipe" />
 
         <a-alert
             class="alert-message"

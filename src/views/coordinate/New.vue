@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h1>Coordinate New</h1>
-        <a-divider />
+        <a-page-header title="Coordinate" subTitle="new item" />
+        <a-divider class="pipe" />
         <a-alert
             class="alert-message"
             v-if="message.isShow"
@@ -78,36 +78,7 @@ export default class New extends Vue {
 }
 </script>
 <style>
-#preview_image {
-    width: 160px;
-    height: 180px;
-}
-
-.image-uploader > .ant-upload {
-    width: 180px;
-    height: 200px;
-}
-
-.ant-upload-select-picture-card i {
-    font-size: 32px;
-    color: #999;
-}
-
-.ant-upload-select-picture-card .ant-upload-text {
-    margin-top: 8px;
-    color: #666;
-}
-
-.selected-item-image {
-    height: 160px;
-    width: 140px;
-}
-
 .alert-message {
     margin-bottom: 20px;
-}
-
-.select-item-table {
-    padding-bottom: 20px;
 }
 </style>

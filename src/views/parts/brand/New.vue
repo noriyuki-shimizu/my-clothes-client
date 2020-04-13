@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h1>New brand</h1>
-        <a-divider />
+        <a-page-header title="Brand" subTitle="new item" />
+        <a-divider class="pipe" />
         <a-alert
             class="alert-message"
             v-if="message.isShow"
