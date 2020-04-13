@@ -57,7 +57,10 @@ import {
     Skeleton,
     Comment,
     ConfigProvider,
-    Empty
+    Empty,
+    Result,
+    Descriptions,
+    PageHeader
 } from 'ant-design-vue';
 
 export default (Vue: VueConstructor<Vue>) => {
@@ -68,6 +71,7 @@ export default (Vue: VueConstructor<Vue>) => {
     Vue.prototype.$error = Modal.error;
     Vue.prototype.$warning = Modal.warning;
     Vue.prototype.$confirm = Modal.confirm;
+    Vue.prototype.$destroyAll = Modal.destroyAll;
 
     Vue.use(Affix);
     Vue.use(Anchor);
@@ -125,6 +129,9 @@ export default (Vue: VueConstructor<Vue>) => {
     Vue.use(Comment);
     Vue.use(ConfigProvider);
     Vue.use(Empty);
+    Vue.use(Result);
+    Vue.use(Descriptions);
+    Vue.use(PageHeader);
 
     Vue.component(Affix.name, Affix);
     Vue.component(Anchor.name, Anchor);
