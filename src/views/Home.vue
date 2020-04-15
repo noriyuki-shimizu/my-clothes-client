@@ -1,28 +1,23 @@
 <template>
-    <div>
-        <div id="home-title">
-            <h1>My Clothes</h1>
-            <a-carousel autoplay>
-                <div
-                    v-if="!imageAddresses.length"
-                    class="loading-image-address"
-                >
-                    <a-spin size="large" />
-                </div>
-                <div
-                    v-else
-                    v-for="imageAddress in imageAddresses"
-                    :key="imageAddress"
-                >
-                    <img
-                        class="slide-img"
-                        :src="
-                            require(`@/assets/image/street-fashion-snap/${imageAddress}`)
-                        "
-                    />
-                </div>
-            </a-carousel>
-        </div>
+    <div id="home-title">
+        <h1>My Clothes</h1>
+        <a-carousel autoplay>
+            <div v-if="!imageAddresses.length" class="loading-image-address">
+                <a-spin size="large" />
+            </div>
+            <div
+                v-else
+                v-for="imageAddress in imageAddresses"
+                :key="imageAddress"
+            >
+                <img
+                    class="slide-img"
+                    :src="
+                        require(`@/assets/image/street-fashion-snap/${imageAddress}`)
+                    "
+                />
+            </div>
+        </a-carousel>
     </div>
 </template>
 <script lang="ts">
@@ -44,6 +39,10 @@ export default class Home extends Vue {
 <style scoped>
 #home-title {
     text-align: center;
+}
+
+h1 {
+    font-size: 40px;
 }
 
 .loading-image-address {
