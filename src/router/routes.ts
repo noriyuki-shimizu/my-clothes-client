@@ -1,4 +1,6 @@
 import { RouteConfig } from 'vue-router';
+import { Route } from 'ant-design-vue/types/breadcrumb/breadcrumb';
+import { isMobile } from '@/util/userAgent';
 
 const routes: RouteConfig[] = [
     {
@@ -15,118 +17,134 @@ const routes: RouteConfig[] = [
     },
     {
         path: '/',
-        component: () => import('../views/Layout.vue'),
+        component: () => import('../views/web/Layout.vue'),
         meta: { requiresAuth: false },
         children: [
             {
                 path: '/home',
                 name: 'home',
-                component: () => import('../views/Home.vue'),
+                component: () => import('../views/web/Home.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/total-price',
                 name: 'totalPrice',
-                component: () => import('../views/TotalPrice.vue'),
+                component: () => import('../views/web/TotalPrice.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/coordinate',
                 name: 'coordinate',
-                component: () => import('../views/coordinate/Index.vue'),
+                component: () => import('../views/web/coordinate/Index.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/coordinate/new',
                 name: 'coordinateNew',
-                component: () => import('../views/coordinate/New.vue'),
+                component: () => import('../views/web/coordinate/New.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/coordinate/:id',
                 name: 'coordinateEdit',
-                component: () => import('../views/coordinate/Edit.vue'),
+                component: () => import('../views/web/coordinate/Edit.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/brand',
                 name: 'brand',
-                component: () => import('../views/parts/brand/Index.vue'),
+                component: () => import('../views/web/parts/brand/Index.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/brand/new',
                 name: 'brandNew',
-                component: () => import('../views/parts/brand/New.vue'),
+                component: () => import('../views/web/parts/brand/New.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/brand/:id',
                 name: 'brandEdit',
-                component: () => import('../views/parts/brand/Edit.vue'),
+                component: () => import('../views/web/parts/brand/Edit.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/genre',
                 name: 'genre',
-                component: () => import('../views/parts/genre/Index.vue'),
+                component: () => import('../views/web/parts/genre/Index.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/genre/new',
                 name: 'genreNew',
-                component: () => import('../views/parts/genre/New.vue'),
+                component: () => import('../views/web/parts/genre/New.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/genre/:id',
                 name: 'genreEdit',
-                component: () => import('../views/parts/genre/Edit.vue'),
+                component: () => import('../views/web/parts/genre/Edit.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/shop',
                 name: 'shop',
-                component: () => import('../views/parts/shop/Index.vue'),
+                component: () => import('../views/web/parts/shop/Index.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/shop/new',
                 name: 'shopNew',
-                component: () => import('../views/parts/shop/New.vue'),
+                component: () => import('../views/web/parts/shop/New.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/shop/:id',
                 name: 'shopEdit',
-                component: () => import('../views/parts/shop/Edit.vue'),
+                component: () => import('../views/web/parts/shop/Edit.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/clothes',
                 name: 'clothes',
-                component: () => import('../views/parts/clothes/Index.vue'),
+                component: () => import('../views/web/parts/clothes/Index.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/clothes/new',
                 name: 'clothesNew',
-                component: () => import('../views/parts/clothes/New.vue'),
+                component: () => import('../views/web/parts/clothes/New.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/clothes/:id',
                 name: 'clothesEdit',
-                component: () => import('../views/parts/clothes/Edit.vue'),
+                component: () => import('../views/web/parts/clothes/Edit.vue'),
                 meta: { requiresAuth: true }
-            },
+            }
+        ]
+    },
+    {
+        path: '/',
+        component: () => import('../views/mobile/Layout.vue'),
+        meta: { requiresAuth: false },
+        children: [
             {
-                path: '*',
-                redirect: { name: 'home' },
+                path: '/mobile/home',
+                name: 'mobileHome',
+                component: () => import('../views/mobile/Home.vue'),
                 meta: { requiresAuth: true }
             }
         ]
     }
+    // TODO モバイルの実装が完了したら、コメントアウトを戻すこと
+    // {
+    //     path: '*',
+    //     redirect: () => ({
+    //         name: isMobile(navigator.userAgent) ? 'mobileHome' : 'home'
+    //     }),
+    //     meta: { requiresAuth: true }
+    // }
 ];
 
 export default routes;

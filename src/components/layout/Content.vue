@@ -1,5 +1,5 @@
 <template>
-    <div id="content">
+    <div>
         <router-view />
     </div>
 </template>
@@ -10,11 +10,3 @@ import { Vue, Component } from 'vue-property-decorator';
 @Component
 export default class Content extends Vue {}
 </script>
-
-<style scoped>
-#content {
-    padding: 24px;
-    background: #fff;
-    min-height: 85vh;
-}
-</style>
