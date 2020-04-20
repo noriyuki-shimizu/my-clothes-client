@@ -70,7 +70,7 @@ export default class PriceChart extends Vue {
 }
 </script>
 
-<style>
+<style scoped>
 .field-total-price {
     left: 0;
     bottom: 0;
