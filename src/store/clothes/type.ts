@@ -1,8 +1,8 @@
+import { IModuleRootMutations } from '@/store/type';
+import { FormFields } from '@/components/clothes/type';
 import { Brand } from '../brand/type';
 import { Shop } from '../shop/type';
 import { Genre } from '../genre/type';
-import { IModuleRootMutations } from '@/store/type';
-import { FormFields } from '@/components/clothes/type';
 
 export interface AssistGenre extends Genre {}
 
@@ -29,6 +29,7 @@ export interface State {
     assistGenres: AssistGenre[];
     assistBrands: AssistBrand[];
     assistShops: AssistShop[];
+    totalPrice: number;
 }
 
 export interface IGetters {
@@ -36,12 +37,14 @@ export interface IGetters {
     assistGenres: AssistGenre[];
     assistBrands: AssistBrand[];
     assistShops: AssistShop[];
+    totalPrice: number;
 }
 export interface IRootGetters {
     'clothes/clothes': IGetters['clothes'];
     'clothes/assistGenres': IGetters['assistGenres'];
     'clothes/assistBrands': IGetters['assistBrands'];
     'clothes/assistShops': IGetters['assistShops'];
+    'clothes/totalPrice': IGetters['totalPrice'];
 }
 
 export interface IMutations extends IModuleRootMutations {
@@ -54,6 +57,7 @@ export interface IMutations extends IModuleRootMutations {
     assistGenreStateChange: AssistGenre[];
     assistBrandStateChange: AssistBrand[];
     assistShopStateChange: AssistShop[];
+    totalPriceStateChange: number;
 }
 export interface IRootMutations {
     'clothes/allStateReset': IMutations['allStateReset'];
@@ -65,6 +69,7 @@ export interface IRootMutations {
     'clothes/assistGenreStateChange': IMutations['assistGenreStateChange'];
     'clothes/assistBrandStateChange': IMutations['assistBrandStateChange'];
     'clothes/assistShopStateChange': IMutations['assistShopStateChange'];
+    'clothes/totalPriceStateChange': IMutations['totalPriceStateChange'];
 }
 
 export interface IActions {
@@ -72,6 +77,7 @@ export interface IActions {
     fetchAssistGenres: void;
     fetchAssistBrands: void;
     fetchAssistShops: void;
+    fetchTotalPrice: void;
     onAddClothes: FormFields;
     onUpdateClothes: FormFields & Pick<Clothes, 'id'>;
     onDeleteClothes: Clothes['id'];
@@ -82,6 +88,7 @@ export interface IRootActions {
     'clothes/fetchAssistGenres': IActions['fetchAssistGenres'];
     'clothes/fetchAssistBrands': IActions['fetchAssistBrands'];
     'clothes/fetchAssistShops': IActions['fetchAssistShops'];
+    'clothes/fetchTotalPrice': IActions['fetchTotalPrice'];
     'clothes/onAddClothes': IActions['onAddClothes'];
     'clothes/onUpdateClothes': IActions['onUpdateClothes'];
     'clothes/onDeleteClothes': IActions['onDeleteClothes'];

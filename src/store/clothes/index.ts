@@ -19,7 +19,8 @@ const state: State = {
     clothes: [],
     assistGenres: [],
     assistBrands: [],
-    assistShops: []
+    assistShops: [],
+    totalPrice: 0
 };
 
 const getters: Getters<State, IGetters> = {
@@ -34,6 +35,9 @@ const getters: Getters<State, IGetters> = {
     },
     assistShops(state) {
         return state.assistShops;
+    },
+    totalPrice(state) {
+        return state.totalPrice;
     }
 };
 
@@ -98,6 +102,9 @@ const mutations: Mutations<State, IMutations> = {
     },
     assistShopStateChange(state, payload) {
         state.assistShops = payload;
+    },
+    totalPriceStateChange(state, payload) {
+        state.totalPrice = payload;
     }
 };
 
@@ -133,6 +140,14 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         const { data } = response;
 
         ctx.commit('assistShopStateChange', data.assistShops);
+    },
+    async fetchTotalPrice(ctx) {
+        const response = await api.get<number>(
+            `/${ctx.rootGetters['user/id']}/clothes/total-price`
+        );
+        const { data } = response;
+
+        ctx.commit('totalPriceStateChange', data);
     },
     async onAddClothes(ctx, formFields) {
         const {
