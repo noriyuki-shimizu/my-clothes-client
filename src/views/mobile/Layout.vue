@@ -1,6 +1,15 @@
 <template>
     <a-layout id="components-layout-demo-top" class="layout">
         <a-layout-header class="mobile-header">
+            <img
+                class="logo"
+                :src="require('@/assets/image/mobile-icon.png')"
+                @click="
+                    $router.push({
+                        name: 'mobileHome'
+                    })
+                "
+            />
             <head-menu />
         </a-layout-header>
         <a-layout-content id="main_layout_content">
@@ -30,6 +39,13 @@ export default class Layout extends Vue {}
 </script>
 
 <style scoped>
+.logo {
+    width: 75px;
+    height: 50px;
+    margin: 7px;
+    float: left;
+}
+
 .mobile-header {
     padding: 0;
     text-align: right;
@@ -40,6 +56,7 @@ export default class Layout extends Vue {}
 }
 
 #content {
+    min-height: 82vh;
     padding: 24px;
     background: #fff;
 }
