@@ -14,7 +14,9 @@
                 <a-menu-item key="shop">Shop</a-menu-item>
             </a-menu-item-group>
             <a-menu-item>
-                Price chart
+                <router-link to="/mobile/total-price">
+                    Price chart
+                </router-link>
             </a-menu-item>
         </a-sub-menu>
     </a-menu>

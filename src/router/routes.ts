@@ -28,8 +28,8 @@ const routes: RouteConfig[] = [
             },
             {
                 path: '/total-price',
-                name: 'totalPrice',
-                component: () => import('../views/web/TotalPrice.vue'),
+                name: 'priceChart',
+                component: () => import('../views/web/PriceChart.vue'),
                 meta: { requiresAuth: true }
             },
             {
@@ -133,6 +133,12 @@ const routes: RouteConfig[] = [
                 path: '/mobile/home',
                 name: 'mobileHome',
                 component: () => import('../views/mobile/Home.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/mobile/total-price',
+                name: 'mobilePriceChart',
+                component: () => import('../views/mobile/PriceChart.vue'),
                 meta: { requiresAuth: true }
             }
         ]
