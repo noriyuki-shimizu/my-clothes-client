@@ -44,12 +44,12 @@ export default class PriceChart extends Vue {
     chartOptions: Chart.ChartOptions = {
         legend: {
             labels: {
-                boxWidth: 30,
-                fontSize: 25
+                boxWidth: 20,
+                fontSize: 15
             }
         },
         tooltips: {
-            bodyFontSize: 20
+            bodyFontSize: 15
         }
     };
 
