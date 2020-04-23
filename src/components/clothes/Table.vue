@@ -145,24 +145,24 @@ export default class ClothesTable extends Vue {
 
     async onDelete(id: number) {
         this.$emit('on-reset-message');
-        this.loading = true;
+        this.$emit<boolean>('set-loading', true);
 
         await this.$store
             .dispatch('clothes/onDeleteClothes', id)
             .catch((err: any) => this.$emit('on-error', err));
 
-        this.loading = false;
+        this.$emit<boolean>('set-loading', false);
     }
 
     async onRestoration(id: number) {
         this.$emit('on-reset-message');
-        this.loading = true;
+        this.$emit<boolean>('set-loading', true);
 
         await this.$store
             .dispatch('clothes/onRestorationClothes', id)
             .catch((err: any) => this.$emit('on-error', err));
 
-        this.loading = false;
+        this.$emit<boolean>('set-loading', false);
     }
 }
 </script>
