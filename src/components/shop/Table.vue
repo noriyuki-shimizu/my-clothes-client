@@ -184,24 +184,24 @@ export default class ShopTable extends Vue {
 
     async onDelete(id: number) {
         this.$emit('on-reset-message');
-        this.loading = true;
+        this.$emit<boolean>('set-loading', true);
 
         await this.$store
             .dispatch('shop/onDeleteShop', id)
             .catch((err: any) => this.$emit('on-error', err));
 
-        this.loading = false;
+        this.$emit<boolean>('set-loading', false);
     }
 
     async onRestoration(id: number) {
         this.$emit('on-reset-message');
-        this.loading = true;
+        this.$emit<boolean>('set-loading', true);
 
         await this.$store
             .dispatch('shop/onRestorationShop', id)
             .catch((err: any) => this.$emit('on-error', err));
 
-        this.loading = false;
+        this.$emit<boolean>('set-loading', false);
     }
 }
 </script>

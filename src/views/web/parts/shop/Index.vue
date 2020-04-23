@@ -33,6 +33,7 @@
             :loading="loading"
             v-on:on-error="onError"
             v-on:on-reset-message="onResetMessage"
+            v-on:set-loading="setLoading"
         />
     </div>
 </template>
@@ -87,6 +88,11 @@ export default class Shop extends Vue {
     @Emit('on-reset-message')
     onResetMessage() {
         this.message = resetMessage();
+    }
+
+    @Emit('set-loading')
+    setLoading(loading: boolean) {
+        this.loading = loading;
     }
 
     @Emit('on-error')
