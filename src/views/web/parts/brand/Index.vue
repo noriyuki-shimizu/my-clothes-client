@@ -31,6 +31,7 @@
         <brand-table
             :brands="brands"
             :loading="loading"
+            v-on:set-loading="setLoading"
             v-on:on-error="onError"
         />
     </div>
@@ -79,6 +80,11 @@ export default class Brand extends Vue {
 
     get brands() {
         return this.$store.getters['brand/brands'];
+    }
+
+    @Emit('set-loading')
+    setLoading(loading: boolean) {
+        this.loading = loading;
     }
 
     @Emit('on-error')
