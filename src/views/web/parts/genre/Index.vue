@@ -37,6 +37,7 @@
         <genre-table
             :genres="genres"
             :loading="loading"
+            v-on:set-loading="setLoading"
             v-on:on-error="onError"
         />
     </div>
@@ -88,6 +89,11 @@ export default class Genre extends Vue {
 
     get RegistrationNum() {
         return this.$store.getters['genre/genres'].length;
+    }
+
+    @Emit('set-loading')
+    setLoading(loading: boolean) {
+        this.loading = loading;
     }
 
     @Emit('on-error')

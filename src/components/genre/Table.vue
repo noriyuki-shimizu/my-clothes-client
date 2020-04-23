@@ -143,13 +143,13 @@ export default class GenreTable extends Vue {
     }
 
     async onDelete(id: number) {
-        this.loading = true;
+        this.$emit<boolean>('set-loading', true);
 
         await this.$store
             .dispatch('genre/onDeleteGenre', id)
             .catch((err: any) => this.$emit('on-error', err));
 
-        this.loading = false;
+        this.$emit<boolean>('set-loading', false);
     }
 }
 </script>
