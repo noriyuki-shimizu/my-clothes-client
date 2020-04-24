@@ -1,12 +1,10 @@
 <template>
     <a-layout id="components-layout-demo-top" class="layout">
         <a-layout-header class="mobile-header">
-            <router-link to="/mobile/home">
-                <img
-                    class="logo"
-                    :src="require('@/assets/image/mobile-icon.png')"
-                />
-            </router-link>
+            <img
+                class="logo"
+                :src="require('@/assets/image/mobile-icon.png')"
+            />
             <head-menu />
         </a-layout-header>
         <a-layout-content id="main_layout_content">
