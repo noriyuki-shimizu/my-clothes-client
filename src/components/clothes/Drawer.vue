@@ -7,10 +7,6 @@
             :closable="false"
             @close="() => $emit('on-close')"
             :visible="visible"
-            :wrapStyle="{
-                height: '95%',
-                overflow: 'auto'
-            }"
         >
             <a-list
                 :grid="{
