@@ -66,9 +66,6 @@ export default class Edit extends Vue {
             return;
         }
 
-        const { name, image, link, country } = values;
-        const imageFile = image && image.file ? image.file.originFileObj : null;
-
         await this.$store.dispatch('brand/onUpdateBrand', {
             id: target.id,
             ...values

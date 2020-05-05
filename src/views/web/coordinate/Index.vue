@@ -123,7 +123,7 @@ export default class Index extends Vue {
     }
 
     @Emit('show-coordinate')
-    showCoordinate({ id, usedCoordinates }: Required<Coordinate>) {
+    showCoordinate({ id, usedCoordinates }: Coordinate) {
         this.coordinateId = id;
         this.coordinateItems = usedCoordinates;
         this.visible = true;

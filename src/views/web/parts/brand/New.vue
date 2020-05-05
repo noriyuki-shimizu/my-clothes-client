@@ -49,9 +49,6 @@ export default class New extends Vue {
     }
 
     async onRegister(values: FormFields) {
-        const { name, image, link, country } = values;
-        const imageFile = image && image.file ? image.file.originFileObj : null;
-
         await this.$store.dispatch('brand/onAddBrand', values);
 
         this.$success({
