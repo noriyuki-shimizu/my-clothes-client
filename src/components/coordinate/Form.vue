@@ -8,7 +8,16 @@
         >
             <a-form-item label="Image">
                 <a-upload
-                    v-decorator="['image']"
+                    v-decorator="[
+                        'image',
+                        {
+                            rules: [
+                                {
+                                    required: !this.target
+                                }
+                            ]
+                        }
+                    ]"
                     name="image"
                     listType="picture-card"
                     class="image-uploader"
