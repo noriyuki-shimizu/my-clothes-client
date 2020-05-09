@@ -1,6 +1,6 @@
 <template>
     <a-layout id="components-layout-demo-top" class="layout">
-        <a-layout-header class="mobile-header">
+        <a-layout-header id="mobile_header">
             <img
                 class="logo"
                 :src="require('@/assets/image/mobile-icon.png')"
@@ -30,7 +30,25 @@ import HeadMenu from '@/components/menu/HeadMenu.vue';
         HeadMenu
     }
 })
-export default class Layout extends Vue {}
+export default class Layout extends Vue {
+    mounted() {
+        const header = document.getElementById('mobile_header') as HTMLElement;
+        const headerHeight = header.clientHeight;
+        let lastPos = 0;
+
+        window.addEventListener('scroll', () => {
+            const pos = window.scrollY;
+            if (pos > headerHeight && pos > lastPos) {
+                header.classList.add('mobile-header--unpinned');
+            }
+            if (pos < headerHeight || pos < lastPos) {
+                header.classList.remove('mobile-header--unpinned');
+            }
+
+            lastPos = pos;
+        });
+    }
+}
 </script>
 
 <style scoped>
@@ -41,26 +59,38 @@ export default class Layout extends Vue {}
     float: left;
 }
 
-.mobile-header {
+#mobile_header {
+    position: fixed;
+    width: 100%;
     padding: 0;
     text-align: right;
+    z-index: 10;
+    -webkit-transition: -webkit-transform 0.2s ease;
+    transition: -webkit-transform 0.2s ease;
+    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, -webkit-transform 0.2s ease;
+}
+
+.mobile-header--unpinned {
+    -webkit-transform: translateY(-150%);
+    transform: translateY(-150%);
 }
 
 #main_layout_content {
     overflow: initial;
+    padding-top: 60px;
 }
 
 #content {
     min-height: 82vh;
     padding: 24px;
     background: #fff;
+    overflow: 'initial';
 }
 
 #main_layout_footer {
     width: 100%;
     padding: 15px 50px;
     background: #f0f2f5;
-    position: absolute;
-    bottom: 0;
 }
 </style>
