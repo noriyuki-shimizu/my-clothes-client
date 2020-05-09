@@ -82,7 +82,7 @@ export default class Layout extends Vue {
 }
 
 #content {
-    min-height: 82vh;
+    min-height: calc(100vh - 132px);
     padding: 24px;
     background: #fff;
     overflow: 'initial';
