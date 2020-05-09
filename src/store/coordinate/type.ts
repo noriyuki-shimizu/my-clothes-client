@@ -1,4 +1,4 @@
-import { Genre } from '../genre/type';
+import { Genre } from '@/store/genre/type';
 import { IModuleRootMutations } from '@/store/type';
 import { FormFields } from '@/components/coordinate/type';
 
@@ -23,21 +23,26 @@ export interface Coordinate {
 }
 
 export interface State {
+    coordinate: Coordinate;
     coordinates: Coordinate[];
     coordinateItems: CoordinateItem[];
 }
 
 export interface IGetters {
+    coordinate: Coordinate;
     coordinates: Coordinate[];
     coordinateItems: CoordinateItem[];
 }
 export interface IRootGetters {
+    'coordinate/coordinate': IGetters['coordinate'];
     'coordinate/coordinates': IGetters['coordinates'];
     'coordinate/coordinateItems': IGetters['coordinateItems'];
 }
 
 export interface IMutations extends IModuleRootMutations {
-    coordinateStateChange: Coordinate[];
+    resetCoordinate: void;
+    coordinateStateChange: Coordinate;
+    coordinatesStateChange: Coordinate[];
     addCoordinate: Coordinate;
     updateCoordinate: Omit<FormFields, 'image'> &
         Pick<Coordinate, 'id' | 'imageLink'>;
@@ -46,7 +51,9 @@ export interface IMutations extends IModuleRootMutations {
 }
 export interface IRootMutations {
     'coordinate/allStateReset': IMutations['allStateReset'];
+    'coordinate/resetCoordinate': IMutations['resetCoordinate'];
     'coordinate/coordinateStateChange': IMutations['coordinateStateChange'];
+    'coordinate/coordinatesStateChange': IMutations['coordinatesStateChange'];
     'coordinate/addCoordinate': IMutations['addCoordinate'];
     'coordinate/updateCoordinate': IMutations['updateCoordinate'];
     'coordinate/deleteCoordinate': IMutations['deleteCoordinate'];
@@ -54,6 +61,7 @@ export interface IRootMutations {
 }
 
 export interface IActions {
+    fetchCoordinate: Coordinate['id'];
     fetchCoordinates: void;
     fetchCoordinateItems: void;
     onAddCoordinate: FormFields;
@@ -61,6 +69,7 @@ export interface IActions {
     onDeleteCoordinate: Coordinate['id'];
 }
 export interface IRootActions {
+    'coordinate/fetchCoordinate': IActions['fetchCoordinate'];
     'coordinate/fetchCoordinates': IActions['fetchCoordinates'];
     'coordinate/fetchCoordinateItems': IActions['fetchCoordinateItems'];
     'coordinate/onAddCoordinate': IActions['onAddCoordinate'];

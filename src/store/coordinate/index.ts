@@ -12,12 +12,24 @@ import api from '@/plugins/api';
 import firebaseStorage from '@/plugins/firebase/storage';
 import { AppUser } from '@/store/user/type';
 
+const initCoordinate: Coordinate = {
+    id: 0,
+    season: '',
+    imageId: 0,
+    imageLink: '',
+    usedCoordinates: []
+};
+
 const state: State = {
+    coordinate: Object.assign({}, initCoordinate),
     coordinates: [],
     coordinateItems: []
 };
 
 const getters: Getters<State, IGetters> = {
+    coordinate(state) {
+        return state.coordinate;
+    },
     coordinates(state) {
         return state.coordinates;
     },
@@ -28,10 +40,17 @@ const getters: Getters<State, IGetters> = {
 
 const mutations: Mutations<State, IMutations> = {
     allStateReset(state) {
+        state.coordinate = Object.assign({}, initCoordinate);
         state.coordinates = [];
         state.coordinateItems = [];
     },
+    resetCoordinate(state) {
+        state.coordinate = Object.assign({}, initCoordinate);
+    },
     coordinateStateChange(state, payload) {
+        state.coordinate = payload;
+    },
+    coordinatesStateChange(state, payload) {
         state.coordinates = payload;
     },
     addCoordinate(state, payload) {
@@ -67,13 +86,21 @@ const mutations: Mutations<State, IMutations> = {
 };
 
 const actions: Actions<State, IActions, IGetters, IMutations> = {
+    async fetchCoordinate(ctx, id) {
+        const response = await api.get(
+            `/${ctx.rootGetters['user/id']}/coordinates/${id}`
+        );
+        const { data } = response;
+
+        ctx.commit('coordinateStateChange', data.coordinate);
+    },
     async fetchCoordinates(ctx) {
         const response = await api.get(
             `/${ctx.rootGetters['user/id']}/coordinates`
         );
         const { data } = response;
 
-        ctx.commit('coordinateStateChange', data.coordinates);
+        ctx.commit('coordinatesStateChange', data.coordinates);
     },
     async fetchCoordinateItems(ctx) {
         const response = await api.get(
