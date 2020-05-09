@@ -110,7 +110,7 @@ export default class Index extends Vue {
     }
 
     reloadCoordinates() {
-        this.$store.commit('coordinate/coordinateStateChange', []);
+        this.$store.commit('coordinate/coordinatesStateChange', []);
         this.fetchCoordinates();
     }
 
