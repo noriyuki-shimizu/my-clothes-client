@@ -140,6 +140,12 @@ const routes: RouteConfig[] = [
                 name: 'mobilePriceChart',
                 component: () => import('../views/mobile/PriceChart.vue'),
                 meta: { requiresAuth: true }
+            },
+            {
+                path: '/mobile/coordinate',
+                name: 'mobileCoordinate',
+                component: () => import('../views/mobile/coordinate/Index.vue'),
+                meta: { requiresAuth: true }
             }
         ]
     }
