@@ -2,6 +2,13 @@
     <a-spin :spinning="loading" tip="Loading...">
         <a-empty v-if="!coordinates.length" />
         <a-row v-else>
+            <a-alert
+                class="alert-message"
+                v-if="message.isShow"
+                :message="message.text"
+                :description="message.description"
+                :type="message.type"
+            />
             <a-col
                 :span="12"
                 v-for="(coordinate, index) in coordinates"

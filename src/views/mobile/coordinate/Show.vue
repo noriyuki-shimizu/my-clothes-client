@@ -1,5 +1,12 @@
 <template>
     <div>
+        <a-alert
+            class="alert-message"
+            v-if="message.isShow"
+            :message="message.text"
+            :description="message.description"
+            :type="message.type"
+        />
         <h3 :style="{ marginBottom: '16px' }">Season</h3>
         <a-list>
             <a-list-item>
@@ -33,10 +40,13 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Emit } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 import { Record } from '@/components/coordinate/type';
 import ClothesDetail from '@/components/clothes/Detail.vue';
+import { resetMessage } from '@/util/message';
+import { AppMessage } from 'ant-design-vue/types/message';
+import { handleForbiddenError } from '@/util/errorHandle';
 
 @Component({
     components: {
@@ -46,6 +56,8 @@ import ClothesDetail from '@/components/clothes/Detail.vue';
 export default class Show extends Vue {
     $store!: Vuex.ExStore;
 
+    message: AppMessage = resetMessage();
+
     created() {
         const { id } = this.$route.params;
 
@@ -53,7 +65,9 @@ export default class Show extends Vue {
             this.$router.push({ name: 'mobileCoordinate' });
         }
 
-        this.$store.dispatch('coordinate/fetchCoordinate', Number(id));
+        this.$store
+            .dispatch('coordinate/fetchCoordinate', Number(id))
+            .catch(this.onError);
     }
 
     beforeDestroy() {
@@ -74,6 +88,21 @@ export default class Show extends Vue {
                 ...items
             };
         }) as Record[];
+    }
+
+    @Emit('on-error')
+    onError(err: any) {
+        this.message = resetMessage();
+        handleForbiddenError(err, this.$store, this.$router);
+
+        this.message = {
+            isShow: true,
+            text: `Error (${err.message})`,
+            description: err.response
+                ? err.response.data
+                : `Access URL: ${err.config.url}`,
+            type: 'error'
+        };
     }
 }
 </script>
