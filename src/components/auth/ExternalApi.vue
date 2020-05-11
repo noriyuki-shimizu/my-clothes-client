@@ -6,7 +6,6 @@
             :message="message.text"
             :description="message.description"
             :type="message.type"
-            showIcon
         />
         <a-button
             icon="google"
