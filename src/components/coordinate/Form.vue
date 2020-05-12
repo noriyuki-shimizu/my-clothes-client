@@ -138,7 +138,7 @@ import ClothesDetail from '@/components/clothes/Detail.vue';
 import ClothesFormTable from '@/components/clothes/FormTable.vue';
 import { Coordinate } from '@/store/coordinate/type';
 import { getBase64, isLt5M } from '@/util/file';
-import { formItemLayout } from './form';
+import { formItemLayout, seasons } from './form';
 import { FormFields, Season, Record } from './type';
 
 @Component({
@@ -150,7 +150,7 @@ import { FormFields, Season, Record } from './type';
 export default class CoordinateForm extends Vue {
     $store!: Vuex.ExStore;
 
-    readonly seasons: Season[] = ['spring', 'summer', 'autumn', 'winter'];
+    seasons = seasons;
 
     @Prop({ type: Object as () => Coordinate })
     target?: Coordinate;

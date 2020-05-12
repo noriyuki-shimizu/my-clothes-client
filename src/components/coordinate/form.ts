@@ -5,4 +5,11 @@ export const formItemLayout: Readonly<ExPartial<Form>> = {
     wrapperCol: { span: 17 }
 };
 
+export const seasons: Readonly<Season[]> = [
+    'spring',
+    'summer',
+    'autumn',
+    'winter'
+];
+
 export default {};
