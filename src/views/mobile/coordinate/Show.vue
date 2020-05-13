@@ -7,6 +7,11 @@
             :description="message.description"
             :type="message.type"
         />
+
+        <div class="button-field">
+            <a-button icon="rollback" @click="$router.back()">Back</a-button>
+        </div>
+
         <h3 :style="{ marginBottom: '16px' }">Season</h3>
         <a-list>
             <a-list-item>
@@ -108,6 +113,14 @@ export default class Show extends Vue {
 </script>
 
 <style scoped>
+.button-field {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    padding: 0 16px;
+    text-align: right;
+}
+
 .coordinate-image {
     width: 43vw;
 }
