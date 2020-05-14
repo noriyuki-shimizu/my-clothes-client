@@ -1,5 +1,17 @@
 <template>
     <a-spin :spinning="loading" tip="Loading...">
+        <div class="button-field">
+            <a-button
+                type="primary"
+                @click="
+                    $router.push({
+                        name: 'mobileCoordinateNew'
+                    })
+                "
+                >New</a-button
+            >
+        </div>
+
         <a-empty v-if="!coordinates.length" />
         <a-row v-else>
             <a-alert
@@ -84,6 +96,10 @@ export default class Index extends Vue {
 </script>
 
 <style scoped>
+.button-field {
+    padding-bottom: 20px;
+}
+
 .coordinate-item {
     width: 43vw;
 }

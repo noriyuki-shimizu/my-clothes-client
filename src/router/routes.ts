@@ -152,6 +152,12 @@ const routes: RouteConfig[] = [
                 name: 'mobileCoordinateShow',
                 component: () => import('../views/mobile/coordinate/Show.vue'),
                 meta: { requiresAuth: true }
+            },
+            {
+                path: '/mobile/coordinate/new',
+                name: 'mobileCoordinateNew',
+                component: () => import('../views/mobile/coordinate/New.vue'),
+                meta: { requiresAuth: true }
             }
         ]
     }
