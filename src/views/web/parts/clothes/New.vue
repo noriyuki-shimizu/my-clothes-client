@@ -1,9 +1,9 @@
 <template>
     <div>
         <a-page-header title="Clothes" subTitle="new item" />
-        <a-divider class="pipe" />
+        <a-divider class="c-pipe" />
         <a-alert
-            class="alert-message"
+            class="c-alert-message"
             v-if="message.isShow"
             :message="message.text"
             :description="message.description"

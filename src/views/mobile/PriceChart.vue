@@ -1,7 +1,7 @@
 <template>
     <div class="total-price">
         <a-alert
-            class="alert-message"
+            class="c-alert-message"
             v-if="message.isShow"
             :message="message.text"
             :description="message.description"

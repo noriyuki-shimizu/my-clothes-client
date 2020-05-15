@@ -1,7 +1,7 @@
 <template>
     <div class="total-price">
         <a-alert
-            class="alert-message"
+            class="c-alert-message"
             v-if="message.isShow"
             :message="message.text"
             :description="message.description"
@@ -80,13 +80,5 @@ export default class PriceChart extends Vue {
     width: 35vw !important;
     margin-left: auto;
     margin-right: auto;
-}
-
-.field-total-price {
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    padding: 10px 16px;
-    text-align: right;
 }
 </style>

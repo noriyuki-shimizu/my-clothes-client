@@ -1,9 +1,9 @@
 <template>
     <div>
         <a-page-header title="Coordinate" subTitle="update item" />
-        <a-divider class="pipe" />
+        <a-divider class="c-pipe" />
         <a-alert
-            class="alert-message"
+            class="c-alert-message"
             v-if="message.isShow"
             :message="message.text"
             :description="message.description"
@@ -70,10 +70,6 @@ export default class Edit extends Vue {
                 this.$router.push({ name: 'coordinate' });
             }
         });
-    }
-
-    onResetMessage() {
-        this.message = resetMessage();
     }
 
     @Emit('on-error')
