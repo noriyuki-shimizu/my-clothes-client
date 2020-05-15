@@ -1,6 +1,6 @@
 <template>
     <a-spin :spinning="loading" tip="Loading...">
-        <div class="button-field">
+        <div class="mc-button-field">
             <a-button
                 type="primary"
                 @click="
@@ -8,14 +8,18 @@
                         name: 'mobileCoordinateNew'
                     })
                 "
-                >New</a-button
             >
+                New
+            </a-button>
         </div>
+
+        <a-page-header title="Coordinate" subTitle="item list" />
+        <a-divider class="c-pipe" />
 
         <a-empty v-if="!coordinates.length" />
         <a-row v-else>
             <a-alert
-                class="alert-message"
+                class="c-alert-message"
                 v-if="message.isShow"
                 :message="message.text"
                 :description="message.description"
@@ -96,10 +100,6 @@ export default class Index extends Vue {
 </script>
 
 <style scoped>
-.button-field {
-    padding-bottom: 20px;
-}
-
 .coordinate-item {
     width: 43vw;
 }
