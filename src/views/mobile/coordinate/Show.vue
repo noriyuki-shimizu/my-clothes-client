@@ -1,16 +1,30 @@
 <template>
     <div>
+        <div class="mc-button-field">
+            <a-button
+                type="primary"
+                icon="edit"
+                @click="
+                    $router.push({
+                        name: 'mobileCoordinateEdit',
+                        params: { id: coordinate.id }
+                    })
+                "
+            >
+                Edit
+            </a-button>
+        </div>
+
+        <a-page-header title="Coordinate" subTitle="show item" />
+        <a-divider class="c-pipe" />
+
         <a-alert
-            class="alert-message"
+            class="c-alert-message"
             v-if="message.isShow"
             :message="message.text"
             :description="message.description"
             :type="message.type"
         />
-
-        <div class="button-field">
-            <a-button icon="rollback" @click="$router.back()">Back</a-button>
-        </div>
 
         <h3 :style="{ marginBottom: '16px' }">Season</h3>
         <a-list>
@@ -113,20 +127,11 @@ export default class Show extends Vue {
 </script>
 
 <style scoped>
-.button-field {
-    position: fixed;
-    left: 0;
-    width: 100%;
-    padding: 0 16px;
-    text-align: right;
-}
-
 .coordinate-image {
     width: 43vw;
 }
 
 .item-image {
-    height: 25vh;
     width: 35vw;
 }
 
@@ -139,6 +144,7 @@ export default class Show extends Vue {
 }
 
 .detail {
+    font-size: 12px;
     margin-left: 15px;
 }
 </style>
