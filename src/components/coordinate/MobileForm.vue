@@ -6,6 +6,31 @@
             v-bind="formItemLayout"
             @submit="handleSubmit"
         >
+            <a-form-item v-bind="formItemLayout" label="Season">
+                <a-select
+                    v-decorator="[
+                        'season',
+                        {
+                            rules: [
+                                {
+                                    required: true,
+                                    message: 'Please select your brand'
+                                }
+                            ]
+                        }
+                    ]"
+                    placeholder="Select a option and change input text above"
+                >
+                    <a-select-option
+                        v-for="season in seasons"
+                        :key="season"
+                        :value="season"
+                    >
+                        {{ season }}
+                    </a-select-option>
+                </a-select>
+            </a-form-item>
+
             <a-form-item label="Image">
                 <a-upload
                     v-decorator="[
@@ -38,31 +63,6 @@
                         <div class="ant-upload-text">Upload</div>
                     </div>
                 </a-upload>
-            </a-form-item>
-
-            <a-form-item v-bind="formItemLayout" label="Season">
-                <a-select
-                    v-decorator="[
-                        'season',
-                        {
-                            rules: [
-                                {
-                                    required: true,
-                                    message: 'Please select your brand'
-                                }
-                            ]
-                        }
-                    ]"
-                    placeholder="Select a option and change input text above"
-                >
-                    <a-select-option
-                        v-for="season in seasons"
-                        :key="season"
-                        :value="season"
-                    >
-                        {{ season }}
-                    </a-select-option>
-                </a-select>
             </a-form-item>
 
             <a-form-item v-bind="formItemLayout" label="Item">
