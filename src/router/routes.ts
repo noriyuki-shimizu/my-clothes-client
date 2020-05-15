@@ -158,6 +158,12 @@ const routes: RouteConfig[] = [
                 name: 'mobileCoordinateNew',
                 component: () => import('../views/mobile/coordinate/New.vue'),
                 meta: { requiresAuth: true }
+            },
+            {
+                path: '/mobile/coordinate/edit/:id',
+                name: 'mobileCoordinateEdit',
+                component: () => import('../views/mobile/coordinate/Edit.vue'),
+                meta: { requiresAuth: true }
             }
         ]
     }
