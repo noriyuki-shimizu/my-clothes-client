@@ -12,16 +12,16 @@ import api from '@/plugins/api';
 import firebaseStorage from '@/plugins/firebase/storage';
 import { AppUser } from '@/store/user/type';
 
-const initCoordinate: Coordinate = {
+const initCoordinate = (): Coordinate => ({
     id: 0,
     season: '',
     imageId: 0,
     imageLink: '',
     usedCoordinates: []
-};
+});
 
 const state: State = {
-    coordinate: Object.assign({}, initCoordinate),
+    coordinate: initCoordinate(),
     coordinates: [],
     coordinateItems: []
 };
@@ -40,12 +40,12 @@ const getters: Getters<State, IGetters> = {
 
 const mutations: Mutations<State, IMutations> = {
     allStateReset(state) {
-        state.coordinate = Object.assign({}, initCoordinate);
+        state.coordinate = initCoordinate();
         state.coordinates = [];
         state.coordinateItems = [];
     },
     resetCoordinate(state) {
-        state.coordinate = Object.assign({}, initCoordinate);
+        state.coordinate = initCoordinate();
     },
     coordinateStateChange(state, payload) {
         state.coordinate = payload;
