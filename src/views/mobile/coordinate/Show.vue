@@ -45,9 +45,9 @@
         <h3 :style="{ margin: '16px 0' }">Coordinate item</h3>
         <a-list bordered :data-source="items">
             <a-list-item slot="renderItem" slot-scope="item">
-                <div class="container">
+                <div class="mc-item-container">
                     <div>
-                        <img class="item-image" :src="item.imageLink" />
+                        <img class="mc-item-image" :src="item.imageLink" />
                     </div>
                     <div class="detail">
                         <clothes-detail :item="item" />
@@ -131,16 +131,8 @@ export default class Show extends Vue {
     width: 43vw;
 }
 
-.item-image {
-    width: 35vw;
-}
-
 .ant-list-item {
     padding: 15px;
-}
-
-.container {
-    display: flex;
 }
 
 .detail {
