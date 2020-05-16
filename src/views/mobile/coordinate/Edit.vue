@@ -59,14 +59,15 @@ export default class Edit extends Vue {
     }
 
     private async onRegister(values: FormFields) {
-        const { target } = this;
-        if (!target) {
-            this.$router.push({ name: 'mobileCoordinate' });
+        const { id } = this.$route.params;
+
+        if (!id) {
+            this.$router.push({ name: 'mobileBrand' });
             return;
         }
 
         await this.$store.dispatch('coordinate/onUpdateCoordinate', {
-            id: target.id,
+            id: Number(id),
             ...values
         });
 

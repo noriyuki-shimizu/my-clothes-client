@@ -5,7 +5,7 @@
                 type="primary"
                 @click="
                     $router.push({
-                        name: 'mobileBrandNew'
+                        name: 'mobileClothesNew'
                     })
                 "
             >
@@ -13,7 +13,7 @@
             </a-button>
         </div>
 
-        <a-page-header title="Brand" subTitle="item list" />
+        <a-page-header title="Clothes" subTitle="item list" />
         <a-divider class="c-pipe" />
 
         <a-alert
@@ -24,8 +24,8 @@
             :type="message.type"
         />
 
-        <a-empty v-if="!brands.length" />
-        <a-list v-else bordered :data-source="brands">
+        <a-empty v-if="!clothes.length" />
+        <a-list v-else bordered :data-source="clothes">
             <a-list-item slot="renderItem" slot-scope="item">
                 <div class="mc-item-container">
                     <div>
@@ -38,7 +38,7 @@
                         />
                     </div>
                     <div class="detail">
-                        <brand-detail
+                        <clothes-detail
                             :item="item"
                             v-on:set-loading="setLoading"
                             v-on:set-message="setMessage"
@@ -55,14 +55,14 @@ import { Vue, Component, Emit } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 import { AppMessage } from 'ant-design-vue/types/message';
 
-import BrandDetail from '@/components/brand/Detail.vue';
+import ClothesDetail from '@/components/clothes/Detail.vue';
 import { resetMessage } from '@/util/message';
 import { handleForbiddenError } from '@/util/errorHandle';
-import { Brand } from '@/store/brand/type';
+import { Clothes } from '@/store/clothes/type';
 
 @Component({
     components: {
-        BrandDetail
+        ClothesDetail
     }
 })
 export default class Index extends Vue {
@@ -73,20 +73,20 @@ export default class Index extends Vue {
     message = resetMessage();
 
     created() {
-        this.fetchBrands();
+        this.fetchClothes();
     }
 
-    private async fetchBrands() {
+    private async fetchClothes() {
         this.loading = true;
 
         this.message = resetMessage();
-        await this.$store.dispatch('brand/fetchBrands').catch(this.onError);
+        await this.$store.dispatch('clothes/fetchClothes').catch(this.onError);
 
         this.loading = false;
     }
 
-    get brands(): Brand[] {
-        return this.$store.getters['brand/brands'];
+    get clohtes(): Clothes[] {
+        return this.$store.getters['clothes/clothes'];
     }
 
     @Emit('set-loading')
