@@ -43,7 +43,7 @@ export default class New extends Vue {
         this.$success({
             title: 'Create success 👏',
             onOk: () => {
-                this.$router.push({ name: 'coordinate' });
+                this.$router.push({ name: 'mobileCoordinate' });
             }
         });
     }
