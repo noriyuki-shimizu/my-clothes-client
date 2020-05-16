@@ -126,7 +126,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
+import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 import { WrappedFormUtils } from 'ant-design-vue/types/form/form';
 import {
@@ -166,31 +166,24 @@ export default class CoordinateForm extends Vue {
     selectedRowKeys: number[] = [];
 
     created() {
-        const { target } = this;
+        this.form = this.$form.createForm(this);
+    }
 
-        if (target) {
-            const clothingIds = target.usedCoordinates.map(
+    @Watch('target')
+    onTargetChange(newCoordinate: Coordinate) {
+        if (newCoordinate) {
+            const clothingIds = newCoordinate.usedCoordinates.map(
                 usedCoordinate => usedCoordinate.id
             );
 
-            this.form = this.$form.createForm(this, {
-                mapPropsToFields: () => {
-                    return {
-                        season: this.$form.createFormField({
-                            value: target.season
-                        }),
-                        clothingIds: this.$form.createFormField({
-                            value: clothingIds
-                        })
-                    };
-                }
+            this.form.setFieldsValue({
+                season: newCoordinate.season,
+                clothingIds
             });
 
-            this.imageURL = target.imageLink || '';
+            this.imageURL = newCoordinate.imageLink || '';
             this.selectedRowKeys = clothingIds;
-            return;
         }
-        this.form = this.$form.createForm(this);
     }
 
     get tableItems() {

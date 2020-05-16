@@ -76,7 +76,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import { Form } from 'ant-design-vue';
 import { WrappedFormUtils } from 'ant-design-vue/types/form/form';
 import * as Vuex from 'vuex';
@@ -100,23 +100,17 @@ export default class GenreForm extends Vue {
 
     created() {
         this.fetchCanSelectedColorsStateChange();
-        if (this.target) {
-            const { target } = this;
-            this.form = this.$form.createForm(this, {
-                mapPropsToFields: () => {
-                    return {
-                        name: this.$form.createFormField({
-                            value: target.name
-                        }),
-                        color: this.$form.createFormField({
-                            value: target.color
-                        })
-                    };
-                }
-            });
-            return;
-        }
         this.form = this.$form.createForm(this);
+    }
+
+    @Watch('target')
+    onTargetChange(newGenre: Genre) {
+        if (newGenre) {
+            this.form.setFieldsValue({
+                name: newGenre.name,
+                color: newGenre.color
+            });
+        }
     }
 
     get genres() {

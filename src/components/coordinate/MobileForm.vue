@@ -130,7 +130,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
+import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 import { WrappedFormUtils } from 'ant-design-vue/types/form/form';
 import {
@@ -162,30 +162,24 @@ export default class CoordinateMobileForm extends Vue {
 
     created() {
         this.fetchCoordinateItems();
-        const { target } = this;
 
-        if (target) {
-            const clothingIds = target.usedCoordinates.map(
+        this.form = this.$form.createForm(this);
+    }
+
+    @Watch('target')
+    onTargetChange(newCoordinate: Coordinate) {
+        if (newCoordinate) {
+            const clothingIds = newCoordinate.usedCoordinates.map(
                 usedCoordinate => usedCoordinate.id
             );
 
-            this.form = this.$form.createForm(this, {
-                mapPropsToFields: () => {
-                    return {
-                        season: this.$form.createFormField({
-                            value: target.season
-                        }),
-                        clothingIds: this.$form.createFormField({
-                            value: clothingIds
-                        })
-                    };
-                }
+            this.form.setFieldsValue({
+                season: newCoordinate.season,
+                clothingIds
             });
 
-            this.imageURL = target.imageLink || '';
-            return;
+            this.imageURL = newCoordinate.imageLink || '';
         }
-        this.form = this.$form.createForm(this);
     }
 
     async fetchCoordinateItems() {

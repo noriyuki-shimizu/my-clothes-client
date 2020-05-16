@@ -175,7 +175,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import { Form } from 'ant-design-vue';
 import {
     WrappedFormUtils,
@@ -224,44 +224,29 @@ export default class ShopForm extends Vue {
     }
 
     created() {
-        if (this.target) {
-            const { target } = this;
+        this.form = this.$form.createForm(this);
+    }
+
+    @Watch('target')
+    onTargetChange(newShop: Shop) {
+        if (newShop) {
             const [
                 startBusinessHours,
                 endBusinessHours
-            ] = target.businessHours.split('~');
+            ] = newShop.businessHours.split('~');
 
-            this.form = this.$form.createForm(this, {
-                mapPropsToFields: () => {
-                    return {
-                        name: this.$form.createFormField({
-                            value: target.name
-                        }),
-                        link: this.$form.createFormField({
-                            value: target.link
-                        }),
-                        stationName: this.$form.createFormField({
-                            value: target.stationName
-                        }),
-                        address: this.$form.createFormField({
-                            value: target.address
-                        }),
-                        startBusinessHours: this.$form.createFormField({
-                            value: moment(startBusinessHours, timeFormat)
-                        }),
-                        endBusinessHours: this.$form.createFormField({
-                            value: moment(endBusinessHours, timeFormat)
-                        }),
-                        tel: this.$form.createFormField({
-                            value: target.tel
-                        })
-                    };
-                }
+            this.form.setFieldsValue({
+                name: newShop.name,
+                link: newShop.link,
+                stationName: newShop.stationName,
+                address: newShop.address,
+                startBusinessHours: moment(startBusinessHours, timeFormat),
+                endBusinessHours: moment(endBusinessHours, timeFormat),
+                tel: newShop.tel
             });
-            this.imageURL = target.imageLink || '';
-            return;
+
+            this.imageURL = newShop.imageLink || '';
         }
-        this.form = this.$form.createForm(this);
     }
 
     beforeUpload(file: File) {

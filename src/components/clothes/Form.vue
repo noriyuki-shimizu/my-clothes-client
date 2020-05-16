@@ -200,7 +200,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import { Form } from 'ant-design-vue';
 import {
     WrappedFormUtils,
@@ -237,40 +237,23 @@ export default class ClothesForm extends Vue {
 
     created() {
         this.fetchAssists();
-        if (this.target) {
-            const { target } = this;
-
-            this.form = this.$form.createForm(this, {
-                mapPropsToFields: () => {
-                    return {
-                        brandId: this.$form.createFormField({
-                            value: target.brand.id
-                        }),
-                        shopId: this.$form.createFormField({
-                            value: target.shop.id
-                        }),
-                        genreIds: this.$form.createFormField({
-                            value: target.genres.map(genre => genre.id)
-                        }),
-                        price: this.$form.createFormField({
-                            value: target.price
-                        }),
-                        buyDate: this.$form.createFormField({
-                            value: moment(target.buyDate, dateFormat)
-                        }),
-                        comment: this.$form.createFormField({
-                            value: target.comment
-                        }),
-                        satisfaction: this.$form.createFormField({
-                            value: target.satisfaction
-                        })
-                    };
-                }
-            });
-            this.imageURL = target.imageLink || '';
-            return;
-        }
         this.form = this.$form.createForm(this);
+    }
+
+    @Watch('target')
+    onTargetChange(newClothes: Clothes) {
+        if (newClothes) {
+            this.form.setFieldsValue({
+                brandId: newClothes.brand.id,
+                shopId: newClothes.shop.id,
+                genreIds: newClothes.genres.map(genre => genre.id),
+                price: newClothes.price,
+                buyDate: moment(newClothes.buyDate, dateFormat),
+                comment: newClothes.comment,
+                satisfaction: newClothes.satisfaction
+            });
+            this.imageURL = newClothes.imageLink || '';
+        }
     }
 
     get assistGenres() {
