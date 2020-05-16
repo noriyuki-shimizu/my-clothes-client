@@ -16,7 +16,11 @@
             </a-menu-item>
             <a-menu-item-group title="Parts">
                 <a-menu-item key="clothes">Clothes</a-menu-item>
-                <a-menu-item key="brand">Brand</a-menu-item>
+                <a-menu-item key="brand">
+                    <router-link to="/mobile/maintenance/brand">
+                        Brand
+                    </router-link>
+                </a-menu-item>
                 <a-menu-item key="genre">Genre</a-menu-item>
                 <a-menu-item key="shop">Shop</a-menu-item>
             </a-menu-item-group>
