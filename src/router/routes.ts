@@ -164,6 +164,25 @@ const routes: RouteConfig[] = [
                 name: 'mobileCoordinateEdit',
                 component: () => import('../views/mobile/coordinate/Edit.vue'),
                 meta: { requiresAuth: true }
+            },
+            {
+                path: '/mobile/maintenance/brand',
+                name: 'mobileBrand',
+                component: () =>
+                    import('../views/mobile/parts/brand/Index.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/mobile/maintenance/brand/new',
+                name: 'mobileBrandNew',
+                component: () => import('../views/mobile/parts/brand/New.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/mobile/maintenance/brand/edit/:id',
+                name: 'mobileBrandEdit',
+                component: () => import('../views/mobile/parts/brand/Edit.vue'),
+                meta: { requiresAuth: true }
             }
         ]
     }

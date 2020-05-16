@@ -1,11 +1,6 @@
 <template>
-    <a-form
-        id="components-form-validate-other"
-        :form="form"
-        v-bind="formItemLayout"
-        @submit="handleSubmit"
-    >
-        <a-form-item v-bind="formItemLayout" label="Name">
+    <a-form :form="form" v-bind="formItemLayout" @submit="handleSubmit">
+        <a-form-item label="Name">
             <a-input
                 v-decorator="[
                     'name',
@@ -54,7 +49,7 @@
             </a-upload>
         </a-form-item>
 
-        <a-form-item v-bind="formItemLayout" label="Link">
+        <a-form-item label="Link">
             <a-input
                 v-decorator="[
                     'link',
@@ -70,7 +65,7 @@
             />
         </a-form-item>
 
-        <a-form-item v-bind="formItemLayout" label="Country">
+        <a-form-item label="Country">
             <a-input
                 v-decorator="[
                     'country',
@@ -98,7 +93,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import { Form } from 'ant-design-vue';
 import {
     WrappedFormUtils,
@@ -125,6 +120,29 @@ export default class BrandForm extends Vue {
 
     form!: WrappedFormUtils;
 
+    formItemLayout = formItemLayout;
+
+    imageURL: string | ArrayBuffer | null = '';
+
+    imageLoading = false;
+
+    created() {
+        this.form = this.$form.createForm(this);
+    }
+
+    @Watch('target')
+    onTargetChange(newBrand: Brand) {
+        if (newBrand) {
+            this.form.setFieldsValue({
+                name: newBrand.name,
+                link: newBrand.link,
+                country: newBrand.country
+            });
+
+            this.imageURL = newBrand.imageLink || '';
+        }
+    }
+
     nameValidator(_: any, value: string, cb: Function) {
         const { id } = this.$route.params;
         const brands = this.$store.getters['brand/brands'] as Readonly<Brand>[];
@@ -134,36 +152,6 @@ export default class BrandForm extends Vue {
             : (brand: Brand) => brand.name === value;
 
         brands.some(someBrand) ? cb(true) : cb();
-    }
-
-    formItemLayout = formItemLayout;
-
-    imageURL: string | ArrayBuffer | null = '';
-
-    imageLoading = false;
-
-    created() {
-        if (this.target) {
-            const { target } = this;
-            this.form = this.$form.createForm(this, {
-                mapPropsToFields: () => {
-                    return {
-                        name: this.$form.createFormField({
-                            value: target.name
-                        }),
-                        link: this.$form.createFormField({
-                            value: target.link
-                        }),
-                        country: this.$form.createFormField({
-                            value: target.country
-                        })
-                    };
-                }
-            });
-            this.imageURL = target.imageLink || '';
-            return;
-        }
-        this.form = this.$form.createForm(this);
     }
 
     beforeUpload(file: File) {

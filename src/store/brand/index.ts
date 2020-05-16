@@ -11,11 +11,25 @@ import api from '@/plugins/api';
 import firebaseStorage from '@/plugins/firebase/storage';
 import { AppUser } from '@/store/user/type';
 
+const initBrand = (): Brand => ({
+    id: 0,
+    name: '',
+    link: '',
+    imageId: 0,
+    imageLink: '',
+    country: '',
+    isDeleted: false
+});
+
 const state: State = {
+    brand: initBrand(),
     brands: []
 };
 
 const getters: Getters<State, IGetters> = {
+    brand(state) {
+        return state.brand;
+    },
     brands(state) {
         return state.brands;
     }
@@ -24,6 +38,12 @@ const getters: Getters<State, IGetters> = {
 const mutations: Mutations<State, IMutations> = {
     allStateReset(state) {
         state.brands = [];
+    },
+    resetBrand(state) {
+        state.brand = initBrand();
+    },
+    brandStateChange(state, payload) {
+        state.brand = payload;
     },
     brandsStateChange(state, payload) {
         state.brands = payload;
@@ -61,6 +81,14 @@ const mutations: Mutations<State, IMutations> = {
 };
 
 const actions: Actions<State, IActions, IGetters, IMutations> = {
+    async fetchBrand(ctx, id) {
+        const response = await api.get(
+            `/${ctx.rootGetters['user/id']}/brands/${id}`
+        );
+        const { data } = response;
+
+        ctx.commit('brandStateChange', data.brand);
+    },
     async fetchBrands(ctx) {
         const response = await api.get(`/${ctx.rootGetters['user/id']}/brands`);
         const { data } = response;

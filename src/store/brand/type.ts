@@ -12,17 +12,22 @@ export interface Brand {
 }
 
 export interface State {
+    brand: Brand;
     brands: Brand[];
 }
 
 export interface IGetters {
+    brand: Brand;
     brands: Brand[];
 }
 export interface IRootGetters {
+    'brand/brand': IGetters['brand'];
     'brand/brands': IGetters['brands'];
 }
 
 export interface IMutations extends IModuleRootMutations {
+    resetBrand: void;
+    brandStateChange: Brand;
     brandsStateChange: Brand[];
     addBrand: Brand;
     updateBrand: Omit<FormFields, 'image'> & Pick<Brand, 'id' | 'imageLink'>;
@@ -31,6 +36,8 @@ export interface IMutations extends IModuleRootMutations {
 }
 export interface IRootMutations {
     'brand/allStateReset': IMutations['allStateReset'];
+    'brand/resetBrand': IMutations['resetBrand'];
+    'brand/brandStateChange': IMutations['brandStateChange'];
     'brand/brandsStateChange': IMutations['brandsStateChange'];
     'brand/addBrand': IMutations['addBrand'];
     'brand/updateBrand': IMutations['updateBrand'];
@@ -39,6 +46,7 @@ export interface IRootMutations {
 }
 
 export interface IActions {
+    fetchBrand: Brand['id'];
     fetchBrands: void;
     onAddBrand: FormFields;
     onUpdateBrand: FormFields & Pick<Brand, 'id'>;
@@ -46,6 +54,7 @@ export interface IActions {
     onRestorationBrand: Brand['id'];
 }
 export interface IRootActions {
+    'brand/fetchBrand': IActions['fetchBrand'];
     'brand/fetchBrands': IActions['fetchBrands'];
     'brand/onAddBrand': IActions['onAddBrand'];
     'brand/onUpdateBrand': IActions['onUpdateBrand'];

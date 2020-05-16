@@ -5,3 +5,11 @@
     padding: 15px 24px;
     z-index: 1;
 }
+
+.mc-item-container {
+    display: flex;
+}
+
+.mc-item-image {
+    width: 35vw;
+}
