@@ -173,6 +173,12 @@ const routes: RouteConfig[] = [
                 meta: { requiresAuth: true }
             },
             {
+                path: '/mobile/maintenance/brand/show/:id',
+                name: 'mobileBrandShow',
+                component: () => import('../views/mobile/parts/brand/Show.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
                 path: '/mobile/maintenance/brand/new',
                 name: 'mobileBrandNew',
                 component: () => import('../views/mobile/parts/brand/New.vue'),

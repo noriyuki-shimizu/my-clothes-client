@@ -6,8 +6,8 @@
                 icon="edit"
                 @click="
                     $router.push({
-                        name: 'mobileCoordinateEdit',
-                        params: { id: coordinate.id }
+                        name: 'mobileBrandEdit',
+                        params: { id: brand.id }
                     })
                 "
             >
@@ -15,7 +15,7 @@
             </a-button>
         </div>
 
-        <a-page-header title="Coordinate" subTitle="show item" />
+        <a-page-header title="Brand" subTitle="show item" />
         <a-divider class="c-pipe" />
 
         <a-alert
@@ -26,33 +26,39 @@
             :type="message.type"
         />
 
-        <h3 :style="{ marginBottom: '16px' }">Season</h3>
+        <h3 class="mc-show-item-title">Name</h3>
         <a-list>
             <a-list-item>
-                <div>{{ coordinate.season }}</div>
+                <div>{{ brand.name }}</div>
             </a-list-item>
         </a-list>
 
-        <h3 :style="{ margin: '16px 0' }">Coordinate</h3>
+        <h3 class="mc-show-item-title">Image</h3>
         <a-list>
             <a-list-item>
                 <div>
-                    <img class="coordinate-image" :src="coordinate.imageLink" />
+                    <img
+                        class="mc-show-item-image"
+                        :src="
+                            brand.imageLink ||
+                                require('@/assets/image/no-img.png')
+                        "
+                    />
                 </div>
             </a-list-item>
         </a-list>
 
-        <h3 :style="{ margin: '16px 0' }">Coordinate item</h3>
-        <a-list bordered :data-source="items">
-            <a-list-item slot="renderItem" slot-scope="item">
-                <div class="mc-item-container">
-                    <div>
-                        <img class="mc-item-image" :src="item.imageLink" />
-                    </div>
-                    <div class="detail">
-                        <clothes-detail :item="item" />
-                    </div>
-                </div>
+        <h3 class="mc-show-item-title">Link</h3>
+        <a-list>
+            <a-list-item>
+                <div>{{ brand.link || 'no link' }}</div>
+            </a-list-item>
+        </a-list>
+
+        <h3 class="mc-show-item-title">Country</h3>
+        <a-list>
+            <a-list-item>
+                <div>{{ brand.country }}</div>
             </a-list-item>
         </a-list>
     </div>
@@ -61,17 +67,11 @@
 <script lang="ts">
 import { Vue, Component, Emit } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
-import { Record } from '@/components/coordinate/type';
-import ClothesDetail from '@/components/clothes/Detail.vue';
 import { resetMessage } from '@/util/message';
 import { AppMessage } from 'ant-design-vue/types/message';
 import { handleForbiddenError } from '@/util/errorHandle';
 
-@Component({
-    components: {
-        ClothesDetail
-    }
-})
+@Component
 export default class Show extends Vue {
     $store!: Vuex.ExStore;
 
@@ -98,18 +98,6 @@ export default class Show extends Vue {
         return this.$store.getters['brand/brand'];
     }
 
-    get items() {
-        const { usedCoordinates } = this.coordinate;
-        return usedCoordinates.map(usedCoordinate => {
-            const { id, price, ...items } = usedCoordinate;
-            return {
-                key: usedCoordinate.id,
-                price: String(usedCoordinate.price),
-                ...items
-            };
-        }) as Record[];
-    }
-
     @Emit('on-error')
     onError(err: any) {
         this.message = resetMessage();
@@ -128,10 +116,6 @@ export default class Show extends Vue {
 </script>
 
 <style scoped>
-.coordinate-image {
-    width: 43vw;
-}
-
 .ant-list-item {
     padding: 15px;
 }
