@@ -35,14 +35,40 @@
                                 item.imageLink ||
                                     require('@/assets/image/no-img.png')
                             "
+                            @click="
+                                $router.push({
+                                    name: 'mobileBrandShow',
+                                    params: { id: item.id }
+                                })
+                            "
                         />
                     </div>
                     <div class="detail">
-                        <brand-detail
-                            :item="item"
-                            v-on:set-loading="setLoading"
-                            v-on:set-message="setMessage"
-                        />
+                        <detail :item="item" />
+                        <a>
+                            <a-popconfirm
+                                v-if="item.isDeleted"
+                                @confirm="() => onRestoration(item.id)"
+                                title="Are you sure restoration this brand?"
+                                placement="topRight"
+                                okText="Yes"
+                                cancelText="No"
+                            >
+                                <a-icon type="undo" />
+                                restoration
+                            </a-popconfirm>
+                            <a-popconfirm
+                                v-else
+                                title="Are you sure delete this brand?"
+                                @confirm="() => onDelete(item.id)"
+                                placement="topRight"
+                                okText="Yes"
+                                cancelText="No"
+                            >
+                                <a-icon type="delete" />
+                                delete
+                            </a-popconfirm>
+                        </a>
                     </div>
                 </div>
             </a-list-item>
@@ -55,14 +81,14 @@ import { Vue, Component, Emit } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 import { AppMessage } from 'ant-design-vue/types/message';
 
-import BrandDetail from '@/components/brand/Detail.vue';
+import Detail from '@/components/brand/Detail.vue';
 import { resetMessage } from '@/util/message';
 import { handleForbiddenError } from '@/util/errorHandle';
 import { Brand } from '@/store/brand/type';
 
 @Component({
     components: {
-        BrandDetail
+        Detail
     }
 })
 export default class Index extends Vue {
@@ -89,9 +115,26 @@ export default class Index extends Vue {
         return this.$store.getters['brand/brands'];
     }
 
-    @Emit('set-loading')
-    setLoading(loading: boolean) {
-        this.loading = loading;
+    async onDelete(id: number) {
+        this.loading = true;
+        this.setMessage();
+
+        await this.$store
+            .dispatch('brand/onDeleteBrand', id)
+            .catch(this.onError);
+
+        this.loading = false;
+    }
+
+    async onRestoration(id: number) {
+        this.loading = true;
+        this.setMessage();
+
+        await this.$store
+            .dispatch('brand/onRestorationBrand', id)
+            .catch(this.onError);
+
+        this.loading = false;
     }
 
     @Emit('set-message')
