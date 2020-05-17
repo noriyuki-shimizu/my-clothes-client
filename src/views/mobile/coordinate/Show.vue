@@ -26,24 +26,27 @@
             :type="message.type"
         />
 
-        <h3 :style="{ marginBottom: '16px' }">Season</h3>
+        <h3 class="mc-show-item-title">Season</h3>
         <a-list>
             <a-list-item>
                 <div>{{ coordinate.season }}</div>
             </a-list-item>
         </a-list>
 
-        <h3 :style="{ margin: '16px 0' }">Coordinate</h3>
+        <h3 class="mc-show-item-title">Coordinate</h3>
         <a-list>
             <a-list-item>
                 <div>
-                    <img class="coordinate-image" :src="coordinate.imageLink" />
+                    <img
+                        class="mc-show-item-image"
+                        :src="coordinate.imageLink"
+                    />
                 </div>
             </a-list-item>
         </a-list>
 
-        <h3 :style="{ margin: '16px 0' }">Coordinate item</h3>
-        <a-list bordered :data-source="items">
+        <h3 class="mc-show-item-title">Coordinate item</h3>
+        <a-list bordered :data-source="coordinate.usedCoordinates">
             <a-list-item slot="renderItem" slot-scope="item">
                 <div class="mc-item-container">
                     <div>
@@ -97,18 +100,6 @@ export default class Show extends Vue {
         return this.$store.getters['coordinate/coordinate'];
     }
 
-    get items() {
-        const { usedCoordinates } = this.coordinate;
-        return usedCoordinates.map(usedCoordinate => {
-            const { id, price, ...items } = usedCoordinate;
-            return {
-                key: usedCoordinate.id,
-                price: String(usedCoordinate.price),
-                ...items
-            };
-        }) as Record[];
-    }
-
     @Emit('on-error')
     onError(err: any) {
         this.message = resetMessage();
@@ -127,10 +118,6 @@ export default class Show extends Vue {
 </script>
 
 <style scoped>
-.coordinate-image {
-    width: 43vw;
-}
-
 .ant-list-item {
     padding: 15px;
 }

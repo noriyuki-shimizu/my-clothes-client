@@ -13,3 +13,11 @@
 .mc-item-image {
     width: 35vw;
 }
+
+.mc-show-item-title {
+    margin: 12px 0;
+}
+
+.mc-show-item-image {
+    width: 43vw;
+}
