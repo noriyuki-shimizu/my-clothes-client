@@ -88,3 +88,5 @@ export const getColumns = (
         width: 200
     }
 ];
+
+export default {};
