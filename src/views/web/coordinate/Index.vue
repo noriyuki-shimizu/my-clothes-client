@@ -79,7 +79,7 @@ import { AppMessage } from 'ant-design-vue/types/message';
 
 import CoordinateList from '@/components/coordinate/List.vue';
 import CoordinateItemDrawer from '@/components/clothes/Drawer.vue';
-import { CoordinateItem, Coordinate } from '@/store/coordinate/type';
+import { ClothesItem, Coordinate } from '@/store/coordinate/type';
 import { getSeason } from '@/util/date';
 import { resetMessage } from '@/util/message';
 import { handleForbiddenError } from '@/util/errorHandle';
@@ -95,7 +95,7 @@ export default class Index extends Vue {
 
     coordinateId: number | null = null;
 
-    coordinateItems: CoordinateItem[] = [];
+    coordinateItems: ClothesItem[] = [];
 
     message: AppMessage = resetMessage();
 
