@@ -2,7 +2,7 @@ import { Genre } from '@/store/genre/type';
 import { IModuleRootMutations } from '@/store/type';
 import { FormFields } from '@/components/coordinate/type';
 
-export interface CoordinateItem {
+export interface ClothesItem {
     id: number;
     imageLink: string;
     brandName: string;
@@ -19,19 +19,19 @@ export interface Coordinate {
     season: string;
     imageId: number;
     imageLink: string;
-    usedCoordinates: CoordinateItem[];
+    usedCoordinates: ClothesItem[];
 }
 
 export interface State {
     coordinate: Coordinate;
     coordinates: Coordinate[];
-    coordinateItems: CoordinateItem[];
+    coordinateItems: ClothesItem[];
 }
 
 export interface IGetters {
     coordinate: Coordinate;
     coordinates: Coordinate[];
-    coordinateItems: CoordinateItem[];
+    coordinateItems: ClothesItem[];
 }
 export interface IRootGetters {
     'coordinate/coordinate': IGetters['coordinate'];
@@ -47,7 +47,7 @@ export interface IMutations extends IModuleRootMutations {
     updateCoordinate: Omit<FormFields, 'image'> &
         Pick<Coordinate, 'id' | 'imageLink'>;
     deleteCoordinate: Coordinate['id'];
-    assistCoordinateItemStateChange: CoordinateItem[];
+    assistCoordinateItemStateChange: ClothesItem[];
 }
 export interface IRootMutations {
     'coordinate/allStateReset': IMutations['allStateReset'];

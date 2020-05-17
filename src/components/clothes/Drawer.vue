@@ -55,7 +55,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { CoordinateItem } from '@/store/coordinate/type';
+import { ClothesItem } from '@/store/coordinate/type';
 
 import ClothesDetail from '@/components/clothes/Detail.vue';
 
@@ -68,8 +68,8 @@ export default class CoordinateItemDrawer extends Vue {
     @Prop({ type: Number })
     coordinateId?: number;
 
-    @Prop({ type: Array as () => CoordinateItem[] })
-    coordinateItems!: CoordinateItem[];
+    @Prop({ type: Array as () => ClothesItem[] })
+    coordinateItems!: ClothesItem[];
 
     @Prop({ type: Boolean, required: true })
     visible!: boolean;

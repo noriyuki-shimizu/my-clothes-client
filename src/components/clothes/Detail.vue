@@ -27,11 +27,12 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 
 import { Record } from './type';
+import { ClothesItem } from '../../store/coordinate/type';
 
 @Component
 export default class ClothesDetail extends Vue {
-    @Prop({ type: Object as () => Record })
-    item!: Record;
+    @Prop({ type: Object as () => Record | ClothesItem })
+    item!: Record | ClothesItem;
 }
 </script>
 

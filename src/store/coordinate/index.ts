@@ -5,7 +5,7 @@ import {
     IMutations,
     IActions,
     Coordinate,
-    CoordinateItem
+    ClothesItem
 } from '@/store/coordinate/type';
 
 import api from '@/plugins/api';
@@ -66,7 +66,7 @@ const mutations: Mutations<State, IMutations> = {
                 clothingId =>
                     state.coordinateItems.find(
                         item => item.id === clothingId
-                    ) as CoordinateItem
+                    ) as ClothesItem
             ),
             imageLink: payload.imageLink,
             season: payload.season
