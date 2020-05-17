@@ -4,13 +4,13 @@ import {
     IGetters,
     IMutations,
     IActions,
-    Coordinate,
-    ClothesItem
+    Coordinate
 } from '@/store/coordinate/type';
 
 import api from '@/plugins/api';
 import firebaseStorage from '@/plugins/firebase/storage';
 import { AppUser } from '@/store/user/type';
+import { ClothesItem } from '@/store/clothes/type';
 
 const initCoordinate = (): Coordinate => ({
     id: 0,

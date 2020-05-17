@@ -55,7 +55,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { ClothesItem } from '@/store/coordinate/type';
+import { ClothesItem } from '@/store/clothes/type';
 
 import ClothesDetail from '@/components/clothes/Detail.vue';
 

@@ -1,5 +1,5 @@
 import { DoneUploadFileInfo } from 'ant-design-vue/types/upload';
-import { ClothesItem } from '@/store/coordinate/type';
+import { ClothesItem } from '@/store/clothes/type';
 
 export type Season = 'spring' | 'summer' | 'autumn' | 'winter';
 

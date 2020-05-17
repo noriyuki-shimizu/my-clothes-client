@@ -24,6 +24,18 @@ export interface Clothes {
     isDeleted: boolean;
 }
 
+export interface ClothesItem {
+    id: number;
+    imageLink: string;
+    brandName: string;
+    shopName: string;
+    genres: Pick<Genre, 'name' | 'color'>[];
+    price: number;
+    buyDate: string;
+    comment: string;
+    satisfaction: number;
+}
+
 export interface State {
     clothes: Clothes[];
     assistGenres: AssistGenre[];

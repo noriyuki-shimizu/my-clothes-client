@@ -1,18 +1,6 @@
-import { Genre } from '@/store/genre/type';
 import { IModuleRootMutations } from '@/store/type';
 import { FormFields } from '@/components/coordinate/type';
-
-export interface ClothesItem {
-    id: number;
-    imageLink: string;
-    brandName: string;
-    shopName: string;
-    genres: Pick<Genre, 'name' | 'color'>[];
-    price: number;
-    buyDate: string;
-    comment: string;
-    satisfaction: number;
-}
+import { ClothesItem } from '@/store/clothes/type';
 
 export interface Coordinate {
     id: number;

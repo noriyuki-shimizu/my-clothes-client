@@ -79,10 +79,11 @@ import { AppMessage } from 'ant-design-vue/types/message';
 
 import CoordinateList from '@/components/coordinate/List.vue';
 import CoordinateItemDrawer from '@/components/clothes/Drawer.vue';
-import { ClothesItem, Coordinate } from '@/store/coordinate/type';
+import { Coordinate } from '@/store/coordinate/type';
 import { getSeason } from '@/util/date';
 import { resetMessage } from '@/util/message';
 import { handleForbiddenError } from '@/util/errorHandle';
+import { ClothesItem } from '@/store/clothes/type';
 
 @Component({
     components: {

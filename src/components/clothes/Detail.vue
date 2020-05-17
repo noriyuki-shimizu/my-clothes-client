@@ -26,8 +26,8 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 
+import { ClothesItem } from '@/store/clothes/type';
 import { Record } from './type';
-import { ClothesItem } from '../../store/coordinate/type';
 
 @Component
 export default class ClothesDetail extends Vue {
