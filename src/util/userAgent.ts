@@ -1,9 +1,10 @@
-export const isMobile = (ua: string) => {
+export const isMobile = () => {
+    const userAgent = navigator.userAgent;
     return (
-        ua.indexOf('iPhone') > 0 ||
-        ua.indexOf('iPod') > 0 ||
-        (ua.indexOf('Android') > 0 && ua.indexOf('Mobile') > 0) ||
-        ua.indexOf('Windows Phone') > 0
+        userAgent.indexOf('iPhone') > 0 ||
+        userAgent.indexOf('iPod') > 0 ||
+        (userAgent.indexOf('Android') > 0 && userAgent.indexOf('Mobile') > 0) ||
+        userAgent.indexOf('Windows Phone') > 0
     );
 };
 

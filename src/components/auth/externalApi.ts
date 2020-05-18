@@ -10,7 +10,7 @@ export const toHome = (
         return;
     }
     router.push({
-        name: isMobile(navigator.userAgent) ? 'mobileHome' : 'home'
+        name: isMobile() ? 'mobileHome' : 'home'
     });
 };
 
