@@ -47,7 +47,11 @@
 
         <h3 class="mc-show-item-title">Coordinate item</h3>
         <a-list bordered :data-source="coordinate.usedCoordinates">
-            <a-list-item slot="renderItem" slot-scope="item">
+            <a-list-item
+                class="clothes-list-item"
+                slot="renderItem"
+                slot-scope="item"
+            >
                 <div class="mc-item-container">
                     <div>
                         <img class="mc-item-image" :src="item.imageLink" />
@@ -123,7 +127,10 @@ export default class Show extends Vue {
 }
 
 .detail {
-    font-size: 12px;
     margin-left: 15px;
+}
+
+.clothes-list-item {
+    padding: 13px;
 }
 </style>

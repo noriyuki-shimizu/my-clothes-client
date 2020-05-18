@@ -26,7 +26,11 @@
 
         <a-empty v-if="!brands.length" />
         <a-list v-else bordered :data-source="brands">
-            <a-list-item slot="renderItem" slot-scope="item">
+            <a-list-item
+                class="brand-list-item"
+                slot="renderItem"
+                slot-scope="item"
+            >
                 <div class="mc-item-container">
                     <div>
                         <img
@@ -159,6 +163,10 @@ export default class Index extends Vue {
 </script>
 
 <style scoped>
+.brand-list-item {
+    padding: 13px;
+}
+
 .detail {
     margin-top: 10px;
     margin-left: 15px;
