@@ -26,23 +26,48 @@
 
         <a-empty v-if="!clothes.length" />
         <a-list v-else bordered :data-source="clothes">
-            <a-list-item slot="renderItem" slot-scope="item">
+            <a-list-item
+                class="clothes-list-item"
+                slot="renderItem"
+                slot-scope="item"
+            >
                 <div class="mc-item-container">
                     <div>
                         <img
                             class="mc-item-image"
-                            :src="
-                                item.imageLink ||
-                                    require('@/assets/image/no-img.png')
+                            :src="item.imageLink"
+                            @click="
+                                $router.push({
+                                    name: 'mobileClothesShow',
+                                    params: { id: item.id }
+                                })
                             "
                         />
                     </div>
                     <div class="detail">
-                        <clothes-detail
-                            :item="item"
-                            v-on:set-loading="setLoading"
-                            v-on:set-message="setMessage"
-                        />
+                        <detail :item="toClothesItem(item)" />
+                        <a>
+                            <a-popconfirm
+                                v-if="item.isDeleted"
+                                @confirm="() => onRestoration(item.id)"
+                                title="Are you sure restoration this clothes?"
+                                okText="Yes"
+                                cancelText="No"
+                            >
+                                <a-icon type="undo" />
+                                restoration
+                            </a-popconfirm>
+                            <a-popconfirm
+                                v-else
+                                title="Are you sure delete this clothes?"
+                                @confirm="() => onDelete(item.id)"
+                                okText="Yes"
+                                cancelText="No"
+                            >
+                                <a-icon type="delete" />
+                                delete
+                            </a-popconfirm>
+                        </a>
                     </div>
                 </div>
             </a-list-item>
@@ -55,14 +80,14 @@ import { Vue, Component, Emit } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 import { AppMessage } from 'ant-design-vue/types/message';
 
-import ClothesDetail from '@/components/clothes/Detail.vue';
+import Detail from '@/components/clothes/Detail.vue';
 import { resetMessage } from '@/util/message';
 import { handleForbiddenError } from '@/util/errorHandle';
-import { Clothes } from '@/store/clothes/type';
+import { ClothesItem, Clothes } from '@/store/clothes/type';
 
 @Component({
     components: {
-        ClothesDetail
+        Detail
     }
 })
 export default class Index extends Vue {
@@ -85,13 +110,51 @@ export default class Index extends Vue {
         this.loading = false;
     }
 
-    get clohtes(): Clothes[] {
+    get clothes(): Clothes[] {
         return this.$store.getters['clothes/clothes'];
     }
 
-    @Emit('set-loading')
-    setLoading(loading: boolean) {
-        this.loading = loading;
+    toClothesItem(clothes: Clothes): ClothesItem {
+        const imageLink = clothes.imageLink || '';
+        const comment = clothes.comment || '';
+        const satisfaction = clothes.satisfaction || 0;
+
+        return {
+            id: clothes.id,
+            imageLink,
+            brandName: clothes.brand.name,
+            shopName: clothes.shop.name,
+            genres: clothes.genres.map(genre => ({
+                name: genre.name,
+                color: genre.color
+            })),
+            price: clothes.price,
+            buyDate: clothes.buyDate,
+            comment,
+            satisfaction
+        };
+    }
+
+    async onDelete(id: number) {
+        this.loading = true;
+        this.setMessage();
+
+        await this.$store
+            .dispatch('clothes/onDeleteClothes', id)
+            .catch(this.onError);
+
+        this.loading = false;
+    }
+
+    async onRestoration(id: number) {
+        this.loading = true;
+        this.setMessage();
+
+        await this.$store
+            .dispatch('clothes/onRestorationClothes', id)
+            .catch(this.onError);
+
+        this.loading = false;
     }
 
     @Emit('set-message')
@@ -116,8 +179,11 @@ export default class Index extends Vue {
 </script>
 
 <style scoped>
+.clothes-list-item {
+    padding: 13px;
+}
+
 .detail {
-    margin-top: 10px;
     margin-left: 15px;
 }
 </style>

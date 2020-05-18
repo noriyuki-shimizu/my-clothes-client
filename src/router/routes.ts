@@ -189,6 +189,34 @@ const routes: RouteConfig[] = [
                 name: 'mobileBrandEdit',
                 component: () => import('../views/mobile/parts/brand/Edit.vue'),
                 meta: { requiresAuth: true }
+            },
+            {
+                path: '/mobile/maintenance/clothes',
+                name: 'mobileClothes',
+                component: () =>
+                    import('../views/mobile/parts/clothes/Index.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/mobile/maintenance/clothes/show/:id',
+                name: 'mobileClothesShow',
+                component: () =>
+                    import('../views/mobile/parts/clothes/Show.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/mobile/maintenance/clothes/new',
+                name: 'mobileClothesNew',
+                component: () =>
+                    import('../views/mobile/parts/clothes/New.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/mobile/maintenance/clothes/edit/:id',
+                name: 'mobileClothesEdit',
+                component: () =>
+                    import('../views/mobile/parts/clothes/Edit.vue'),
+                meta: { requiresAuth: true }
             }
         ]
     }

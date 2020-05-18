@@ -18,7 +18,7 @@
         </div>
         <div>Buy date ... {{ item.buyDate }}</div>
         <div>
-            <a-rate :defaultValue="item.satisfaction" disabled />
+            <a-rate :value="item.satisfaction" disabled allow-half />
         </div>
     </div>
 </template>

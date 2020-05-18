@@ -15,7 +15,11 @@
                 </router-link>
             </a-menu-item>
             <a-menu-item-group title="Parts">
-                <a-menu-item key="clothes">Clothes</a-menu-item>
+                <a-menu-item key="clothes">
+                    <router-link to="/mobile/maintenance/clothes">
+                        Clothes
+                    </router-link>
+                </a-menu-item>
                 <a-menu-item key="brand">
                     <router-link to="/mobile/maintenance/brand">
                         Brand

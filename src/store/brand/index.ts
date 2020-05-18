@@ -11,7 +11,7 @@ import api from '@/plugins/api';
 import firebaseStorage from '@/plugins/firebase/storage';
 import { AppUser } from '@/store/user/type';
 
-const initBrand = (): Brand => ({
+export const initBrand = (): Brand => ({
     id: 0,
     name: '',
     link: '',

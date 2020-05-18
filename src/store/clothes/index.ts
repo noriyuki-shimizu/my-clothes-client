@@ -14,8 +14,25 @@ import api from '@/plugins/api';
 import firebaseStorage from '@/plugins/firebase/storage';
 import { AppUser } from '@/store/user/type';
 import { dateFormat } from '@/util/date';
+import { initBrand } from '@/store/brand';
+import { initShop } from '@/store/shop';
+
+const initClothes = (): Clothes => ({
+    id: 0,
+    imageId: null,
+    imageLink: null,
+    brand: initBrand(),
+    shop: initShop(),
+    genres: [],
+    price: 0,
+    buyDate: '',
+    comment: null,
+    satisfaction: null,
+    isDeleted: false
+});
 
 const state: State = {
+    item: initClothes(),
     clothes: [],
     assistGenres: [],
     assistBrands: [],
@@ -24,6 +41,9 @@ const state: State = {
 };
 
 const getters: Getters<State, IGetters> = {
+    item(state) {
+        return state.item;
+    },
     clothes(state) {
         return state.clothes;
     },
@@ -43,10 +63,17 @@ const getters: Getters<State, IGetters> = {
 
 const mutations: Mutations<State, IMutations> = {
     allStateReset(state) {
+        state.item = initClothes();
         state.assistBrands = [];
         state.assistGenres = [];
         state.assistShops = [];
         state.clothes = [];
+    },
+    resetItem(state) {
+        state.item = initClothes();
+    },
+    itemStateChange(state, payload) {
+        state.item = payload;
     },
     clothesStateChange(state, payload) {
         state.clothes = payload;
@@ -109,6 +136,14 @@ const mutations: Mutations<State, IMutations> = {
 };
 
 const actions: Actions<State, IActions, IGetters, IMutations> = {
+    async fetchOne(ctx, id) {
+        const response = await api.get(
+            `/${ctx.rootGetters['user/id']}/clothes/${id}`
+        );
+        const { data } = response;
+
+        ctx.commit('itemStateChange', data.clothes);
+    },
     async fetchClothes(ctx) {
         const response = await api.get(
             `/${ctx.rootGetters['user/id']}/clothes`

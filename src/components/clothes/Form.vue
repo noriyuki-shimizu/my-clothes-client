@@ -39,7 +39,7 @@
             </a-upload>
         </a-form-item>
 
-        <a-form-item v-bind="formItemLayout" label="Brand">
+        <a-form-item label="Brand">
             <a-select
                 v-if="assistBrands.length"
                 v-decorator="[
@@ -63,12 +63,12 @@
                     {{ assistBrand.name }}
                 </a-select-option>
             </a-select>
-            <router-link v-else :to="'/maintenance/brand/new?next=back'">
+            <a v-else @click="movePartNewPage('brand')">
                 Please create a brand
-            </router-link>
+            </a>
         </a-form-item>
 
-        <a-form-item v-bind="formItemLayout" label="Shop">
+        <a-form-item label="Shop">
             <a-select
                 v-if="assistShops.length"
                 v-decorator="[
@@ -92,12 +92,12 @@
                     {{ assistShop.name }}
                 </a-select-option>
             </a-select>
-            <router-link v-else :to="'/maintenance/shop/new?next=back'">
+            <a v-else @click="movePartNewPage('shop')">
                 Please create a shop
-            </router-link>
+            </a>
         </a-form-item>
 
-        <a-form-item v-bind="formItemLayout" label="Genres">
+        <a-form-item label="Genres">
             <a-checkbox-group
                 v-if="assistGenres.length"
                 v-decorator="[
@@ -127,12 +127,12 @@
                     </a-col>
                 </a-row>
             </a-checkbox-group>
-            <router-link v-else :to="'/maintenance/genre/new?next=back'">
+            <a v-else @click="movePartNewPage('genre')">
                 Please create a genre
-            </router-link>
+            </a>
         </a-form-item>
 
-        <a-form-item v-bind="formItemLayout" label="Price">
+        <a-form-item label="Price">
             <a-input-number
                 v-decorator="[
                     'price',
@@ -151,7 +151,7 @@
             />
         </a-form-item>
 
-        <a-form-item v-bind="formItemLayout" label="Buy date">
+        <a-form-item label="Buy date">
             <a-date-picker
                 v-decorator="[
                     'buyDate',
@@ -168,7 +168,7 @@
             />
         </a-form-item>
 
-        <a-form-item v-bind="formItemLayout" label="Comment">
+        <a-form-item label="Comment">
             <a-textarea
                 v-decorator="[
                     'comment',
@@ -184,7 +184,7 @@
             />
         </a-form-item>
 
-        <a-form-item v-bind="formItemLayout" label="Satisfaction">
+        <a-form-item label="Satisfaction">
             <a-rate
                 v-decorator="['satisfaction', { initialValue: 2.5 }]"
                 allow-half
@@ -219,6 +219,7 @@ import { FormFields } from '@/components/clothes/type';
 import { Clothes } from '@/store/clothes/type';
 import { getBase64, isLt5M } from '@/util/file';
 import { dateFormat } from '@/util/date';
+import { isMobile } from '../../util/userAgent';
 
 @Component
 export default class ClothesForm extends Vue {
@@ -305,6 +306,17 @@ export default class ClothesForm extends Vue {
         this.form.validateFields(async (err, values: FormFields) => {
             if (!err) {
                 this.$emit<FormFields>('on-submit', values);
+            }
+        });
+    }
+
+    movePartNewPage(part: string) {
+        this.$router.push({
+            path: isMobile()
+                ? `/mobile/maintenance/${part}/new`
+                : `/maintenance/${part}/new`,
+            query: {
+                next: 'back'
             }
         });
     }

@@ -1,8 +1,8 @@
 import { IModuleRootMutations } from '@/store/type';
 import { FormFields } from '@/components/clothes/type';
-import { Brand } from '../brand/type';
-import { Shop } from '../shop/type';
-import { Genre } from '../genre/type';
+import { Brand } from '@/store/brand/type';
+import { Shop } from '@/store/shop/type';
+import { Genre } from '@/store/genre/type';
 
 export interface AssistGenre extends Genre {}
 
@@ -37,6 +37,7 @@ export interface ClothesItem {
 }
 
 export interface State {
+    item: Clothes;
     clothes: Clothes[];
     assistGenres: AssistGenre[];
     assistBrands: AssistBrand[];
@@ -45,6 +46,7 @@ export interface State {
 }
 
 export interface IGetters {
+    item: Clothes;
     clothes: Clothes[];
     assistGenres: AssistGenre[];
     assistBrands: AssistBrand[];
@@ -52,6 +54,7 @@ export interface IGetters {
     totalPrice: number;
 }
 export interface IRootGetters {
+    'clothes/item': IGetters['item'];
     'clothes/clothes': IGetters['clothes'];
     'clothes/assistGenres': IGetters['assistGenres'];
     'clothes/assistBrands': IGetters['assistBrands'];
@@ -60,6 +63,8 @@ export interface IRootGetters {
 }
 
 export interface IMutations extends IModuleRootMutations {
+    resetItem: void;
+    itemStateChange: Clothes;
     clothesStateChange: Clothes[];
     addClothes: Clothes;
     updateClothes: Omit<FormFields, 'image' | 'buyDate'> &
@@ -73,6 +78,8 @@ export interface IMutations extends IModuleRootMutations {
 }
 export interface IRootMutations {
     'clothes/allStateReset': IMutations['allStateReset'];
+    'clothes/resetItem': IMutations['resetItem'];
+    'clothes/itemStateChange': IMutations['itemStateChange'];
     'clothes/clothesStateChange': IMutations['clothesStateChange'];
     'clothes/addClothes': IMutations['addClothes'];
     'clothes/updateClothes': IMutations['updateClothes'];
@@ -85,6 +92,7 @@ export interface IRootMutations {
 }
 
 export interface IActions {
+    fetchOne: Clothes['id'];
     fetchClothes: void;
     fetchAssistGenres: void;
     fetchAssistBrands: void;
@@ -96,6 +104,7 @@ export interface IActions {
     onRestorationClothes: Clothes['id'];
 }
 export interface IRootActions {
+    'clothes/fetchOne': IActions['fetchOne'];
     'clothes/fetchClothes': IActions['fetchClothes'];
     'clothes/fetchAssistGenres': IActions['fetchAssistGenres'];
     'clothes/fetchAssistBrands': IActions['fetchAssistBrands'];

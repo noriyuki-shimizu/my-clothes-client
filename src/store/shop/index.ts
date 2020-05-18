@@ -6,6 +6,19 @@ import firebaseStorage from '@/plugins/firebase/storage';
 import { AppUser } from '@/store/user/type';
 import { timeFormat } from '@/util/date';
 
+export const initShop = (): Shop => ({
+    id: 0,
+    name: '',
+    link: null,
+    stationName: '',
+    imageId: null,
+    imageLink: null,
+    address: '',
+    businessHours: '',
+    tel: '',
+    isDeleted: false
+});
+
 const state: State = {
     shops: []
 };
