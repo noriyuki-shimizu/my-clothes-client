@@ -62,7 +62,7 @@ export default class Edit extends Vue {
         const { id } = this.$route.params;
 
         if (!id) {
-            this.$router.push({ name: 'mobileBrand' });
+            this.$router.push({ name: 'mobileCoordinate' });
             return;
         }
 
