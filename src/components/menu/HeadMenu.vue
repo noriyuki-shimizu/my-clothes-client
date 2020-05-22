@@ -30,7 +30,12 @@
                         Genre
                     </router-link>
                 </a-menu-item>
-                <a-menu-item key="shop">Shop</a-menu-item>
+                <a-menu-item key="shop">
+                    <router-link to="/mobile/maintenance/shop">
+                        Shop
+                    </router-link>
+                    Shop
+                </a-menu-item>
             </a-menu-item-group>
             <a-menu-item>
                 <router-link to="/mobile/total-price">

@@ -242,6 +242,30 @@ const routes: RouteConfig[] = [
                 name: 'mobileGenreEdit',
                 component: () => import('../views/mobile/parts/genre/Edit.vue'),
                 meta: { requiresAuth: true }
+            },
+            {
+                path: '/mobile/maintenance/shop',
+                name: 'mobileShop',
+                component: () => import('../views/mobile/parts/shop/Index.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/mobile/maintenance/shop/show/:id',
+                name: 'mobileShopShow',
+                component: () => import('../views/mobile/parts/shop/Show.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/mobile/maintenance/shop/new',
+                name: 'mobileShopNew',
+                component: () => import('../views/mobile/parts/shop/New.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/mobile/maintenance/shop/edit/:id',
+                name: 'mobileShopEdit',
+                component: () => import('../views/mobile/parts/shop/Edit.vue'),
+                meta: { requiresAuth: true }
             }
         ]
     }

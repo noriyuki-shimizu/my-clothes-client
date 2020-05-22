@@ -20,10 +20,14 @@ export const initShop = (): Shop => ({
 });
 
 const state: State = {
+    shop: initShop(),
     shops: []
 };
 
 const getters: Getters<State, IGetters> = {
+    shop(state) {
+        return state.shop;
+    },
     shops(state) {
         return state.shops;
     }
@@ -32,6 +36,12 @@ const getters: Getters<State, IGetters> = {
 const mutations: Mutations<State, IMutations> = {
     allStateReset(state) {
         state.shops = [];
+    },
+    resetShop(state) {
+        state.shop = initShop();
+    },
+    shopStateChange(state, payload) {
+        state.shop = payload;
     },
     shopsStateChange(state, payload) {
         state.shops = payload;
@@ -72,6 +82,14 @@ const mutations: Mutations<State, IMutations> = {
 };
 
 const actions: Actions<State, IActions, IGetters, IMutations> = {
+    async fetchShop(ctx, id) {
+        const response = await api.get(
+            `/${ctx.rootGetters['user/id']}/shops/${id}`
+        );
+        const { data } = response;
+
+        ctx.commit('shopStateChange', data.shop);
+    },
     async fetchShops(ctx) {
         const response = await api.get(`/${ctx.rootGetters['user/id']}/shops`);
         const { data } = response;
