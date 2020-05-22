@@ -60,9 +60,7 @@ export default class Brand extends Vue {
     loading = false;
 
     async created() {
-        if (!this.brands.length) {
-            this.fetchBrands();
-        }
+        this.fetchBrands();
     }
 
     private async fetchBrands() {

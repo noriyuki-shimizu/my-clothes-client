@@ -35,14 +35,24 @@ export default class Edit extends Vue {
     $store!: Vuex.ExStore;
 
     created() {
-        if (!this.target) {
+        const { id } = this.$route.params;
+
+        if (!id) {
             this.$router.push({ name: 'brand' });
+            return;
         }
+
+        this.$store
+            .dispatch('brand/fetchBrand', Number(id))
+            .catch(this.onError);
+    }
+
+    beforeDestroy() {
+        this.$store.commit('brand/resetBrand');
     }
 
     get target() {
-        const brands = this.$store.getters['brand/brands'];
-        return brands.find(brand => Number(this.$route.params.id) === brand.id);
+        return this.$store.getters['brand/brand'];
     }
 
     onError(err: any) {
@@ -60,14 +70,15 @@ export default class Edit extends Vue {
     }
 
     async onRegister(values: FormFields) {
-        const target = this.target;
-        if (!target) {
+        const { id } = this.$route.params;
+
+        if (!id) {
             this.$router.push({ name: 'brand' });
             return;
         }
 
         await this.$store.dispatch('brand/onUpdateBrand', {
-            id: target.id,
+            id: Number(id),
             ...values
         });
 

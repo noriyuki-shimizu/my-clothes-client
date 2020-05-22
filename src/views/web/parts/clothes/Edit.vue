@@ -39,27 +39,36 @@ export default class Edit extends Vue {
     $store!: Vuex.ExStore;
 
     created() {
-        if (!this.target) {
+        const { id } = this.$route.params;
+
+        if (!id) {
             this.$router.push({ name: 'clothes' });
+            return;
         }
+
+        this.$store
+            .dispatch('clothes/fetchOne', Number(id))
+            .catch(this.onError);
+    }
+
+    beforeDestroy() {
+        this.$store.commit('clothes/resetItem');
     }
 
     get target() {
-        const clothes = this.$store.getters['clothes/clothes'];
-        return clothes.find(
-            clothes => Number(this.$route.params.id) === clothes.id
-        );
+        return this.$store.getters['clothes/item'];
     }
 
     async onRegister(values: FormFields) {
-        const target = this.target;
-        if (!target) {
+        const { id } = this.$route.params;
+
+        if (!id) {
             this.$router.push({ name: 'clothes' });
             return;
         }
 
         await this.$store.dispatch('clothes/onUpdateClothes', {
-            id: target.id,
+            id: Number(id),
             ...values
         });
 

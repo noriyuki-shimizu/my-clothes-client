@@ -10,7 +10,11 @@
             :type="message.type"
             showIcon
         />
-        <shop-form :target="target" v-on:on-submit="onSubmit" />
+        <shop-form
+            :target="target"
+            v-on:on-submit="onSubmit"
+            v-on:on-error="onError"
+        />
     </div>
 </template>
 
@@ -37,16 +41,25 @@ export default class Edit extends Vue {
     $store!: Vuex.ExStore;
 
     created() {
-        if (!this.target) {
-            this.$router.push({ name: 'shop' });
+        const { id } = this.$route.params;
+
+        if (!id) {
+            this.$router.push({ name: 'mobileShop' });
+            return;
         }
+
+        this.$store.dispatch('shop/fetchShop', Number(id)).catch(this.onError);
+    }
+
+    beforeDestroy() {
+        this.$store.commit('shop/resetShop');
     }
 
     get target() {
-        const shops = this.$store.getters['shop/shops'];
-        return shops.find(shop => Number(this.$route.params.id) === shop.id);
+        return this.$store.getters['shop/shop'];
     }
 
+    @Emit('on-error')
     onError(err: any) {
         this.message = resetMessage();
         handleForbiddenError(err, this.$store, this.$router);
@@ -62,14 +75,15 @@ export default class Edit extends Vue {
     }
 
     async onRegister(values: FormFields) {
-        const target = this.target;
-        if (!target) {
-            this.$router.push({ name: 'shop' });
+        const { id } = this.$route.params;
+
+        if (!id) {
+            this.$router.push({ name: 'mobileShop' });
             return;
         }
 
         await this.$store.dispatch('shop/onUpdateShop', {
-            id: target.id,
+            id: Number(id),
             ...values
         });
 

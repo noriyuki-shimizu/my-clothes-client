@@ -40,27 +40,35 @@ export default class Edit extends Vue {
     message: AppMessage = resetMessage();
 
     created() {
-        if (!this.target) {
+        const { id } = this.$route.params;
+
+        if (!id) {
             this.$router.push({ name: 'coordinate' });
         }
+
+        this.$store
+            .dispatch('coordinate/fetchCoordinate', Number(id))
+            .catch(this.onError);
+    }
+
+    beforeDestroy() {
+        this.$store.commit('coordinate/resetCoordinate');
     }
 
     get target() {
-        const coordinates = this.$store.getters['coordinate/coordinates'];
-        return coordinates.find(
-            coordinate => Number(this.$route.params.id) === coordinate.id
-        );
+        return this.$store.getters['coordinate/coordinate'];
     }
 
     private async onRegister(values: FormFields) {
-        const { target } = this;
-        if (!target) {
+        const { id } = this.$route.params;
+
+        if (!id) {
             this.$router.push({ name: 'coordinate' });
             return;
         }
 
         await this.$store.dispatch('coordinate/onUpdateCoordinate', {
-            id: target.id,
+            id: Number(id),
             ...values
         });
 

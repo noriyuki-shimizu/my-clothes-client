@@ -65,9 +65,7 @@ export default class Genre extends Vue {
     loading = false;
 
     created() {
-        if (!this.genres.length) {
-            this.fetchGenres();
-        }
+        this.fetchGenres();
     }
 
     reloadGenres() {

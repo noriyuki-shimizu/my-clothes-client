@@ -65,23 +65,17 @@ export default class Shop extends Vue {
     loading = false;
 
     created() {
-        this.$emit('on-reset-message');
+        this.onResetMessage();
 
-        const despatches: ClothesDispatches[] = [
-            'clothes/fetchAssistGenres',
-            'clothes/fetchAssistBrands',
-            'clothes/fetchAssistShops'
-        ];
-
-        if (!this.clothes.length) {
-            despatches.push('clothes/fetchClothes');
-        }
-
-        this.fetchClothes(despatches);
+        this.fetchClothes();
     }
 
     reloadClothes() {
-        this.$store.commit('clothes/clothesStateChange', []);
+        this.fetchClothes();
+    }
+
+    private async fetchClothes() {
+        this.loading = true;
 
         const despatches: ClothesDispatches[] = [
             'clothes/fetchAssistGenres',
@@ -90,16 +84,10 @@ export default class Shop extends Vue {
             'clothes/fetchClothes'
         ];
 
-        this.fetchClothes(despatches);
-    }
-
-    private async fetchClothes(despatches: ClothesDispatches[]) {
-        this.loading = true;
-
         await Promise.all(
             despatches.map(despatch => this.$store.dispatch(despatch))
         ).catch(err => {
-            this.$emit('on-error', err);
+            this.onError(err);
         });
 
         this.loading = false;

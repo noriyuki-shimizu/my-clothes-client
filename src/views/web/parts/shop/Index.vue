@@ -61,11 +61,9 @@ export default class Shop extends Vue {
     loading = false;
 
     created() {
-        this.$emit('on-reset-message');
+        this.onResetMessage();
 
-        if (!this.shops.length) {
-            this.fetchShops();
-        }
+        this.fetchShops();
     }
 
     reloadShops() {
@@ -75,9 +73,7 @@ export default class Shop extends Vue {
 
     private async fetchShops() {
         this.loading = true;
-        await this.$store
-            .dispatch('shop/fetchShops')
-            .catch((err: any) => this.$emit('on-error', err));
+        await this.$store.dispatch('shop/fetchShops').catch(this.onError);
         this.loading = false;
     }
 

@@ -10,7 +10,11 @@
             :type="message.type"
             showIcon
         />
-        <genre-form :target="target" v-on:on-submit="onSubmit" />
+        <genre-form
+            :target="target"
+            v-on:on-submit="onSubmit"
+            v-on:on-error="onError"
+        />
     </div>
 </template>
 
@@ -35,16 +39,27 @@ export default class Edit extends Vue {
     $store!: Vuex.ExStore;
 
     created() {
-        if (!this.target) {
-            this.$router.push({ name: 'genre' });
+        const { id } = this.$route.params;
+
+        if (!id) {
+            this.$router.push({ name: 'mobileGenre' });
+            return;
         }
+
+        this.$store
+            .dispatch('genre/fetchGenre', Number(id))
+            .catch(this.onError);
+    }
+
+    beforeDestroy() {
+        this.$store.commit('genre/resetGenre');
     }
 
     get target() {
-        const genres = this.$store.getters['genre/genres'];
-        return genres.find(genre => Number(this.$route.params.id) === genre.id);
+        return this.$store.getters['genre/genre'];
     }
 
+    @Emit('on-error')
     onError(err: any) {
         this.message = resetMessage();
         handleForbiddenError(err, this.$store, this.$router);
@@ -60,18 +75,16 @@ export default class Edit extends Vue {
     }
 
     async onRegister(values: FormFields) {
-        const target = this.target;
-        if (!target) {
-            this.$router.push({ name: 'genre' });
+        const { id } = this.$route.params;
+
+        if (!id) {
+            this.$router.push({ name: 'mobileGenre' });
             return;
         }
 
-        const { name, color } = values;
-
         await this.$store.dispatch('genre/onUpdateGenre', {
-            id: target.id,
-            name,
-            color
+            id: Number(id),
+            ...values
         });
 
         this.$success({
