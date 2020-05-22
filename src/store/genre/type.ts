@@ -14,23 +14,28 @@ export interface TotalPricePerGenre {
 }
 
 export interface State {
+    genre: Genre;
     genres: Genre[];
     totalPricePerGenres: TotalPricePerGenre[];
     canSelectedColors: string[];
 }
 
 export interface IGetters {
+    genre: Genre;
     genres: Genre[];
     totalPricePerGenres: TotalPricePerGenre[];
     canSelectedColors: string[];
 }
 export interface IRootGetters {
+    'genre/genre': IGetters['genre'];
     'genre/genres': IGetters['genres'];
     'genre/totalPricePerGenres': IGetters['totalPricePerGenres'];
     'genre/canSelectedColors': IGetters['canSelectedColors'];
 }
 
 export interface IMutations extends IModuleRootMutations {
+    resetGenre: void;
+    genreStateChange: Genre;
     genresStateChange: Genre[];
     totalPricePerGenreStateChange: TotalPricePerGenre[];
     canSelectedColorsStateChange: string[];
@@ -40,6 +45,8 @@ export interface IMutations extends IModuleRootMutations {
 }
 export interface IRootMutations {
     'genre/allStateReset': IMutations['allStateReset'];
+    'genre/resetGenre': IMutations['resetGenre'];
+    'genre/genreStateChange': IMutations['genreStateChange'];
     'genre/genresStateChange': IMutations['genresStateChange'];
     'genre/totalPricePerGenreStateChange': IMutations['totalPricePerGenreStateChange'];
     'genre/canSelectedColorsStateChange': IMutations['canSelectedColorsStateChange'];
@@ -49,6 +56,7 @@ export interface IRootMutations {
 }
 
 export interface IActions {
+    fetchGenre: Genre['id'];
     fetchGenres: void;
     fetchTotalPricePerGenres: void;
     fetchCanSelectedColorsStateChange: Genre['id'] | null;
@@ -57,6 +65,7 @@ export interface IActions {
     onDeleteGenre: Genre['id'];
 }
 export interface IRootActions {
+    'genre/fetchGenre': IActions['fetchGenre'];
     'genre/fetchGenres': IActions['fetchGenres'];
     'genre/fetchTotalPricePerGenres': IActions['fetchTotalPricePerGenres'];
     'genre/fetchCanSelectedColorsStateChange': IActions['fetchCanSelectedColorsStateChange'];

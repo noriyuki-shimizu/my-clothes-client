@@ -9,13 +9,23 @@ import {
 } from '@/store/genre/type';
 import api from '@/plugins/api';
 
+const initGenre = (): Genre => ({
+    id: 0,
+    name: '',
+    color: ''
+});
+
 const state: State = {
+    genre: initGenre(),
     genres: [],
     totalPricePerGenres: [],
     canSelectedColors: []
 };
 
 const getters: Getters<State, IGetters> = {
+    genre(state) {
+        return state.genre;
+    },
     genres(state) {
         return state.genres;
     },
@@ -32,6 +42,12 @@ const mutations: Mutations<State, IMutations> = {
         state.genres = [];
         state.totalPricePerGenres = [];
         state.canSelectedColors = [];
+    },
+    resetGenre(state) {
+        state.genre = initGenre();
+    },
+    genreStateChange(state, payload) {
+        state.genre = payload;
     },
     genresStateChange(state, payload) {
         state.genres = payload;
@@ -64,6 +80,14 @@ const mutations: Mutations<State, IMutations> = {
 };
 
 const actions: Actions<State, IActions, IGetters, IMutations> = {
+    async fetchGenre(ctx, id) {
+        const response = await api.get(
+            `/${ctx.rootGetters['user/id']}/genres/${id}`
+        );
+        const { data } = response;
+
+        ctx.commit('genreStateChange', data.genre);
+    },
     async fetchGenres(ctx) {
         const response = await api.get(`/${ctx.rootGetters['user/id']}/genres`);
         const { data } = response;

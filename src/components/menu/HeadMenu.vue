@@ -25,7 +25,11 @@
                         Brand
                     </router-link>
                 </a-menu-item>
-                <a-menu-item key="genre">Genre</a-menu-item>
+                <a-menu-item key="genre">
+                    <router-link to="/mobile/maintenance/genre">
+                        Genre
+                    </router-link>
+                </a-menu-item>
                 <a-menu-item key="shop">Shop</a-menu-item>
             </a-menu-item-group>
             <a-menu-item>

@@ -217,6 +217,31 @@ const routes: RouteConfig[] = [
                 component: () =>
                     import('../views/mobile/parts/clothes/Edit.vue'),
                 meta: { requiresAuth: true }
+            },
+            {
+                path: '/mobile/maintenance/genre',
+                name: 'mobileGenre',
+                component: () =>
+                    import('../views/mobile/parts/genre/Index.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/mobile/maintenance/genre/show/:id',
+                name: 'mobileGenreShow',
+                component: () => import('../views/mobile/parts/genre/Show.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/mobile/maintenance/genre/new',
+                name: 'mobileGenreNew',
+                component: () => import('../views/mobile/parts/genre/New.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/mobile/maintenance/genre/edit/:id',
+                name: 'mobileGenreEdit',
+                component: () => import('../views/mobile/parts/genre/Edit.vue'),
+                meta: { requiresAuth: true }
             }
         ]
     }
