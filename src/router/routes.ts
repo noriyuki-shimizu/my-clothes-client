@@ -1,6 +1,5 @@
-import { RouteConfig } from 'vue-router';
-import { Route } from 'ant-design-vue/types/breadcrumb/breadcrumb';
 import { isMobile } from '@/util/userAgent';
+import { RouteConfig } from 'vue-router';
 
 const routes: RouteConfig[] = [
     {
