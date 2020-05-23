@@ -285,7 +285,6 @@ export default class ShopForm extends Vue {
 <style>
 #preview_image {
     width: 150px;
-    height: 150px;
 }
 
 .image-uploader > .ant-upload {

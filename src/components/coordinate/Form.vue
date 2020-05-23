@@ -263,7 +263,6 @@ export default class CoordinateForm extends Vue {
 <style>
 #preview_image {
     width: 160px;
-    height: 180px;
 }
 
 .image-uploader > .ant-upload {

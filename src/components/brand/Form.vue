@@ -40,7 +40,7 @@
                     id="preview_image"
                     v-if="imageURL"
                     :src="imageURL"
-                    alt="avatar"
+                    alt="brand image"
                 />
                 <div v-else>
                     <a-icon :type="imageLoading ? 'loading' : 'plus'" />
@@ -190,7 +190,6 @@ export default class BrandForm extends Vue {
 <style>
 #preview_image {
     width: 150px;
-    height: 150px;
 }
 
 .image-uploader > .ant-upload {
