@@ -18,7 +18,7 @@ const routes: RouteConfig[] = [
     {
         path: '/',
         component: () => import('../views/web/Layout.vue'),
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
         children: [
             {
                 path: '/home',
@@ -127,7 +127,7 @@ const routes: RouteConfig[] = [
     {
         path: '/',
         component: () => import('../views/mobile/Layout.vue'),
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
         children: [
             {
                 path: '/mobile/home',
@@ -268,15 +268,14 @@ const routes: RouteConfig[] = [
                 meta: { requiresAuth: true }
             }
         ]
+    },
+    {
+        path: '*',
+        redirect: () => ({
+            name: isMobile() ? 'mobileHome' : 'home'
+        }),
+        meta: { requiresAuth: true }
     }
-    // TODO モバイルの実装が完了したら、コメントアウトを戻すこと
-    // {
-    //     path: '*',
-    //     redirect: () => ({
-    //         name: isMobile(navigator.userAgent) ? 'mobileHome' : 'home'
-    //     }),
-    //     meta: { requiresAuth: true }
-    // }
 ];
 
 export default routes;
