@@ -41,7 +41,6 @@
 
         <a-form-item label="Brand">
             <a-select
-                v-if="assistBrands.length"
                 v-decorator="[
                     'brandId',
                     {
@@ -63,14 +62,13 @@
                     {{ assistBrand.name }}
                 </a-select-option>
             </a-select>
-            <a v-else @click="movePartNewPage('brand')">
+            <a v-if="!assistBrands.length" @click="movePartNewPage('brand')">
                 Please create a brand
             </a>
         </a-form-item>
 
         <a-form-item label="Shop">
             <a-select
-                v-if="assistShops.length"
                 v-decorator="[
                     'shopId',
                     {
@@ -92,14 +90,13 @@
                     {{ assistShop.name }}
                 </a-select-option>
             </a-select>
-            <a v-else @click="movePartNewPage('shop')">
+            <a v-if="!assistShops.length" @click="movePartNewPage('shop')">
                 Please create a shop
             </a>
         </a-form-item>
 
         <a-form-item label="Genres">
             <a-checkbox-group
-                v-if="assistGenres.length"
                 v-decorator="[
                     'genreIds',
                     {
@@ -127,7 +124,7 @@
                     </a-col>
                 </a-row>
             </a-checkbox-group>
-            <a v-else @click="movePartNewPage('genre')">
+            <a v-if="!assistGenres.length" @click="movePartNewPage('genre')">
                 Please create a genre
             </a>
         </a-form-item>
