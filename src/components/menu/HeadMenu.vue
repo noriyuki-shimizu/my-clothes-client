@@ -14,29 +14,26 @@
                     Coordinate
                 </router-link>
             </a-menu-item>
-            <a-menu-item-group title="Parts">
-                <a-menu-item key="clothes">
-                    <router-link to="/mobile/maintenance/clothes">
-                        Clothes
-                    </router-link>
-                </a-menu-item>
-                <a-menu-item key="brand">
-                    <router-link to="/mobile/maintenance/brand">
-                        Brand
-                    </router-link>
-                </a-menu-item>
-                <a-menu-item key="genre">
-                    <router-link to="/mobile/maintenance/genre">
-                        Genre
-                    </router-link>
-                </a-menu-item>
-                <a-menu-item key="shop">
-                    <router-link to="/mobile/maintenance/shop">
-                        Shop
-                    </router-link>
+            <a-menu-item>
+                <router-link to="/mobile/maintenance/clothes">
+                    Clothes
+                </router-link>
+            </a-menu-item>
+            <a-menu-item>
+                <router-link to="/mobile/maintenance/brand">
+                    Brand
+                </router-link>
+            </a-menu-item>
+            <a-menu-item>
+                <router-link to="/mobile/maintenance/genre">
+                    Genre
+                </router-link>
+            </a-menu-item>
+            <a-menu-item>
+                <router-link to="/mobile/maintenance/shop">
                     Shop
-                </a-menu-item>
-            </a-menu-item-group>
+                </router-link>
+            </a-menu-item>
             <a-menu-item>
                 <router-link to="/mobile/total-price">
                     Price chart
