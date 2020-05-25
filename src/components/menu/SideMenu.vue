@@ -30,7 +30,7 @@
                 Shop
             </router-link>
         </a-menu-item>
-        <a-menu-item key="3">
+        <a-menu-item key="6">
             <router-link to="/total-price">
                 <a-icon type="pie-chart" />
                 <span>Price chart</span>
