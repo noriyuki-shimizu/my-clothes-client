@@ -209,7 +209,7 @@ export default class ShopTable extends Vue {
 <style scoped>
 .shop-image {
     height: 110px;
-    width: 110px;
+    max-width: 110px;
 }
 
 .highlight {

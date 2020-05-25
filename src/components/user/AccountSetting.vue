@@ -209,7 +209,7 @@ export default class AccountSetting extends Vue {
 <style scoped>
 #preview_image {
     width: 124px;
-    height: 124px;
+    max-height: 124px;
 }
 
 .icon-uploader > .ant-upload {

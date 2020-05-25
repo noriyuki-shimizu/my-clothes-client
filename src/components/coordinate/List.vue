@@ -92,7 +92,6 @@ export default class CoordinateList extends Vue {
 }
 
 .coordinate-image {
-    height: 280px;
     width: 240;
 }
 

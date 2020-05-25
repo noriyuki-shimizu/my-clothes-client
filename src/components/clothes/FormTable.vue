@@ -97,6 +97,6 @@ export default class ClothesFormTable extends Vue {
 <style scoped>
 .coordinate-item-table-image {
     height: 160px;
-    width: 140px;
+    max-width: 140px;
 }
 </style>

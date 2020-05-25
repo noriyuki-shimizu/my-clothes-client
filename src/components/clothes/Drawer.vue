@@ -78,7 +78,6 @@ export default class CoordinateItemDrawer extends Vue {
 
 <style scoped>
 .coordinate-item-image {
-    height: 250px;
     width: 220;
 }
 

@@ -155,11 +155,6 @@ export default class GenreTable extends Vue {
 </script>
 
 <style scoped>
-.genre-image {
-    height: 80px;
-    width: 80px;
-}
-
 .highlight {
     background-color: rgb(255, 192, 105);
     padding: 0px;

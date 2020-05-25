@@ -282,7 +282,7 @@ export default class CoordinateForm extends Vue {
 
 .selected-item-image {
     height: 160px;
-    width: 140px;
+    max-width: 140px;
     margin-bottom: 20px;
 }
 
