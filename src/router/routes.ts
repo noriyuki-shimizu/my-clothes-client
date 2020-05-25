@@ -52,73 +52,73 @@ const routes: RouteConfig[] = [
             {
                 path: '/maintenance/brand',
                 name: 'brand',
-                component: () => import('../views/web/parts/brand/Index.vue'),
+                component: () => import('../views/web/brand/Index.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/brand/new',
                 name: 'brandNew',
-                component: () => import('../views/web/parts/brand/New.vue'),
+                component: () => import('../views/web/brand/New.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/brand/:id',
                 name: 'brandEdit',
-                component: () => import('../views/web/parts/brand/Edit.vue'),
+                component: () => import('../views/web/brand/Edit.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/genre',
                 name: 'genre',
-                component: () => import('../views/web/parts/genre/Index.vue'),
+                component: () => import('../views/web/genre/Index.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/genre/new',
                 name: 'genreNew',
-                component: () => import('../views/web/parts/genre/New.vue'),
+                component: () => import('../views/web/genre/New.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/genre/:id',
                 name: 'genreEdit',
-                component: () => import('../views/web/parts/genre/Edit.vue'),
+                component: () => import('../views/web/genre/Edit.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/shop',
                 name: 'shop',
-                component: () => import('../views/web/parts/shop/Index.vue'),
+                component: () => import('../views/web/shop/Index.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/shop/new',
                 name: 'shopNew',
-                component: () => import('../views/web/parts/shop/New.vue'),
+                component: () => import('../views/web/shop/New.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/shop/:id',
                 name: 'shopEdit',
-                component: () => import('../views/web/parts/shop/Edit.vue'),
+                component: () => import('../views/web/shop/Edit.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/clothes',
                 name: 'clothes',
-                component: () => import('../views/web/parts/clothes/Index.vue'),
+                component: () => import('../views/web/clothes/Index.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/clothes/new',
                 name: 'clothesNew',
-                component: () => import('../views/web/parts/clothes/New.vue'),
+                component: () => import('../views/web/clothes/New.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/maintenance/clothes/:id',
                 name: 'clothesEdit',
-                component: () => import('../views/web/parts/clothes/Edit.vue'),
+                component: () => import('../views/web/clothes/Edit.vue'),
                 meta: { requiresAuth: true }
             }
         ]
@@ -167,103 +167,97 @@ const routes: RouteConfig[] = [
             {
                 path: '/mobile/maintenance/brand',
                 name: 'mobileBrand',
-                component: () =>
-                    import('../views/mobile/parts/brand/Index.vue'),
+                component: () => import('../views/mobile/brand/Index.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/mobile/maintenance/brand/show/:id',
                 name: 'mobileBrandShow',
-                component: () => import('../views/mobile/parts/brand/Show.vue'),
+                component: () => import('../views/mobile/brand/Show.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/mobile/maintenance/brand/new',
                 name: 'mobileBrandNew',
-                component: () => import('../views/mobile/parts/brand/New.vue'),
+                component: () => import('../views/mobile/brand/New.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/mobile/maintenance/brand/edit/:id',
                 name: 'mobileBrandEdit',
-                component: () => import('../views/mobile/parts/brand/Edit.vue'),
+                component: () => import('../views/mobile/brand/Edit.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/mobile/maintenance/clothes',
                 name: 'mobileClothes',
-                component: () =>
-                    import('../views/mobile/parts/clothes/Index.vue'),
+                component: () => import('../views/mobile/clothes/Index.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/mobile/maintenance/clothes/show/:id',
                 name: 'mobileClothesShow',
-                component: () =>
-                    import('../views/mobile/parts/clothes/Show.vue'),
+                component: () => import('../views/mobile/clothes/Show.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/mobile/maintenance/clothes/new',
                 name: 'mobileClothesNew',
-                component: () =>
-                    import('../views/mobile/parts/clothes/New.vue'),
+                component: () => import('../views/mobile/clothes/New.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/mobile/maintenance/clothes/edit/:id',
                 name: 'mobileClothesEdit',
-                component: () =>
-                    import('../views/mobile/parts/clothes/Edit.vue'),
+                component: () => import('../views/mobile/clothes/Edit.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/mobile/maintenance/genre',
                 name: 'mobileGenre',
-                component: () =>
-                    import('../views/mobile/parts/genre/Index.vue'),
+                component: () => import('../views/mobile/genre/Index.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/mobile/maintenance/genre/show/:id',
                 name: 'mobileGenreShow',
-                component: () => import('../views/mobile/parts/genre/Show.vue'),
+                component: () => import('../views/mobile/genre/Show.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/mobile/maintenance/genre/new',
                 name: 'mobileGenreNew',
-                component: () => import('../views/mobile/parts/genre/New.vue'),
+                component: () => import('../views/mobile/genre/New.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/mobile/maintenance/genre/edit/:id',
                 name: 'mobileGenreEdit',
-                component: () => import('../views/mobile/parts/genre/Edit.vue'),
+                component: () => import('../views/mobile/genre/Edit.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/mobile/maintenance/shop',
                 name: 'mobileShop',
-                component: () => import('../views/mobile/parts/shop/Index.vue'),
+                component: () => import('../views/mobile/shop/Index.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/mobile/maintenance/shop/show/:id',
                 name: 'mobileShopShow',
-                component: () => import('../views/mobile/parts/shop/Show.vue'),
+                component: () => import('../views/mobile/shop/Show.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/mobile/maintenance/shop/new',
                 name: 'mobileShopNew',
-                component: () => import('../views/mobile/parts/shop/New.vue'),
+                component: () => import('../views/mobile/shop/New.vue'),
                 meta: { requiresAuth: true }
             },
             {
                 path: '/mobile/maintenance/shop/edit/:id',
                 name: 'mobileShopEdit',
-                component: () => import('../views/mobile/parts/shop/Edit.vue'),
+                component: () => import('../views/mobile/shop/Edit.vue'),
                 meta: { requiresAuth: true }
             }
         ]
