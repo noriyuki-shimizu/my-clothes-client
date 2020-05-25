@@ -38,14 +38,31 @@
         <h3 class="mc-show-item-title">Brand</h3>
         <a-list>
             <a-list-item>
-                <div>{{ clothes.brand.name }}</div>
+                <a
+                    @click="
+                        $router.push({
+                            name: 'mobileBrandShow',
+                            params: { id: clothes.brand.id }
+                        })
+                    "
+                >
+                    {{ clothes.brand.name }}
+                </a>
             </a-list-item>
         </a-list>
 
         <h3 class="mc-show-item-title">Shop</h3>
         <a-list>
             <a-list-item>
-                <div>{{ clothes.shop.name }}</div>
+                <a
+                    @click="
+                        $router.push({
+                            name: 'mobileShopShow',
+                            params: { id: clothes.shop.id }
+                        })
+                    "
+                    >{{ clothes.shop.name }}</a
+                >
             </a-list-item>
         </a-list>
 
@@ -57,6 +74,12 @@
                         v-for="(genre, index) in clothes.genres"
                         :key="index"
                         :color="genre.color"
+                        @click="
+                            $router.push({
+                                name: 'mobileGenreShow',
+                                params: { id: genre.id }
+                            })
+                        "
                     >
                         {{ genre.name }}
                     </a-tag>

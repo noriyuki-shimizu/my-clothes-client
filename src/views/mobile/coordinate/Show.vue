@@ -52,7 +52,15 @@
                 slot="renderItem"
                 slot-scope="item"
             >
-                <div class="mc-item-container">
+                <div
+                    class="mc-item-container"
+                    @click="
+                        $router.push({
+                            name: 'mobileClothesShow',
+                            params: { id: item.id }
+                        })
+                    "
+                >
                     <div>
                         <img class="mc-item-image" :src="item.imageLink" />
                     </div>
