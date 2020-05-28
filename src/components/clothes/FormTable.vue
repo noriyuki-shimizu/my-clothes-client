@@ -41,7 +41,7 @@
 
         <span slot="imageLink" slot-scope="imageLink">
             <img
-                class="coordinate-item-table-image"
+                class="table-image"
                 :src="
                     imageLink ? imageLink : require('@/assets/image/no-img.png')
                 "
@@ -100,8 +100,5 @@ export default class ClothesFormTable extends Vue {
 </script>
 
 <style scoped>
-.coordinate-item-table-image {
-    height: 160px;
-    max-width: 140px;
-}
+@import '../../assets/css/table/ant.css';
 </style>

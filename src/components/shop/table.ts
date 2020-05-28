@@ -25,7 +25,7 @@ export const columns: Partial<Column>[] = [
         dataIndex: 'imageLink',
         key: 'imageLink',
         scopedSlots: { customRender: 'imageLink' },
-        width: 120
+        width: 160
     },
     {
         title: 'Link',

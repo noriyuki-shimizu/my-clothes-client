@@ -36,7 +36,7 @@
 
         <span slot="imageLink" slot-scope="imageLink">
             <img
-                class="clothes-image"
+                class="table-image"
                 :src="
                     imageLink ? imageLink : require('@/assets/image/no-img.png')
                 "
@@ -173,10 +173,7 @@ export default class ClothesTable extends Vue {
 </script>
 
 <style scoped>
-.clothes-image {
-    height: 160px;
-    max-width: 140px;
-}
+@import '../../assets/css/table/ant.css';
 
 .highlight {
     background-color: rgb(255, 192, 105);

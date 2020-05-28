@@ -51,7 +51,7 @@
 
         <span slot="imageLink" slot-scope="imageLink">
             <img
-                class="brand-image"
+                class="table-image"
                 :src="
                     imageLink ? imageLink : require('@/assets/image/no-img.png')
                 "
@@ -186,10 +186,7 @@ export default class BrandTable extends Vue {
 </script>
 
 <style scoped>
-.brand-image {
-    height: 130px;
-    max-width: 130px;
-}
+@import '../../assets/css/table/ant.css';
 
 .highlight {
     background-color: rgb(255, 192, 105);

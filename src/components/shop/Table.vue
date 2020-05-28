@@ -2,7 +2,7 @@
     <a-table
         :dataSource="dataSource"
         :columns="columns"
-        :scroll="{ x: 1600, y: 570 }"
+        :scroll="{ x: 1650, y: 570 }"
         :pagination="{ pageSize: 30 }"
         :loading="loading"
     >
@@ -51,7 +51,7 @@
 
         <span slot="imageLink" slot-scope="imageLink">
             <img
-                class="shop-image"
+                class="table-image"
                 :src="
                     imageLink ? imageLink : require('@/assets/image/no-img.png')
                 "
@@ -207,10 +207,7 @@ export default class ShopTable extends Vue {
 </script>
 
 <style scoped>
-.shop-image {
-    height: 110px;
-    max-width: 110px;
-}
+@import '../../assets/css/table/ant.css';
 
 .highlight {
     background-color: rgb(255, 192, 105);
