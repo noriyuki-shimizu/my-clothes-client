@@ -15,11 +15,10 @@ export type FormFields = {
 
 export type Record = Pick<
     Clothes,
-    'imageLink' | 'genres' | 'buyDate' | 'comment' | 'satisfaction'
+    'imageLink' | 'genres' | 'buyDate' | 'price' | 'comment' | 'satisfaction'
 > & {
     key?: number;
     brandName: string;
     shopName: string;
-    price: string;
     deleted: string;
 };

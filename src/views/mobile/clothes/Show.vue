@@ -90,7 +90,7 @@
         <h3 class="mc-show-item-title">Price</h3>
         <a-list>
             <a-list-item>
-                <div>{{ clothes.price.toLocaleString() }}</div>
+                <div>{{ clothes.price | priceFormat }}</div>
             </a-list-item>
         </a-list>
 
@@ -123,8 +123,13 @@ import * as Vuex from 'vuex';
 import { resetMessage } from '@/util/message';
 import { AppMessage } from 'ant-design-vue/types/message';
 import { handleForbiddenError } from '@/util/errorHandle';
+import { priceFormat } from '@/filters/number-format';
 
-@Component
+@Component({
+    filters: {
+        priceFormat
+    }
+})
 export default class Show extends Vue {
     $store!: Vuex.ExStore;
 

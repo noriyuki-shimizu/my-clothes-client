@@ -58,9 +58,7 @@ const getColumns = (
             title: 'Price',
             dataIndex: 'price',
             key: 'price',
-            sorter: (a: Record, b: Record) =>
-                Number(a.price.replace(/,/, '')) -
-                Number(b.price.replace(/,/, '')),
+            sorter: (a: Record, b: Record) => a.price - b.price,
             scopedSlots: { customRender: 'price' },
             width: 160
         },

@@ -4,7 +4,7 @@
         <div>Shop ... {{ item.shopName }}</div>
         <div>
             Price ...
-            {{ item.price.toLocaleString() }}
+            {{ item.price | priceFormat }}
         </div>
         <div>
             Genre ...
@@ -27,9 +27,14 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 
 import { ClothesItem } from '@/store/clothes/type';
+import { priceFormat } from '@/filters/number-format';
 import { Record } from './type';
 
-@Component
+@Component({
+    filters: {
+        priceFormat
+    }
+})
 export default class ClothesDetail extends Vue {
     @Prop({ type: Object as () => Record | ClothesItem })
     item!: Record | ClothesItem;

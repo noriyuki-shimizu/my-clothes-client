@@ -14,7 +14,7 @@
 
         <span slot="price" slot-scope="price">
             <div class="column-price">
-                {{ price }}
+                {{ price | priceFormat }}
             </div>
         </span>
 
@@ -84,8 +84,13 @@ import * as Vuex from 'vuex';
 import { getColumnsForTable } from '@/components/clothes/table';
 import { Record } from '@/components/clothes/type';
 import { Clothes } from '@/store/clothes/type';
+import { priceFormat } from '@/filters/number-format';
 
-@Component
+@Component({
+    filters: {
+        priceFormat
+    }
+})
 export default class ClothesTable extends Vue {
     $store!: Vuex.ExStore;
 
@@ -124,7 +129,7 @@ export default class ClothesTable extends Vue {
                 brandName: brand.name,
                 shopName: shop.name,
                 genres: genres,
-                price: price.toLocaleString(),
+                price,
                 buyDate,
                 comment,
                 satisfaction,

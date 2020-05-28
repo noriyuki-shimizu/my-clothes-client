@@ -206,10 +206,9 @@ export default class CoordinateForm extends Vue {
         ];
 
         return coordinateItems.map(coordinateItem => {
-            const { id, price, ...items } = coordinateItem;
+            const { id, ...items } = coordinateItem;
             return {
                 key: coordinateItem.id,
-                price: String(coordinateItem.price),
                 ...items
             };
         }) as Record[];

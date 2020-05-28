@@ -9,7 +9,6 @@ export type FormFields = {
     clothingIds: number[];
 };
 
-export type Record = Omit<ClothesItem, 'id' | 'price'> & {
+export type Record = Omit<ClothesItem, 'id'> & {
     key: number;
-    price: string;
 };

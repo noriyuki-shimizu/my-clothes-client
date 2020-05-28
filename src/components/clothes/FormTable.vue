@@ -19,7 +19,7 @@
 
         <span slot="price" slot-scope="price">
             <div class="column-price">
-                {{ price.toLocaleString() }}
+                {{ price | priceFormat }}
             </div>
         </span>
 
@@ -54,10 +54,15 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 
+import { priceFormat } from '@/filters/number-format';
 import { Record } from './type';
 import { getColumnsForFormTable } from './table';
 
-@Component
+@Component({
+    filters: {
+        priceFormat
+    }
+})
 export default class ClothesFormTable extends Vue {
     @Prop({ type: Array as () => Record[] })
     tableItems!: Record[];
