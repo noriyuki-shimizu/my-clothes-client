@@ -283,14 +283,7 @@ export default class ShopForm extends Vue {
 </script>
 
 <style>
-#preview_image {
-    width: 150px;
-}
-
-.image-uploader > .ant-upload {
-    width: 170px;
-    height: 170px;
-}
+@import '../../assets/css/form/ant.css';
 
 .form-submit-button {
     left: 0;

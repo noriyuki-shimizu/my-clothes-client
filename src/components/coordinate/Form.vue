@@ -260,14 +260,7 @@ export default class CoordinateForm extends Vue {
 }
 </script>
 <style>
-#preview_image {
-    width: 160px;
-}
-
-.image-uploader > .ant-upload {
-    width: 180px;
-    height: 200px;
-}
+@import '../../assets/css/form/ant.css';
 
 .ant-upload-select-picture-card i {
     font-size: 32px;
