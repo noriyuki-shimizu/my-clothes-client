@@ -1,2 +1,2 @@
-import './assets/css/common.css';
-import './assets/css/mobile-common.css';
+import './assets/css/common/web.css';
+import './assets/css/common/mobile.css';
