@@ -30,11 +30,10 @@
                 name="image"
                 listType="picture-card"
                 class="image-uploader"
-                :showUploadList="false"
-                action="http://www.mocky.io/v2/5cc8019d300000980a055e76"
-                :beforeUpload="beforeUpload"
-                @change="handleChange"
                 accept="image/*"
+                :showUploadList="false"
+                :beforeUpload="beforeUpload"
+                :customRequest="setSelectImage"
             >
                 <img
                     id="preview_image"
@@ -44,7 +43,7 @@
                 />
                 <div v-else>
                     <a-icon :type="imageLoading ? 'loading' : 'plus'" />
-                    <div class="ant-upload-text">Upload</div>
+                    <div class="ant-upload-text">Select</div>
                 </div>
             </a-upload>
         </a-form-item>
@@ -101,7 +100,8 @@ import {
 } from 'ant-design-vue/types/form/form';
 import {
     UploadingFileInfo,
-    DoneUploadFileInfo
+    DoneUploadFileInfo,
+    ExUploadFile
 } from 'ant-design-vue/types/upload';
 import * as Vuex from 'vuex';
 
@@ -162,18 +162,12 @@ export default class BrandForm extends Vue {
         return isBeforeCheck;
     }
 
-    handleChange(info: UploadingFileInfo | DoneUploadFileInfo) {
-        if (info.file.status === 'uploading') {
-            this.imageURL = '';
-            this.imageLoading = true;
-            return;
-        }
-        if (info.file.status === 'done') {
-            getBase64(info.file.originFileObj, imageURLTmp => {
-                this.imageURL = imageURLTmp;
-                this.imageLoading = false;
-            });
-        }
+    setSelectImage(file: any) {
+        var fileReader = new FileReader();
+        fileReader.onload = () => {
+            this.imageURL = fileReader.result;
+        };
+        fileReader.readAsDataURL(file.file);
     }
 
     handleSubmit(e: Event) {

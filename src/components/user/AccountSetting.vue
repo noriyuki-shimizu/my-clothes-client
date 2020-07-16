@@ -45,12 +45,11 @@
                         v-decorator="['icon', {}]"
                         name="icon"
                         listType="picture-card"
-                        class="icon-uploader"
-                        :showUploadList="false"
-                        action="http://www.mocky.io/v2/5cc8019d300000980a055e76"
-                        :beforeUpload="beforeUpload"
-                        @change="handleChange"
+                        class="image-uploader"
                         accept="image/*"
+                        :showUploadList="false"
+                        :beforeUpload="beforeUpload"
+                        :customRequest="setSelectImage"
                     >
                         <img
                             id="preview_image"
@@ -144,18 +143,12 @@ export default class AccountSetting extends Vue {
         return this.$store.getters['user/currentUser'];
     }
 
-    handleChange(info: UploadingFileInfo | DoneUploadFileInfo) {
-        if (info.file.status === 'uploading') {
-            this.imageURL = '';
-            this.imageLoading = true;
-            return;
-        }
-        if (info.file.status === 'done') {
-            getBase64(info.file.originFileObj, imageURLTmp => {
-                this.imageURL = imageURLTmp;
-                this.imageLoading = false;
-            });
-        }
+    setSelectImage(file: any) {
+        var fileReader = new FileReader();
+        fileReader.onload = () => {
+            this.imageURL = fileReader.result;
+        };
+        fileReader.readAsDataURL(file.file);
     }
 
     beforeUpload(file: File) {
@@ -207,16 +200,6 @@ export default class AccountSetting extends Vue {
 </script>
 
 <style scoped>
-#preview_image {
-    width: 124px;
-    max-height: 124px;
-}
-
-.icon-uploader > .ant-upload {
-    width: 128px;
-    height: 128px;
-}
-
 .form-submit-button {
     position: absolute;
     left: 0;
