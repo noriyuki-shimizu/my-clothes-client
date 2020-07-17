@@ -34,7 +34,7 @@
                     />
                     <div v-else>
                         <a-icon :type="imageLoading ? 'loading' : 'plus'" />
-                        <div class="ant-upload-text">Upload</div>
+                        <div class="ant-upload-text">Select</div>
                     </div>
                 </a-upload>
             </a-form-item>
