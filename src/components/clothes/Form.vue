@@ -32,7 +32,7 @@
                     alt="avatar"
                 />
                 <div v-else>
-                    <a-icon :type="imageLoading ? 'loading' : 'plus'" />
+                    <a-icon type="plus" />
                     <div class="ant-upload-text">Select</div>
                 </div>
             </a-upload>
@@ -229,8 +229,6 @@ export default class ClothesForm extends Vue {
     formItemLayout = formItemLayout;
 
     imageURL: string | ArrayBuffer | null = '';
-
-    imageLoading = false;
 
     created() {
         this.fetchAssists();
