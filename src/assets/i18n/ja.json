@@ -1,0 +1,102 @@
+{
+    "dictionary": {
+        "season": {
+            "index": "季節",
+            "spring": "春",
+            "summer": "夏",
+            "autumn": "秋",
+            "winter": "冬"
+        },
+        "authentication": {
+            "signin": "ログイン",
+            "signout": "ログアウト",
+            "external": {
+                "with-google": "Google でログイン",
+                "with-twitter": "Twitter でログイン",
+                "with-facebook": "Facebook でログイン"
+            },
+            "signed-as": "ログインユーザ"
+        },
+        "brand": {
+            "index": "ブランド",
+            "name": "ブランド名"
+        },
+        "shop": {
+            "index": "店",
+            "name": "店名"
+        },
+        "user": {
+            "mail-address": "メールアドレス",
+            "name": "名前",
+            "icon": "アイコン"
+        },
+        "coordinate": {
+            "item": "アイテム"
+        },
+        "empty": "データが存在しません",
+        "price": "金額",
+        "genre": "ジャンル",
+        "buy-date": "購入日",
+        "image": "イメージ",
+        "comment": "コメント",
+        "satisfaction": "満足度",
+        "status": "ステータス",
+        "operation": "操作",
+        "refine": "絞り込む",
+        "reset": "リセット"
+    },
+    "status": {
+        "item": {
+            "delete": "削除済み",
+            "not-delete": "未削除"
+        }
+    },
+    "title": {
+        "accout-setting": "アカウント設定",
+        "coordinate": "コーディネート",
+        "clothes": "洋服",
+        "brand": "ブランド",
+        "genre": "ジャンル",
+        "shop": "店",
+        "price-chart": "金額表",
+        "sub-title": {
+            "item-list": "一覧",
+            "new-item": "新規登録",
+            "update-item": "更新"
+        }
+    },
+    "operation": {
+        "submit": "登録",
+        "cancel": "キャンセル",
+        "select": "選択する",
+        "new": "新規登録",
+        "edit": "編集",
+        "reload-list": "再読み込み",
+        "item": {
+            "delete": "削除する",
+            "restoration": "復元する"
+        }
+    },
+    "message": {
+        "info": {
+            "empty-clothes": "服を登録してください"
+        },
+        "success": {
+            "create-complete": "新規登録が完了しました 👏",
+            "update-complete": "更新が完了しました 👏"
+        },
+        "confirm": {
+            "register": "入力されたデータで登録しますか?"
+        },
+        "error": {
+            "image-capacity": "選択する画像は {capacity} 以下としてください"
+        },
+        "validation": {
+            "image": "画像を選択してください",
+            "coordinate": {
+                "season": "季節を選択してください",
+                "item": "コーディネートに使用する服を選択してください"
+            }
+        }
+    }
+}

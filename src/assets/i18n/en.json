@@ -1,0 +1,102 @@
+{
+    "dictionary": {
+        "season": {
+            "index": "Season",
+            "spring": "Spring",
+            "summer": "Summer",
+            "autumn": "Autumn",
+            "winter": "Winter"
+        },
+        "authentication": {
+            "signin": "Sign in",
+            "signout": "Sign out",
+            "external": {
+                "with-google": "Sign in with Google",
+                "with-twitter": "Sign in with Twitter",
+                "with-facebook": "Sign in with Facebook"
+            },
+            "signed-as": "Sined in as"
+        },
+        "brand": {
+            "index": "Brand",
+            "name": "Brand name"
+        },
+        "shop": {
+            "index": "Shop",
+            "name": "Shop name"
+        },
+        "user": {
+            "mail-address": "Mail address",
+            "name": "Name",
+            "icon": "Icon"
+        },
+        "coordinate": {
+            "item": "Item"
+        },
+        "empty": "No Data",
+        "price": "Price",
+        "genre": "Genre",
+        "buy-date": "Buy date",
+        "image": "Image",
+        "comment": "Comment",
+        "satisfaction": "Satisfaction",
+        "status": "Status",
+        "operation": "Operation",
+        "refine": "Refine",
+        "reset": "Reset"
+    },
+    "status": {
+        "item": {
+            "delete": "Deleted",
+            "not-delete": "Not deleted"
+        }
+    },
+    "title": {
+        "accout-setting": "Your account setting",
+        "coordinate": "Coordinate",
+        "clothes": "Clothes",
+        "brand": "Brand",
+        "genre": "Genre",
+        "shop": "Shop",
+        "price-chart": "Price chart",
+        "sub-title": {
+            "item-list": "item list",
+            "new-item": "new item",
+            "update-item": "update item"
+        }
+    },
+    "operation": {
+        "submit": "Submit",
+        "cancel": "Cancel",
+        "select": "Select",
+        "new": "New",
+        "edit": "Edit",
+        "reload-list": "Reload list",
+        "item": {
+            "delete": "Delete",
+            "restoration": "Restoration"
+        }
+    },
+    "message": {
+        "info": {
+            "empty-clothes": "Please create a clothes"
+        },
+        "success": {
+            "create-complete": "Create success 👏",
+            "update-complete": "Update success 👏"
+        },
+        "confirm": {
+            "register": "Do you want to register with the registered data?"
+        },
+        "error": {
+            "image-capacity": "Image must smaller than {capacity}"
+        },
+        "validation": {
+            "image": "Image is required",
+            "coordinate": {
+                "season": "Please select your season",
+                "item": "Clothes item is required"
+            }
+        }
+    }
+}
