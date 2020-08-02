@@ -9,20 +9,24 @@ export const getSeason = (date: Date): string => {
         case 3:
         case 4:
         case 5:
-            return 'dictionary.season.spring';
+            return 'spring';
         case 6:
         case 7:
         case 8:
-            return 'dictionary.season.summer';
+            return 'summer';
         case 9:
         case 10:
         case 11:
-            return 'dictionary.season.autumn';
+            return 'autumn';
         case 12:
         case 1:
         case 2:
-            return 'dictionary.season.winter';
+            return 'winter';
         default:
             return 'default';
     }
+};
+
+export const getDictionarySeason = (date: Date): string => {
+    return `dictionary.season.${getSeason(date)}`;
 };
