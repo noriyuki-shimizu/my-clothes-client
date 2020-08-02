@@ -1,16 +1,15 @@
+import { AssistItem, Record } from '@/components/clothes/type';
 import { Column } from 'ant-design-vue/types/table/column';
 import moment from 'moment';
-import { AssistBrand, AssistShop, AssistGenre } from '@/store/clothes/type';
-import { Record } from '@/components/clothes/type';
+import Vue from 'vue';
 
 const getColumns = (
-    brands: AssistBrand[],
-    shops: AssistShop[],
-    genres: AssistGenre[]
+    $t: Vue['$t'],
+    { brands, shops, genres }: AssistItem
 ): Partial<Column>[] => {
     return [
         {
-            title: 'Image',
+            title: $t('dictionary.image'),
             dataIndex: 'imageLink',
             key: 'imageLink',
             fixed: 'left',
@@ -18,7 +17,7 @@ const getColumns = (
             width: 160
         },
         {
-            title: 'Brand name',
+            title: $t('dictionary.brand.name'),
             dataIndex: 'brandName',
             key: 'brandName',
             filters: brands.map(({ name }) => ({
@@ -30,7 +29,7 @@ const getColumns = (
             width: 160
         },
         {
-            title: 'Shop name',
+            title: $t('dictionary.shop.name'),
             dataIndex: 'shopName',
             key: 'shopName',
             filters: shops.map(({ name }) => ({
@@ -42,7 +41,7 @@ const getColumns = (
             width: 160
         },
         {
-            title: 'Genre',
+            title: $t('dictionary.genre.index'),
             key: 'genres',
             dataIndex: 'genres',
             filters: genres.map(({ name }) => ({
@@ -55,7 +54,7 @@ const getColumns = (
             width: 200
         },
         {
-            title: 'Price',
+            title: $t('dictionary.price'),
             dataIndex: 'price',
             key: 'price',
             sorter: (a: Record, b: Record) => a.price - b.price,
@@ -63,7 +62,7 @@ const getColumns = (
             width: 160
         },
         {
-            title: 'Buy date',
+            title: $t('dictionary.buy-date'),
             key: 'buyDate',
             dataIndex: 'buyDate',
             sorter: (a: Record, b: Record) => {
@@ -77,13 +76,13 @@ const getColumns = (
             width: 150
         },
         {
-            title: 'Comment',
+            title: $t('dictionary.comment'),
             key: 'comment',
             dataIndex: 'comment',
             width: 300
         },
         {
-            title: 'Satisfaction',
+            title: $t('dictionary.satisfaction'),
             dataIndex: 'satisfaction',
             key: 'satisfaction',
             sorter: (a: Record, b: Record) => {
@@ -94,30 +93,31 @@ const getColumns = (
             },
             scopedSlots: { customRender: 'satisfaction' },
             width: 200
-        },
-        {
-            title: 'Deleted',
-            dataIndex: 'deleted',
-            filters: [
-                { text: 'Deleted', value: 'Deleted' },
-                { text: 'Not deleted', value: 'Not deleted' }
-            ],
-            filterMultiple: false,
-            onFilter: (value: string, record: Record) =>
-                record.deleted === value,
-            width: 150
         }
     ];
 };
 
 export const getColumnsForTable = (
-    brands: AssistBrand[],
-    shops: AssistShop[],
-    genres: AssistGenre[]
+    $t: Vue['$t'],
+    { brands, shops, genres }: AssistItem
 ): Partial<Column>[] => {
-    return getColumns(brands, shops, genres).concat([
+    const deletedText = $t('status.item.delete').toString();
+    const notDeletedText = $t('status.item.not-delete').toString();
+    return getColumns($t, { brands, shops, genres }).concat([
         {
-            title: 'Operation',
+            title: $t('dictionary.status'),
+            dataIndex: 'deleted',
+            filters: [
+                { text: deletedText, value: deletedText },
+                { text: notDeletedText, value: notDeletedText }
+            ],
+            filterMultiple: false,
+            onFilter: (value: string, record: Record) =>
+                record.deleted === value,
+            width: 150
+        },
+        {
+            title: $t('dictionary.operation'),
             key: 'operation',
             fixed: 'right',
             width: 200,
@@ -127,11 +127,10 @@ export const getColumnsForTable = (
 };
 
 export const getColumnsForFormTable = (
-    brands: AssistBrand[],
-    shops: AssistShop[],
-    genres: AssistGenre[]
+    $t: Vue['$t'],
+    { brands, shops, genres }: AssistItem
 ): Partial<Column>[] => {
-    return getColumns(brands, shops, genres);
+    return getColumns($t, { brands, shops, genres });
 };
 
 export default {};

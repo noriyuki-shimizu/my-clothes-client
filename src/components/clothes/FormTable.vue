@@ -10,6 +10,11 @@
             selectedRowKeys,
             onSelect
         }"
+        :locale="{
+            filterConfirm: $t('operation.refine'),
+            filterReset: $t('operation.reset'),
+            emptyText: $t('dictionary.empty')
+        }"
     >
         <span slot="genres" slot-scope="genres">
             <a-tag v-for="(genre, i) in genres" :color="genre.color" :key="i">
@@ -68,13 +73,16 @@ export default class ClothesFormTable extends Vue {
     @Prop({ type: Array as () => number[], default: [] })
     selectedRowKeys?: number[];
 
-    columns = getColumnsForFormTable(
-        this.$store.getters['clothes/assistBrands'],
-        this.$store.getters['clothes/assistShops'],
-        this.$store.getters['clothes/assistGenres']
-    );
-
     tableLoading = false;
+
+    get columns() {
+        const { $t } = this;
+        return getColumnsForFormTable($t.bind(this), {
+            brands: this.$store.getters['clothes/assistBrands'],
+            shops: this.$store.getters['clothes/assistShops'],
+            genres: this.$store.getters['clothes/assistGenres']
+        });
+    }
 
     async created() {
         this.tableLoading = true;

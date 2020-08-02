@@ -5,14 +5,15 @@
         v-bind="formItemLayout"
         @submit="handleSubmit"
     >
-        <a-form-item label="Image">
+        <a-form-item :label="$t('dictionary.image')">
             <a-upload
                 v-decorator="[
                     'image',
                     {
                         rules: [
                             {
-                                required: !this.target
+                                required: !this.target,
+                                message: $t('message.validation.image.required')
                             }
                         ]
                     }
@@ -33,12 +34,14 @@
                 />
                 <div v-else>
                     <a-icon type="plus" />
-                    <div class="ant-upload-text">Select</div>
+                    <div class="ant-upload-text">
+                        {{ $t('operation.select') }}
+                    </div>
                 </div>
             </a-upload>
         </a-form-item>
 
-        <a-form-item label="Brand">
+        <a-form-item :label="$t('dictionary.brand.index')">
             <a-select
                 v-decorator="[
                     'brandId',
@@ -46,12 +49,13 @@
                         rules: [
                             {
                                 required: true,
-                                message: 'Please select your brand'
+                                message: $t(
+                                    'message.validation.clothes.brand.required'
+                                )
                             }
                         ]
                     }
                 ]"
-                placeholder="Select a option and change input text above"
             >
                 <a-select-option
                     v-for="(assistBrand, i) in assistBrands"
@@ -62,11 +66,11 @@
                 </a-select-option>
             </a-select>
             <a v-if="!assistBrands.length" @click="movePartNewPage('brand')">
-                Please create a brand
+                {{ $t('message.info.empty-brand') }}
             </a>
         </a-form-item>
 
-        <a-form-item label="Shop">
+        <a-form-item :label="$t('dictionary.shop.index')">
             <a-select
                 v-decorator="[
                     'shopId',
@@ -74,12 +78,13 @@
                         rules: [
                             {
                                 required: true,
-                                message: 'Please select your shop'
+                                message: $t(
+                                    'message.validation.clothes.shop.required'
+                                )
                             }
                         ]
                     }
                 ]"
-                placeholder="Select a option and change input text above"
             >
                 <a-select-option
                     v-for="(assistShop, i) in assistShops"
@@ -90,11 +95,11 @@
                 </a-select-option>
             </a-select>
             <a v-if="!assistShops.length" @click="movePartNewPage('shop')">
-                Please create a shop
+                {{ $t('message.info.empty-shop') }}
             </a>
         </a-form-item>
 
-        <a-form-item label="Genres">
+        <a-form-item :label="$t('dictionary.genre.index')">
             <a-checkbox-group
                 v-decorator="[
                     'genreIds',
@@ -102,7 +107,9 @@
                         rules: [
                             {
                                 required: true,
-                                message: 'Please select your genre'
+                                message: $t(
+                                    'message.validation.clothes.genre.required'
+                                )
                             }
                         ]
                     }
@@ -124,11 +131,11 @@
                 </a-row>
             </a-checkbox-group>
             <a v-if="!assistGenres.length" @click="movePartNewPage('genre')">
-                Please create a genre
+                {{ $t('message.validation.clothes.genre') }}
             </a>
         </a-form-item>
 
-        <a-form-item label="Price">
+        <a-form-item :label="$t('dictionary.price')">
             <a-input-number
                 v-decorator="[
                     'price',
@@ -137,7 +144,9 @@
                         rules: [
                             {
                                 required: true,
-                                message: 'Please input price'
+                                message: $t(
+                                    'message.validation.clothes.price.required'
+                                )
                             }
                         ]
                     }
@@ -147,7 +156,7 @@
             />
         </a-form-item>
 
-        <a-form-item label="Buy date">
+        <a-form-item :label="$t('dictionary.buy-date')">
             <a-date-picker
                 v-decorator="[
                     'buyDate',
@@ -156,31 +165,36 @@
                             {
                                 type: 'object',
                                 required: true,
-                                message: 'Please select buy date'
+                                message: $t(
+                                    'message.validation.clothes.buy-date.required'
+                                )
                             }
                         ]
                     }
                 ]"
+                placeholder="yyyy-MM-dd"
             />
         </a-form-item>
 
-        <a-form-item label="Comment">
+        <a-form-item :label="$t('dictionary.comment')">
             <a-textarea
                 v-decorator="[
                     'comment',
                     {
                         rules: [
                             {
-                                max: 255
+                                max: 255,
+                                message: $t(
+                                    'message.validation.clothes.comment.max'
+                                )
                             }
                         ]
                     }
                 ]"
-                placeholder="Enter the comment for the target clothes"
             />
         </a-form-item>
 
-        <a-form-item label="Satisfaction">
+        <a-form-item :label="$t('dictionary.satisfaction')">
             <a-rate
                 v-decorator="['satisfaction', { initialValue: 2.5 }]"
                 allow-half
@@ -189,7 +203,7 @@
 
         <div class="form-submit-button">
             <a-button html-type="submit" type="primary">
-                Submit
+                {{ $t('operation.submit') }}
             </a-button>
         </div>
     </a-form>
@@ -235,6 +249,13 @@ export default class ClothesForm extends Vue {
         this.form = this.$form.createForm(this);
     }
 
+    @Watch('$i18n.locale')
+    onLocalChange() {
+        const fieldsValue = this.form.getFieldsValue();
+        this.form.resetFields();
+        this.form.setFieldsValue(fieldsValue);
+    }
+
     @Watch('target')
     onTargetChange(newClothes: Clothes) {
         if (newClothes) {
@@ -276,7 +297,10 @@ export default class ClothesForm extends Vue {
     beforeUpload(file: File) {
         const isBeforeCheck = isLt5M(file);
         if (!isBeforeCheck) {
-            this.$message.error('Image must smaller than 2MB');
+            const errorMessage = this.$t('message.error.image-capacity', {
+                capacity: '2MB'
+            }).toString();
+            this.$message.error(errorMessage);
         }
         return isBeforeCheck;
     }

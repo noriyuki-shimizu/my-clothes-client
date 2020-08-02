@@ -94,7 +94,7 @@ export default class Edit extends Vue {
     }
 
     @Emit('on-submit')
-    async onSubmit(values: FormFields) {
+    onSubmit(values: FormFields) {
         this.$confirm({
             title: 'Are you sure you want to register?',
             content: 'The entered information is registered.',

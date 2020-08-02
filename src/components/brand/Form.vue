@@ -1,30 +1,34 @@
 <template>
     <a-form :form="form" v-bind="formItemLayout" @submit="handleSubmit">
-        <a-form-item label="Name">
+        <a-form-item :label="$t('dictionary.brand.name')">
             <a-input
                 v-decorator="[
                     'name',
                     {
                         rules: [
                             {
-                                max: 60
+                                max: 60,
+                                message: $t('message.validation.brand.name.max')
                             },
                             {
-                                required: true
+                                required: true,
+                                message: $t(
+                                    'message.validation.brand.name.required'
+                                )
                             },
                             {
-                                message:
-                                    'A brand with the same name already exists.',
+                                message: $t(
+                                    'message.validation.brand.name.duplication'
+                                ),
                                 validator: nameValidator
                             }
                         ]
                     }
                 ]"
-                placeholder="Please enter brand name"
             />
         </a-form-item>
 
-        <a-form-item label="Image">
+        <a-form-item :label="$t('dictionary.image')">
             <a-upload
                 v-decorator="['image', {}]"
                 name="image"
@@ -43,49 +47,56 @@
                 />
                 <div v-else>
                     <a-icon type="plus" />
-                    <div class="ant-upload-text">Select</div>
+                    <div class="ant-upload-text">
+                        {{ $t('operation.select') }}
+                    </div>
                 </div>
             </a-upload>
         </a-form-item>
 
-        <a-form-item label="Link">
+        <a-form-item :label="$t('dictionary.link')">
             <a-input
                 v-decorator="[
                     'link',
                     {
                         rules: [
                             {
-                                max: 100
+                                max: 100,
+                                message: $t('message.validation.link.max')
                             }
                         ]
                     }
                 ]"
-                placeholder="Enter the link for the target brand"
             />
         </a-form-item>
 
-        <a-form-item label="Country">
+        <a-form-item :label="$t('dictionary.brand.country')">
             <a-input
                 v-decorator="[
                     'country',
                     {
                         rules: [
                             {
-                                max: 15
+                                max: 15,
+                                message: $t(
+                                    'message.validation.brand.country.max'
+                                )
                             },
                             {
-                                required: true
+                                required: true,
+                                message: $t(
+                                    'message.validation.brand.country.required'
+                                )
                             }
                         ]
                     }
                 ]"
-                placeholder="Enter the country for the target brand"
             />
         </a-form-item>
 
         <div class="form-submit-button">
             <a-button html-type="submit" type="primary">
-                Submit
+                {{ $t('operation.submit') }}
             </a-button>
         </div>
     </a-form>
@@ -128,6 +139,13 @@ export default class BrandForm extends Vue {
         this.form = this.$form.createForm(this);
     }
 
+    @Watch('$i18n.locale')
+    onLocalChange() {
+        const fieldsValue = this.form.getFieldsValue();
+        this.form.resetFields();
+        this.form.setFieldsValue(fieldsValue);
+    }
+
     @Watch('target')
     onTargetChange(newBrand: Brand) {
         if (newBrand) {
@@ -142,6 +160,7 @@ export default class BrandForm extends Vue {
     }
 
     nameValidator(_: any, value: string, cb: Function) {
+        // FIXME 重複チェックを API に問い合わせること
         const { id } = this.$route.params;
         const brands = this.$store.getters['brand/brands'] as Readonly<Brand>[];
 
@@ -155,7 +174,10 @@ export default class BrandForm extends Vue {
     beforeUpload(file: File) {
         const isBeforeCheck = isLt5M(file);
         if (!isBeforeCheck) {
-            this.$message.error('Image must smaller than 2MB');
+            const errorMessage = this.$t('message.error.image-capacity', {
+                capacity: '2MB'
+            }).toString();
+            this.$message.error(errorMessage);
         }
         return isBeforeCheck;
     }

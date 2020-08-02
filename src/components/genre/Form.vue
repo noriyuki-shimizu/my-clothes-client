@@ -5,31 +5,41 @@
         v-bind="formItemLayout"
         @submit="handleSubmit"
     >
-        <a-form-item v-bind="formItemLayout" label="Name">
+        <a-form-item
+            v-bind="formItemLayout"
+            :label="$t('dictionary.genre.name')"
+        >
             <a-input
                 v-decorator="[
                     'name',
                     {
                         rules: [
                             {
-                                max: 60
+                                max: 60,
+                                message: $t('message.validation.genre.name.max')
                             },
                             {
-                                required: true
+                                required: true,
+                                message: $t(
+                                    'message.validation.genre.name.required'
+                                )
                             },
                             {
-                                message:
-                                    'A genre with the same name already exists.',
-                                validator: nameValidator
+                                validator: nameValidator,
+                                message: $t(
+                                    'message.validation.genre.name.duplication'
+                                )
                             }
                         ]
                     }
                 ]"
-                placeholder="Please enter genre name"
             />
         </a-form-item>
 
-        <a-form-item v-bind="formItemLayout" label="Tag color">
+        <a-form-item
+            v-bind="formItemLayout"
+            :label="$t('dictionary.genre.tag-color')"
+        >
             <a-select
                 v-decorator="[
                     'color',
@@ -37,12 +47,13 @@
                         rules: [
                             {
                                 required: true,
-                                message: 'Please select your color.'
+                                message: $t(
+                                    'message.validation.genre.tag-color.required'
+                                )
                             }
                         ]
                     }
                 ]"
-                placeholder="Please select a color"
             >
                 <a-select-option
                     v-for="(color, i) in remainingColors"
@@ -54,7 +65,10 @@
             </a-select>
         </a-form-item>
 
-        <a-form-item v-bind="formItemLayout" label="Remaining color">
+        <a-form-item
+            v-bind="formItemLayout"
+            :label="$t('dictionary.genre.color-list')"
+        >
             <a-card>
                 <a-tag
                     v-for="(color, i) in remainingColors"
@@ -69,7 +83,7 @@
 
         <div class="form-submit-button">
             <a-button html-type="submit" type="primary">
-                Submit
+                {{ $t('operation.submit') }}
             </a-button>
         </div>
     </a-form>
@@ -101,6 +115,13 @@ export default class GenreForm extends Vue {
     created() {
         this.fetchCanSelectedColorsStateChange();
         this.form = this.$form.createForm(this);
+    }
+
+    @Watch('$i18n.locale')
+    onLocalChange() {
+        const fieldsValue = this.form.getFieldsValue();
+        this.form.resetFields();
+        this.form.setFieldsValue(fieldsValue);
     }
 
     @Watch('target')

@@ -1,6 +1,9 @@
 <template>
     <div>
-        <a-page-header title="Genre" subTitle="item list">
+        <a-page-header
+            :title="`${$t('title.genre')} (${genres.length})`"
+            :subTitle="$t('title.sub-title.item-list')"
+        >
             <template slot="extra">
                 <a-button
                     type="primary"
@@ -9,7 +12,7 @@
                     :loading="loading"
                     @click="reloadGenres"
                 >
-                    Reload list
+                    {{ $t('operation.reload-list') }}
                 </a-button>
                 <a-button
                     type="primary"
@@ -18,7 +21,7 @@
                     @click="onNew"
                     :disabled="RegistrationNum > 20"
                 >
-                    New
+                    {{ $t('operation.new') }}
                 </a-button>
             </template>
         </a-page-header>
@@ -33,7 +36,6 @@
             showIcon
         />
 
-        <p>total item: {{ genres.length }}</p>
         <genre-table
             :genres="genres"
             :loading="loading"

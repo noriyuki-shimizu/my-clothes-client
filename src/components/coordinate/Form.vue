@@ -6,14 +6,17 @@
             v-bind="formItemLayout"
             @submit="handleSubmit"
         >
-            <a-form-item label="Image">
+            <a-form-item :label="$t('dictionary.image')">
                 <a-upload
                     v-decorator="[
                         'image',
                         {
                             rules: [
                                 {
-                                    required: !this.target
+                                    required: !this.target,
+                                    message: $t(
+                                        'message.validation.image.required'
+                                    )
                                 }
                             ]
                         }
@@ -34,12 +37,17 @@
                     />
                     <div v-else>
                         <a-icon type="plus" />
-                        <div class="ant-upload-text">Select</div>
+                        <div class="ant-upload-text">
+                            {{ $t('operation.select') }}
+                        </div>
                     </div>
                 </a-upload>
             </a-form-item>
 
-            <a-form-item v-bind="formItemLayout" label="Season">
+            <a-form-item
+                v-bind="formItemLayout"
+                :label="$t('dictionary.season.index')"
+            >
                 <a-select
                     v-decorator="[
                         'season',
@@ -47,24 +55,28 @@
                             rules: [
                                 {
                                     required: true,
-                                    message: 'Please select your brand'
+                                    message: $t(
+                                        'message.validation.coordinate.season.required'
+                                    )
                                 }
                             ]
                         }
                     ]"
-                    placeholder="Select a option and change input text above"
                 >
                     <a-select-option
                         v-for="season in seasons"
                         :key="season"
                         :value="season"
                     >
-                        {{ season }}
+                        {{ $t(season) }}
                     </a-select-option>
                 </a-select>
             </a-form-item>
 
-            <a-form-item v-bind="formItemLayout" label="Item">
+            <a-form-item
+                v-bind="formItemLayout"
+                :label="$t('dictionary.coordinate.item')"
+            >
                 <a-checkbox-group
                     v-decorator="[
                         'clothingIds',
@@ -72,14 +84,21 @@
                             rules: [
                                 {
                                     required: true,
-                                    message: 'Clothes item is required'
+                                    message: $t(
+                                        'message.validation.coordinate.item.required'
+                                    )
                                 }
                             ]
                         }
                     ]"
                     style="width: 100%;"
                 >
-                    <a-empty v-if="!checkboxGroupItems.length" />
+                    <a-empty
+                        v-if="!checkboxGroupItems.length"
+                        :description="false"
+                    >
+                        {{ $t('dictionary.empty') }}
+                    </a-empty>
                     <a-row v-else>
                         <a-col :span="30">
                             <a-checkbox
@@ -88,7 +107,13 @@
                                 :value="item.key"
                                 @change="() => onRemoveItemKey(item.key)"
                             >
-                                <a-popover title="Clothes item">
+                                <a-popover
+                                    :title="
+                                        `${$t(
+                                            'dictionary.coordinate.item'
+                                        )}${i + 1}`
+                                    "
+                                >
                                     <template slot="content">
                                         <clothes-detail :item="item" />
                                     </template>
@@ -107,7 +132,7 @@
                 v-if="!dataSource.length"
                 :to="'/maintenance/clothes/new?next=back'"
             >
-                Please create a clothes
+                {{ $t('message.info.empty-clothes') }}
             </router-link>
             <clothes-form-table
                 :tableItems="tableItems"
@@ -117,7 +142,7 @@
 
             <div class="form-submit-button">
                 <a-button html-type="submit" type="primary">
-                    Submit
+                    {{ $t('operation.submit') }}
                 </a-button>
             </div>
         </a-form>
@@ -137,6 +162,7 @@ import ClothesDetail from '@/components/clothes/Detail.vue';
 import ClothesFormTable from '@/components/clothes/FormTable.vue';
 import { Coordinate } from '@/store/coordinate/type';
 import { getBase64, isLt5M } from '@/util/file';
+import { ClothesItem } from '@/store/clothes/type';
 import { formItemLayout, seasons } from './form';
 import { FormFields, Season, Record } from './type';
 
@@ -164,6 +190,13 @@ export default class CoordinateForm extends Vue {
 
     created() {
         this.form = this.$form.createForm(this);
+    }
+
+    @Watch('$i18n.locale')
+    onLocalChange() {
+        const fieldsValue = this.form.getFieldsValue();
+        this.form.resetFields();
+        this.form.setFieldsValue(fieldsValue);
     }
 
     @Watch('target')
@@ -202,7 +235,7 @@ export default class CoordinateForm extends Vue {
             'coordinate/coordinateItems'
         ];
 
-        return coordinateItems.map(coordinateItem => {
+        return coordinateItems.map((coordinateItem: ClothesItem) => {
             const { id, ...items } = coordinateItem;
             return {
                 key: coordinateItem.id,
@@ -227,7 +260,10 @@ export default class CoordinateForm extends Vue {
     beforeUpload(file: File) {
         const isBeforeCheck = isLt5M(file);
         if (!isBeforeCheck) {
-            this.$message.error('Image must smaller than 2MB');
+            const errorMessage = this.$t('message.error.image-capacity', {
+                capacity: '2MB'
+            }).toString();
+            this.$message.error(errorMessage);
         }
         return isBeforeCheck;
     }
@@ -269,7 +305,13 @@ export default class CoordinateForm extends Vue {
     margin-bottom: 20px;
 }
 
-.select-item-table {
-    padding-bottom: 20px;
+.form-submit-button {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #e9e9e9;
+    padding: 10px 16px;
+    background: #fff;
+    text-align: right;
 }
 </style>

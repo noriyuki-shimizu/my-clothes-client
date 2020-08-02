@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div>Brand ... {{ item.brandName }}</div>
-        <div>Shop ... {{ item.shopName }}</div>
+        <div>{{ $t('dictionary.brand.index') }} ... {{ item.brandName }}</div>
+        <div>{{ $t('dictionary.shop.index') }} ... {{ item.shopName }}</div>
         <div>
-            Price ...
+            {{ $t('dictionary.price') }} ...
             {{ item.price | priceFormat }}
         </div>
         <div>
-            Genre ...
+            {{ $t('dictionary.genre.index') }} ...
             <a-tag
                 v-for="(genre, index) in item.genres"
                 :key="index"
@@ -16,7 +16,7 @@
                 {{ genre.name }}
             </a-tag>
         </div>
-        <div>Buy date ... {{ item.buyDate }}</div>
+        <div>{{ $t('dictionary.buy-date') }} ... {{ item.buyDate }}</div>
         <div>
             <a-rate :value="item.satisfaction" disabled allow-half />
         </div>

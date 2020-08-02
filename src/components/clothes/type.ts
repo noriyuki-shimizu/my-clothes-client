@@ -1,6 +1,11 @@
 import { DoneUploadFileInfo } from 'ant-design-vue/types/upload';
 import { Moment } from 'moment';
-import { Clothes } from '@/store/clothes/type';
+import {
+    Clothes,
+    AssistBrand,
+    AssistShop,
+    AssistGenre
+} from '@/store/clothes/type';
 
 export type FormFields = {
     image: DoneUploadFileInfo;
@@ -21,4 +26,10 @@ export type Record = Pick<
     brandName: string;
     shopName: string;
     deleted: string;
+};
+
+export type AssistItem = {
+    brands: AssistBrand[];
+    shops: AssistShop[];
+    genres: AssistGenre[];
 };

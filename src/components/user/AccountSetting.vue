@@ -1,7 +1,7 @@
 <template>
     <div>
         <a-drawer
-            title="Your account setting"
+            :title="$t('title.accout-setting')"
             :width="'calc(25rem + (2vw - 1.2rem) * 2)'"
             :visible="visible"
             @close="onInputResetAndClose"
@@ -16,13 +16,16 @@
                 @submit="handleSubmit"
                 hideRequiredMark
             >
-                <a-form-item label="Mail address">
+                <a-form-item :label="$t('dictionary.user.mail-address')">
                     <span class="ant-form-text">
                         {{ currentUser ? currentUser.email : '' }}
                     </span>
                 </a-form-item>
 
-                <a-form-item v-bind="formItemLayout" label="Name">
+                <a-form-item
+                    v-bind="formItemLayout"
+                    :label="$t('dictionary.user.name')"
+                >
                     <a-input
                         v-decorator="[
                             'displayName',
@@ -40,7 +43,7 @@
                     />
                 </a-form-item>
 
-                <a-form-item label="Icon">
+                <a-form-item :label="$t('dictionary.user.icon')">
                     <a-upload
                         v-decorator="['icon', {}]"
                         name="icon"
@@ -59,7 +62,9 @@
                         />
                         <div v-else>
                             <a-icon type="plus" />
-                            <div class="ant-upload-text">Select</div>
+                            <div class="ant-upload-text">
+                                {{ $t('operation.select') }}
+                            </div>
                         </div>
                     </a-upload>
                 </a-form-item>
@@ -69,14 +74,14 @@
                         :style="{ marginRight: '8px' }"
                         @click="onInputResetAndClose"
                     >
-                        Cancel
+                        {{ $t('operation.cancel') }}
                     </a-button>
                     <a-button
                         html-type="submit"
                         type="primary"
                         :loading="registerLoading"
                     >
-                        Submit
+                        {{ $t('operation.submit') }}
                     </a-button>
                 </div>
             </a-form>
@@ -152,7 +157,10 @@ export default class AccountSetting extends Vue {
     beforeUpload(file: File) {
         const isBeforeCheck = isLt5M(file);
         if (!isBeforeCheck) {
-            this.$message.error('Image must smaller than 2MB');
+            const errorMessage = this.$t('message.error.image-capacity', {
+                capacity: '2MB'
+            }).toString();
+            this.$message.error(errorMessage);
         }
         return isBeforeCheck;
     }
@@ -183,7 +191,10 @@ export default class AccountSetting extends Vue {
                         displayName,
                         iconFile
                     });
-                    this.$message.success('Successfully updated account');
+
+                    this.$message.success(
+                        this.$t('message.success.update-complete').toString()
+                    );
                     this.$emit('on-close');
                 } catch (err) {
                     if (isFirebaseStorageError(err)) {
@@ -198,6 +209,8 @@ export default class AccountSetting extends Vue {
 </script>
 
 <style scoped>
+@import '../../assets/css/form/ant.css';
+
 .form-submit-button {
     position: absolute;
     left: 0;

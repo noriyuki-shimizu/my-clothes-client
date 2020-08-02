@@ -3,15 +3,19 @@
         <a-popover trigger="click" placement="bottomLeft">
             <template slot="content">
                 <div class="account-menu">
-                    <a @click="showDrawer">Your account setting</a>
+                    <a @click="showDrawer">
+                        {{ $t('title.accout-setting') }}
+                    </a>
                 </div>
                 <div class="account-menu">
-                    <a @click="signOut">Sign out</a>
+                    <a @click="signOut">
+                        {{ $t('dictionary.authentication.signout') }}
+                    </a>
                 </div>
             </template>
             <template slot="title">
                 <span>
-                    Signed in as
+                    {{ $t('dictionary.authentication.signed-as') }}
                     <div>
                         <strong>{{
                             currentUser ? currentUser.displayName : ''

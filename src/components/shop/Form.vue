@@ -5,31 +5,38 @@
         v-bind="formItemLayout"
         @submit="handleSubmit"
     >
-        <a-form-item v-bind="formItemLayout" label="Name">
+        <a-form-item
+            v-bind="formItemLayout"
+            :label="$t('dictionary.shop.name')"
+        >
             <a-input
                 v-decorator="[
                     'name',
                     {
                         rules: [
                             {
-                                max: 60
+                                max: 60,
+                                message: $t('message.validation.shop.name.max')
                             },
                             {
-                                required: true
+                                required: true,
+                                message: $t(
+                                    'message.validation.shop.name.required'
+                                )
                             },
                             {
-                                message:
-                                    'A shop with the same name already exists.',
-                                validator: nameValidator
+                                validator: nameValidator,
+                                message: $t(
+                                    'message.validation.shop.name.duplication'
+                                )
                             }
                         ]
                     }
                 ]"
-                placeholder="Please enter shop name"
             />
         </a-form-item>
 
-        <a-form-item label="Image">
+        <a-form-item :label="$t('dictionary.image')">
             <a-upload
                 v-decorator="['image', {}]"
                 name="image"
@@ -48,126 +55,160 @@
                 />
                 <div v-else>
                     <a-icon type="plus" />
-                    <div class="ant-upload-text">Select</div>
+                    <div class="ant-upload-text">
+                        {{ $t('operation.select') }}
+                    </div>
                 </div>
             </a-upload>
         </a-form-item>
 
-        <a-form-item v-bind="formItemLayout" label="Link">
+        <a-form-item v-bind="formItemLayout" :label="$t('dictionary.link')">
             <a-input
                 v-decorator="[
                     'link',
                     {
                         rules: [
                             {
-                                max: 100
+                                max: 100,
+                                message: $t('message.validation.link.max')
                             }
                         ]
                     }
                 ]"
-                placeholder="Enter the link for the target shop"
             />
         </a-form-item>
 
-        <a-form-item v-bind="formItemLayout" label="Station name">
+        <a-form-item
+            v-bind="formItemLayout"
+            :label="$t('dictionary.shop.station-name')"
+        >
             <a-input
                 v-decorator="[
                     'stationName',
                     {
                         rules: [
                             {
-                                required: true
+                                required: true,
+                                message: $t(
+                                    'message.validation.shop.station-name.required'
+                                )
                             },
                             {
-                                max: 30
+                                max: 30,
+                                message: $t(
+                                    'message.validation.shop.station-name.max'
+                                )
                             }
                         ]
                     }
                 ]"
-                placeholder="Enter the station name for the target shop"
             />
         </a-form-item>
 
-        <a-form-item v-bind="formItemLayout" label="Address">
+        <a-form-item
+            v-bind="formItemLayout"
+            :label="$t('dictionary.shop.address')"
+        >
             <a-input
                 v-decorator="[
                     'address',
                     {
                         rules: [
                             {
-                                required: true
+                                required: true,
+                                message: $t(
+                                    'message.validation.shop.address.required'
+                                )
                             },
                             {
-                                max: 60
+                                max: 60,
+                                message: $t(
+                                    'message.validation.shop.address.max'
+                                )
                             }
                         ]
                     }
                 ]"
-                placeholder="Enter the address for the target shop"
             />
         </a-form-item>
 
-        <a-form-item v-bind="formItemLayout" label="Business hours (start)">
+        <a-form-item
+            v-bind="formItemLayout"
+            :label="$t('dictionary.shop.start-business-hours')"
+        >
             <a-time-picker
                 v-decorator="[
                     'startBusinessHours',
                     {
                         rules: [
                             {
-                                required: true
+                                required: true,
+                                message: $t(
+                                    'message.validation.shop.start-business-hours.required'
+                                )
                             }
-                        ],
-                        initialValue: initialTime
+                        ]
                     }
                 ]"
                 format="HH:mm"
+                placeholder="HH:mm"
             />
         </a-form-item>
 
-        <a-form-item v-bind="formItemLayout" label="Business hours (end)">
+        <a-form-item
+            v-bind="formItemLayout"
+            :label="$t('dictionary.shop.end-business-hours')"
+        >
             <a-time-picker
                 v-decorator="[
                     'endBusinessHours',
                     {
                         rules: [
                             {
-                                required: true
+                                required: true,
+                                message: $t(
+                                    'message.validation.shop.end-business-hours.required'
+                                )
                             }
-                        ],
-                        initialValue: initialTime
+                        ]
                     }
                 ]"
                 format="HH:mm"
+                placeholder="HH:mm"
             />
         </a-form-item>
 
-        <a-form-item v-bind="formItemLayout" label="Tel">
+        <a-form-item v-bind="formItemLayout" :label="$t('dictionary.shop.tel')">
             <a-input
                 v-decorator="[
                     'tel',
                     {
                         rules: [
                             {
-                                required: true
+                                required: true,
+                                message: $t(
+                                    'message.validation.shop.tel.required'
+                                )
                             },
                             {
-                                max: 15
+                                max: 15,
+                                message: $t('message.validation.shop.tel.max')
                             },
                             {
                                 pattern: /^(0[5-9]0[0-9]{8}|0[1-9][1-9][0-9]{7})$/,
-                                message:
-                                    'The format is incorrect. If there is -, please remove it.'
+                                message: $t(
+                                    'message.validation.shop.tel.format'
+                                )
                             }
                         ]
                     }
                 ]"
-                placeholder="Enter the tel for the target shop"
             />
         </a-form-item>
 
         <div class="form-submit-button">
             <a-button html-type="submit" type="primary">
-                Submit
+                {{ $t('operation.submit') }}
             </a-button>
         </div>
     </a-form>
@@ -205,8 +246,6 @@ export default class ShopForm extends Vue {
 
     formItemLayout = formItemLayout;
 
-    initialTime = moment('00:00', timeFormat);
-
     imageURL: string | ArrayBuffer | null = '';
 
     nameValidator(_: any, value: string, cb: Function) {
@@ -222,6 +261,13 @@ export default class ShopForm extends Vue {
 
     created() {
         this.form = this.$form.createForm(this);
+    }
+
+    @Watch('$i18n.locale')
+    onLocalChange() {
+        const fieldsValue = this.form.getFieldsValue();
+        this.form.resetFields();
+        this.form.setFieldsValue(fieldsValue);
     }
 
     @Watch('target')
@@ -249,7 +295,10 @@ export default class ShopForm extends Vue {
     beforeUpload(file: File) {
         const isBeforeCheck = isLt5M(file);
         if (!isBeforeCheck) {
-            this.$message.error('Image must smaller than 2MB');
+            const errorMessage = this.$t('message.error.image-capacity', {
+                capacity: '2MB'
+            }).toString();
+            this.$message.error(errorMessage);
         }
         return isBeforeCheck;
     }

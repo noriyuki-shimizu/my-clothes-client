@@ -1,7 +1,11 @@
 import { DoneUploadFileInfo } from 'ant-design-vue/types/upload';
 import { ClothesItem } from '@/store/clothes/type';
 
-export type Season = 'spring' | 'summer' | 'autumn' | 'winter';
+export type Season =
+    | 'dictionary.season.spring'
+    | 'dictionary.season.summer'
+    | 'dictionary.season.autumn'
+    | 'dictionary.season.winter';
 
 export type FormFields = {
     image: DoneUploadFileInfo;

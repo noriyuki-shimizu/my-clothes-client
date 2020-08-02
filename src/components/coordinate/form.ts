@@ -51,10 +51,10 @@ export const formItemLayout: Readonly<ExPartial<Form>> = {
 };
 
 export const seasons: Readonly<Season[]> = [
-    'spring',
-    'summer',
-    'autumn',
-    'winter'
+    'dictionary.season.spring',
+    'dictionary.season.summer',
+    'dictionary.season.autumn',
+    'dictionary.season.winter'
 ];
 
 export default {};

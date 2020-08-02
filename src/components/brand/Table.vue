@@ -5,6 +5,11 @@
         :scroll="{ x: 1000, y: 570 }"
         :pagination="{ pageSize: 30 }"
         :loading="loading"
+        :locale="{
+            filterConfirm: $t('operation.refine'),
+            filterReset: $t('operation.reset'),
+            emptyText: $t('dictionary.empty')
+        }"
     >
         <div
             slot="filterDropdown"
@@ -18,7 +23,7 @@
             style="padding: 8px"
         >
             <a-input
-                :placeholder="`Search ${column.dataIndex}`"
+                :placeholder="column.dataIndex"
                 :value="selectedKeys[0]"
                 @change="
                     e => setSelectedKeys(e.target.value ? [e.target.value] : [])
@@ -32,14 +37,16 @@
                 icon="search"
                 size="small"
                 style="width: 90px; margin-right: 8px"
-                >Search</a-button
             >
+                {{ $t('operation.search') }}
+            </a-button>
             <a-button
                 @click="() => handleReset(clearFilters)"
                 size="small"
                 style="width: 90px"
-                >Reset</a-button
             >
+                {{ $t('operation.reset') }}
+            </a-button>
         </div>
 
         <a-icon
@@ -59,7 +66,7 @@
         <span slot="link" slot-scope="link">
             <a-tooltip v-if="link" placement="topLeft">
                 <template slot="title">
-                    Go web site
+                    {{ $t('message.info.go-site') }}
                 </template>
                 <a v-if="link" :href="link" target="_blank">{{ link }}</a>
             </a-tooltip>
@@ -68,31 +75,31 @@
         <template slot="operation" slot-scope="record">
             <router-link :to="`/maintenance/brand/${record.key}`">
                 <a-icon type="edit" />
-                edit
+                {{ $t('operation.edit') }}
             </router-link>
             /
             <a>
                 <a-popconfirm
-                    v-if="record.deleted === 'Not deleted'"
-                    title="Are you sure delete this brand?"
+                    v-if="!isDeleted(record)"
+                    :title="$t('message.confirm.delete')"
                     placement="topRight"
                     @confirm="() => onDelete(record.key)"
-                    okText="Yes"
-                    cancelText="No"
+                    :okText="$t('operation.yes')"
+                    :cancelText="$t('operation.no')"
                 >
                     <a-icon type="delete" />
-                    delete
+                    {{ $t('operation.item.delete') }}
                 </a-popconfirm>
                 <a-popconfirm
                     v-else
-                    title="Are you sure restoration this brand?"
+                    :title="$t('message.confirm.restoration')"
                     @confirm="() => onRestoration(record.key)"
                     placement="topRight"
-                    okText="Yes"
-                    cancelText="No"
+                    :okText="$t('operation.yes')"
+                    :cancelText="$t('operation.no')"
                 >
                     <a-icon type="undo" />
-                    restoration
+                    {{ $t('operation.item.restoration') }}
                 </a-popconfirm>
             </a>
         </template>
@@ -129,7 +136,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 
-import { columns } from '@/components/brand/table';
+import { getTableColumns } from '@/components/brand/table';
 import { Record } from '@/components/brand/type';
 import { Brand } from '@/store/brand/type';
 
@@ -139,20 +146,30 @@ export default class BrandTable extends Vue {
 
     searchText = '';
 
-    columns = columns;
-
     @Prop({ type: Array as () => Brand[], required: true })
     brands!: Brand[];
 
     @Prop({ type: Boolean, required: true })
     loading!: boolean;
 
+    get columns() {
+        const { $t } = this;
+        return getTableColumns($t.bind(this));
+    }
+
     get dataSource() {
+        const deletedText = this.$t('status.item.delete');
+        const notDeletedText = this.$t('status.item.not-delete');
         return this.brands.map(brand => ({
             ...brand,
             key: brand.id,
-            deleted: brand.isDeleted ? 'Deleted' : 'Not deleted'
+            deleted: brand.isDeleted ? deletedText : notDeletedText
         })) as Record[];
+    }
+
+    isDeleted(record: Record): boolean {
+        const brand = this.brands.find(b => b.id === record.key) as Brand;
+        return brand.isDeleted;
     }
 
     handleSearch(selectedKeys: string[], confirm: Function) {

@@ -7,6 +7,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 import PieChart from '@/components/chart/PieChart';
+import { TotalPricePerGenreData } from '@/store/genre/type';
 
 type ChartDataParts = {
     labels: string[];
@@ -41,7 +42,10 @@ export default class TotalPricePerGenre extends Vue {
             backgroundColor,
             data
         } = this.totalPricePerGenres.reduce(
-            (accumulator: ChartDataParts, currentValue) => {
+            (
+                accumulator: ChartDataParts,
+                currentValue: TotalPricePerGenreData
+            ) => {
                 accumulator.labels.push(currentValue.name);
                 accumulator.backgroundColor.push(currentValue.color);
                 accumulator.data.push(currentValue.totalPrice);

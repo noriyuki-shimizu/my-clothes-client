@@ -19,11 +19,18 @@
         },
         "brand": {
             "index": "Brand",
-            "name": "Brand name"
+            "name": "Brand name",
+            "country": "Country"
         },
         "shop": {
             "index": "Shop",
-            "name": "Shop name"
+            "name": "Shop name",
+            "station-name": "Station name",
+            "address": "Address",
+            "business-hours": "Business hours",
+            "start-business-hours": "Business hours (start)",
+            "end-business-hours": "Business hours (end)",
+            "tel": "Tel"
         },
         "user": {
             "mail-address": "Mail address",
@@ -33,17 +40,21 @@
         "coordinate": {
             "item": "Item"
         },
+        "genre": {
+            "index": "Genre",
+            "name": "Genre name",
+            "tag-color": "Tag color",
+            "color-list": "Color list"
+        },
         "empty": "No Data",
         "price": "Price",
-        "genre": "Genre",
         "buy-date": "Buy date",
         "image": "Image",
         "comment": "Comment",
         "satisfaction": "Satisfaction",
         "status": "Status",
         "operation": "Operation",
-        "refine": "Refine",
-        "reset": "Reset"
+        "link": "Link"
     },
     "status": {
         "item": {
@@ -75,27 +86,116 @@
         "item": {
             "delete": "Delete",
             "restoration": "Restoration"
-        }
+        },
+        "search": "Search",
+        "refine": "Refine",
+        "reset": "Reset",
+        "yes": "Yes",
+        "no": "No"
     },
     "message": {
         "info": {
-            "empty-clothes": "Please create a clothes"
+            "empty-clothes": "Please create a clothes",
+            "empty-brand": "Please create a brand",
+            "empty-shop": "Please create a shop",
+            "empty-genre": "Please create a genre",
+            "go-site": "Go site",
+            "show-google-map": "Show Google map"
         },
         "success": {
             "create-complete": "Create success 👏",
             "update-complete": "Update success 👏"
         },
         "confirm": {
-            "register": "Do you want to register with the registered data?"
+            "register": "Do you want to register with the data you entered?",
+            "update": "Do you want to update with the data you entered?",
+            "delete": "Are you sure you want to delete this?",
+            "restoration": "Do you want to restore it?"
         },
         "error": {
             "image-capacity": "Image must smaller than {capacity}"
         },
         "validation": {
-            "image": "Image is required",
+            "image": {
+                "required": "Image is required"
+            },
+            "link": {
+                "max": "Link cannot be longer than 100 characters"
+            },
             "coordinate": {
-                "season": "Please select your season",
-                "item": "Clothes item is required"
+                "season": {
+                    "required": "Please select your season"
+                },
+                "item": {
+                    "required": "Clothes item is required"
+                }
+            },
+            "clothes": {
+                "brand": {
+                    "required": "Please select your brand"
+                },
+                "shop": {
+                    "required": "Please select your shop"
+                },
+                "genre": {
+                    "required": "Please select your genre"
+                },
+                "price": {
+                    "required": "Please input price"
+                },
+                "buy-date": {
+                    "required": "Please select buy date"
+                },
+                "comment": {
+                    "max": "Comment cannot be longer than 255 characters"
+                }
+            },
+            "brand": {
+                "name": {
+                    "max": "Brand name cannot be longer than 60 characters",
+                    "required": "Brand name is required",
+                    "duplication": "A brand with the same name already exists"
+                },
+                "country": {
+                    "max": "Country cannot be longer than 15 characters",
+                    "required": "Country is required"
+                }
+            },
+            "genre": {
+                "name": {
+                    "max": "Genre name cannot be longer than 60 characters",
+                    "required": "Genre name is required",
+                    "duplication": "A genre with the same name already exists"
+                },
+                "tag-color": {
+                    "required": "Tag color is required"
+                }
+            },
+            "shop": {
+                "name": {
+                    "max": "Shop name cannot be longer than 60 characters",
+                    "required": "Shop name is required",
+                    "duplication": "A shop with the same name already exists"
+                },
+                "station-name": {
+                    "max": "Station name cannot be longer than 30 characters",
+                    "required": "Station name is required"
+                },
+                "address": {
+                    "max": "Address cannot be longer than 60 characters",
+                    "required": "Address is required"
+                },
+                "start-business-hours": {
+                    "required": "Business hours (start) is required"
+                },
+                "end-business-hours": {
+                    "required": "Business hours (end) is required"
+                },
+                "tel": {
+                    "max": "Tel cannot be longer than 15 characters",
+                    "required": "Tel is required",
+                    "format": "The format is incorrect. If there is -, please remove it"
+                }
             }
         }
     }

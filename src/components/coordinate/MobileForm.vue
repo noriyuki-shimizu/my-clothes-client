@@ -139,6 +139,7 @@ import {
 
 import { Coordinate } from '@/store/coordinate/type';
 import { getBase64, isLt5M } from '@/util/file';
+import { ClothesItem } from '@/store/clothes/type';
 import { formItemLayout, seasons } from './form';
 import { FormFields, Season, Record } from './type';
 
@@ -188,7 +189,7 @@ export default class CoordinateMobileForm extends Vue {
             'coordinate/coordinateItems'
         ];
 
-        return coordinateItems.map(coordinateItem => {
+        return coordinateItems.map((coordinateItem: ClothesItem) => {
             const { id, ...items } = coordinateItem;
             return {
                 key: coordinateItem.id,
@@ -207,7 +208,10 @@ export default class CoordinateMobileForm extends Vue {
     beforeUpload(file: File) {
         const isBeforeCheck = isLt5M(file);
         if (!isBeforeCheck) {
-            this.$message.error('Image must smaller than 2MB');
+            const errorMessage = this.$t('message.error.image-capacity', {
+                capacity: '2MB'
+            }).toString();
+            this.$message.error(errorMessage);
         }
         return isBeforeCheck;
     }

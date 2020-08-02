@@ -5,6 +5,11 @@
         :scroll="{ x: 700, y: 630 }"
         :pagination="false"
         :loading="loading"
+        :locale="{
+            filterConfirm: $t('operation.refine'),
+            filterReset: $t('operation.reset'),
+            emptyText: $t('dictionary.empty')
+        }"
     >
         <span slot="color" slot-scope="color">
             <a-tag :color="color">
@@ -38,14 +43,16 @@
                 icon="search"
                 size="small"
                 style="width: 90px; margin-right: 8px"
-                >Search</a-button
             >
+                {{ $t('operation.search') }}
+            </a-button>
             <a-button
                 @click="() => handleReset(clearFilters)"
                 size="small"
                 style="width: 90px"
-                >Reset</a-button
             >
+                {{ $t('operation.reset') }}
+            </a-button>
         </div>
 
         <a-icon
@@ -58,19 +65,19 @@
         <template slot="operation" slot-scope="record">
             <router-link :to="`/maintenance/genre/${record.key}`">
                 <a-icon type="edit" />
-                edit
+                {{ $t('operation.edit') }}
             </router-link>
             /
             <a>
                 <a-popconfirm
-                    title="Are you sure delete this genre?"
+                    :title="$t('message.confirm.delete')"
                     placement="topRight"
                     @confirm="() => onDelete(record.key)"
-                    okText="Yes"
-                    cancelText="No"
+                    :okText="$t('operation.yes')"
+                    :cancelText="$t('operation.no')"
                 >
                     <a-icon type="delete" />
-                    delete
+                    {{ $t('operation.item.delete') }}
                 </a-popconfirm>
             </a>
         </template>
@@ -107,7 +114,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 
-import { columns } from '@/components/genre/table';
+import { getTableColumns } from '@/components/genre/table';
 import { Record } from '@/components/genre/type';
 import { Genre } from '@/store/genre/type';
 
@@ -123,7 +130,10 @@ export default class GenreTable extends Vue {
 
     searchText = '';
 
-    columns = columns;
+    get columns() {
+        const { $t } = this;
+        return getTableColumns($t.bind(this));
+    }
 
     get dataSource() {
         return this.genres.map(genre => ({

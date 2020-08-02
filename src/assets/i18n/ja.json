@@ -19,11 +19,18 @@
         },
         "brand": {
             "index": "ブランド",
-            "name": "ブランド名"
+            "name": "ブランド名",
+            "country": "国"
         },
         "shop": {
             "index": "店",
-            "name": "店名"
+            "name": "店名",
+            "station-name": "最寄り駅",
+            "address": "住所",
+            "business-hours": "営業時間",
+            "start-business-hours": "営業開始時間",
+            "end-business-hours": "営業終了時間",
+            "tel": "電話番号"
         },
         "user": {
             "mail-address": "メールアドレス",
@@ -33,17 +40,21 @@
         "coordinate": {
             "item": "アイテム"
         },
+        "genre": {
+            "index": "ジャンル",
+            "name": "ジャンル名",
+            "tag-color": "タグカラー",
+            "color-list": "カラー一覧"
+        },
         "empty": "データが存在しません",
         "price": "金額",
-        "genre": "ジャンル",
         "buy-date": "購入日",
         "image": "イメージ",
         "comment": "コメント",
         "satisfaction": "満足度",
         "status": "ステータス",
         "operation": "操作",
-        "refine": "絞り込む",
-        "reset": "リセット"
+        "link": "リンク"
     },
     "status": {
         "item": {
@@ -75,27 +86,116 @@
         "item": {
             "delete": "削除する",
             "restoration": "復元する"
-        }
+        },
+        "search": "検索",
+        "refine": "絞り込む",
+        "reset": "リセット",
+        "yes": "はい",
+        "no": "いいえ"
     },
     "message": {
         "info": {
-            "empty-clothes": "服を登録してください"
+            "empty-clothes": "服を登録してください",
+            "empty-brand": "ブランドを登録してください",
+            "empty-shop": "店を登録してください",
+            "empty-genre": "ジャンルを登録してください",
+            "go-site": "サイトへ",
+            "show-google-map": "Google map で見る"
         },
         "success": {
             "create-complete": "新規登録が完了しました 👏",
             "update-complete": "更新が完了しました 👏"
         },
         "confirm": {
-            "register": "入力されたデータで登録しますか?"
+            "register": "入力されたデータで登録しますか?",
+            "update": "入力されたデータで更新しますか?",
+            "delete": "削除してよろしいですか?",
+            "restoration": "復元しますか?"
         },
         "error": {
             "image-capacity": "選択する画像は {capacity} 以下としてください"
         },
         "validation": {
-            "image": "画像を選択してください",
+            "image": {
+                "required": "画像を選択してください"
+            },
+            "link": {
+                "max": "リンクは 100 文字以上にすることはできません"
+            },
             "coordinate": {
-                "season": "季節を選択してください",
-                "item": "コーディネートに使用する服を選択してください"
+                "season": {
+                    "required": "季節を選択してください"
+                },
+                "item": {
+                    "required": "コーディネートに使用する服を選択してください"
+                }
+            },
+            "clothes": {
+                "brand": {
+                    "required": "ブランドを選択してください"
+                },
+                "shop": {
+                    "required": "店を選択してください"
+                },
+                "genre": {
+                    "required": "ジャンルを選択してください"
+                },
+                "price": {
+                    "required": "金額を入力してください"
+                },
+                "buy-date": {
+                    "required": "購入日を選択してください"
+                },
+                "comment": {
+                    "max": "コメントは 255 文字以上にすることはできません"
+                }
+            },
+            "brand": {
+                "name": {
+                    "max": "ブランド名は 60 文字以上にすることはできません",
+                    "required": "ブランド名を入力してください",
+                    "duplication": "既に登録されています"
+                },
+                "country": {
+                    "max": "国は 15 文字以上にすることはできません",
+                    "required": "国を入力してください"
+                }
+            },
+            "genre": {
+                "name": {
+                    "max": "ジャンル名は 60 文字以上にすることはできません",
+                    "required": "ジャンル名を入力してください",
+                    "duplication": "既に登録されています"
+                },
+                "tag-color": {
+                    "required": "タグカラーを入力してください"
+                }
+            },
+            "shop": {
+                "name": {
+                    "max": "店名は 60 文字以上にすることはできません",
+                    "required": "店名を入力してください",
+                    "duplication": "既に登録されています"
+                },
+                "station-name": {
+                    "max": "最寄り駅は 30 文字以上にすることはできません",
+                    "required": "最寄り駅を入力してください"
+                },
+                "address": {
+                    "max": "住所は 60 文字以上にすることはできません",
+                    "required": "住所を入力してください"
+                },
+                "start-business-hours": {
+                    "required": "営業開始時間を入力してください"
+                },
+                "end-business-hours": {
+                    "required": "営業終了時間を入力してください"
+                },
+                "tel": {
+                    "max": "電話番号は 15 文字以上にすることはできません",
+                    "required": "電話番号を入力してください",
+                    "format": "不正なフォーマットです。- (ハイフン) がある場合は削除してください"
+                }
             }
         }
     }
