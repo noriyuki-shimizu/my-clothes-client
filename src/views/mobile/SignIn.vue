@@ -3,10 +3,10 @@
         <div id="sign_in">
             <div id="sign_in_title_field">
                 <h1>{{ $t('dictionary.authentication.signin') }}</h1>
-                <language-select id="outer_language_block" size="large" />
+                <language-select id="outer_language_block" />
             </div>
 
-            <a-divider />
+            <a-divider class="c-pipe" />
 
             <external-api />
         </div>
@@ -37,7 +37,7 @@ export default class SignIn extends Vue {}
 
 <style scoped>
 h1 {
-    font-size: 2rem;
+    font-size: 2em;
 }
 
 #sign_in {
@@ -56,7 +56,7 @@ h1 {
 #sign_in_title_field {
     display: flex;
     justify-content: space-between;
-    padding: 0 15%;
+    padding: 0 5%;
 }
 
 #outer_language_block {

@@ -156,7 +156,7 @@
             />
         </a-form-item>
 
-        <a-form-item :label="$t('dictionary.buy-date')">
+        <a-form-item :label="$t('dictionary.clothes.buy-date')">
             <a-date-picker
                 v-decorator="[
                     'buyDate',
@@ -194,7 +194,7 @@
             />
         </a-form-item>
 
-        <a-form-item :label="$t('dictionary.satisfaction')">
+        <a-form-item :label="$t('dictionary.clothes.satisfaction')">
             <a-rate
                 v-decorator="['satisfaction', { initialValue: 2.5 }]"
                 allow-half
@@ -337,14 +337,4 @@ export default class ClothesForm extends Vue {
 
 <style>
 @import '../../assets/css/form/ant.css';
-
-.form-submit-button {
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    border-top: 1px solid #e9e9e9;
-    padding: 10px 16px;
-    background: #fff;
-    text-align: right;
-}
 </style>

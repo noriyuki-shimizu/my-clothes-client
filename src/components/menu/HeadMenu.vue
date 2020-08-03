@@ -6,42 +6,42 @@
             </span>
             <a-menu-item>
                 <router-link to="/mobile/home">
-                    Home
+                    {{ $t('title.home') }}
                 </router-link>
             </a-menu-item>
             <a-menu-item>
                 <router-link to="/mobile/coordinate">
-                    Coordinate
+                    {{ $t('title.coordinate') }}
                 </router-link>
             </a-menu-item>
             <a-menu-item>
                 <router-link to="/mobile/maintenance/clothes">
-                    Clothes
+                    {{ $t('title.clothes') }}
                 </router-link>
             </a-menu-item>
             <a-menu-item>
                 <router-link to="/mobile/maintenance/brand">
-                    Brand
+                    {{ $t('title.brand') }}
                 </router-link>
             </a-menu-item>
             <a-menu-item>
                 <router-link to="/mobile/maintenance/genre">
-                    Genre
+                    {{ $t('title.genre') }}
                 </router-link>
             </a-menu-item>
             <a-menu-item>
                 <router-link to="/mobile/maintenance/shop">
-                    Shop
+                    {{ $t('title.shop') }}
                 </router-link>
             </a-menu-item>
             <a-menu-item>
                 <router-link to="/mobile/total-price">
-                    Price chart
+                    {{ $t('title.price-chart') }}
                 </router-link>
             </a-menu-item>
             <a-menu-item>
                 <span @click="signOut">
-                    Sign out
+                    {{ $t('dictionary.authentication.signout') }}
                 </span>
             </a-menu-item>
         </a-sub-menu>

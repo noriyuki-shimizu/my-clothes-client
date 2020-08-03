@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <a-spin :spinning="false" tip="Loading...">
         <div class="mc-button-field">
             <a-button
                 type="primary"
@@ -11,11 +11,15 @@
                     })
                 "
             >
-                Edit
+                {{ $t('operation.edit') }}
             </a-button>
         </div>
 
-        <a-page-header title="Shop" subTitle="show item" />
+        <a-page-header
+            class="mc-page-title"
+            :title="$t('title.shop')"
+            :subTitle="$t('title.sub-title.show-item')"
+        />
         <a-divider class="c-pipe" />
 
         <a-alert
@@ -26,14 +30,18 @@
             :type="message.type"
         />
 
-        <h3 class="mc-show-item-title">Name</h3>
+        <h3 class="mc-show-item-title">
+            {{ $t('dictionary.shop.name') }}
+        </h3>
         <a-list>
             <a-list-item>
                 <div>{{ shop.name }}</div>
             </a-list-item>
         </a-list>
 
-        <h3 class="mc-show-item-title">Image</h3>
+        <h3 class="mc-show-item-title">
+            {{ $t('dictionary.image') }}
+        </h3>
         <a-list>
             <a-list-item>
                 <div>
@@ -48,41 +56,51 @@
             </a-list-item>
         </a-list>
 
-        <h3 class="mc-show-item-title">Link</h3>
+        <h3 class="mc-show-item-title">
+            {{ $t('dictionary.link') }}
+        </h3>
         <a-list>
             <a-list-item>
                 <div>{{ shop.link || 'no link' }}</div>
             </a-list-item>
         </a-list>
 
-        <h3 class="mc-show-item-title">Station name</h3>
+        <h3 class="mc-show-item-title">
+            {{ $t('dictionary.shop.station-name') }}
+        </h3>
         <a-list>
             <a-list-item>
                 <div>{{ shop.stationName }}</div>
             </a-list-item>
         </a-list>
 
-        <h3 class="mc-show-item-title">Address</h3>
+        <h3 class="mc-show-item-title">
+            {{ $t('dictionary.shop.address') }}
+        </h3>
         <a-list>
             <a-list-item>
                 <div>{{ shop.address }}</div>
             </a-list-item>
         </a-list>
 
-        <h3 class="mc-show-item-title">Business hours</h3>
+        <h3 class="mc-show-item-title">
+            {{ $t('dictionary.shop.business-hours') }}
+        </h3>
         <a-list>
             <a-list-item>
                 <div>{{ shop.businessHours }}</div>
             </a-list-item>
         </a-list>
 
-        <h3 class="mc-show-item-title">Tel</h3>
+        <h3 class="mc-show-item-title">
+            {{ $t('dictionary.shop.tel') }}
+        </h3>
         <a-list>
             <a-list-item>
                 <div>{{ shop.tel }}</div>
             </a-list-item>
         </a-list>
-    </div>
+    </a-spin>
 </template>
 
 <script lang="ts">

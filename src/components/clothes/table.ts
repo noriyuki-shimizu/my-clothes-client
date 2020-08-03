@@ -62,7 +62,7 @@ const getColumns = (
             width: 160
         },
         {
-            title: $t('dictionary.buy-date'),
+            title: $t('dictionary.clothes.buy-date'),
             key: 'buyDate',
             dataIndex: 'buyDate',
             sorter: (a: Record, b: Record) => {
@@ -82,7 +82,7 @@ const getColumns = (
             width: 300
         },
         {
-            title: $t('dictionary.satisfaction'),
+            title: $t('dictionary.clothes.satisfaction'),
             dataIndex: 'satisfaction',
             key: 'satisfaction',
             sorter: (a: Record, b: Record) => {

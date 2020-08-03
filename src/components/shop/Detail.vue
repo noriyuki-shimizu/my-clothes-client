@@ -1,15 +1,24 @@
 <template>
     <div>
-        <div>Name ... {{ item.name }}</div>
+        <div>{{ $t('dictionary.shop.name') }} ... {{ item.name }}</div>
         <div>
-            Link ...
-            <a v-if="item.link" :href="item.link" target="_blank">open</a>
-            <span v-else>no link</span>
+            {{ $t('dictionary.link') }} ...
+            <a v-if="item.link" :href="item.link" target="_blank">
+                {{ $t('message.info.go-site') }}
+            </a>
+            <span v-else>
+                {{ $t('message.info.not-link') }}
+            </span>
         </div>
-        <div>Station name ... {{ item.stationName }}</div>
-        <div>Address ... {{ item.address }}</div>
-        <div>Business hours ... {{ item.businessHours }}</div>
-        <div>Tel ... {{ item.tel }}</div>
+        <div>
+            {{ $t('dictionary.shop.station-name') }} ... {{ item.stationName }}
+        </div>
+        <div>{{ $t('dictionary.shop.address') }} ... {{ item.address }}</div>
+        <div>
+            {{ $t('dictionary.shop.business-hours') }} ...
+            {{ item.businessHours }}
+        </div>
+        <div>{{ $t('dictionary.shop.tel') }} ... {{ item.tel }}</div>
     </div>
 </template>
 

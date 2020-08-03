@@ -46,12 +46,14 @@
             "tag-color": "タグカラー",
             "color-list": "カラー一覧"
         },
+        "clothes": {
+            "buy-date": "購入日",
+            "satisfaction": "満足度"
+        },
         "empty": "データが存在しません",
         "price": "金額",
-        "buy-date": "購入日",
         "image": "イメージ",
         "comment": "コメント",
-        "satisfaction": "満足度",
         "status": "ステータス",
         "operation": "操作",
         "link": "リンク"
@@ -63,6 +65,7 @@
         }
     },
     "title": {
+        "home": "ホーム",
         "accout-setting": "アカウント設定",
         "coordinate": "コーディネート",
         "clothes": "洋服",
@@ -73,7 +76,8 @@
         "sub-title": {
             "item-list": "一覧",
             "new-item": "新規登録",
-            "update-item": "更新"
+            "update-item": "更新",
+            "show-item": "詳細"
         }
     },
     "operation": {
@@ -100,6 +104,7 @@
             "empty-shop": "店を登録してください",
             "empty-genre": "ジャンルを登録してください",
             "go-site": "サイトへ",
+            "not-link": "未入力",
             "show-google-map": "Google map で見る"
         },
         "success": {

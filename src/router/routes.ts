@@ -5,7 +5,12 @@ const routes: RouteConfig[] = [
     {
         path: '/sign-in',
         name: 'signIn',
-        component: () => import('../views/SignIn.vue'),
+        component: () => {
+            if (isMobile()) {
+                return import('../views/mobile/SignIn.vue');
+            }
+            return import('../views/web/SignIn.vue');
+        },
         meta: { requiresAuth: false }
     },
     {

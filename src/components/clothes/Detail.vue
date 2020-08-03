@@ -16,7 +16,9 @@
                 {{ genre.name }}
             </a-tag>
         </div>
-        <div>{{ $t('dictionary.buy-date') }} ... {{ item.buyDate }}</div>
+        <div>
+            {{ $t('dictionary.clothes.buy-date') }} ... {{ item.buyDate }}
+        </div>
         <div>
             <a-rate :value="item.satisfaction" disabled allow-half />
         </div>

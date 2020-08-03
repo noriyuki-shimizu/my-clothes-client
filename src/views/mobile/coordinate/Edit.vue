@@ -1,7 +1,12 @@
 <template>
     <div>
-        <a-page-header title="Coordinate" subTitle="update item" />
+        <a-page-header
+            class="mc-page-title"
+            :title="$t('title.coordinate')"
+            :subTitle="$t('title.sub-title.update-item')"
+        />
         <a-divider class="c-pipe" />
+
         <a-alert
             class="c-alert-message"
             v-if="message.isShow"
@@ -71,8 +76,10 @@ export default class Edit extends Vue {
             ...values
         });
 
+        const okText = this.$t('operation.yes').toString();
         this.$success({
-            title: 'Create success 👏',
+            title: this.$t('message.success.update-complete'),
+            okText,
             onOk: () => {
                 this.$router.push({ name: 'mobileCoordinate' });
             }
@@ -95,9 +102,12 @@ export default class Edit extends Vue {
 
     @Emit('on-submit')
     onSubmit(values: FormFields) {
+        const okText = this.$t('operation.yes').toString();
+        const cancelText = this.$t('operation.cancel').toString();
         this.$confirm({
-            title: 'Are you sure you want to register?',
-            content: 'The entered information is registered.',
+            title: this.$t('message.confirm.update'),
+            okText,
+            cancelText,
             onOk: async () => {
                 await this.onRegister(values).catch(this.onError);
             },

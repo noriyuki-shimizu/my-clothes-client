@@ -9,11 +9,15 @@
                     })
                 "
             >
-                New
+                {{ $t('operation.new') }}
             </a-button>
         </div>
 
-        <a-page-header title="Genre" subTitle="item list" />
+        <a-page-header
+            class="mc-page-title"
+            :title="`${$t('title.genre')} (${genres.length})`"
+            :subTitle="$t('title.sub-title.item-list')"
+        />
         <a-divider class="c-pipe" />
 
         <a-alert
@@ -45,14 +49,14 @@
                     </a-tag>
                     <a>
                         <a-popconfirm
-                            title="Are you sure delete this genre?"
+                            :title="$t('message.confirm.delete')"
                             placement="topRight"
                             @confirm="() => onDelete(item.id)"
-                            okText="Yes"
-                            cancelText="No"
+                            :okText="$t('operation.yes')"
+                            :cancelText="$t('operation.no')"
                         >
                             <a-icon type="delete" />
-                            delete
+                            {{ $t('operation.item.delete') }}
                         </a-popconfirm>
                     </a>
                 </div>

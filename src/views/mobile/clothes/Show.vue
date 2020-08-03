@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <a-spin :spinning="false" tip="Loading...">
         <div class="mc-button-field">
             <a-button
                 type="primary"
@@ -11,11 +11,15 @@
                     })
                 "
             >
-                Edit
+                {{ $t('operation.edit') }}
             </a-button>
         </div>
 
-        <a-page-header title="Clothes" subTitle="show item" />
+        <a-page-header
+            class="mc-page-title"
+            :title="$t('title.clothes')"
+            :subTitle="$t('title.sub-title.show-item')"
+        />
         <a-divider class="c-pipe" />
 
         <a-alert
@@ -26,7 +30,9 @@
             :type="message.type"
         />
 
-        <h3 class="mc-show-item-title">Image</h3>
+        <h3 class="mc-show-item-title">
+            {{ $t('dictionary.image') }}
+        </h3>
         <a-list>
             <a-list-item>
                 <div>
@@ -35,7 +41,9 @@
             </a-list-item>
         </a-list>
 
-        <h3 class="mc-show-item-title">Brand</h3>
+        <h3 class="mc-show-item-title">
+            {{ $t('dictionary.brand.index') }}
+        </h3>
         <a-list>
             <a-list-item>
                 <a
@@ -51,7 +59,9 @@
             </a-list-item>
         </a-list>
 
-        <h3 class="mc-show-item-title">Shop</h3>
+        <h3 class="mc-show-item-title">
+            {{ $t('dictionary.shop.index') }}
+        </h3>
         <a-list>
             <a-list-item>
                 <a
@@ -66,7 +76,9 @@
             </a-list-item>
         </a-list>
 
-        <h3 class="mc-show-item-title">Genres</h3>
+        <h3 class="mc-show-item-title">
+            {{ $t('dictionary.genre.index') }}
+        </h3>
         <a-list>
             <a-list-item>
                 <div>
@@ -87,34 +99,42 @@
             </a-list-item>
         </a-list>
 
-        <h3 class="mc-show-item-title">Price</h3>
+        <h3 class="mc-show-item-title">
+            {{ $t('dictionary.price') }}
+        </h3>
         <a-list>
             <a-list-item>
                 <div>{{ clothes.price | priceFormat }}</div>
             </a-list-item>
         </a-list>
 
-        <h3 class="mc-show-item-title">Buy date</h3>
+        <h3 class="mc-show-item-title">
+            {{ $t('dictionary.clothes.buy-date') }}
+        </h3>
         <a-list>
             <a-list-item>
                 <div>{{ clothes.buyDate }}</div>
             </a-list-item>
         </a-list>
 
-        <h3 class="mc-show-item-title">Comment</h3>
+        <h3 class="mc-show-item-title">
+            {{ $t('dictionary.comment') }}
+        </h3>
         <a-list>
             <a-list-item>
                 <p>{{ clothes.comment }}</p>
             </a-list-item>
         </a-list>
 
-        <h3 class="mc-show-item-title">Satisfaction</h3>
+        <h3 class="mc-show-item-title">
+            {{ $t('dictionary.clothes.satisfaction') }}
+        </h3>
         <a-list>
             <a-list-item>
                 <a-rate :value="clothes.satisfaction" disabled allow-half />
             </a-list-item>
         </a-list>
-    </div>
+    </a-spin>
 </template>
 
 <script lang="ts">

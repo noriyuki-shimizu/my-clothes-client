@@ -46,12 +46,14 @@
             "tag-color": "Tag color",
             "color-list": "Color list"
         },
+        "clothes": {
+            "buy-date": "Buy date",
+            "satisfaction": "Satisfaction"
+        },
         "empty": "No Data",
         "price": "Price",
-        "buy-date": "Buy date",
         "image": "Image",
         "comment": "Comment",
-        "satisfaction": "Satisfaction",
         "status": "Status",
         "operation": "Operation",
         "link": "Link"
@@ -63,6 +65,7 @@
         }
     },
     "title": {
+        "home": "Home",
         "accout-setting": "Your account setting",
         "coordinate": "Coordinate",
         "clothes": "Clothes",
@@ -73,7 +76,8 @@
         "sub-title": {
             "item-list": "item list",
             "new-item": "new item",
-            "update-item": "update item"
+            "update-item": "update item",
+            "show-item": "show item"
         }
     },
     "operation": {
@@ -100,6 +104,7 @@
             "empty-shop": "Please create a shop",
             "empty-genre": "Please create a genre",
             "go-site": "Go site",
+            "not-link": "Not link",
             "show-google-map": "Show Google map"
         },
         "success": {

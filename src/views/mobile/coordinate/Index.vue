@@ -9,11 +9,15 @@
                     })
                 "
             >
-                New
+                {{ $t('operation.new') }}
             </a-button>
         </div>
 
-        <a-page-header title="Coordinate" subTitle="item list" />
+        <a-page-header
+            class="mc-page-title"
+            :title="`${$t('title.coordinate')} (${coordinates.length})`"
+            :subTitle="$t('title.sub-title.item-list')"
+        />
         <a-divider class="c-pipe" />
 
         <a-empty v-if="!coordinates.length" />
@@ -42,7 +46,7 @@
                         :src="coordinate.imageLink"
                         slot="cover"
                     />
-                    <a-card-meta :title="coordinate.season" />
+                    <a-card-meta :title="$t(coordinate.season)" />
                 </a-card>
             </a-col>
         </a-row>

@@ -108,8 +108,7 @@ export default class SignIn extends Vue {
 
 <style scoped>
 #external_api {
-    text-align: center;
-    width: calc(24rem + (18vw - 17rem));
+    width: calc(24rem + (18vw - 17em));
     margin: auto;
 }
 .external-api-login-button {
@@ -118,7 +117,7 @@ export default class SignIn extends Vue {
     color: white;
     height: 4rem;
     width: 100%;
-    font-size: calc(1.6rem + (1vw - 1rem));
+    font-size: calc(1.6rem + (1vw - 1em));
 }
 #google_login_button {
     background-color: #c6594b;

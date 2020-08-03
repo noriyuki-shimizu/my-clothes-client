@@ -174,17 +174,9 @@ export default class GenreForm extends Vue {
 </script>
 
 <style>
+@import '../../assets/css/form/ant.css';
+
 .color-list {
     margin-bottom: 5px;
-}
-
-.form-submit-button {
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    border-top: 1px solid #e9e9e9;
-    padding: 10px 16px;
-    background: #fff;
-    text-align: right;
 }
 </style>

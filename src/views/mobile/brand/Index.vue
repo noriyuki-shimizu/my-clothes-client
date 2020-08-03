@@ -9,11 +9,15 @@
                     })
                 "
             >
-                New
+                {{ $t('operation.new') }}
             </a-button>
         </div>
 
-        <a-page-header title="Brand" subTitle="item list" />
+        <a-page-header
+            class="mc-page-title"
+            :title="`${$t('title.brand')} (${brands.length})`"
+            :subTitle="$t('title.sub-title.item-list')"
+        />
         <a-divider class="c-pipe" />
 
         <a-alert
@@ -53,24 +57,24 @@
                             <a-popconfirm
                                 v-if="item.isDeleted"
                                 @confirm="() => onRestoration(item.id)"
-                                title="Are you sure restoration this brand?"
+                                :title="$t('message.confirm.restoration')"
                                 placement="topRight"
-                                okText="Yes"
-                                cancelText="No"
+                                :okText="$t('operation.yes')"
+                                :cancelText="$t('operation.no')"
                             >
                                 <a-icon type="undo" />
-                                restoration
+                                {{ $t('operation.item.restoration') }}
                             </a-popconfirm>
                             <a-popconfirm
                                 v-else
-                                title="Are you sure delete this brand?"
+                                :title="$t('message.confirm.delete')"
                                 @confirm="() => onDelete(item.id)"
                                 placement="topRight"
-                                okText="Yes"
-                                cancelText="No"
+                                :okText="$t('operation.yes')"
+                                :cancelText="$t('operation.no')"
                             >
                                 <a-icon type="delete" />
-                                delete
+                                {{ $t('operation.item.delete') }}
                             </a-popconfirm>
                         </a>
                     </div>

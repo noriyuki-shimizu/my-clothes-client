@@ -1,6 +1,10 @@
 <template>
     <div>
-        <a-page-header title="Coordinate" subTitle="new item" />
+        <a-page-header
+            class="mc-page-title"
+            :title="$t('title.coordinate')"
+            :subTitle="$t('title.sub-title.new-item')"
+        />
         <a-divider class="c-pipe" />
         <a-alert
             class="c-alert-message"
@@ -40,8 +44,10 @@ export default class New extends Vue {
     private async onRegister(values: FormFields) {
         await this.$store.dispatch('coordinate/onAddCoordinate', values);
 
+        const okText = this.$t('operation.yes').toString();
         this.$success({
-            title: 'Create success 👏',
+            title: this.$t('message.success.create-complete'),
+            okText,
             onOk: () => {
                 this.$router.push({ name: 'mobileCoordinate' });
             }
@@ -68,9 +74,12 @@ export default class New extends Vue {
 
     @Emit('on-submit')
     onSubmit(values: FormFields) {
+        const okText = this.$t('operation.yes').toString();
+        const cancelText = this.$t('operation.cancel').toString();
         this.$confirm({
-            title: 'Are you sure you want to register?',
-            content: 'The entered information is registered.',
+            title: this.$t('message.confirm.register'),
+            okText,
+            cancelText,
             onOk: async () => {
                 await this.onRegister(values).catch(this.onError);
             },
