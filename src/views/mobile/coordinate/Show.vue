@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <a-spin :spinning="false" tip="Loading...">
         <div class="mc-button-field">
             <a-button
                 type="primary"
@@ -11,11 +11,15 @@
                     })
                 "
             >
-                Edit
+                {{ $t('operation.edit') }}
             </a-button>
         </div>
 
-        <a-page-header title="Coordinate" subTitle="show item" />
+        <a-page-header
+            class="mc-page-title"
+            :title="$t('title.coordinate')"
+            :subTitle="$t('title.sub-title.show-item')"
+        />
         <a-divider class="c-pipe" />
 
         <a-alert
@@ -26,14 +30,18 @@
             :type="message.type"
         />
 
-        <h3 class="mc-show-item-title">Season</h3>
+        <h3 class="mc-show-item-title">
+            {{ $t('dictionary.season.index') }}
+        </h3>
         <a-list>
             <a-list-item>
-                <div>{{ coordinate.season }}</div>
+                <div>{{ $t(coordinate.season) }}</div>
             </a-list-item>
         </a-list>
 
-        <h3 class="mc-show-item-title">Coordinate</h3>
+        <h3 class="mc-show-item-title">
+            {{ $t('dictionary.image') }}
+        </h3>
         <a-list>
             <a-list-item>
                 <div>
@@ -45,7 +53,9 @@
             </a-list-item>
         </a-list>
 
-        <h3 class="mc-show-item-title">Coordinate item</h3>
+        <h3 class="mc-show-item-title">
+            {{ $t('dictionary.coordinate.item') }}
+        </h3>
         <a-list bordered :data-source="coordinate.usedCoordinates">
             <a-list-item
                 class="clothes-list-item"
@@ -70,7 +80,7 @@
                 </div>
             </a-list-item>
         </a-list>
-    </div>
+    </a-spin>
 </template>
 
 <script lang="ts">

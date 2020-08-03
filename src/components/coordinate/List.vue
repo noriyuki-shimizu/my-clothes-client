@@ -37,10 +37,10 @@
                                 />
                                 <a-popconfirm
                                     placement="topRight"
-                                    title="Are you sure delete this coodinate?"
+                                    :title="$t('message.confirm.delete')"
                                     @confirm="() => confirm(item.id)"
-                                    okText="Yes"
-                                    cancelText="No"
+                                    :okText="$t('operation.yes')"
+                                    :cancelText="$t('operation.no')"
                                 >
                                     <a-button
                                         type="danger"
@@ -60,6 +60,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
+import { Coordinate } from '@/store/coordinate/type';
 
 @Component
 export default class CoordinateList extends Vue {
@@ -71,7 +72,7 @@ export default class CoordinateList extends Vue {
     get dataSource() {
         const coordinates = this.$store.getters['coordinate/coordinates'];
         return coordinates.filter(
-            coordinate => coordinate.season === this.tabKey
+            (coordinate: Coordinate) => coordinate.season === this.tabKey
         );
     }
 

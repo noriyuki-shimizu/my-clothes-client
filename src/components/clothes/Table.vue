@@ -5,6 +5,11 @@
         :scroll="{ x: 1850, y: 570 }"
         :pagination="{ pageSize: 50 }"
         :loading="loading"
+        :locale="{
+            filterConfirm: $t('operation.refine'),
+            filterReset: $t('operation.reset'),
+            emptyText: $t('dictionary.empty')
+        }"
     >
         <span slot="genres" slot-scope="genres">
             <a-tag v-for="(genre, i) in genres" :color="genre.color" :key="i">
@@ -44,31 +49,31 @@
         <template slot="operation" slot-scope="record">
             <router-link :to="`/maintenance/clothes/${record.key}`">
                 <a-icon type="edit" />
-                edit
+                {{ $t('operation.edit') }}
             </router-link>
             /
             <a>
                 <a-popconfirm
-                    v-if="record.deleted === 'Not deleted'"
-                    title="Are you sure delete this clothes?"
+                    v-if="!isDeleted(record)"
+                    :title="$t('message.confirm.delete')"
                     placement="topRight"
                     @confirm="() => onDelete(record.key)"
-                    okText="Yes"
-                    cancelText="No"
+                    :okText="$t('operation.yes')"
+                    :cancelText="$t('operation.no')"
                 >
                     <a-icon type="delete" />
-                    delete
+                    {{ $t('operation.item.delete') }}
                 </a-popconfirm>
                 <a-popconfirm
                     v-else
-                    title="Are you sure restoration this clothes?"
+                    :title="$t('message.confirm.restoration')"
                     @confirm="() => onRestoration(record.key)"
                     placement="topRight"
-                    okText="Yes"
-                    cancelText="No"
+                    :okText="$t('operation.yes')"
+                    :cancelText="$t('operation.no')"
                 >
                     <a-icon type="undo" />
-                    restoration
+                    {{ $t('operation.item.restoration') }}
                 </a-popconfirm>
             </a>
         </template>
@@ -100,14 +105,20 @@ export default class ClothesTable extends Vue {
 
     searchText = '';
 
-    columns = getColumnsForTable(
-        this.$store.getters['clothes/assistBrands'],
-        this.$store.getters['clothes/assistShops'],
-        this.$store.getters['clothes/assistGenres']
-    );
+    get columns() {
+        const { $t } = this;
+        return getColumnsForTable($t.bind(this), {
+            brands: this.$store.getters['clothes/assistBrands'],
+            shops: this.$store.getters['clothes/assistShops'],
+            genres: this.$store.getters['clothes/assistGenres']
+        });
+    }
 
     get dataSource() {
         const { clothes } = this;
+        const deletedText = this.$t('status.item.delete');
+        const notDeletedText = this.$t('status.item.not-delete');
+
         return clothes.map(c => {
             const {
                 id,
@@ -131,9 +142,14 @@ export default class ClothesTable extends Vue {
                 buyDate,
                 comment,
                 satisfaction,
-                deleted: c.isDeleted ? 'Deleted' : 'Not deleted'
+                deleted: c.isDeleted ? deletedText : notDeletedText
             };
         }) as Record[];
+    }
+
+    isDeleted(record: Record): boolean {
+        const item = this.clothes.find(c => c.id === record.key) as Clothes;
+        return item.isDeleted;
     }
 
     handleSearch(selectedKeys: string[], confirm: Function) {

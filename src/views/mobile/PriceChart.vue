@@ -1,5 +1,8 @@
 <template>
     <div class="total-price">
+        <a-page-header class="mc-page-title" :title="$t('title.price-chart')" />
+        <a-divider class="c-pipe" />
+
         <a-alert
             class="c-alert-message"
             v-if="message.isShow"

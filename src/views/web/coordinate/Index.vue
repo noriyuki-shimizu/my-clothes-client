@@ -1,6 +1,9 @@
 <template>
     <div>
-        <a-page-header title="Coordinate" subTitle="item list">
+        <a-page-header
+            :title="`${$t('title.coordinate')} (${coordinates.length})`"
+            :subTitle="$t('title.sub-title.item-list')"
+        >
             <template slot="extra">
                 <a-button
                     type="primary"
@@ -9,15 +12,15 @@
                     :loading="loading"
                     @click="reloadCoordinates"
                 >
-                    Reload list
+                    {{ $t('operation.reload-list') }}
                 </a-button>
                 <a-button
                     type="primary"
-                    icon="edit"
+                    icon="file-add"
                     key="1"
                     @click="$router.push({ name: 'coordinateNew' })"
                 >
-                    New
+                    {{ $t('operation.new') }}
                 </a-button>
             </template>
         </a-page-header>
@@ -33,28 +36,40 @@
         />
 
         <a-tabs :defaultActiveKey="tabKey" @change="callback" type="card">
-            <a-tab-pane tab="Spring" key="spring">
+            <a-tab-pane
+                :tab="$t('dictionary.season.spring')"
+                key="dictionary.season.spring"
+            >
                 <coordinate-list
                     :tabKey="tabKey"
                     v-on:show-coordinate="showCoordinate"
                     v-on:on-error="onError"
                 />
             </a-tab-pane>
-            <a-tab-pane tab="Summer" key="summer">
+            <a-tab-pane
+                :tab="$t('dictionary.season.summer')"
+                key="dictionary.season.summer"
+            >
                 <coordinate-list
                     :tabKey="tabKey"
                     v-on:show-coordinate="showCoordinate"
                     v-on:on-error="onError"
                 />
             </a-tab-pane>
-            <a-tab-pane tab="Autumn" key="autumn">
+            <a-tab-pane
+                :tab="$t('dictionary.season.autumn')"
+                key="dictionary.season.autumn"
+            >
                 <coordinate-list
                     :tabKey="tabKey"
                     v-on:show-coordinate="showCoordinate"
                     v-on:on-error="onError"
                 />
             </a-tab-pane>
-            <a-tab-pane tab="Winter" key="winter">
+            <a-tab-pane
+                :tab="$t('dictionary.season.winter')"
+                key="dictionary.season.winter"
+            >
                 <coordinate-list
                     :tabKey="tabKey"
                     v-on:show-coordinate="showCoordinate"
@@ -80,7 +95,7 @@ import { AppMessage } from 'ant-design-vue/types/message';
 import CoordinateList from '@/components/coordinate/List.vue';
 import CoordinateItemDrawer from '@/components/clothes/Drawer.vue';
 import { Coordinate } from '@/store/coordinate/type';
-import { getSeason } from '@/util/date';
+import { getDictionarySeason } from '@/util/date';
 import { resetMessage } from '@/util/message';
 import { handleForbiddenError } from '@/util/errorHandle';
 import { ClothesItem } from '@/store/clothes/type';
@@ -104,7 +119,7 @@ export default class Index extends Vue {
 
     loading = false;
 
-    tabKey = getSeason(new Date());
+    tabKey = getDictionarySeason(new Date());
 
     created() {
         this.fetchCoordinates();
@@ -113,6 +128,10 @@ export default class Index extends Vue {
     reloadCoordinates() {
         this.$store.commit('coordinate/coordinatesStateChange', []);
         this.fetchCoordinates();
+    }
+
+    get coordinates() {
+        return this.$store.getters['coordinate/coordinates'];
     }
 
     private async fetchCoordinates() {

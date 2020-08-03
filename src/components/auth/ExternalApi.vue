@@ -13,7 +13,7 @@
             id="google_login_button"
             @click="signInWithGoogle"
         >
-            Signin with Google
+            {{ $t('dictionary.authentication.external.with-google') }}
         </a-button>
         <a-button
             icon="twitter"
@@ -21,7 +21,7 @@
             id="twitter_login_button"
             @click="signInWithTwitter"
         >
-            Signin with Twitter
+            {{ $t('dictionary.authentication.external.with-twitter') }}
         </a-button>
         <a-button
             icon="facebook"
@@ -29,7 +29,7 @@
             id="facebook_login_button"
             @click="signInWithFacebook"
         >
-            Signin with Facebook
+            {{ $t('dictionary.authentication.external.with-facebook') }}
         </a-button>
     </a-spin>
 </template>
@@ -60,53 +60,55 @@ export default class SignIn extends Vue {
         this.message = resetMessage();
         this.spinning = true;
 
-        try {
-            await this.$store.dispatch('user/signInWithGoogle');
-            toHome(this.$route.query.next, this.$router);
-        } catch (err) {
-            this.spinning = false;
-            this.message = isFirebaseExternalApiAuthError(err)
-                ? toFirebaseErrorMessage(err)
-                : toErrorMessage(err);
-        }
+        await this.$store
+            .dispatch('user/signInWithGoogle')
+            .catch((err: any) => {
+                this.spinning = false;
+                this.message = isFirebaseExternalApiAuthError(err)
+                    ? toFirebaseErrorMessage(err)
+                    : toErrorMessage(err);
+            });
+
+        toHome(this.$route.query.next, this.$router);
     }
 
     async signInWithTwitter(): Promise<void> {
         this.message = resetMessage();
         this.spinning = true;
 
-        try {
-            await this.$store.dispatch('user/signInWithTwitter');
-            toHome(this.$route.query.next, this.$router);
-        } catch (err) {
-            this.spinning = false;
-            this.message = isFirebaseExternalApiAuthError(err)
-                ? toFirebaseErrorMessage(err)
-                : toErrorMessage(err);
-        }
+        await this.$store
+            .dispatch('user/signInWithTwitter')
+            .catch((err: any) => {
+                this.spinning = false;
+                this.message = isFirebaseExternalApiAuthError(err)
+                    ? toFirebaseErrorMessage(err)
+                    : toErrorMessage(err);
+            });
+
+        toHome(this.$route.query.next, this.$router);
     }
 
     async signInWithFacebook(): Promise<void> {
         this.message = resetMessage();
         this.spinning = true;
 
-        try {
-            await this.$store.dispatch('user/signInWithFacebook');
-            toHome(this.$route.query.next, this.$router);
-        } catch (err) {
-            this.spinning = false;
-            this.message = isFirebaseExternalApiAuthError(err)
-                ? toFirebaseErrorMessage(err)
-                : toErrorMessage(err);
-        }
+        await this.$store
+            .dispatch('user/signInWithFacebook')
+            .catch((err: any) => {
+                this.spinning = false;
+                this.message = isFirebaseExternalApiAuthError(err)
+                    ? toFirebaseErrorMessage(err)
+                    : toErrorMessage(err);
+            });
+
+        toHome(this.$route.query.next, this.$router);
     }
 }
 </script>
 
 <style scoped>
 #external_api {
-    text-align: center;
-    width: calc(24rem + (18vw - 17rem));
+    width: calc(24rem + (18vw - 17em));
     margin: auto;
 }
 .external-api-login-button {
@@ -115,7 +117,7 @@ export default class SignIn extends Vue {
     color: white;
     height: 4rem;
     width: 100%;
-    font-size: calc(1.6rem + (1vw - 1rem));
+    font-size: calc(1.6rem + (1vw - 1em));
 }
 #google_login_button {
     background-color: #c6594b;

@@ -52,6 +52,7 @@ declare module 'vuex' {
         genre: Genre.State;
         shop: Shop.State;
         clothes: Clothes.State;
+        coordinate: Coordinate.State;
     };
 
     type RootGetters = User.IRootGetters &

@@ -1,10 +1,7 @@
 <template>
     <a-layout id="components-layout-demo-top" class="layout">
         <a-layout-header id="mobile_header">
-            <img
-                class="logo"
-                :src="require('@/assets/image/mobile-icon.png')"
-            />
+            <language-select class="language-select" />
             <head-menu />
         </a-layout-header>
         <a-layout-content id="main_layout_content">
@@ -22,12 +19,14 @@ import { Component, Vue } from 'vue-property-decorator';
 import AppContent from '@/components/layout/Content.vue';
 import AppFooter from '@/components/layout/Footer.vue';
 import HeadMenu from '@/components/menu/HeadMenu.vue';
+import LanguageSelect from '@/components/language/Select.vue';
 
 @Component({
     components: {
         AppFooter,
         AppContent,
-        HeadMenu
+        HeadMenu,
+        LanguageSelect
     }
 })
 export default class Layout extends Vue {
@@ -52,10 +51,8 @@ export default class Layout extends Vue {
 </script>
 
 <style scoped>
-.logo {
-    width: 75px;
-    height: 50px;
-    margin: 7px;
+.language-select {
+    margin: 15px;
     float: left;
 }
 

@@ -1,8 +1,11 @@
+.mc-page-title {
+    padding: 16px 5px;
+}
 
 .mc-button-field {
     position: absolute;
     right: 0;
-    padding: 15px 24px;
+    padding: 15px 5px;
     z-index: 1;
 }
 

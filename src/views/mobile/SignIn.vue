@@ -1,8 +1,13 @@
 <template>
     <div>
         <div id="sign_in">
-            <h1>Sign in</h1>
-            <a-divider />
+            <div id="sign_in_title_field">
+                <h1>{{ $t('dictionary.authentication.signin') }}</h1>
+                <language-select id="outer_language_block" />
+            </div>
+
+            <a-divider class="c-pipe" />
+
             <external-api />
         </div>
         <div id="sign_in_footer">
@@ -16,11 +21,15 @@ import { Vue, Component } from 'vue-property-decorator';
 
 import ExternalApi from '@/components/auth/ExternalApi.vue';
 import AppFooter from '@/components/layout/Footer.vue';
+import LanguageSelect from '@/components/language/Select.vue';
+import * as Vuex from 'vuex';
+import { selectedLanguageKey } from '@/plugins/i18n';
 
 @Component({
     components: {
         ExternalApi,
-        AppFooter
+        AppFooter,
+        LanguageSelect
     }
 })
 export default class SignIn extends Vue {}
@@ -28,18 +37,29 @@ export default class SignIn extends Vue {}
 
 <style scoped>
 h1 {
-    margin-left: 10%;
     font-size: 2em;
 }
+
 #sign_in {
-    padding: 10% 15%;
+    padding: 150px 10%;
     width: 100vw;
 }
+
 #sign_in_footer {
     width: 100%;
     padding: 15px 50px;
     background: #f0f2f5;
     position: absolute;
     bottom: 0;
+}
+
+#sign_in_title_field {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5%;
+}
+
+#outer_language_block {
+    padding-top: 5px;
 }
 </style>

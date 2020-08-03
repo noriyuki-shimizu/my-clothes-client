@@ -1,9 +1,8 @@
-import { Getters, Mutations, Actions, ExActionContext } from 'vuex';
-import { State, IGetters, IMutations, IActions } from '@/store/user/type';
-
 import api from '@/plugins/api';
 import firebaseAuth from '@/plugins/firebase/auth';
 import firebaseStorage from '@/plugins/firebase/storage';
+import { IActions, IGetters, IMutations, State } from '@/store/user/type';
+import { Actions, Getters, Mutations } from 'vuex';
 
 const state: State = {
     id: null,
@@ -33,7 +32,6 @@ const mutations: Mutations<State, IMutations> = {
         state.id = payload;
     },
     currentUserStateChanged(state, payload) {
-        state.user = payload;
         if (payload) {
             const { uid, displayName, email, phoneNumber, photoURL } = payload;
             state.user = {
@@ -78,7 +76,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         await ctx.commit('currentUserStateChanged', user);
     },
     async linkUserToAPI(ctx) {
-        const response = await api.post('/preLogin', {
+        const response = await api.post<number>('/users/authentication', {
             userAgent: navigator.userAgent
         });
         ctx.commit('idStateChanged', response.data);

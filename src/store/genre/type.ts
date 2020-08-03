@@ -7,7 +7,7 @@ export interface Genre {
     color: string;
 }
 
-export interface TotalPricePerGenre {
+export interface TotalPricePerGenreData {
     name: string;
     color: string;
     totalPrice: number;
@@ -16,14 +16,14 @@ export interface TotalPricePerGenre {
 export interface State {
     genre: Genre;
     genres: Genre[];
-    totalPricePerGenres: TotalPricePerGenre[];
+    totalPricePerGenres: TotalPricePerGenreData[];
     canSelectedColors: string[];
 }
 
 export interface IGetters {
     genre: Genre;
     genres: Genre[];
-    totalPricePerGenres: TotalPricePerGenre[];
+    totalPricePerGenres: TotalPricePerGenreData[];
     canSelectedColors: string[];
 }
 export interface IRootGetters {
@@ -37,7 +37,7 @@ export interface IMutations extends IModuleRootMutations {
     resetGenre: void;
     genreStateChange: Genre;
     genresStateChange: Genre[];
-    totalPricePerGenreStateChange: TotalPricePerGenre[];
+    totalPricePerGenreStateChange: TotalPricePerGenreData[];
     canSelectedColorsStateChange: string[];
     addGenre: Genre;
     updateTargetGenre: FormFields & Pick<Genre, 'id'>;

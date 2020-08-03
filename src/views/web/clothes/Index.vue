@@ -1,6 +1,9 @@
 <template>
     <div>
-        <a-page-header title="Clothes" subTitle="item list">
+        <a-page-header
+            :title="`${$t('title.clothes')} (${clothes.length})`"
+            :subTitle="$t('title.sub-title.item-list')"
+        >
             <template slot="extra">
                 <a-button
                     type="primary"
@@ -9,10 +12,10 @@
                     :loading="loading"
                     @click="reloadClothes"
                 >
-                    Reload list
+                    {{ $t('operation.reload-list') }}
                 </a-button>
                 <a-button type="primary" icon="file-add" key="1" @click="onNew">
-                    New
+                    {{ $t('operation.new') }}
                 </a-button>
             </template>
         </a-page-header>
@@ -26,7 +29,6 @@
             showIcon
         />
 
-        <p>total item: {{ clothes.length }}</p>
         <clothes-table
             :clothes="clothes"
             :loading="loading"

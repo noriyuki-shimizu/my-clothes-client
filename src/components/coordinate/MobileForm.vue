@@ -6,7 +6,10 @@
             v-bind="formItemLayout"
             @submit="handleSubmit"
         >
-            <a-form-item v-bind="formItemLayout" label="Season">
+            <a-form-item
+                v-bind="formItemLayout"
+                :label="$t('dictionary.season.index')"
+            >
                 <a-select
                     v-decorator="[
                         'season',
@@ -14,31 +17,35 @@
                             rules: [
                                 {
                                     required: true,
-                                    message: 'Please select your brand'
+                                    message: $t(
+                                        'message.validation.coordinate.season.required'
+                                    )
                                 }
                             ]
                         }
                     ]"
-                    placeholder="Select a option and change input text above"
                 >
                     <a-select-option
                         v-for="season in seasons"
                         :key="season"
                         :value="season"
                     >
-                        {{ season }}
+                        {{ $t(season) }}
                     </a-select-option>
                 </a-select>
             </a-form-item>
 
-            <a-form-item label="Image">
+            <a-form-item :label="$t('dictionary.image')">
                 <a-upload
                     v-decorator="[
                         'image',
                         {
                             rules: [
                                 {
-                                    required: !this.target
+                                    required: !this.target,
+                                    message: $t(
+                                        'message.validation.image.required'
+                                    )
                                 }
                             ]
                         }
@@ -59,12 +66,17 @@
                     />
                     <div v-else>
                         <a-icon type="plus" />
-                        <div class="ant-upload-text">Select</div>
+                        <div class="ant-upload-text">
+                            {{ $t('operation.select') }}
+                        </div>
                     </div>
                 </a-upload>
             </a-form-item>
 
-            <a-form-item v-bind="formItemLayout" label="Item">
+            <a-form-item
+                v-bind="formItemLayout"
+                :label="$t('dictionary.coordinate.item')"
+            >
                 <a-checkbox-group
                     v-decorator="[
                         'clothingIds',
@@ -72,7 +84,9 @@
                             rules: [
                                 {
                                     required: true,
-                                    message: 'Clothes item is required'
+                                    message: $t(
+                                        'message.validation.coordinate.item.required'
+                                    )
                                 }
                             ]
                         }
@@ -83,7 +97,7 @@
                         v-if="!coordinateItems.length"
                         :to="'/maintenance/clothes/new?next=back'"
                     >
-                        Please create a clothes
+                        {{ $t('message.info.empty-clothes') }}
                     </router-link>
                     <a-row v-else>
                         <a-col
@@ -121,7 +135,7 @@
 
             <div class="form-submit-button">
                 <a-button html-type="submit" type="primary">
-                    Submit
+                    {{ $t('operation.submit') }}
                 </a-button>
             </div>
         </a-form>
@@ -139,6 +153,7 @@ import {
 
 import { Coordinate } from '@/store/coordinate/type';
 import { getBase64, isLt5M } from '@/util/file';
+import { ClothesItem } from '@/store/clothes/type';
 import { formItemLayout, seasons } from './form';
 import { FormFields, Season, Record } from './type';
 
@@ -161,6 +176,13 @@ export default class CoordinateMobileForm extends Vue {
         this.fetchCoordinateItems();
 
         this.form = this.$form.createForm(this);
+    }
+
+    @Watch('$i18n.locale')
+    onLocalChange() {
+        const fieldsValue = this.form.getFieldsValue();
+        this.form.resetFields();
+        this.form.setFieldsValue(fieldsValue);
     }
 
     @Watch('target')
@@ -188,7 +210,7 @@ export default class CoordinateMobileForm extends Vue {
             'coordinate/coordinateItems'
         ];
 
-        return coordinateItems.map(coordinateItem => {
+        return coordinateItems.map((coordinateItem: ClothesItem) => {
             const { id, ...items } = coordinateItem;
             return {
                 key: coordinateItem.id,
@@ -207,7 +229,10 @@ export default class CoordinateMobileForm extends Vue {
     beforeUpload(file: File) {
         const isBeforeCheck = isLt5M(file);
         if (!isBeforeCheck) {
-            this.$message.error('Image must smaller than 2MB');
+            const errorMessage = this.$t('message.error.image-capacity', {
+                capacity: '2MB'
+            }).toString();
+            this.$message.error(errorMessage);
         }
         return isBeforeCheck;
     }

@@ -1,71 +1,77 @@
 import { Column } from 'ant-design-vue/types/table/column';
+import Vue from 'vue';
 import { Record } from './type';
 
-export const columns: Partial<Column>[] = [
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        fixed: 'left',
-        scopedSlots: {
-            filterDropdown: 'filterDropdown',
-            filterIcon: 'filterIcon',
-            customRender: 'customRender'
+export const getTableColumns = ($t: Vue['$t']): Partial<Column>[] => {
+    const deletedText = $t('status.item.delete').toString();
+    const notDeletedText = $t('status.item.not-delete').toString();
+    return [
+        {
+            title: $t('dictionary.brand.name'),
+            dataIndex: 'name',
+            key: 'name',
+            fixed: 'left',
+            scopedSlots: {
+                filterDropdown: 'filterDropdown',
+                filterIcon: 'filterIcon',
+                customRender: 'customRender'
+            },
+            onFilter: (value: string, record: Record) =>
+                record.name
+                    .toString()
+                    .toLowerCase()
+                    .includes(value.toLowerCase()),
+            width: 150
         },
-        onFilter: (value: string, record: Record) =>
-            record.name
-                .toString()
-                .toLowerCase()
-                .includes(value.toLowerCase()),
-        width: 150
-    },
-    {
-        title: 'Image',
-        dataIndex: 'imageLink',
-        key: 'imageLink',
-        scopedSlots: { customRender: 'imageLink' },
-        width: 160
-    },
-    {
-        title: 'Link',
-        dataIndex: 'link',
-        key: 'link',
-        scopedSlots: { customRender: 'link' }
-    },
-    {
-        title: 'Country',
-        dataIndex: 'country',
-        key: 'country',
-        scopedSlots: {
-            filterDropdown: 'filterDropdown',
-            filterIcon: 'filterIcon',
-            customRender: 'customRender'
+        {
+            title: $t('dictionary.image'),
+            dataIndex: 'imageLink',
+            key: 'imageLink',
+            scopedSlots: { customRender: 'imageLink' },
+            width: 160
         },
-        onFilter: (value: string, record: Record) =>
-            record.country
-                .toString()
-                .toLowerCase()
-                .includes(value.toLowerCase()),
-        width: 150
-    },
-    {
-        title: 'Deleted',
-        dataIndex: 'deleted',
-        filters: [
-            { text: 'Deleted', value: 'Deleted' },
-            { text: 'Not deleted', value: 'Not deleted' }
-        ],
-        filterMultiple: false,
-        onFilter: (value: string, record: Record) => record.deleted === value,
-        width: 150
-    },
-    {
-        title: 'Operation',
-        key: 'operation',
-        fixed: 'right',
-        width: 200,
-        scopedSlots: { customRender: 'operation' }
-    }
-];
+        {
+            title: $t('dictionary.link'),
+            dataIndex: 'link',
+            key: 'link',
+            scopedSlots: { customRender: 'link' }
+        },
+        {
+            title: $t('dictionary.brand.country'),
+            dataIndex: 'country',
+            key: 'country',
+            scopedSlots: {
+                filterDropdown: 'filterDropdown',
+                filterIcon: 'filterIcon',
+                customRender: 'customRender'
+            },
+            onFilter: (value: string, record: Record) =>
+                record.country
+                    .toString()
+                    .toLowerCase()
+                    .includes(value.toLowerCase()),
+            width: 150
+        },
+        {
+            title: $t('dictionary.status'),
+            dataIndex: 'deleted',
+            filters: [
+                { text: deletedText, value: deletedText },
+                { text: notDeletedText, value: notDeletedText }
+            ],
+            filterMultiple: false,
+            onFilter: (value: string, record: Record) =>
+                record.deleted === value,
+            width: 150
+        },
+        {
+            title: $t('dictionary.operation'),
+            key: 'operation',
+            fixed: 'right',
+            width: 200,
+            scopedSlots: { customRender: 'operation' }
+        }
+    ];
+};
 
 export default {};

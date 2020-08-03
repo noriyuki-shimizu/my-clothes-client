@@ -1,6 +1,9 @@
 <template>
     <div>
-        <a-page-header title="Brand" subTitle="new item" />
+        <a-page-header
+            :title="$t('title.brand')"
+            :subTitle="$t('title.sub-title.new-item')"
+        />
         <a-divider class="c-pipe" />
         <a-alert
             class="c-alert-message"
@@ -51,8 +54,10 @@ export default class New extends Vue {
     async onRegister(values: FormFields) {
         await this.$store.dispatch('brand/onAddBrand', values);
 
+        const okText = this.$t('operation.yes').toString();
         this.$success({
-            title: 'Create success 👏',
+            title: this.$t('message.success.create-complete'),
+            okText,
             onOk: () => {
                 if (this.$route.query.next === 'back') {
                     this.$router.back();
@@ -64,10 +69,13 @@ export default class New extends Vue {
     }
 
     @Emit('on-submit')
-    async onSubmit(values: FormFields) {
+    onSubmit(values: FormFields) {
+        const okText = this.$t('operation.yes').toString();
+        const cancelText = this.$t('operation.cancel').toString();
         this.$confirm({
-            title: 'Are you sure you want to register?',
-            content: 'The entered information is registered.',
+            title: this.$t('message.confirm.register'),
+            okText,
+            cancelText,
             onOk: async () => {
                 await this.onRegister(values).catch(this.onError);
             },

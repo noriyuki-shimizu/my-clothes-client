@@ -26,3 +26,7 @@ export const getSeason = (date: Date): string => {
             return 'default';
     }
 };
+
+export const getDictionarySeason = (date: Date): string => {
+    return `dictionary.season.${getSeason(date)}`;
+};
