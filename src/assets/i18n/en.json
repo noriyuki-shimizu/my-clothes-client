@@ -52,6 +52,7 @@
         },
         "empty": "No Data",
         "price": "Price",
+        "total-price": "Total price",
         "image": "Image",
         "comment": "Comment",
         "status": "Status",

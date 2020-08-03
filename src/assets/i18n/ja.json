@@ -52,6 +52,7 @@
         },
         "empty": "データが存在しません",
         "price": "金額",
+        "total-price": "合計金額",
         "image": "イメージ",
         "comment": "コメント",
         "status": "ステータス",

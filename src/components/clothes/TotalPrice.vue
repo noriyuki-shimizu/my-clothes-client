@@ -1,6 +1,6 @@
 <template>
     <a-statistic
-        title="Total price"
+        :title="$t('dictionary.total-price')"
         :value="totalPrice"
         class="field-total-price"
     />
