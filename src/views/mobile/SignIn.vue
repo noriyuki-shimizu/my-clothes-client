@@ -41,13 +41,13 @@ h1 {
 }
 
 #sign_in {
-    padding: 150px 10%;
+    padding: 20vh 10% 0;
     width: 100vw;
 }
 
 #sign_in_footer {
     width: 100%;
-    padding: 15px 50px;
+    padding: 10px 10px;
     background: #f0f2f5;
     position: absolute;
     bottom: 0;

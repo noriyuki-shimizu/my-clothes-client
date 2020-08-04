@@ -41,7 +41,7 @@ h1 {
 }
 
 #sign_in {
-    padding: 150px 20%;
+    padding: 20vh 20% 0;
     width: 100vw;
 }
 
