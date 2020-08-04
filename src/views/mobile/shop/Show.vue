@@ -61,7 +61,7 @@
         </h3>
         <a-list>
             <a-list-item>
-                <div>{{ shop.link || 'no link' }}</div>
+                <div>{{ shop.link || $t('message.info.not-link') }}</div>
             </a-list-item>
         </a-list>
 
