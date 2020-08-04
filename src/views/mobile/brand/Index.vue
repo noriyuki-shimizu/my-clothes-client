@@ -58,7 +58,6 @@
                                 v-if="item.isDeleted"
                                 @confirm="() => onRestoration(item.id)"
                                 :title="$t('message.confirm.restoration')"
-                                placement="topRight"
                                 :okText="$t('operation.yes')"
                                 :cancelText="$t('operation.no')"
                             >
@@ -69,7 +68,6 @@
                                 v-else
                                 :title="$t('message.confirm.delete')"
                                 @confirm="() => onDelete(item.id)"
-                                placement="topRight"
                                 :okText="$t('operation.yes')"
                                 :cancelText="$t('operation.no')"
                             >
@@ -85,7 +83,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Emit } from 'vue-property-decorator';
+import { Vue, Component, Emit, Watch } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 import { AppMessage } from 'ant-design-vue/types/message';
 
@@ -108,6 +106,11 @@ export default class Index extends Vue {
 
     created() {
         this.fetchBrands();
+    }
+
+    @Watch('$i18n.locale')
+    onLocalChange() {
+        this.message = resetMessage();
     }
 
     private async fetchBrands() {
@@ -152,16 +155,16 @@ export default class Index extends Vue {
 
     @Emit('on-error')
     onError(err: any) {
+        this.message = resetMessage();
         handleForbiddenError(err, this.$store, this.$router);
 
-        this.setMessage({
+        const { data } = err.response;
+        this.message = {
             isShow: true,
-            text: `Error (${err.message})`,
-            description: err.response
-                ? err.response.data
-                : `Access URL: ${err.config.url}`,
+            text: this.$t('status.error').toString(),
+            description: this.$t(data).toString(),
             type: 'error'
-        });
+        };
     }
 }
 </script>

@@ -63,7 +63,8 @@
         "item": {
             "delete": "削除済み",
             "not-delete": "未削除"
-        }
+        },
+        "error": "エラー"
     },
     "title": {
         "home": "ホーム",
@@ -119,7 +120,15 @@
             "restoration": "復元しますか?"
         },
         "error": {
-            "image-capacity": "選択する画像は {capacity} 以下としてください"
+            "image-capacity": "選択する画像は {capacity} 以下としてください",
+            "used-other-data": "こちらのデータは他のデータで使用されているため、削除することができません",
+            "duplicate-name": "同じ名称のデータが存在します",
+            "fatal": "致命的エラーが発生しました。管理者に問い合わせてください",
+            "auth": {
+                "operation-not-supported-in-this-environment": "動作環境が本アプリをサポートしてません",
+                "popup-blocked": "ブラウザによってブロックされました",
+                "popup-closed-by-user": "ポップアップウィンドウが閉じられたため、認証を行えませんでした"
+            }
         },
         "validation": {
             "image": {

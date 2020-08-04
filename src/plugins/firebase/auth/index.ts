@@ -5,14 +5,8 @@ import firebase, {
 } from 'firebase/app';
 import 'firebase/auth';
 
-export const isFirebaseExternalApiAuthError = (
-    err: any
-): err is FirebaseExternalApiAuthError => {
-    return 'credential' in err;
-};
-
 export const isFirebaseAuthError = (err: any): err is FirebaseAuthError => {
-    return 'code' in err && 'message' in err;
+    return 'code' in err && 'message' in err && !('response' in err);
 };
 
 export default {

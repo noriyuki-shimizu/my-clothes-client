@@ -54,7 +54,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Emit } from 'vue-property-decorator';
+import { Vue, Component, Emit, Watch } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 import { AppMessage } from 'ant-design-vue/types/message';
 
@@ -69,6 +69,11 @@ export default class Index extends Vue {
     loading = false;
 
     message: AppMessage = resetMessage();
+
+    @Watch('$i18n.locale')
+    onLocalChange() {
+        this.message = resetMessage();
+    }
 
     created() {
         this.fetchCoordinates();
@@ -91,12 +96,11 @@ export default class Index extends Vue {
         this.message = resetMessage();
         handleForbiddenError(err, this.$store, this.$router);
 
+        const { data } = err.response;
         this.message = {
             isShow: true,
-            text: `Error (${err.message})`,
-            description: err.response
-                ? err.response.data
-                : `Access URL: ${err.config.url}`,
+            text: this.$t('status.error').toString(),
+            description: this.$t(data).toString(),
             type: 'error'
         };
     }

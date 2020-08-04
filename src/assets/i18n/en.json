@@ -63,7 +63,8 @@
         "item": {
             "delete": "Deleted",
             "not-delete": "Not deleted"
-        }
+        },
+        "error": "Error"
     },
     "title": {
         "home": "Home",
@@ -119,7 +120,15 @@
             "restoration": "Do you want to restore it?"
         },
         "error": {
-            "image-capacity": "Image must smaller than {capacity}"
+            "image-capacity": "Image must smaller than {capacity}",
+            "used-other-data": "This data is used by other data and cannot be deleted",
+            "duplicate-name": "There is data with the same name",
+            "fatal": "A fatal error has occurred. Please contact your administrator",
+            "auth": {
+                "operation-not-supported-in-this-environment": "Your operating environment does not support this application",
+                "popup-blocked": "Your browser has blocked it",
+                "popup-closed-by-user": "Authentication could not be performed because the pop-up window was closed"
+            }
         },
         "validation": {
             "image": {

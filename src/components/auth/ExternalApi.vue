@@ -35,12 +35,12 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Watch } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 import { FirebaseExternalApiAuthError } from 'firebase';
 import { AppMessage } from 'ant-design-vue/types/message';
 
-import { isFirebaseExternalApiAuthError } from '@/plugins/firebase/auth';
+import { isFirebaseAuthError } from '@/plugins/firebase/auth';
 import {
     resetMessage,
     toErrorMessage,
@@ -56,20 +56,19 @@ export default class SignIn extends Vue {
 
     $store!: Vuex.ExStore;
 
+    @Watch('$i18n.locale')
+    onLocalChange() {
+        this.message = resetMessage();
+    }
+
     async signInWithGoogle(): Promise<void> {
         this.message = resetMessage();
         this.spinning = true;
 
         await this.$store
             .dispatch('user/signInWithGoogle')
-            .catch((err: any) => {
-                this.spinning = false;
-                this.message = isFirebaseExternalApiAuthError(err)
-                    ? toFirebaseErrorMessage(err)
-                    : toErrorMessage(err);
-            });
-
-        toHome(this.$route.query.next, this.$router);
+            .then(() => toHome(this.$route.query.next, this.$router))
+            .catch(this.onError);
     }
 
     async signInWithTwitter(): Promise<void> {
@@ -78,14 +77,8 @@ export default class SignIn extends Vue {
 
         await this.$store
             .dispatch('user/signInWithTwitter')
-            .catch((err: any) => {
-                this.spinning = false;
-                this.message = isFirebaseExternalApiAuthError(err)
-                    ? toFirebaseErrorMessage(err)
-                    : toErrorMessage(err);
-            });
-
-        toHome(this.$route.query.next, this.$router);
+            .then(() => toHome(this.$route.query.next, this.$router))
+            .catch(this.onError);
     }
 
     async signInWithFacebook(): Promise<void> {
@@ -94,14 +87,16 @@ export default class SignIn extends Vue {
 
         await this.$store
             .dispatch('user/signInWithFacebook')
-            .catch((err: any) => {
-                this.spinning = false;
-                this.message = isFirebaseExternalApiAuthError(err)
-                    ? toFirebaseErrorMessage(err)
-                    : toErrorMessage(err);
-            });
+            .then(() => toHome(this.$route.query.next, this.$router))
+            .catch(this.onError);
+    }
 
-        toHome(this.$route.query.next, this.$router);
+    private onError(err: any) {
+        const { $t } = this;
+        this.spinning = false;
+        this.message = isFirebaseAuthError(err)
+            ? toFirebaseErrorMessage($t.bind(this), err)
+            : toErrorMessage($t.bind(this), err);
     }
 }
 </script>

@@ -1,5 +1,6 @@
 import { AppMessage } from 'ant-design-vue/types/message';
-import { FirebaseExternalApiAuthError } from 'firebase';
+import { FirebaseAuthError } from 'firebase';
+import Vue from 'vue';
 
 export const resetMessage = (): AppMessage => ({
     isShow: false,
@@ -8,20 +9,29 @@ export const resetMessage = (): AppMessage => ({
     type: null
 });
 
-export const toErrorMessage = (err: any): AppMessage => ({
-    isShow: true,
-    text: `Error (${err.code})`,
-    description: `${err.message}`,
-    type: 'error'
-});
-
-export const toFirebaseErrorMessage = (
-    err: FirebaseExternalApiAuthError
-): AppMessage => {
+export const toErrorMessage = ($t: Vue['$t'], err: any): AppMessage => {
+    const { data } = err.response;
     return {
         isShow: true,
-        text: `Error (${err.code})`,
-        description: `${err.message} ProviderId is "${err.credential.providerId}", Email is "${err.email}"`,
+        text: $t('status.error').toString(),
+        description: $t(data).toString(),
+        type: 'error'
+    };
+};
+
+export const toFirebaseErrorMessage = (
+    $t: Vue['$t'],
+    err: FirebaseAuthError
+): AppMessage => {
+    const code = err.code.split('auth/').pop();
+    const description = code
+        ? $t(`message.error.auth.${code}`).toString()
+        : err.message;
+
+    return {
+        isShow: true,
+        text: $t('status.error').toString(),
+        description,
         type: 'error'
     };
 };

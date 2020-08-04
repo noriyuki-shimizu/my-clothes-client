@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Emit } from 'vue-property-decorator';
+import { Vue, Component, Emit, Watch } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 import { DoneUploadFileInfo } from 'ant-design-vue/types/upload';
 import { AppMessage } from 'ant-design-vue/types/message';
@@ -39,17 +39,21 @@ export default class New extends Vue {
 
     $store!: Vuex.ExStore;
 
+    @Watch('$i18n.locale')
+    onLocalChange() {
+        this.message = resetMessage();
+    }
+
     @Emit('on-error')
     onError(err: any) {
         this.message = resetMessage();
         handleForbiddenError(err, this.$store, this.$router);
 
+        const { data } = err.response;
         this.message = {
             isShow: true,
-            text: `Error (${err.message})`,
-            description: err.response
-                ? err.response.data
-                : `Access URL: ${err.config.url}`,
+            text: this.$t('status.error').toString(),
+            description: this.$t(data).toString(),
             type: 'error'
         };
     }
