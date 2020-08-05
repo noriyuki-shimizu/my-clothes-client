@@ -107,7 +107,9 @@
             "empty-genre": "ジャンルを登録してください",
             "go-site": "サイトへ",
             "not-link": "未入力",
-            "show-google-map": "Google map で見る"
+            "show-google-map": "Google map で見る",
+            "session-timeout": "セッションタイムアウト",
+            "signin-again": "再度ログインしてください"
         },
         "success": {
             "create-complete": "新規登録が完了しました 👏",

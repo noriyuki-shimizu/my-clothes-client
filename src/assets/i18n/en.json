@@ -107,7 +107,9 @@
             "empty-genre": "Please create a genre",
             "go-site": "Go site",
             "not-link": "Not link",
-            "show-google-map": "Show Google map"
+            "show-google-map": "Show Google map",
+            "session-timeout": "Session timeout",
+            "signin-again": "Please sign in again"
         },
         "success": {
             "create-complete": "Create success 👏",
