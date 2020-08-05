@@ -65,7 +65,8 @@ export default class Edit extends Vue {
 
     onError(err: any) {
         this.message = resetMessage();
-        handleForbiddenError(err, this.$store, this.$router);
+        const { $t } = this;
+        handleForbiddenError(err, $t.bind(this), this.$store, this.$router);
 
         const { data } = err.response;
         this.message = {

@@ -5,8 +5,10 @@ import Vue, { VueConstructor } from 'vue';
 
 export const selectedLanguageKey = 'selectedLanguage';
 
-export default (Vue: VueConstructor<Vue>) => {
-    Vue.use(VueI18n);
+export default (Vue?: VueConstructor<Vue>) => {
+    if (Vue) {
+        Vue.use(VueI18n);
+    }
 
     return new VueI18n({
         locale: localStorage.getItem(selectedLanguageKey) || 'en',

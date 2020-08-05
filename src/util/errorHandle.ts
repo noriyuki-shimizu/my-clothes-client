@@ -9,13 +9,14 @@ type VueRouterNext = (
 
 export const handleForbiddenError = (
     err: any,
+    $t: Vue['$t'],
     store: Vuex.ExStore,
     router: VueRouter | VueRouterNext
 ) => {
     if (err.response && err.response.status === 403) {
         Modal.warning({
-            title: 'Certification expired',
-            content: 'Please sign in again.',
+            title: $t('message.info.session-timeout'),
+            content: $t('message.info.signin-again'),
             onOk: () => {
                 store.commit('brand/allStateReset');
                 store.commit('clothes/allStateReset');
