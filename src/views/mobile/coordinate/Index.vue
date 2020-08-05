@@ -5,7 +5,7 @@
                 type="primary"
                 @click="
                     $router.push({
-                        name: 'mobileCoordinateNew'
+                        name: 'coordinateNew'
                     })
                 "
             >
@@ -35,7 +35,7 @@
                 :key="index"
                 @click="
                     $router.push({
-                        name: 'mobileCoordinateShow',
+                        name: 'coordinateShow',
                         params: { id: coordinate.id }
                     })
                 "

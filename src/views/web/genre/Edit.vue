@@ -50,7 +50,7 @@ export default class Edit extends Vue {
         const { id } = this.$route.params;
 
         if (!id) {
-            this.$router.push({ name: 'mobileGenre' });
+            this.$router.push({ name: 'genre' });
             return;
         }
 

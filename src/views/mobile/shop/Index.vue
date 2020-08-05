@@ -5,7 +5,7 @@
                 type="primary"
                 @click="
                     $router.push({
-                        name: 'mobileShopNew'
+                        name: 'shopNew'
                     })
                 "
             >
@@ -45,7 +45,7 @@
                             "
                             @click="
                                 $router.push({
-                                    name: 'mobileShopShow',
+                                    name: 'shopShow',
                                     params: { id: item.id }
                                 })
                             "

@@ -6,7 +6,7 @@
                 icon="edit"
                 @click="
                     $router.push({
-                        name: 'mobileClothesEdit',
+                        name: 'clothesEdit',
                         params: { id: clothes.id }
                     })
                 "
@@ -49,7 +49,7 @@
                 <a
                     @click="
                         $router.push({
-                            name: 'mobileBrandShow',
+                            name: 'brandShow',
                             params: { id: clothes.brand.id }
                         })
                     "
@@ -67,7 +67,7 @@
                 <a
                     @click="
                         $router.push({
-                            name: 'mobileShopShow',
+                            name: 'shopShow',
                             params: { id: clothes.shop.id }
                         })
                     "
@@ -88,7 +88,7 @@
                         :color="genre.color"
                         @click="
                             $router.push({
-                                name: 'mobileGenreShow',
+                                name: 'genreShow',
                                 params: { id: genre.id }
                             })
                         "
@@ -164,7 +164,7 @@ export default class Show extends Vue {
         const { id } = this.$route.params;
 
         if (!id) {
-            this.$router.push({ name: 'mobileClothes' });
+            this.$router.push({ name: 'clothes' });
             return;
         }
 

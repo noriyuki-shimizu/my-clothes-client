@@ -5,7 +5,7 @@
                 type="primary"
                 @click="
                     $router.push({
-                        name: 'mobileClothesNew'
+                        name: 'clothesNew'
                     })
                 "
             >
@@ -42,7 +42,7 @@
                             :src="item.imageLink"
                             @click="
                                 $router.push({
-                                    name: 'mobileClothesShow',
+                                    name: 'clothesShow',
                                     params: { id: item.id }
                                 })
                             "

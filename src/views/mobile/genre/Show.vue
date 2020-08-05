@@ -6,7 +6,7 @@
                 icon="edit"
                 @click="
                     $router.push({
-                        name: 'mobileGenreEdit',
+                        name: 'genreEdit',
                         params: { id: genre.id }
                     })
                 "
@@ -74,7 +74,7 @@ export default class Show extends Vue {
         const { id } = this.$route.params;
 
         if (!id) {
-            this.$router.push({ name: 'mobileGenre' });
+            this.$router.push({ name: 'genre' });
             return;
         }
 

@@ -5,37 +5,37 @@
                 <a-icon type="menu" :style="{ fontSize: '20px' }" />
             </span>
             <a-menu-item>
-                <router-link to="/mobile/home">
+                <router-link to="/home">
                     {{ $t('title.home') }}
                 </router-link>
             </a-menu-item>
             <a-menu-item>
-                <router-link to="/mobile/coordinate">
+                <router-link to="/coordinate">
                     {{ $t('title.coordinate') }}
                 </router-link>
             </a-menu-item>
             <a-menu-item>
-                <router-link to="/mobile/maintenance/clothes">
+                <router-link to="/maintenance/clothes">
                     {{ $t('title.clothes') }}
                 </router-link>
             </a-menu-item>
             <a-menu-item>
-                <router-link to="/mobile/maintenance/brand">
+                <router-link to="/maintenance/brand">
                     {{ $t('title.brand') }}
                 </router-link>
             </a-menu-item>
             <a-menu-item>
-                <router-link to="/mobile/maintenance/genre">
+                <router-link to="/maintenance/genre">
                     {{ $t('title.genre') }}
                 </router-link>
             </a-menu-item>
             <a-menu-item>
-                <router-link to="/mobile/maintenance/shop">
+                <router-link to="/maintenance/shop">
                     {{ $t('title.shop') }}
                 </router-link>
             </a-menu-item>
             <a-menu-item>
-                <router-link to="/mobile/total-price">
+                <router-link to="/total-price">
                     {{ $t('title.price-chart') }}
                 </router-link>
             </a-menu-item>

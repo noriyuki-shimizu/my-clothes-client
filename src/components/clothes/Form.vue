@@ -229,7 +229,6 @@ import { FormFields } from '@/components/clothes/type';
 import { Clothes } from '@/store/clothes/type';
 import { getBase64, isLt5M } from '@/util/file';
 import { dateFormat } from '@/util/date';
-import { isMobile } from '../../util/userAgent';
 
 @Component
 export default class ClothesForm extends Vue {
@@ -324,9 +323,7 @@ export default class ClothesForm extends Vue {
 
     movePartNewPage(part: string) {
         this.$router.push({
-            path: isMobile()
-                ? `/mobile/maintenance/${part}/new`
-                : `/maintenance/${part}/new`,
+            path: `/maintenance/${part}/new`,
             query: {
                 next: 'back'
             }

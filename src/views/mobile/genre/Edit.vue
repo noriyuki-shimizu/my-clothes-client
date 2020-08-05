@@ -52,7 +52,7 @@ export default class Edit extends Vue {
         const { id } = this.$route.params;
 
         if (!id) {
-            this.$router.push({ name: 'mobileGenre' });
+            this.$router.push({ name: 'genre' });
             return;
         }
 
@@ -73,7 +73,7 @@ export default class Edit extends Vue {
         const { id } = this.$route.params;
 
         if (!id) {
-            this.$router.push({ name: 'mobileGenre' });
+            this.$router.push({ name: 'genre' });
             return;
         }
 
@@ -87,7 +87,7 @@ export default class Edit extends Vue {
             title: this.$t('message.success.update-complete'),
             okText,
             onOk: () => {
-                this.$router.push({ name: 'mobileGenre' });
+                this.$router.push({ name: 'genre' });
             }
         });
     }

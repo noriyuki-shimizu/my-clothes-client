@@ -56,7 +56,7 @@ export default class New extends Vue {
                     this.$router.back();
                     return;
                 }
-                this.$router.push({ name: 'mobileBrand' });
+                this.$router.push({ name: 'brand' });
             }
         });
     }

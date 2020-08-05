@@ -6,7 +6,7 @@
                 icon="edit"
                 @click="
                     $router.push({
-                        name: 'mobileCoordinateEdit',
+                        name: 'coordinateEdit',
                         params: { id: coordinate.id }
                     })
                 "
@@ -66,7 +66,7 @@
                     class="mc-item-container"
                     @click="
                         $router.push({
-                            name: 'mobileClothesShow',
+                            name: 'clothesShow',
                             params: { id: item.id }
                         })
                     "
@@ -111,7 +111,7 @@ export default class Show extends Vue {
         const { id } = this.$route.params;
 
         if (!id) {
-            this.$router.push({ name: 'mobileCoordinate' });
+            this.$router.push({ name: 'coordinate' });
         }
 
         this.$store

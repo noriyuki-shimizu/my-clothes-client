@@ -52,7 +52,7 @@ export default class Edit extends Vue {
         const { id } = this.$route.params;
 
         if (!id) {
-            this.$router.push({ name: 'mobileCoordinate' });
+            this.$router.push({ name: 'coordinate' });
         }
 
         this.$store
@@ -72,7 +72,7 @@ export default class Edit extends Vue {
         const { id } = this.$route.params;
 
         if (!id) {
-            this.$router.push({ name: 'mobileCoordinate' });
+            this.$router.push({ name: 'coordinate' });
             return;
         }
 
@@ -86,7 +86,7 @@ export default class Edit extends Vue {
             title: this.$t('message.success.update-complete'),
             okText,
             onOk: () => {
-                this.$router.push({ name: 'mobileCoordinate' });
+                this.$router.push({ name: 'coordinate' });
             }
         });
     }

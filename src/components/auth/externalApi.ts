@@ -1,5 +1,4 @@
 import VueRouter from 'vue-router';
-import { isMobile } from '@/util/userAgent';
 
 export const toHome = (
     next: string | (string | null)[],
@@ -10,7 +9,7 @@ export const toHome = (
         return;
     }
     router.push({
-        name: isMobile() ? 'mobileHome' : 'home'
+        name: 'home'
     });
 };
 

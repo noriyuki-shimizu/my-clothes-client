@@ -54,7 +54,7 @@ export default class New extends Vue {
             title: this.$t('message.success.create-complete'),
             okText,
             onOk: () => {
-                this.$router.push({ name: 'mobileCoordinate' });
+                this.$router.push({ name: 'coordinate' });
             }
         });
     }
