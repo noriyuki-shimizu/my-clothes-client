@@ -95,8 +95,7 @@ export default class Brand extends Vue {
     @Emit('on-error')
     onError(err: any) {
         this.message = resetMessage();
-        const { $t } = this;
-        handleForbiddenError(err, $t.bind(this), this.$store, this.$router);
+        handleForbiddenError(err, this.$store, this.$router);
 
         const { data } = err.response;
         this.message = {

@@ -23,7 +23,6 @@ import ExternalApi from '@/components/auth/ExternalApi.vue';
 import AppFooter from '@/components/layout/Footer.vue';
 import LanguageSelect from '@/components/language/Select.vue';
 import * as Vuex from 'vuex';
-import { selectedLanguageKey } from '@/plugins/i18n';
 
 @Component({
     components: {

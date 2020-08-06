@@ -1,9 +1,8 @@
-import VueI18n from 'vue-i18n';
 import en from '@/assets/i18n/en.json';
 import ja from '@/assets/i18n/ja.json';
 import Vue, { VueConstructor } from 'vue';
-
-export const selectedLanguageKey = 'selectedLanguage';
+import VueI18n from 'vue-i18n';
+import { getLanguage } from './language';
 
 export default (Vue?: VueConstructor<Vue>) => {
     if (Vue) {
@@ -11,7 +10,7 @@ export default (Vue?: VueConstructor<Vue>) => {
     }
 
     return new VueI18n({
-        locale: localStorage.getItem(selectedLanguageKey) || 'en',
+        locale: getLanguage(),
         messages: {
             en,
             ja

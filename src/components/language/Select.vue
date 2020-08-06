@@ -15,8 +15,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 
 import * as Vuex from 'vuex';
-import { selectedLanguageKey } from '@/plugins/i18n';
-import language from '@/plugins/i18n/language';
+import language, { setLanguage, getLanguage } from '@/plugins/i18n/language';
 import { LanguageSelectSize } from './type';
 
 @Component
@@ -29,13 +28,12 @@ export default class LanguageSelect extends Vue {
     size?: LanguageSelectSize;
 
     handleChange(languageName: string) {
-        localStorage.setItem(selectedLanguageKey, languageName);
+        setLanguage(languageName);
         this.$i18n.locale = languageName;
     }
 
     get selectedLanguage() {
-        const { value } = this.language.en;
-        return localStorage.getItem(selectedLanguageKey) || value;
+        return getLanguage();
     }
 
     get specifiedSize(): LanguageSelectSize {
