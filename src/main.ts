@@ -7,6 +7,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import './css';
+import './registerServiceWorker';
 
 const i18n = initVueI18n(Vue);
 
