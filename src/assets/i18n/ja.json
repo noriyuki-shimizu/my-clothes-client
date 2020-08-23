@@ -30,6 +30,7 @@
             "business-hours": "営業時間",
             "start-business-hours": "営業開始時間",
             "end-business-hours": "営業終了時間",
+            "business-status": "ステータス",
             "tel": "電話番号"
         },
         "user": {
@@ -63,6 +64,10 @@
         "item": {
             "delete": "削除済み",
             "not-delete": "未削除"
+        },
+        "shop": {
+            "open": "営業中",
+            "close": "営業時間外"
         },
         "error": "エラー"
     },

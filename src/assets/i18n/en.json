@@ -30,6 +30,7 @@
             "business-hours": "Business hours",
             "start-business-hours": "Business hours (start)",
             "end-business-hours": "Business hours (end)",
+            "business-status": "Status",
             "tel": "Tel"
         },
         "user": {
@@ -63,6 +64,10 @@
         "item": {
             "delete": "Deleted",
             "not-delete": "Not deleted"
+        },
+        "shop": {
+            "open": "Open",
+            "close": "Close"
         },
         "error": "Error"
     },

@@ -31,6 +31,15 @@
         />
 
         <h3 class="mc-show-item-title">
+            {{ $t('dictionary.shop.business-status') }}
+        </h3>
+        <a-list>
+            <a-list-item>
+                <business-status :isBusinessStatus="shop.isBusinessStatus" />
+            </a-list-item>
+        </a-list>
+
+        <h3 class="mc-show-item-title">
             {{ $t('dictionary.shop.name') }}
         </h3>
         <a-list>
@@ -109,8 +118,13 @@ import * as Vuex from 'vuex';
 import { resetMessage } from '@/util/message';
 import { AppMessage } from 'ant-design-vue/types/message';
 import { handleForbiddenError } from '@/util/errorHandle';
+import BusinessStatus from '@/components/shop/BusinessStatus.vue';
 
-@Component
+@Component({
+    components: {
+        BusinessStatus
+    }
+})
 export default class Show extends Vue {
     $store!: Vuex.ExStore;
 

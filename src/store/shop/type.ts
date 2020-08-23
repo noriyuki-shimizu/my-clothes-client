@@ -10,6 +10,7 @@ export interface Shop {
     imageLink: string | null;
     address: string;
     businessHours: string;
+    isBusinessStatus: boolean;
     tel: string;
     isDeleted: boolean;
 }

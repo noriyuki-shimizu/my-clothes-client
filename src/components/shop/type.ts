@@ -4,7 +4,13 @@ import { Shop } from '@/store/shop/type';
 
 export type Record = Pick<
     Shop,
-    'name' | 'link' | 'imageLink' | 'stationName' | 'address' | 'tel'
+    | 'name'
+    | 'link'
+    | 'imageLink'
+    | 'stationName'
+    | 'address'
+    | 'isBusinessStatus'
+    | 'tel'
 > & {
     key?: number;
     deleted: string;

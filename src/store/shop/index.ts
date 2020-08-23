@@ -15,6 +15,7 @@ export const initShop = (): Shop => ({
     imageLink: null,
     address: '',
     businessHours: '',
+    isBusinessStatus: false,
     tel: '',
     isDeleted: false
 });

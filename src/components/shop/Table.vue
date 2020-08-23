@@ -2,7 +2,7 @@
     <a-table
         :dataSource="dataSource"
         :columns="columns"
-        :scroll="{ x: 1650, y: 570 }"
+        :scroll="{ x: 1810, y: 570 }"
         :pagination="{ pageSize: 30 }"
         :loading="loading"
         :locale="{
@@ -87,6 +87,10 @@
             </a-tooltip>
         </span>
 
+        <span slot="isBusinessStatus" slot-scope="isBusinessStatus">
+            <business-status :isBusinessStatus="isBusinessStatus" />
+        </span>
+
         <template slot="operation" slot-scope="record">
             <router-link :to="`/maintenance/shop/${record.key}`">
                 <a-icon type="edit" />
@@ -154,8 +158,13 @@ import * as Vuex from 'vuex';
 import { getTableColumns } from '@/components/shop/table';
 import { Record } from '@/components/shop/type';
 import { Shop } from '@/store/shop/type';
+import BusinessStatus from './BusinessStatus.vue';
 
-@Component
+@Component({
+    components: {
+        BusinessStatus
+    }
+})
 export default class ShopTable extends Vue {
     $store!: Vuex.ExStore;
 
