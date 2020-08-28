@@ -37,7 +37,8 @@ export const getTableColumns = ($t: Vue['$t']): Partial<Column>[] => {
             key: 'isBusinessStatus',
             scopedSlots: { customRender: 'isBusinessStatus' },
             sorter: true,
-            width: 150
+            width: 150,
+            align: 'center'
         },
         {
             title: $t('dictionary.link'),
