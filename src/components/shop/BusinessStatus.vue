@@ -12,11 +12,17 @@ export default class BusinessStatus extends Vue {
     @Prop({ type: Boolean })
     isBusinessStatus!: boolean;
 
+    @Prop()
+    text?: string;
+
     get businessStatus() {
         return this.isBusinessStatus ? 'processing' : 'default';
     }
 
     get businessStatusText() {
+        if (this.text || this.text === '') {
+            return this.text;
+        }
         return this.isBusinessStatus
             ? this.$t('status.shop.open')
             : this.$t('status.shop.close');
