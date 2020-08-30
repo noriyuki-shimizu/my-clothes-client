@@ -82,8 +82,9 @@
                         `https://maps.google.co.jp/maps?q=${encodeURI(address)}`
                     "
                     target="_blank"
-                    >{{ address }}</a
                 >
+                    {{ address }}
+                </a>
             </a-tooltip>
         </span>
 
