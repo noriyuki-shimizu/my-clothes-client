@@ -27,6 +27,9 @@ const routes: RouteConfig[] = [
             }
             return import('../views/web/Layout.vue');
         },
+        redirect: () => ({
+            name: 'home'
+        }),
         meta: { requiresAuth: true },
         children: [
             {
