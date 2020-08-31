@@ -61,7 +61,10 @@
         </h3>
         <a-list>
             <a-list-item>
-                <div>{{ brand.link || $t('message.info.not-link') }}</div>
+                <a v-if="brand.link" :href="brand.link" target="_blank">
+                    {{ brand.link }}
+                </a>
+                <div v-else>{{ $t('message.info.not-link') }}</div>
             </a-list-item>
         </a-list>
 

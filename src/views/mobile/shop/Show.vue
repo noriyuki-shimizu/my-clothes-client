@@ -70,7 +70,10 @@
         </h3>
         <a-list>
             <a-list-item>
-                <div>{{ shop.link || $t('message.info.not-link') }}</div>
+                <a v-if="shop.link" :href="shop.link" target="_blank">
+                    {{ shop.link }}
+                </a>
+                <div v-else>{{ $t('message.info.not-link') }}</div>
             </a-list-item>
         </a-list>
 
@@ -88,7 +91,16 @@
         </h3>
         <a-list>
             <a-list-item>
-                <div>{{ shop.address }}</div>
+                <a
+                    :href="
+                        `https://maps.google.co.jp/maps?q=${encodeURI(
+                            shop.address
+                        )}`
+                    "
+                    target="_blank"
+                >
+                    {{ shop.address }}
+                </a>
             </a-list-item>
         </a-list>
 

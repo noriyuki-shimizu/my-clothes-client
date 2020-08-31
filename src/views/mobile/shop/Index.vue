@@ -29,56 +29,55 @@
         />
 
         <a-empty v-if="!shops.length" />
-        <a-list v-else bordered :data-source="shops">
-            <a-list-item
-                class="shop-list-item"
-                slot="renderItem"
-                slot-scope="item"
-            >
-                <div class="mc-item-container">
-                    <div>
-                        <img
-                            class="mc-item-image"
-                            :src="
-                                item.imageLink ||
-                                    require('@/assets/image/no-img.png')
-                            "
-                            @click="
-                                $router.push({
-                                    name: 'shopShow',
-                                    params: { id: item.id }
-                                })
-                            "
+        <a-list v-else :grid="{ gutter: 5, column: 2 }" :data-source="shops">
+            <a-list-item slot="renderItem" slot-scope="shop">
+                <a-card hoverable :title="shop.name">
+                    <a slot="extra" href="#">
+                        <business-status
+                            :isBusinessStatus="shop.isBusinessStatus"
+                            text=""
                         />
-                    </div>
-                    <div class="detail">
-                        <detail :item="item" />
-                        <a>
-                            <a-popconfirm
-                                v-if="item.isDeleted"
-                                @confirm="() => onRestoration(item.id)"
-                                :title="$t('message.confirm.restoration')"
-                                placement="topRight"
-                                :okText="$t('operation.yes')"
-                                :cancelText="$t('operation.no')"
-                            >
-                                <a-icon type="undo" />
-                                {{ $t('operation.item.restoration') }}
-                            </a-popconfirm>
-                            <a-popconfirm
-                                v-else
-                                :title="$t('message.confirm.delete')"
-                                @confirm="() => onDelete(item.id)"
-                                placement="topRight"
-                                :okText="$t('operation.yes')"
-                                :cancelText="$t('operation.no')"
-                            >
-                                <a-icon type="delete" />
-                                {{ $t('operation.item.delete') }}
-                            </a-popconfirm>
-                        </a>
-                    </div>
-                </div>
+                    </a>
+                    <img
+                        class="mc-item-image"
+                        slot="cover"
+                        alt="Shop image"
+                        :src="
+                            shop.imageLink ||
+                                require('@/assets/image/no-img.png')
+                        "
+                        @click="
+                            $router.push({
+                                name: 'shopShow',
+                                params: { id: shop.id }
+                            })
+                        "
+                    />
+                    <template slot="actions" class="ant-card-actions">
+                        <a-popconfirm
+                            v-if="shop.isDeleted"
+                            @confirm="() => onRestoration(shop.id)"
+                            :title="$t('message.confirm.restoration')"
+                            placement="topRight"
+                            :okText="$t('operation.yes')"
+                            :cancelText="$t('operation.no')"
+                        >
+                            <a-icon type="undo" />
+                            {{ $t('operation.item.restoration') }}
+                        </a-popconfirm>
+                        <a-popconfirm
+                            v-else
+                            :title="$t('message.confirm.delete')"
+                            @confirm="() => onDelete(shop.id)"
+                            placement="topRight"
+                            :okText="$t('operation.yes')"
+                            :cancelText="$t('operation.no')"
+                        >
+                            <a-icon type="delete" />
+                            {{ $t('operation.item.delete') }}
+                        </a-popconfirm>
+                    </template>
+                </a-card>
             </a-list-item>
         </a-list>
     </a-spin>
@@ -89,14 +88,14 @@ import { Vue, Component, Emit, Watch } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
 import { AppMessage } from 'ant-design-vue/types/message';
 
-import Detail from '@/components/shop/Detail.vue';
 import { resetMessage } from '@/util/message';
 import { handleForbiddenError } from '@/util/errorHandle';
 import { Shop } from '@/store/shop/type';
+import BusinessStatus from '@/components/shop/BusinessStatus.vue';
 
 @Component({
     components: {
-        Detail
+        BusinessStatus
     }
 })
 export default class Index extends Vue {
