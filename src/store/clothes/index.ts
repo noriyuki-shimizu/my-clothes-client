@@ -118,7 +118,7 @@ const mutations: Mutations<State, IMutations> = {
     restorationClothes(state, payload) {
         const c = state.clothes.find(c => c.id === payload);
         if (c) {
-            c.isDeleted = true;
+            c.isDeleted = false;
         }
     },
     assistGenreStateChange(state, payload) {
