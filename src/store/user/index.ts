@@ -1,52 +1,73 @@
 import api from '@/plugins/api';
 import firebaseAuth from '@/plugins/firebase/auth';
 import firebaseStorage from '@/plugins/firebase/storage';
-import { IActions, IGetters, IMutations, State } from '@/store/user/type';
+import {
+    IActions,
+    IGetters,
+    IMutations,
+    State,
+    TYPES,
+    AppUser
+} from '@/store/user/type';
 import { Actions, Getters, Mutations } from 'vuex';
-
-const state: State = {
-    id: null,
-    user: null,
-    accessToken: ''
-};
+import * as Cookie from 'js-cookie';
 
 const getters: Getters<State, IGetters> = {
-    id(state) {
-        return state.id;
+    id() {
+        const id = Cookie.get(TYPES.USER_ID);
+        if (id) {
+            return Number(id);
+        }
+        return null;
     },
-    currentUser(state) {
-        return state.user;
+    currentUser() {
+        const user = Cookie.getJSON(TYPES.USER_DETAIL);
+        if (user) {
+            return user as AppUser;
+        }
+        return null;
     },
-    accessToken(state) {
-        return state.accessToken;
+    accessToken() {
+        const accessToken = Cookie.get(TYPES.ACCESS_TOKEN);
+        if (accessToken) {
+            return accessToken;
+        }
+        return '';
     }
 };
 
 const mutations: Mutations<State, IMutations> = {
-    allStateReset(state) {
-        state.id = null;
-        state.user = null;
-        state.accessToken = '';
+    allStateReset() {
+        Cookie.remove(TYPES.USER_ID);
+        Cookie.remove(TYPES.USER_DETAIL);
+        Cookie.remove(TYPES.ACCESS_TOKEN);
     },
-    idStateChanged(state, payload) {
-        state.id = payload;
+    idStateChanged(_, payload) {
+        if (payload) {
+            Cookie.set(TYPES.USER_ID, String(payload), { expires: 1 / 2 });
+        }
     },
-    currentUserStateChanged(state, payload) {
+    currentUserStateChanged(_, payload) {
         if (payload) {
             const { uid, displayName, email, phoneNumber, photoURL } = payload;
-            state.user = {
-                uid,
-                displayName,
-                email,
-                phoneNumber,
-                photoURL
-            };
-            return;
+
+            Cookie.set(
+                TYPES.USER_DETAIL,
+                {
+                    uid,
+                    displayName,
+                    email,
+                    phoneNumber,
+                    photoURL
+                },
+                { expires: 1 / 2 }
+            );
         }
-        state.user = null;
     },
-    accessTokenStateChanged(state, payload) {
-        state.accessToken = payload;
+    accessTokenStateChanged(_, payload) {
+        if (payload) {
+            Cookie.set(TYPES.ACCESS_TOKEN, payload, { expires: 1 / 2 });
+        }
     }
 };
 
@@ -111,7 +132,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
 
 export default {
     namespaced: true,
-    state,
+    state: {},
     getters,
     mutations,
     actions

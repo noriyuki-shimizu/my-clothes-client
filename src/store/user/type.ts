@@ -8,15 +8,17 @@ export interface AppUser {
     photoURL: string | null;
 }
 
-export interface State {
-    id: number | null;
-    user: AppUser | null;
-    accessToken: string;
-}
+export const TYPES = {
+    USER_ID: 'user_id',
+    USER_DETAIL: 'user_detail',
+    ACCESS_TOKEN: 'access_token'
+} as const;
+
+export interface State {}
 
 export interface IGetters {
     id: number | null;
-    currentUser: State['user'] | null;
+    currentUser: AppUser | null;
     accessToken: string;
 }
 export interface IRootGetters {
