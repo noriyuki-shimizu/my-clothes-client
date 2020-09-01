@@ -20,36 +20,51 @@
         />
         <a-divider class="c-pipe" />
 
+        <a-alert
+            class="c-alert-message"
+            v-if="message.isShow"
+            :message="message.text"
+            :description="message.description"
+            :type="message.type"
+        />
+
         <a-empty v-if="!coordinates.length" />
-        <a-row v-else>
-            <a-alert
-                class="c-alert-message"
-                v-if="message.isShow"
-                :message="message.text"
-                :description="message.description"
-                :type="message.type"
-            />
-            <a-col
-                :span="12"
-                v-for="(coordinate, index) in coordinates"
-                :key="index"
-                @click="
-                    $router.push({
-                        name: 'coordinateShow',
-                        params: { id: coordinate.id }
-                    })
-                "
-            >
-                <a-card hoverable class="coordinate-item">
+        <a-list
+            v-else
+            :grid="{ gutter: 5, column: 2 }"
+            :data-source="coordinates"
+        >
+            <a-list-item slot="renderItem" slot-scope="coordinate">
+                <a-card hoverable :title="$t(coordinate.season)">
                     <img
-                        alt="example"
-                        :src="coordinate.imageLink"
+                        class="mc-item-image"
                         slot="cover"
+                        alt="Coordinate image"
+                        :src="
+                            coordinate.imageLink ||
+                                require('@/assets/image/no-img.png')
+                        "
+                        @click="
+                            $router.push({
+                                name: 'coordinateShow',
+                                params: { id: coordinate.id }
+                            })
+                        "
                     />
-                    <a-card-meta :title="$t(coordinate.season)" />
+                    <template slot="actions" class="ant-card-actions">
+                        <a-popconfirm
+                            :title="$t('message.confirm.delete')"
+                            @confirm="() => onDelete(coordinate.id)"
+                            :okText="$t('operation.yes')"
+                            :cancelText="$t('operation.no')"
+                        >
+                            <a-icon type="delete" />
+                            {{ $t('operation.item.delete') }}
+                        </a-popconfirm>
+                    </template>
                 </a-card>
-            </a-col>
-        </a-row>
+            </a-list-item>
+        </a-list>
     </a-spin>
 </template>
 
@@ -103,6 +118,17 @@ export default class Index extends Vue {
             description: this.$t(data).toString(),
             type: 'error'
         };
+    }
+
+    onDelete(id: Coordinate['id']) {
+        this.loading = true;
+        this.message = resetMessage();
+
+        this.$store
+            .dispatch('coordinate/onDeleteCoordinate', id)
+            .catch(this.onError);
+
+        this.loading = false;
     }
 }
 </script>
