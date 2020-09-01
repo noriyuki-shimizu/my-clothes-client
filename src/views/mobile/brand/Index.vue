@@ -29,7 +29,7 @@
         />
 
         <a-empty v-if="!brands.length" />
-        <a-list :grid="{ gutter: 5, column: 2 }" :data-source="brands">
+        <a-list v-else :grid="{ gutter: 5, column: 2 }" :data-source="brands">
             <a-list-item slot="renderItem" slot-scope="brand">
                 <a-card hoverable :title="brand.name">
                     <img
