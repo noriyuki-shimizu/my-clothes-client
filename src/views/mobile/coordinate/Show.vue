@@ -72,7 +72,7 @@
                     "
                 >
                     <div>
-                        <img class="mc-item-image" :src="item.imageLink" />
+                        <img class="item-image" :src="item.imageLink" />
                     </div>
                     <div class="detail">
                         <clothes-detail :item="item" />
@@ -154,5 +154,9 @@ export default class Show extends Vue {
 
 .clothes-list-item {
     padding: 13px;
+}
+
+.item-image {
+    width: 35vw;
 }
 </style>
