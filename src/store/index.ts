@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
+import * as Cookies from 'js-cookie';
 
 import user from '@/store/user';
 import brand from '@/store/brand';
@@ -22,8 +23,19 @@ export default new Vuex.Store({
     },
     plugins: [
         createPersistedState({
-            key: 'mcm-client',
+            key: 'mcm-item',
+            paths: ['brand', 'genre', 'shop', 'clothes', 'coordinate'],
             storage: window.sessionStorage
+        }),
+        createPersistedState({
+            key: 'mcm-auth',
+            paths: ['user'],
+            storage: {
+                getItem: key => Cookies.get(key),
+                setItem: (key, value) =>
+                    Cookies.set(key, value, { expires: 1 / 2, secure: false }),
+                removeItem: key => Cookies.remove(key)
+            }
         })
     ]
 });
