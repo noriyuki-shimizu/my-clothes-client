@@ -136,7 +136,6 @@ export default class GenreTable extends Vue {
     }
 
     get dataSource() {
-        console.log(this.genres);
         return this.genres.map(genre => ({
             ...genre,
             key: genre.id
