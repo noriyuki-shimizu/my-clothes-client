@@ -19,13 +19,29 @@ export const getTableColumns = ($t: Vue['$t']): Partial<Column>[] => {
                     .toString()
                     .toLowerCase()
                     .includes(value.toLowerCase()),
-            width: 500
+            width: 300
         },
         {
             title: $t('dictionary.genre.tag-color'),
             dataIndex: 'color',
             key: 'color',
             scopedSlots: { customRender: 'color' },
+            width: 150
+        },
+        {
+            title: $t('dictionary.genre.description'),
+            dataIndex: 'description',
+            key: 'description',
+            scopedSlots: {
+                filterDropdown: 'filterDropdown',
+                filterIcon: 'filterIcon',
+                customRender: 'customRender'
+            },
+            onFilter: (value: string, record: Record) =>
+                record.name
+                    .toString()
+                    .toLowerCase()
+                    .includes(value.toLowerCase()),
             width: 500
         },
         {

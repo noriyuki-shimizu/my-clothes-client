@@ -65,6 +65,24 @@
             </a-select>
         </a-form-item>
 
+        <a-form-item :label="$t('dictionary.genre.description')">
+            <a-textarea
+                v-decorator="[
+                    'description',
+                    {
+                        rules: [
+                            {
+                                max: 255,
+                                message: $t(
+                                    'message.validation.genre.description.max'
+                                )
+                            }
+                        ]
+                    }
+                ]"
+            />
+        </a-form-item>
+
         <a-form-item
             v-bind="formItemLayout"
             :label="$t('dictionary.genre.color-list')"
@@ -129,7 +147,8 @@ export default class GenreForm extends Vue {
         if (newGenre) {
             this.form.setFieldsValue({
                 name: newGenre.name,
-                color: newGenre.color
+                color: newGenre.color,
+                description: newGenre.description
             });
         }
     }

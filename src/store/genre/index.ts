@@ -12,7 +12,8 @@ import api from '@/plugins/api';
 const initGenre = (): Genre => ({
     id: 0,
     name: '',
-    color: ''
+    color: '',
+    description: ''
 });
 
 const state: State = {
@@ -68,7 +69,8 @@ const mutations: Mutations<State, IMutations> = {
         const updateValue = {
             ...genres[replaceIndex],
             name: payload.name,
-            color: payload.color
+            color: payload.color,
+            description: payload.description
         };
 
         genres.splice(replaceIndex, 1, updateValue);
@@ -124,10 +126,11 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         ctx.commit('addGenre', response.data.genre);
     },
     async onUpdateGenre(ctx, updateValue) {
-        const { id, name, color } = updateValue;
+        const { id, name, color, description } = updateValue;
         await api.put(`/${ctx.rootGetters['user/id']}/genres/${id}`, {
             name,
-            color
+            color,
+            description
         });
 
         ctx.commit('updateTargetGenre', updateValue);

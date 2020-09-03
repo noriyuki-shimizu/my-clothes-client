@@ -5,6 +5,7 @@ export interface Genre {
     id: number;
     name: string;
     color: string;
+    description: string;
 }
 
 export interface TotalPricePerGenreData {

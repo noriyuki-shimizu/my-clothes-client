@@ -2,7 +2,7 @@
     <a-table
         :dataSource="dataSource"
         :columns="columns"
-        :scroll="{ x: 700, y: 630 }"
+        :scroll="{ x: 1150, y: 630 }"
         :pagination="false"
         :loading="loading"
         :locale="{
@@ -136,6 +136,7 @@ export default class GenreTable extends Vue {
     }
 
     get dataSource() {
+        console.log(this.genres);
         return this.genres.map(genre => ({
             ...genre,
             key: genre.id

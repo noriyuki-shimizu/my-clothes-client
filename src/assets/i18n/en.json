@@ -45,7 +45,8 @@
             "index": "Genre",
             "name": "Genre name",
             "tag-color": "Tag color",
-            "color-list": "Color list"
+            "color-list": "Color list",
+            "description": "Description"
         },
         "clothes": {
             "buy-date": "Buy date",
@@ -191,6 +192,9 @@
                 },
                 "tag-color": {
                     "required": "Tag color is required"
+                },
+                "description": {
+                    "max": "Description cannot be longer than 255 characters"
                 }
             },
             "shop": {

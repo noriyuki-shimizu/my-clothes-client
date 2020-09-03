@@ -49,6 +49,15 @@
                 </a-tag>
             </a-list-item>
         </a-list>
+
+        <h3 class="mc-show-item-title">
+            {{ $t('dictionary.genre.description') }}
+        </h3>
+        <a-list>
+            <a-list-item>
+                <pre>{{ genre.description }}</pre>
+            </a-list-item>
+        </a-list>
     </a-spin>
 </template>
 

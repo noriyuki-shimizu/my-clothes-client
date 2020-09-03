@@ -56,7 +56,6 @@
                             :cancelText="$t('operation.no')"
                         >
                             <a-icon type="delete" />
-                            {{ $t('operation.item.delete') }}
                         </a-popconfirm>
                     </a>
                 </div>

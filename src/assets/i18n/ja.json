@@ -45,7 +45,8 @@
             "index": "ジャンル",
             "name": "ジャンル名",
             "tag-color": "タグカラー",
-            "color-list": "カラー一覧"
+            "color-list": "カラー一覧",
+            "description": "説明"
         },
         "clothes": {
             "buy-date": "購入日",
@@ -191,6 +192,9 @@
                 },
                 "tag-color": {
                     "required": "タグカラーを入力してください"
+                },
+                "description": {
+                    "max": "説明は 255 文字以上にすることはできません"
                 }
             },
             "shop": {
