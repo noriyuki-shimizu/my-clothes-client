@@ -18,15 +18,37 @@
             :title="`${$t('title.brand')} (${brands.length})`"
             :subTitle="$t('title.sub-title.item-list')"
         />
-        <a-divider class="c-pipe" />
+        <a-divider class="mc-pipe" />
 
         <a-alert
-            class="c-alert-message"
+            class="mc-alert-message"
             v-if="message.isShow"
             :message="message.text"
             :description="message.description"
             :type="message.type"
         />
+
+        <a-collapse class="mc-refine-container">
+            <a-collapse-panel :header="$t('operation.refine')">
+                <a-form layout="vertical">
+                    <a-form-item :label="$t('dictionary.brand.name')">
+                        <a-auto-complete
+                            v-model="filteringBrandName"
+                            @change="onChangeFilteringBrandName"
+                        >
+                            <template slot="dataSource">
+                                <a-select-option
+                                    v-for="name in filteringBrandNames"
+                                    :key="name"
+                                >
+                                    {{ name }}
+                                </a-select-option>
+                            </template>
+                        </a-auto-complete>
+                    </a-form-item>
+                </a-form>
+            </a-collapse-panel>
+        </a-collapse>
 
         <a-empty v-if="!brands.length" />
         <a-list v-else :grid="{ gutter: 5, column: 2 }" :data-source="brands">
@@ -83,6 +105,7 @@ import { AppMessage } from 'ant-design-vue/types/message';
 import { resetMessage } from '@/util/message';
 import { handleForbiddenError } from '@/util/errorHandle';
 import { Brand } from '@/store/brand/type';
+import { textIncludes } from '@/util/text';
 
 @Component
 export default class Index extends Vue {
@@ -91,6 +114,10 @@ export default class Index extends Vue {
     loading = false;
 
     message = resetMessage();
+
+    filteringBrandName: string = '';
+
+    filteringBrandNames: string[] = [];
 
     created() {
         this.fetchBrands();
@@ -111,7 +138,26 @@ export default class Index extends Vue {
     }
 
     get brands(): Brand[] {
-        return this.$store.getters['brand/brands'];
+        const brands = this.$store.getters['brand/brands'];
+        const trimValue = this.filteringBrandName.trim();
+
+        if (trimValue) {
+            return brands.filter(brand => textIncludes(brand.name, trimValue));
+        }
+        return brands;
+    }
+
+    onChangeFilteringBrandName(value: string) {
+        const brands = this.$store.getters['brand/brands'];
+        const brandNames = brands.map(brand => brand.name);
+        const trimValue = value.trim();
+        if (trimValue) {
+            this.filteringBrandNames = brandNames.filter(name =>
+                textIncludes(name, trimValue)
+            );
+            return;
+        }
+        this.filteringBrandNames = [];
     }
 
     async onDelete(id: number) {

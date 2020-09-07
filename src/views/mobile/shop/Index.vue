@@ -18,15 +18,37 @@
             :title="`${$t('title.shop')} (${shops.length})`"
             :subTitle="$t('title.sub-title.item-list')"
         />
-        <a-divider class="c-pipe" />
+        <a-divider class="mc-pipe" />
 
         <a-alert
-            class="c-alert-message"
+            class="mc-alert-message"
             v-if="message.isShow"
             :message="message.text"
             :description="message.description"
             :type="message.type"
         />
+
+        <a-collapse class="mc-refine-container">
+            <a-collapse-panel :header="$t('operation.refine')">
+                <a-form layout="vertical">
+                    <a-form-item :label="$t('dictionary.shop.name')">
+                        <a-auto-complete
+                            v-model="filteringShopName"
+                            @change="onChangeFilteringShopName"
+                        >
+                            <template slot="dataSource">
+                                <a-select-option
+                                    v-for="name in filteringShopNames"
+                                    :key="name"
+                                >
+                                    {{ name }}
+                                </a-select-option>
+                            </template>
+                        </a-auto-complete>
+                    </a-form-item>
+                </a-form>
+            </a-collapse-panel>
+        </a-collapse>
 
         <a-empty v-if="!shops.length" />
         <a-list v-else :grid="{ gutter: 5, column: 2 }" :data-source="shops">
@@ -92,6 +114,7 @@ import { resetMessage } from '@/util/message';
 import { handleForbiddenError } from '@/util/errorHandle';
 import { Shop } from '@/store/shop/type';
 import BusinessStatus from '@/components/shop/BusinessStatus.vue';
+import { textIncludes } from '@/util/text';
 
 @Component({
     components: {
@@ -104,6 +127,10 @@ export default class Index extends Vue {
     loading = false;
 
     message = resetMessage();
+
+    filteringShopName: string = '';
+
+    filteringShopNames: string[] = [];
 
     @Watch('$i18n.locale')
     onLocalChange() {
@@ -124,7 +151,26 @@ export default class Index extends Vue {
     }
 
     get shops(): Shop[] {
-        return this.$store.getters['shop/shops'];
+        const shops = this.$store.getters['shop/shops'];
+        const trimValue = this.filteringShopName.trim();
+
+        if (trimValue) {
+            return shops.filter(shop => textIncludes(shop.name, trimValue));
+        }
+        return shops;
+    }
+
+    onChangeFilteringShopName(value: string) {
+        const shops = this.$store.getters['shop/shops'];
+        const shopNames = shops.map(shop => shop.name);
+        const trimValue = value.trim();
+        if (trimValue) {
+            this.filteringShopNames = shopNames.filter(name =>
+                textIncludes(name, trimValue)
+            );
+            return;
+        }
+        this.filteringShopNames = [];
     }
 
     async onDelete(id: number) {

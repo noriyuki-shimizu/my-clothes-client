@@ -18,15 +18,37 @@
             :title="`${$t('title.genre')} (${genres.length})`"
             :subTitle="$t('title.sub-title.item-list')"
         />
-        <a-divider class="c-pipe" />
+        <a-divider class="mc-pipe" />
 
         <a-alert
-            class="c-alert-message"
+            class="mc-alert-message"
             v-if="message.isShow"
             :message="message.text"
             :description="message.description"
             :type="message.type"
         />
+
+        <a-collapse class="mc-refine-container">
+            <a-collapse-panel :header="$t('operation.refine')">
+                <a-form layout="vertical">
+                    <a-form-item :label="$t('dictionary.genre.name')">
+                        <a-auto-complete
+                            v-model="filteringGenreName"
+                            @change="onChangeFilteringGenreName"
+                        >
+                            <template slot="dataSource">
+                                <a-select-option
+                                    v-for="name in filteringGenreNames"
+                                    :key="name"
+                                >
+                                    {{ name }}
+                                </a-select-option>
+                            </template>
+                        </a-auto-complete>
+                    </a-form-item>
+                </a-form>
+            </a-collapse-panel>
+        </a-collapse>
 
         <a-empty v-if="!genres.length" />
         <a-list v-else :data-source="genres">
@@ -72,6 +94,7 @@ import { AppMessage } from 'ant-design-vue/types/message';
 import { resetMessage } from '@/util/message';
 import { handleForbiddenError } from '@/util/errorHandle';
 import { Genre } from '@/store/genre/type';
+import { textIncludes } from '@/util/text';
 
 @Component
 export default class Index extends Vue {
@@ -80,6 +103,10 @@ export default class Index extends Vue {
     loading = false;
 
     message = resetMessage();
+
+    filteringGenreName: string = '';
+
+    filteringGenreNames: string[] = [];
 
     @Watch('$i18n.locale')
     onLocalChange() {
@@ -100,7 +127,26 @@ export default class Index extends Vue {
     }
 
     get genres(): Genre[] {
-        return this.$store.getters['genre/genres'];
+        const genres = this.$store.getters['genre/genres'];
+        const trimValue = this.filteringGenreName.trim();
+
+        if (trimValue) {
+            return genres.filter(genre => textIncludes(genre.name, trimValue));
+        }
+        return genres;
+    }
+
+    onChangeFilteringGenreName(value: string) {
+        const genres = this.$store.getters['genre/genres'];
+        const genreNames = genres.map(genre => genre.name);
+        const trimValue = value.trim();
+        if (trimValue) {
+            this.filteringGenreNames = genreNames.filter(name =>
+                textIncludes(name, trimValue)
+            );
+            return;
+        }
+        this.filteringGenreNames = [];
     }
 
     async onDelete(id: number) {

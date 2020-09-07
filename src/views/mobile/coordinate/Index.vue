@@ -18,15 +18,33 @@
             :title="`${$t('title.coordinate')} (${coordinates.length})`"
             :subTitle="$t('title.sub-title.item-list')"
         />
-        <a-divider class="c-pipe" />
+        <a-divider class="mc-pipe" />
 
         <a-alert
-            class="c-alert-message"
+            class="mc-alert-message"
             v-if="message.isShow"
             :message="message.text"
             :description="message.description"
             :type="message.type"
         />
+
+        <a-collapse class="mc-refine-container">
+            <a-collapse-panel :header="$t('operation.refine')">
+                <a-form layout="vertical">
+                    <a-form-item :label="$t('dictionary.season.index')">
+                        <a-select v-model="filteringSeason" style="width: 100%">
+                            <a-select-option
+                                v-for="season in seasons"
+                                :key="season"
+                                :value="season"
+                            >
+                                {{ $t(season) }}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-item>
+                </a-form>
+            </a-collapse-panel>
+        </a-collapse>
 
         <a-empty v-if="!coordinates.length" />
         <a-list
@@ -76,12 +94,17 @@ import { AppMessage } from 'ant-design-vue/types/message';
 import { resetMessage } from '@/util/message';
 import { handleForbiddenError } from '@/util/errorHandle';
 import { Coordinate } from '@/store/coordinate/type';
+import { seasons } from '@/components/coordinate/form';
 
 @Component
 export default class Index extends Vue {
     $store!: Vuex.ExStore;
 
     loading = false;
+
+    seasons = seasons;
+
+    filteringSeason: string = '';
 
     message: AppMessage = resetMessage();
 
@@ -103,7 +126,13 @@ export default class Index extends Vue {
     }
 
     get coordinates(): Coordinate[] {
-        return this.$store.getters['coordinate/coordinates'];
+        const coordinates = this.$store.getters['coordinate/coordinates'];
+        if (this.filteringSeason) {
+            return coordinates.filter(
+                coordinate => coordinate.season === this.filteringSeason
+            );
+        }
+        return coordinates;
     }
 
     @Emit('on-error')

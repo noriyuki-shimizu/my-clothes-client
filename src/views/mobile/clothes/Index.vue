@@ -18,15 +18,40 @@
             :title="`${$t('title.clothes')} (${clothes.length})`"
             :subTitle="$t('title.sub-title.item-list')"
         />
-        <a-divider class="c-pipe" />
+        <a-divider class="mc-pipe" />
 
         <a-alert
-            class="c-alert-message"
+            class="mc-alert-message"
             v-if="message.isShow"
             :message="message.text"
             :description="message.description"
             :type="message.type"
         />
+
+        <a-collapse class="mc-refine-container">
+            <a-collapse-panel :header="$t('operation.refine')">
+                <a-form layout="vertical">
+                    <a-form-item :label="$t('dictionary.brand.index')">
+                        <a-checkbox-group
+                            v-model="filteringBrands"
+                            :options="filteringBrandOptions"
+                        />
+                    </a-form-item>
+                    <a-form-item :label="$t('dictionary.shop.index')">
+                        <a-checkbox-group
+                            v-model="filteringShops"
+                            :options="filteringShopOptions"
+                        />
+                    </a-form-item>
+                    <a-form-item :label="$t('dictionary.genre.index')">
+                        <a-checkbox-group
+                            v-model="filteringGenres"
+                            :options="filteringGenreOptions"
+                        />
+                    </a-form-item>
+                </a-form>
+            </a-collapse-panel>
+        </a-collapse>
 
         <a-empty v-if="!clothes.length" />
         <a-list v-else :grid="{ gutter: 5, column: 2 }" :data-source="clothes">
@@ -84,7 +109,19 @@ import { AppMessage } from 'ant-design-vue/types/message';
 
 import { resetMessage } from '@/util/message';
 import { handleForbiddenError } from '@/util/errorHandle';
-import { ClothesItem, Clothes } from '@/store/clothes/type';
+import {
+    ClothesItem,
+    Clothes,
+    AssistBrand,
+    AssistShop,
+    AssistGenre
+} from '@/store/clothes/type';
+
+type ClothesDispatches =
+    | 'clothes/fetchClothes'
+    | 'clothes/fetchAssistGenres'
+    | 'clothes/fetchAssistBrands'
+    | 'clothes/fetchAssistShops';
 
 @Component
 export default class Index extends Vue {
@@ -93,6 +130,12 @@ export default class Index extends Vue {
     loading = false;
 
     message = resetMessage();
+
+    filteringBrands: string[] = [];
+
+    filteringShops: string[] = [];
+
+    filteringGenres: string[] = [];
 
     @Watch('$i18n.locale')
     onLocalChange() {
@@ -106,14 +149,63 @@ export default class Index extends Vue {
     private async fetchClothes() {
         this.loading = true;
 
-        this.message = resetMessage();
-        await this.$store.dispatch('clothes/fetchClothes').catch(this.onError);
+        const despatches: ClothesDispatches[] = [
+            'clothes/fetchAssistGenres',
+            'clothes/fetchAssistBrands',
+            'clothes/fetchAssistShops',
+            'clothes/fetchClothes'
+        ];
+
+        await Promise.all(
+            despatches.map(despatch => this.$store.dispatch(despatch))
+        ).catch(err => {
+            this.onError(err);
+        });
 
         this.loading = false;
     }
 
     get clothes(): Clothes[] {
-        return this.$store.getters['clothes/clothes'];
+        const clothes = this.$store.getters['clothes/clothes'];
+        return clothes.filter(c => {
+            if (
+                this.filteringBrands.length &&
+                !this.filteringBrands.includes(c.brand.name)
+            ) {
+                return false;
+            }
+            if (
+                this.filteringShops.length &&
+                !this.filteringShops.includes(c.shop.name)
+            ) {
+                return false;
+            }
+            if (this.filteringGenres.length) {
+                const clothesGenres = c.genres.map(genre => genre.name);
+                const includes = this.filteringGenres.some(filteringGenre =>
+                    clothesGenres.includes(filteringGenre)
+                );
+                if (!includes) {
+                    return false;
+                }
+            }
+            return true;
+        });
+    }
+
+    get filteringBrandOptions(): string[] {
+        const brands = this.$store.getters['clothes/assistBrands'];
+        return brands.map(brand => brand.name);
+    }
+
+    get filteringShopOptions(): string[] {
+        const shops = this.$store.getters['clothes/assistShops'];
+        return shops.map(shop => shop.name);
+    }
+
+    get filteringGenreOptions(): string[] {
+        const genres = this.$store.getters['clothes/assistGenres'];
+        return genres.map(genre => genre.name);
     }
 
     async onDelete(id: number) {
