@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { Column } from 'ant-design-vue/types/table/column';
-
+import { textIncludes } from '@/util/text';
 import { Record } from './type';
 
 export const getTableColumns = ($t: Vue['$t']): Partial<Column>[] => {
@@ -15,10 +15,7 @@ export const getTableColumns = ($t: Vue['$t']): Partial<Column>[] => {
                 customRender: 'customRender'
             },
             onFilter: (value: string, record: Record) =>
-                record.name
-                    .toString()
-                    .toLowerCase()
-                    .includes(value.toLowerCase()),
+                textIncludes(record.name, value),
             width: 300
         },
         {
@@ -38,10 +35,7 @@ export const getTableColumns = ($t: Vue['$t']): Partial<Column>[] => {
                 customRender: 'customRender'
             },
             onFilter: (value: string, record: Record) =>
-                record.name
-                    .toString()
-                    .toLowerCase()
-                    .includes(value.toLowerCase()),
+                textIncludes(record.description, value),
             width: 500
         },
         {
