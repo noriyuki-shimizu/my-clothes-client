@@ -251,12 +251,16 @@ export default class Index extends Vue {
 }
 </script>
 
-<style scoped>
+<style>
 .clothes-list-item {
     padding: 13px;
 }
 
 .detail {
     margin-left: 15px;
+}
+
+.ant-checkbox-group-item {
+    margin: 0 10px 8px 0;
 }
 </style>
