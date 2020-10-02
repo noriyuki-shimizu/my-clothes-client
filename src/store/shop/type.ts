@@ -34,11 +34,6 @@ export interface IMutations extends IModuleRootMutations {
     shopStateChange: Shop;
     shopsStateChange: Shop[];
     addShop: Shop;
-    updateShop: Omit<
-        FormFields,
-        'image' | 'startBusinessHours' | 'endBusinessHours'
-    > &
-        Pick<Shop, 'id' | 'imageLink' | 'businessHours'>;
     deleteShop: Shop['id'];
     restorationShop: Shop['id'];
 }
@@ -48,7 +43,6 @@ export interface IRootMutations {
     'shop/shopStateChange': IMutations['shopStateChange'];
     'shop/shopsStateChange': IMutations['shopsStateChange'];
     'shop/addShop': IMutations['addShop'];
-    'shop/updateShop': IMutations['updateShop'];
     'shop/deleteShop': IMutations['deleteShop'];
     'shop/restorationShop': IMutations['restorationShop'];
 }

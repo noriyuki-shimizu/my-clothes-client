@@ -30,7 +30,6 @@ export interface IMutations extends IModuleRootMutations {
     brandStateChange: Brand;
     brandsStateChange: Brand[];
     addBrand: Brand;
-    updateBrand: Omit<FormFields, 'image'> & Pick<Brand, 'id' | 'imageLink'>;
     deleteBrand: Brand['id'];
     restorationBrand: Brand['id'];
 }
@@ -40,7 +39,6 @@ export interface IRootMutations {
     'brand/brandStateChange': IMutations['brandStateChange'];
     'brand/brandsStateChange': IMutations['brandsStateChange'];
     'brand/addBrand': IMutations['addBrand'];
-    'brand/updateBrand': IMutations['updateBrand'];
     'brand/deleteBrand': IMutations['deleteBrand'];
     'brand/restorationBrand': IMutations['restorationBrand'];
 }

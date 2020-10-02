@@ -67,8 +67,6 @@ export interface IMutations extends IModuleRootMutations {
     itemStateChange: Clothes;
     clothesStateChange: Clothes[];
     addClothes: Clothes;
-    updateClothes: Omit<FormFields, 'image' | 'buyDate'> &
-        Pick<Clothes, 'id' | 'buyDate' | 'imageLink'>;
     deleteClothes: Clothes['id'];
     restorationClothes: Clothes['id'];
     assistGenreStateChange: AssistGenre[];
@@ -82,7 +80,6 @@ export interface IRootMutations {
     'clothes/itemStateChange': IMutations['itemStateChange'];
     'clothes/clothesStateChange': IMutations['clothesStateChange'];
     'clothes/addClothes': IMutations['addClothes'];
-    'clothes/updateClothes': IMutations['updateClothes'];
     'clothes/deleteClothes': IMutations['deleteClothes'];
     'clothes/restorationClothes': IMutations['restorationClothes'];
     'clothes/assistGenreStateChange': IMutations['assistGenreStateChange'];

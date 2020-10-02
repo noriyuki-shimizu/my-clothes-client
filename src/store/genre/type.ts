@@ -41,7 +41,6 @@ export interface IMutations extends IModuleRootMutations {
     totalPricePerGenreStateChange: TotalPricePerGenreData[];
     canSelectedColorsStateChange: string[];
     addGenre: Genre;
-    updateTargetGenre: FormFields & Pick<Genre, 'id'>;
     deleteGenre: Genre['id'];
 }
 export interface IRootMutations {
@@ -52,7 +51,6 @@ export interface IRootMutations {
     'genre/totalPricePerGenreStateChange': IMutations['totalPricePerGenreStateChange'];
     'genre/canSelectedColorsStateChange': IMutations['canSelectedColorsStateChange'];
     'genre/addGenre': IMutations['addGenre'];
-    'genre/updateTargetGenre': IMutations['updateTargetGenre'];
     'genre/deleteGenre': IMutations['deleteGenre'];
 }
 

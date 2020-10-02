@@ -32,8 +32,6 @@ export interface IMutations extends IModuleRootMutations {
     coordinateStateChange: Coordinate;
     coordinatesStateChange: Coordinate[];
     addCoordinate: Coordinate;
-    updateCoordinate: Omit<FormFields, 'image'> &
-        Pick<Coordinate, 'id' | 'imageLink'>;
     deleteCoordinate: Coordinate['id'];
     assistCoordinateItemStateChange: ClothesItem[];
 }
@@ -43,7 +41,6 @@ export interface IRootMutations {
     'coordinate/coordinateStateChange': IMutations['coordinateStateChange'];
     'coordinate/coordinatesStateChange': IMutations['coordinatesStateChange'];
     'coordinate/addCoordinate': IMutations['addCoordinate'];
-    'coordinate/updateCoordinate': IMutations['updateCoordinate'];
     'coordinate/deleteCoordinate': IMutations['deleteCoordinate'];
     'coordinate/assistCoordinateItemStateChange': IMutations['assistCoordinateItemStateChange'];
 }

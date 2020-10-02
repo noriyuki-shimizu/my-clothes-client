@@ -81,34 +81,6 @@ const mutations: Mutations<State, IMutations> = {
     addClothes(state, payload) {
         state.clothes.push(payload);
     },
-    updateClothes(state, payload) {
-        const { clothes } = state;
-        const replaceIndex = clothes.map(c => c.id).indexOf(payload.id);
-
-        const updateValue: Clothes = {
-            ...clothes[replaceIndex],
-            brand: state.assistBrands.find(
-                brand => brand.id === payload.brandId
-            ) as AssistBrand,
-            shop: state.assistShops.find(
-                shop => shop.id === payload.shopId
-            ) as AssistShop,
-            genres: payload.genreIds.map(
-                genreId =>
-                    state.assistGenres.find(
-                        genre => genre.id === genreId
-                    ) as AssistGenre
-            ),
-            imageLink: payload.imageLink,
-            buyDate: payload.buyDate,
-            price: payload.price,
-            comment: payload.comment,
-            satisfaction: payload.satisfaction
-        };
-
-        clothes.splice(replaceIndex, 1, updateValue);
-        state.clothes = clothes;
-    },
     deleteClothes(state, payload) {
         const c = state.clothes.find(c => c.id === payload);
         if (c) {
@@ -258,7 +230,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
               )
             : imageLink;
 
-        const updateItem = {
+        await api.put(`/${ctx.rootGetters['user/id']}/clothes/${id}`, {
             imageId: clothes.imageId,
             imageLink: updateImageLink,
             buyDate: formatBuyDate,
@@ -268,16 +240,6 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
             price,
             comment,
             satisfaction
-        };
-
-        await api.put(
-            `/${ctx.rootGetters['user/id']}/clothes/${id}`,
-            updateItem
-        );
-
-        ctx.commit('updateClothes', {
-            id,
-            ...updateItem
         });
     },
     async onDeleteClothes(ctx, id) {

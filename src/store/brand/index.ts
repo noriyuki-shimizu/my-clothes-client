@@ -51,21 +51,6 @@ const mutations: Mutations<State, IMutations> = {
     addBrand(state, payload) {
         state.brands.push(payload);
     },
-    updateBrand(state, payload) {
-        const { brands } = state;
-        const replaceIndex = brands.map(brand => brand.id).indexOf(payload.id);
-
-        const updateValue = {
-            ...brands[replaceIndex],
-            name: payload.name,
-            link: payload.link,
-            country: payload.country,
-            imageLink: payload.imageLink
-        };
-
-        brands.splice(replaceIndex, 1, updateValue);
-        state.brands = brands;
-    },
     deleteBrand(state, payload) {
         const brand = state.brands.find(brand => brand.id === payload);
         if (brand) {
@@ -138,22 +123,12 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
               )
             : brand.imageLink;
 
-        const updateItem = {
+        await api.put(`/${ctx.rootGetters['user/id']}/brands/${id}`, {
             name,
             link,
             imageId: brand.imageId,
             imageLink,
             country
-        };
-
-        await api.put(
-            `/${ctx.rootGetters['user/id']}/brands/${id}`,
-            updateItem
-        );
-
-        ctx.commit('updateBrand', {
-            id,
-            ...updateItem
         });
     },
     async onDeleteBrand(ctx, id) {

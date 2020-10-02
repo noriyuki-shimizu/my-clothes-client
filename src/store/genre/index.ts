@@ -62,20 +62,6 @@ const mutations: Mutations<State, IMutations> = {
     addGenre(state, payload) {
         state.genres.push(payload);
     },
-    updateTargetGenre(state, payload) {
-        const { genres } = state;
-        const replaceIndex = genres.map(genre => genre.id).indexOf(payload.id);
-
-        const updateValue = {
-            ...genres[replaceIndex],
-            name: payload.name,
-            color: payload.color,
-            description: payload.description
-        };
-
-        genres.splice(replaceIndex, 1, updateValue);
-        state.genres = genres;
-    },
     deleteGenre(state, payload) {
         state.genres = state.genres.filter(genre => genre.id !== payload);
     }
@@ -132,8 +118,6 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
             color,
             description
         });
-
-        ctx.commit('updateTargetGenre', updateValue);
     },
     async onDeleteGenre(ctx, id) {
         await api.delete(`/${ctx.rootGetters['user/id']}/genres/${id}`);

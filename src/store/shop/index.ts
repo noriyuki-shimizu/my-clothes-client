@@ -50,24 +50,6 @@ const mutations: Mutations<State, IMutations> = {
     addShop(state, payload) {
         state.shops.push(payload);
     },
-    updateShop(state, payload) {
-        const { shops } = state;
-        const replaceIndex = shops.map(shop => shop.id).indexOf(payload.id);
-
-        const updateValue = {
-            ...shops[replaceIndex],
-            imageLink: payload.imageLink,
-            businessHours: payload.businessHours,
-            name: payload.name,
-            link: payload.link,
-            stationName: payload.stationName,
-            address: payload.address,
-            tel: payload.tel
-        };
-
-        shops.splice(replaceIndex, 1, updateValue);
-        state.shops = shops;
-    },
     deleteShop(state, payload) {
         const shop = state.shops.find(shop => shop.id === payload);
         if (shop) {
@@ -172,7 +154,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
               )
             : shop.imageLink;
 
-        const updateItem = {
+        await api.put(`/${ctx.rootGetters['user/id']}/shops/${id}`, {
             name,
             link,
             stationName,
@@ -181,13 +163,6 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
             address,
             businessHours,
             tel
-        };
-
-        await api.put(`/${ctx.rootGetters['user/id']}/shops/${id}`, updateItem);
-
-        ctx.commit('updateShop', {
-            id,
-            ...updateItem
         });
     },
     async onDeleteShop(ctx, id) {

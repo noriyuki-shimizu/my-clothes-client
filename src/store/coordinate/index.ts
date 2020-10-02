@@ -56,25 +56,6 @@ const mutations: Mutations<State, IMutations> = {
     addCoordinate(state, payload) {
         state.coordinates.push(payload);
     },
-    updateCoordinate(state, payload) {
-        const { coordinates } = state;
-        const replaceIndex = coordinates.map(c => c.id).indexOf(payload.id);
-
-        const updateValue: Coordinate = {
-            ...coordinates[replaceIndex],
-            usedCoordinates: payload.clothingIds.map(
-                clothingId =>
-                    state.coordinateItems.find(
-                        item => item.id === clothingId
-                    ) as ClothesItem
-            ),
-            imageLink: payload.imageLink,
-            season: payload.season
-        };
-
-        coordinates.splice(replaceIndex, 1, updateValue);
-        state.coordinates = coordinates;
-    },
     deleteCoordinate(state, payload) {
         state.coordinates = state.coordinates.filter(
             coordinate => coordinate.id !== payload
@@ -154,21 +135,11 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
               )
             : imageLink;
 
-        const updateItem = {
+        await api.put(`/${ctx.rootGetters['user/id']}/coordinates/${id}`, {
             imageId,
             imageLink: updateImageLink,
             season,
             clothingIds
-        };
-
-        await api.put(
-            `/${ctx.rootGetters['user/id']}/coordinates/${id}`,
-            updateItem
-        );
-
-        ctx.commit('updateCoordinate', {
-            id,
-            ...updateItem
         });
     },
     async onDeleteCoordinate(ctx, id) {
