@@ -132,6 +132,7 @@
             "used-other-data": "This data is used by other data and cannot be deleted",
             "duplicate-name": "There is data with the same name",
             "fatal": "A fatal error has occurred. Please contact your administrator",
+            "resource-not-found": "The resource was not found",
             "auth": {
                 "operation-not-supported-in-this-environment": "Your operating environment does not support this application",
                 "popup-blocked": "Your browser has blocked it",
