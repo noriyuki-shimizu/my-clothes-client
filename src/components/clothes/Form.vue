@@ -227,7 +227,7 @@ import moment from 'moment';
 import { formItemLayout } from '@/components/clothes/form';
 import { FormFields } from '@/components/clothes/type';
 import { Clothes } from '@/store/clothes/type';
-import { getBase64, isLt5M } from '@/util/file';
+import { getBase64, isLessThan5M } from '@/util/file';
 import { dateFormat } from '@/util/date';
 
 @Component
@@ -294,10 +294,10 @@ export default class ClothesForm extends Vue {
     }
 
     beforeUpload(file: File) {
-        const isBeforeCheck = isLt5M(file);
+        const isBeforeCheck = isLessThan5M(file);
         if (!isBeforeCheck) {
             const errorMessage = this.$t('message.error.image-capacity', {
-                capacity: '2MB'
+                capacity: '5MB'
             }).toString();
             this.$message.error(errorMessage);
         }

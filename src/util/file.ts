@@ -7,6 +7,6 @@ export const getBase64 = (
     reader.readAsDataURL(img);
 };
 
-export const isLt5M = (file: File) => {
+export const isLessThan5M = (file: File) => {
     return file.size < 5 * 1024 * 1024;
 };

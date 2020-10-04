@@ -232,7 +232,7 @@ import moment from 'moment';
 import { formItemLayout } from '@/components/shop/form';
 import { FormFields } from '@/components/shop/type';
 import { Shop } from '@/store/shop/type';
-import { getBase64, isLt5M } from '@/util/file';
+import { getBase64, isLessThan5M } from '@/util/file';
 import { timeFormat } from '@/util/date';
 
 @Component
@@ -293,10 +293,10 @@ export default class ShopForm extends Vue {
     }
 
     beforeUpload(file: File) {
-        const isBeforeCheck = isLt5M(file);
+        const isBeforeCheck = isLessThan5M(file);
         if (!isBeforeCheck) {
             const errorMessage = this.$t('message.error.image-capacity', {
-                capacity: '2MB'
+                capacity: '5MB'
             }).toString();
             this.$message.error(errorMessage);
         }

@@ -161,7 +161,7 @@ import {
 import ClothesDetail from '@/components/clothes/Detail.vue';
 import ClothesFormTable from '@/components/clothes/FormTable.vue';
 import { Coordinate } from '@/store/coordinate/type';
-import { getBase64, isLt5M } from '@/util/file';
+import { getBase64, isLessThan5M } from '@/util/file';
 import { ClothesItem } from '@/store/clothes/type';
 import { formItemLayout, seasons } from './form';
 import { FormFields, Season, Record } from './type';
@@ -258,10 +258,10 @@ export default class CoordinateForm extends Vue {
     }
 
     beforeUpload(file: File) {
-        const isBeforeCheck = isLt5M(file);
+        const isBeforeCheck = isLessThan5M(file);
         if (!isBeforeCheck) {
             const errorMessage = this.$t('message.error.image-capacity', {
-                capacity: '2MB'
+                capacity: '5MB'
             }).toString();
             this.$message.error(errorMessage);
         }

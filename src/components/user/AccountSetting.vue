@@ -104,7 +104,7 @@ import {
     DoneUploadFileInfo
 } from 'ant-design-vue/types/upload';
 
-import { getBase64, isLt5M } from '@/util/file';
+import { getBase64, isLessThan5M } from '@/util/file';
 import { isFirebaseStorageError } from '@/plugins/firebase/storage';
 import { formItemLayout } from './form';
 
@@ -155,10 +155,10 @@ export default class AccountSetting extends Vue {
     }
 
     beforeUpload(file: File) {
-        const isBeforeCheck = isLt5M(file);
+        const isBeforeCheck = isLessThan5M(file);
         if (!isBeforeCheck) {
             const errorMessage = this.$t('message.error.image-capacity', {
-                capacity: '2MB'
+                capacity: '5MB'
             }).toString();
             this.$message.error(errorMessage);
         }

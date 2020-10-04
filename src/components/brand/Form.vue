@@ -119,7 +119,7 @@ import * as Vuex from 'vuex';
 import { formItemLayout } from '@/components/brand/form';
 import { FormFields } from '@/components/brand/type';
 import { Brand } from '@/store/brand/type';
-import { getBase64, isLt5M } from '@/util/file';
+import { getBase64, isLessThan5M } from '@/util/file';
 import { Route } from 'vue-router';
 
 @Component
@@ -172,10 +172,10 @@ export default class BrandForm extends Vue {
     }
 
     beforeUpload(file: File) {
-        const isBeforeCheck = isLt5M(file);
+        const isBeforeCheck = isLessThan5M(file);
         if (!isBeforeCheck) {
             const errorMessage = this.$t('message.error.image-capacity', {
-                capacity: '2MB'
+                capacity: '5MB'
             }).toString();
             this.$message.error(errorMessage);
         }
