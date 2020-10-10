@@ -3,6 +3,7 @@ import initAntdComponents from '@/plugins/antd/components';
 import initVueI18n from '@/plugins/i18n';
 import firebaseApp from '@/plugins/firebase/app';
 import firebaseAuth from '@/plugins/firebase/auth';
+import sentry from '@/plugins/sentry';
 import App from './App.vue';
 import router from './router';
 import store from './store';
@@ -16,6 +17,7 @@ Vue.config.productionTip = false;
 
 firebaseApp.init();
 firebaseAuth.init();
+sentry.init(Vue);
 
 new Vue({
     router,

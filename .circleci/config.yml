@@ -20,6 +20,7 @@ jobs:
             echo "VUE_APP_FIREBASE_APP_ID=$FIREBASE_APP_ID" >> .env
             echo "VUE_APP_API_BASE_URL=$API_BASE_URL" >> .env
             echo "VUE_APP_FIREBASE_STORAGE_DIR=$FIREBASE_STORAGE_DIR" >> .env
+            echo "VUE_APP_SENTRY_DSN=$SENTRY_DSN" >> .env
       - run:
           name: clean
           command: npm run clean

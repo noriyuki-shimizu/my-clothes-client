@@ -22,3 +22,10 @@
 ## Created by
 
 * Noriyuki Shimizu
+
+## Sentry
+
+* prod
+  * https://sentry.io/organizations/shiminori-zo/issues/?project=5458393
+* dev
+  * https://sentry.io/organizations/shiminori-zo/issues/?project=5458361
