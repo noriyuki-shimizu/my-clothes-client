@@ -1,16 +1,18 @@
 <template>
     <a-spin :spinning="loading" tip="Loading...">
         <div class="mc-button-field">
-            <a-button
-                type="primary"
-                @click="
-                    $router.push({
-                        name: 'clothesNew'
-                    })
-                "
-            >
-                {{ $t('operation.new') }}
-            </a-button>
+            <a-affix :offset-top="100">
+                <a-button
+                    type="primary"
+                    @click="
+                        $router.push({
+                            name: 'clothesNew'
+                        })
+                    "
+                >
+                    {{ $t('operation.new') }}
+                </a-button>
+            </a-affix>
         </div>
 
         <a-page-header
