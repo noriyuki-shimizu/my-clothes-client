@@ -67,7 +67,7 @@ export default class SignIn extends Vue {
 
         await this.$store
             .dispatch('user/signInWithGoogle')
-            .then(() => toHome(this.$route.query.next, this.$router))
+            .then(() => toHome(this.$router))
             .catch(this.onError);
     }
 
@@ -77,7 +77,7 @@ export default class SignIn extends Vue {
 
         await this.$store
             .dispatch('user/signInWithTwitter')
-            .then(() => toHome(this.$route.query.next, this.$router))
+            .then(() => toHome(this.$router))
             .catch(this.onError);
     }
 
@@ -87,7 +87,7 @@ export default class SignIn extends Vue {
 
         await this.$store
             .dispatch('user/signInWithFacebook')
-            .then(() => toHome(this.$route.query.next, this.$router))
+            .then(() => toHome(this.$router))
             .catch(this.onError);
     }
 

@@ -28,10 +28,10 @@ export const handleForbiddenError = (
                 store.dispatch('user/signOut');
 
                 if (router instanceof VueRouter) {
-                    router.push({ path: '/sign-in', query: { next: 'back' } });
+                    router.push({ name: 'signIn' });
                     return;
                 }
-                router({ path: '/sign-in', query: { next: 'back' } });
+                router({ name: 'signIn' });
             }
         });
     }
