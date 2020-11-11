@@ -1,11 +1,11 @@
-const selectedLanguageKey = 'selectedLanguage';
+import storageKey from '@/util/storageKey';
 
 export const getLanguage = () => {
-    return localStorage.getItem(selectedLanguageKey) || 'en';
+    return localStorage.getItem(storageKey.SELECTED_LANGUAGE_KEY) || 'en';
 };
 
 export const setLanguage = (lang: string) => {
-    localStorage.setItem(selectedLanguageKey, lang);
+    localStorage.setItem(storageKey.SELECTED_LANGUAGE_KEY, lang);
 };
 
 export default {
