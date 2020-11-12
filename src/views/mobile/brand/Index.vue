@@ -125,11 +125,6 @@ export default class Index extends Vue {
         this.fetchBrands();
     }
 
-    beforeDestroy() {
-        // 0になる、、、
-        console.log(window.scrollY);
-    }
-
     @Watch('$i18n.locale')
     onLocalChange() {
         this.message = resetMessage();
