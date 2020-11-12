@@ -57,11 +57,7 @@ export default class HeadMenu extends Vue {
     $store!: Vuex.ExStore;
 
     signOut() {
-        this.$store.commit('brand/allStateReset');
-        this.$store.commit('clothes/allStateReset');
-        this.$store.commit('coordinate/allStateReset');
-        this.$store.commit('genre/allStateReset');
-        this.$store.commit('shop/allStateReset');
+        this.$store.commit('allStateReset');
         this.$store.dispatch('user/signOut');
         this.$router.push({ name: 'signIn' });
     }

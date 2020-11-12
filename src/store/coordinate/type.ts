@@ -1,4 +1,3 @@
-import { IModuleRootMutations } from '@/store/type';
 import { FormFields } from '@/components/coordinate/type';
 import { ClothesItem } from '@/store/clothes/type';
 
@@ -27,7 +26,7 @@ export interface IRootGetters {
     'coordinate/coordinateItems': IGetters['coordinateItems'];
 }
 
-export interface IMutations extends IModuleRootMutations {
+export interface IMutations {
     resetCoordinate: void;
     coordinateStateChange: Coordinate;
     coordinatesStateChange: Coordinate[];
@@ -36,7 +35,6 @@ export interface IMutations extends IModuleRootMutations {
     assistCoordinateItemStateChange: ClothesItem[];
 }
 export interface IRootMutations {
-    'coordinate/allStateReset': IMutations['allStateReset'];
     'coordinate/resetCoordinate': IMutations['resetCoordinate'];
     'coordinate/coordinateStateChange': IMutations['coordinateStateChange'];
     'coordinate/coordinatesStateChange': IMutations['coordinatesStateChange'];

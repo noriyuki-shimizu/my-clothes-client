@@ -9,7 +9,7 @@ import {
 } from '@/store/genre/type';
 import api from '@/plugins/api';
 
-const initGenre = (): Genre => ({
+export const initGenre = (): Genre => ({
     id: 0,
     name: '',
     color: '',
@@ -39,11 +39,6 @@ const getters: Getters<State, IGetters> = {
 };
 
 const mutations: Mutations<State, IMutations> = {
-    allStateReset(state) {
-        state.genres = [];
-        state.totalPricePerGenres = [];
-        state.canSelectedColors = [];
-    },
     resetGenre(state) {
         state.genre = initGenre();
     },

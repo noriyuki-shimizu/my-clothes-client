@@ -62,7 +62,8 @@ declare module 'vuex' {
         Clothes.IRootGetters &
         Coordinate.IRootGetters;
 
-    type RootMutations = User.IRootMutations &
+    type RootMutations = Root.IModuleRootMutations &
+        User.IRootMutations &
         Brand.IRootMutations &
         Genre.IRootMutations &
         Shop.IRootMutations &

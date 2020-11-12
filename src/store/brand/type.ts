@@ -1,4 +1,3 @@
-import { IModuleRootMutations } from '@/store/type';
 import { FormFields } from '@/components/brand/type';
 
 export interface Brand {
@@ -25,7 +24,7 @@ export interface IRootGetters {
     'brand/brands': IGetters['brands'];
 }
 
-export interface IMutations extends IModuleRootMutations {
+export interface IMutations {
     resetBrand: void;
     brandStateChange: Brand;
     brandsStateChange: Brand[];
@@ -34,7 +33,6 @@ export interface IMutations extends IModuleRootMutations {
     restorationBrand: Brand['id'];
 }
 export interface IRootMutations {
-    'brand/allStateReset': IMutations['allStateReset'];
     'brand/resetBrand': IMutations['resetBrand'];
     'brand/brandStateChange': IMutations['brandStateChange'];
     'brand/brandsStateChange': IMutations['brandsStateChange'];

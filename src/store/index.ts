@@ -4,15 +4,62 @@ import createPersistedState from 'vuex-persistedstate';
 import * as Cookies from 'js-cookie';
 
 import user from '@/store/user';
-import brand from '@/store/brand';
-import genre from '@/store/genre';
-import shop from '@/store/shop';
-import clothes from '@/store/clothes';
-import coordinate from '@/store/coordinate';
+import brand, { initBrand } from '@/store/brand';
+import genre, { initGenre } from '@/store/genre';
+import shop, { initShop } from '@/store/shop';
+import clothes, { initClothes } from '@/store/clothes';
+import coordinate, { initCoordinate } from '@/store/coordinate';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+    mutations: {
+        allStateReset: state => {
+            // brand
+            state.brand = {
+                brand: initBrand(),
+                brands: []
+            };
+
+            // clothes
+            state.clothes = {
+                assistBrands: [],
+                assistGenres: [],
+                assistShops: [],
+                clothes: [],
+                item: initClothes(),
+                totalPrice: 0
+            };
+
+            // coordinate
+            state.coordinate = {
+                coordinate: initCoordinate(),
+                coordinateItems: [],
+                coordinates: []
+            };
+
+            // genre
+            state.genre = {
+                canSelectedColors: [],
+                genre: initGenre(),
+                genres: [],
+                totalPricePerGenres: []
+            };
+
+            // shop
+            state.shop = {
+                shop: initShop(),
+                shops: []
+            };
+
+            // user
+            state.user = {
+                id: null,
+                user: null,
+                accessToken: ''
+            };
+        }
+    },
     modules: {
         user,
         brand,

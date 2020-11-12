@@ -105,6 +105,11 @@ export default class Show extends Vue {
             return;
         }
 
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+
         this.$store
             .dispatch('brand/fetchBrand', Number(id))
             .catch(this.onError);

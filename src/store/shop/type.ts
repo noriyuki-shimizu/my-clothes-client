@@ -1,4 +1,3 @@
-import { IModuleRootMutations } from '@/store/type';
 import { FormFields } from '@/components/shop/type';
 
 export interface Shop {
@@ -29,7 +28,7 @@ export interface IRootGetters {
     'shop/shops': IGetters['shops'];
 }
 
-export interface IMutations extends IModuleRootMutations {
+export interface IMutations {
     resetShop: void;
     shopStateChange: Shop;
     shopsStateChange: Shop[];
@@ -38,7 +37,6 @@ export interface IMutations extends IModuleRootMutations {
     restorationShop: Shop['id'];
 }
 export interface IRootMutations {
-    'shop/allStateReset': IMutations['allStateReset'];
     'shop/resetShop': IMutations['resetShop'];
     'shop/shopStateChange': IMutations['shopStateChange'];
     'shop/shopsStateChange': IMutations['shopsStateChange'];

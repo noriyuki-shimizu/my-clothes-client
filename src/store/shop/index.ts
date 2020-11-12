@@ -35,9 +35,6 @@ const getters: Getters<State, IGetters> = {
 };
 
 const mutations: Mutations<State, IMutations> = {
-    allStateReset(state) {
-        state.shops = [];
-    },
     resetShop(state) {
         state.shop = initShop();
     },

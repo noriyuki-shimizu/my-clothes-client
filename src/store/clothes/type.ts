@@ -1,4 +1,3 @@
-import { IModuleRootMutations } from '@/store/type';
 import { FormFields } from '@/components/clothes/type';
 import { Brand } from '@/store/brand/type';
 import { Shop } from '@/store/shop/type';
@@ -62,7 +61,7 @@ export interface IRootGetters {
     'clothes/totalPrice': IGetters['totalPrice'];
 }
 
-export interface IMutations extends IModuleRootMutations {
+export interface IMutations {
     resetItem: void;
     itemStateChange: Clothes;
     clothesStateChange: Clothes[];
@@ -75,7 +74,6 @@ export interface IMutations extends IModuleRootMutations {
     totalPriceStateChange: number;
 }
 export interface IRootMutations {
-    'clothes/allStateReset': IMutations['allStateReset'];
     'clothes/resetItem': IMutations['resetItem'];
     'clothes/itemStateChange': IMutations['itemStateChange'];
     'clothes/clothesStateChange': IMutations['clothesStateChange'];

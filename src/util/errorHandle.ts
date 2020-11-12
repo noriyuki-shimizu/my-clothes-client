@@ -19,12 +19,7 @@ export const handleForbiddenError = (
             title: i18n.t('message.info.session-timeout'),
             content: i18n.t('message.info.signin-again'),
             onOk: () => {
-                store.commit('brand/allStateReset');
-                store.commit('clothes/allStateReset');
-                store.commit('coordinate/allStateReset');
-                store.commit('genre/allStateReset');
-                store.commit('shop/allStateReset');
-
+                store.commit('allStateReset');
                 store.dispatch('user/signOut');
 
                 if (router instanceof VueRouter) {

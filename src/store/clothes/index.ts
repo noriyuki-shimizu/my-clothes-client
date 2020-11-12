@@ -17,7 +17,7 @@ import { dateFormat } from '@/util/date';
 import { initBrand } from '@/store/brand';
 import { initShop } from '@/store/shop';
 
-const initClothes = (): Clothes => ({
+export const initClothes = (): Clothes => ({
     id: 0,
     imageId: null,
     imageLink: null,
@@ -62,13 +62,6 @@ const getters: Getters<State, IGetters> = {
 };
 
 const mutations: Mutations<State, IMutations> = {
-    allStateReset(state) {
-        state.item = initClothes();
-        state.assistBrands = [];
-        state.assistGenres = [];
-        state.assistShops = [];
-        state.clothes = [];
-    },
     resetItem(state) {
         state.item = initClothes();
     },

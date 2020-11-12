@@ -1,5 +1,3 @@
-import { IModuleRootMutations } from '@/store/type';
-
 export interface AppUser {
     uid: string;
     displayName: string | null;
@@ -25,13 +23,12 @@ export interface IRootGetters {
     'user/accessToken': IGetters['accessToken'];
 }
 
-export interface IMutations extends IModuleRootMutations {
+export interface IMutations {
     idStateChanged: number | null;
     currentUserStateChanged: firebase.User | null;
     accessTokenStateChanged: string;
 }
 export interface IRootMutations {
-    'user/allStateReset': IMutations['allStateReset'];
     'user/idStateChanged': IMutations['idStateChanged'];
     'user/currentUserStateChanged': IMutations['currentUserStateChanged'];
     'user/accessTokenStateChanged': IMutations['accessTokenStateChanged'];

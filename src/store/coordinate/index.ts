@@ -10,9 +10,8 @@ import {
 import api from '@/plugins/api';
 import firebaseStorage from '@/plugins/firebase/storage';
 import { AppUser } from '@/store/user/type';
-import { ClothesItem } from '@/store/clothes/type';
 
-const initCoordinate = (): Coordinate => ({
+export const initCoordinate = (): Coordinate => ({
     id: 0,
     season: '',
     imageId: 0,
@@ -39,11 +38,6 @@ const getters: Getters<State, IGetters> = {
 };
 
 const mutations: Mutations<State, IMutations> = {
-    allStateReset(state) {
-        state.coordinate = initCoordinate();
-        state.coordinates = [];
-        state.coordinateItems = [];
-    },
     resetCoordinate(state) {
         state.coordinate = initCoordinate();
     },

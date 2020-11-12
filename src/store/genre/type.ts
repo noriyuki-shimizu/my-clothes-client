@@ -1,4 +1,3 @@
-import { IModuleRootMutations } from '@/store/type';
 import { FormFields } from '@/components/genre/type';
 
 export interface Genre {
@@ -34,7 +33,7 @@ export interface IRootGetters {
     'genre/canSelectedColors': IGetters['canSelectedColors'];
 }
 
-export interface IMutations extends IModuleRootMutations {
+export interface IMutations {
     resetGenre: void;
     genreStateChange: Genre;
     genresStateChange: Genre[];
@@ -44,7 +43,6 @@ export interface IMutations extends IModuleRootMutations {
     deleteGenre: Genre['id'];
 }
 export interface IRootMutations {
-    'genre/allStateReset': IMutations['allStateReset'];
     'genre/resetGenre': IMutations['resetGenre'];
     'genre/genreStateChange': IMutations['genreStateChange'];
     'genre/genresStateChange': IMutations['genresStateChange'];
