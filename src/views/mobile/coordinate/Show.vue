@@ -91,11 +91,13 @@ import ClothesDetail from '@/components/clothes/Detail.vue';
 import { resetMessage } from '@/util/message';
 import { AppMessage } from 'ant-design-vue/types/message';
 import { handleForbiddenError } from '@/util/errorHandle';
+import InitiableMixin from '@/mixin/Initiable';
 
 @Component({
     components: {
         ClothesDetail
-    }
+    },
+    mixins: [InitiableMixin]
 })
 export default class Show extends Vue {
     $store!: Vuex.ExStore;

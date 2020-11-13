@@ -67,8 +67,11 @@ import * as Vuex from 'vuex';
 import { resetMessage } from '@/util/message';
 import { AppMessage } from 'ant-design-vue/types/message';
 import { handleForbiddenError } from '@/util/errorHandle';
+import InitiableMixin from '@/mixin/Initiable';
 
-@Component
+@Component({
+    mixins: [InitiableMixin]
+})
 export default class Show extends Vue {
     $store!: Vuex.ExStore;
 

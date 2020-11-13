@@ -131,11 +131,13 @@ import { resetMessage } from '@/util/message';
 import { AppMessage } from 'ant-design-vue/types/message';
 import { handleForbiddenError } from '@/util/errorHandle';
 import BusinessStatus from '@/components/shop/BusinessStatus.vue';
+import InitiableMixin from '@/mixin/Initiable';
 
 @Component({
     components: {
         BusinessStatus
-    }
+    },
+    mixins: [InitiableMixin]
 })
 export default class Show extends Vue {
     $store!: Vuex.ExStore;
