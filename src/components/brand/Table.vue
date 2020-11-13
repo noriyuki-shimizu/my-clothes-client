@@ -2,14 +2,19 @@
     <a-table
         :dataSource="dataSource"
         :columns="columns"
-        :scroll="{ x: 1000, y: 570 }"
-        :pagination="{ pageSize: 30 }"
         :loading="loading"
+        :scroll="{ x: 1000, y: 570 }"
+        :pagination="{
+            current: currentPage,
+            pageSize: 30
+        }"
+        @change="onPageChange"
         :locale="{
             filterConfirm: $t('operation.refine'),
             filterReset: $t('operation.reset'),
             emptyText: $t('dictionary.empty')
         }"
+        size="middle"
     >
         <div
             slot="filterDropdown"
@@ -139,6 +144,8 @@ import * as Vuex from 'vuex';
 import { getTableColumns } from '@/components/brand/table';
 import { Record } from '@/components/brand/type';
 import { Brand } from '@/store/brand/type';
+import { Pagination } from 'ant-design-vue';
+import storageKey from '@/util/storageKey';
 
 @Component
 export default class BrandTable extends Vue {
@@ -146,11 +153,20 @@ export default class BrandTable extends Vue {
 
     searchText = '';
 
+    currentPage: number = 1;
+
     @Prop({ type: Array as () => Brand[], required: true })
     brands!: Brand[];
 
     @Prop({ type: Boolean, required: true })
     loading!: boolean;
+
+    created() {
+        const currentPage = sessionStorage.getItem(
+            storageKey.BRAND_CURRENT_PAGE_NUMBER
+        );
+        this.currentPage = Number(currentPage) || 1;
+    }
 
     get columns() {
         const { $t } = this;
@@ -165,6 +181,17 @@ export default class BrandTable extends Vue {
             key: brand.id,
             deleted: brand.isDeleted ? deletedText : notDeletedText
         })) as Record[];
+    }
+
+    onPageChange(pagination: Pagination) {
+        const { current } = pagination;
+        if (current) {
+            this.currentPage = current;
+            sessionStorage.setItem(
+                storageKey.BRAND_CURRENT_PAGE_NUMBER,
+                String(current)
+            );
+        }
     }
 
     isDeleted(record: Record): boolean {
