@@ -2,14 +2,19 @@
     <a-table
         :dataSource="dataSource"
         :columns="columns"
-        :scroll="{ x: 1810, y: 570 }"
-        :pagination="{ pageSize: 30 }"
         :loading="loading"
+        :scroll="{ x: 1810, y: 570 }"
+        :pagination="{
+            current: currentPage,
+            pageSize: 30
+        }"
+        @change="onPageChange"
         :locale="{
             filterConfirm: $t('operation.refine'),
             filterReset: $t('operation.reset'),
             emptyText: $t('dictionary.empty')
         }"
+        size="middle"
     >
         <div
             slot="filterDropdown"
@@ -159,6 +164,8 @@ import * as Vuex from 'vuex';
 import { getTableColumns } from '@/components/shop/table';
 import { Record } from '@/components/shop/type';
 import { Shop } from '@/store/shop/type';
+import storageKey from '@/util/storageKey';
+import { Pagination } from 'ant-design-vue';
 import BusinessStatus from './BusinessStatus.vue';
 
 @Component({
@@ -177,6 +184,15 @@ export default class ShopTable extends Vue {
 
     searchText = '';
 
+    currentPage: number = 1;
+
+    created() {
+        const currentPage = sessionStorage.getItem(
+            storageKey.SHOP_CURRENT_PAGE_NUMBER
+        );
+        this.currentPage = Number(currentPage) || 1;
+    }
+
     get columns() {
         const { $t } = this;
         return getTableColumns($t.bind(this));
@@ -190,6 +206,17 @@ export default class ShopTable extends Vue {
             key: shop.id,
             deleted: shop.isDeleted ? deletedText : notDeletedText
         })) as Record[];
+    }
+
+    onPageChange(pagination: Pagination) {
+        const { current } = pagination;
+        if (current) {
+            this.currentPage = current;
+            sessionStorage.setItem(
+                storageKey.SHOP_CURRENT_PAGE_NUMBER,
+                String(current)
+            );
+        }
     }
 
     isDeleted(record: Record): boolean {
