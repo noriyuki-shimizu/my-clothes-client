@@ -2,14 +2,19 @@
     <a-table
         :dataSource="dataSource"
         :columns="columns"
-        :scroll="{ x: 1850, y: 570 }"
-        :pagination="{ pageSize: 50 }"
         :loading="loading"
+        :scroll="{ x: 1850, y: 570 }"
+        :pagination="{
+            current: currentPage,
+            pageSize: 50
+        }"
+        @change="onPageChange"
         :locale="{
             filterConfirm: $t('operation.refine'),
             filterReset: $t('operation.reset'),
             emptyText: $t('dictionary.empty')
         }"
+        size="middle"
     >
         <span slot="genres" slot-scope="genres">
             <a-tag v-for="(genre, i) in genres" :color="genre.color" :key="i">
@@ -88,6 +93,8 @@ import { getColumnsForTable } from '@/components/clothes/table';
 import { Record } from '@/components/clothes/type';
 import { Clothes } from '@/store/clothes/type';
 import { priceFormat } from '@/filters/number-format';
+import storageKey from '@/util/storageKey';
+import { Pagination } from 'ant-design-vue';
 
 @Component({
     filters: {
@@ -104,6 +111,15 @@ export default class ClothesTable extends Vue {
     loading!: boolean;
 
     searchText = '';
+
+    currentPage: number = 1;
+
+    created() {
+        const currentPage = sessionStorage.getItem(
+            storageKey.CLOTHES_CURRENT_PAGE_NUMBER
+        );
+        this.currentPage = Number(currentPage) || 1;
+    }
 
     get columns() {
         const { $t } = this;
@@ -145,6 +161,17 @@ export default class ClothesTable extends Vue {
                 deleted: c.isDeleted ? deletedText : notDeletedText
             };
         }) as Record[];
+    }
+
+    onPageChange(pagination: Pagination) {
+        const { current } = pagination;
+        if (current) {
+            this.currentPage = current;
+            sessionStorage.setItem(
+                storageKey.CLOTHES_CURRENT_PAGE_NUMBER,
+                String(current)
+            );
+        }
     }
 
     isDeleted(record: Record): boolean {
