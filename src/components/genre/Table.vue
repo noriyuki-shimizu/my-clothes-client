@@ -10,6 +10,7 @@
             filterReset: $t('operation.reset'),
             emptyText: $t('dictionary.empty')
         }"
+        size="middle"
     >
         <span slot="color" slot-scope="color">
             <a-tag :color="color">
