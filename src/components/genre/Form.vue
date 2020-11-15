@@ -172,6 +172,7 @@ export default class GenreForm extends Vue {
     }
 
     nameValidator(_: any, value: string, cb: Function) {
+        // FIXME 重複チェックを API に問い合わせること
         const { id } = this.$route.params;
 
         const someCallback = id
