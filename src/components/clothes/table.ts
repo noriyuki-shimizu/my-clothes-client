@@ -49,7 +49,7 @@ const getColumns = (
                 value: name
             })),
             onFilter: (value: string, record: Record) =>
-                record.genres.map(genre => genre.name).includes(value),
+                record.genres.map((genre) => genre.name).includes(value),
             scopedSlots: { customRender: 'genres' },
             width: 200
         },

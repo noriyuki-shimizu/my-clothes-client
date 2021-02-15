@@ -131,7 +131,7 @@ export default class Index extends Vue {
         const coordinates = this.$store.getters['coordinate/coordinates'];
         if (this.filteringSeason) {
             return coordinates.filter(
-                coordinate => coordinate.season === this.filteringSeason
+                (coordinate) => coordinate.season === this.filteringSeason
             );
         }
         return coordinates;

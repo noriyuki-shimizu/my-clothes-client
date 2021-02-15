@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import { Getters, Mutations, Actions } from 'vuex';
 import {
     State,
@@ -75,13 +76,13 @@ const mutations: Mutations<State, IMutations> = {
         state.clothes.push(payload);
     },
     deleteClothes(state, payload) {
-        const c = state.clothes.find(c => c.id === payload);
+        const c = state.clothes.find((c) => c.id === payload);
         if (c) {
             c.isDeleted = true;
         }
     },
     restorationClothes(state, payload) {
-        const c = state.clothes.find(c => c.id === payload);
+        const c = state.clothes.find((c) => c.id === payload);
         if (c) {
             c.isDeleted = false;
         }
@@ -167,10 +168,10 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         const currentUser = ctx.rootGetters['user/currentUser'] as AppUser;
         const imageLink = imageFile
             ? await firebaseStorage.image.upload(
-                  imageFile,
-                  currentUser.uid,
-                  'clothes'
-              )
+                imageFile,
+                currentUser.uid,
+                'clothes'
+            )
             : null;
 
         const response = await api.post<{ clothes: Clothes }>(
@@ -206,9 +207,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
 
         const formatBuyDate = buyDate.format(dateFormat);
 
-        const clothes = ctx.getters['clothes'].find(
-            c => c.id === id
-        ) as Clothes;
+        const clothes = ctx.getters.clothes.find((c) => c.id === id) as Clothes;
         const { imageLink } = clothes;
         if (imageLink && imageFile) {
             await firebaseStorage.image.deleteImageByFullPath(imageLink);
@@ -217,10 +216,10 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         const currentUser = ctx.rootGetters['user/currentUser'] as AppUser;
         const updateImageLink = imageFile
             ? await firebaseStorage.image.upload(
-                  imageFile,
-                  currentUser.uid,
-                  'clothes'
-              )
+                imageFile,
+                currentUser.uid,
+                'clothes'
+            )
             : imageLink;
 
         await api.put(`/${ctx.rootGetters['user/id']}/clothes/${id}`, {

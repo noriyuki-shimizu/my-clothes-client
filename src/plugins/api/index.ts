@@ -7,16 +7,19 @@ const http = axios.create({
 });
 
 http.interceptors.request.use(
-    async requestConfig => {
+    async (requestConfig) => {
         const id = store.getters['user/id'];
         const accessToken = store.getters['user/accessToken'];
-        requestConfig.headers = {
-            UserId: id,
-            Authorization: `Bearer ${accessToken}`
+
+        return {
+            ...requestConfig,
+            headers: {
+                UserId: id,
+                Authorization: `Bearer ${accessToken}`
+            }
         };
-        return requestConfig;
     },
-    error => {
+    (error) => {
         throw error;
     }
 );

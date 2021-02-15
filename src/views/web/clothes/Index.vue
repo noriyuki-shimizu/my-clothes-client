@@ -92,8 +92,8 @@ export default class Shop extends Vue {
         ];
 
         await Promise.all(
-            despatches.map(despatch => this.$store.dispatch(despatch))
-        ).catch(err => {
+            despatches.map((despatch) => this.$store.dispatch(despatch))
+        ).catch((err) => {
             this.onError(err);
         });
 

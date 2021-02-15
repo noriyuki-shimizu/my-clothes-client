@@ -33,7 +33,8 @@
                 :placeholder="`Search ${column.dataIndex}`"
                 :value="selectedKeys[0]"
                 @change="
-                    e => setSelectedKeys(e.target.value ? [e.target.value] : [])
+                    (e) =>
+                        setSelectedKeys(e.target.value ? [e.target.value] : [])
                 "
                 @pressEnter="() => handleSearch(selectedKeys, confirm)"
                 style="width: 188px; margin-bottom: 8px; display: block;"
@@ -137,7 +138,7 @@ export default class GenreTable extends Vue {
     }
 
     get dataSource() {
-        return this.genres.map(genre => ({
+        return this.genres.map((genre) => ({
             ...genre,
             key: genre.id
         })) as Record[];

@@ -31,7 +31,8 @@
                 :placeholder="column.dataIndex"
                 :value="selectedKeys[0]"
                 @change="
-                    e => setSelectedKeys(e.target.value ? [e.target.value] : [])
+                    (e) =>
+                        setSelectedKeys(e.target.value ? [e.target.value] : [])
                 "
                 @pressEnter="() => handleSearch(selectedKeys, confirm)"
                 style="width: 188px; margin-bottom: 8px; display: block;"
@@ -176,7 +177,7 @@ export default class BrandTable extends Vue {
     get dataSource() {
         const deletedText = this.$t('status.item.delete');
         const notDeletedText = this.$t('status.item.not-delete');
-        return this.brands.map(brand => ({
+        return this.brands.map((brand) => ({
             ...brand,
             key: brand.id,
             deleted: brand.isDeleted ? deletedText : notDeletedText
@@ -195,7 +196,7 @@ export default class BrandTable extends Vue {
     }
 
     isDeleted(record: Record): boolean {
-        const brand = this.brands.find(b => b.id === record.key) as Brand;
+        const brand = this.brands.find((b) => b.id === record.key) as Brand;
         return brand.isDeleted;
     }
 

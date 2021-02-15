@@ -257,7 +257,11 @@ export default class ShopForm extends Vue {
             ? (shop: Shop) => shop.name === value && shop.id !== Number(id)
             : (shop: Shop) => shop.name === value;
 
-        shops.some(someShop) ? cb(true) : cb();
+        if (shops.some(someShop)) {
+            cb(true);
+            return;
+        }
+        cb();
     }
 
     created() {
@@ -305,7 +309,7 @@ export default class ShopForm extends Vue {
     }
 
     setSelectImage(file: any) {
-        var fileReader = new FileReader();
+        const fileReader = new FileReader();
         fileReader.onload = () => {
             this.imageURL = fileReader.result;
         };

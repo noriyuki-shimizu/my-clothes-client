@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import { Getters, Mutations, Actions } from 'vuex';
 
 import {
@@ -58,7 +59,7 @@ const mutations: Mutations<State, IMutations> = {
         state.genres.push(payload);
     },
     deleteGenre(state, payload) {
-        state.genres = state.genres.filter(genre => genre.id !== payload);
+        state.genres = state.genres.filter((genre) => genre.id !== payload);
     }
 };
 

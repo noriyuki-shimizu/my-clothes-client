@@ -31,7 +31,8 @@
                 :placeholder="`Search ${column.dataIndex}`"
                 :value="selectedKeys[0]"
                 @change="
-                    e => setSelectedKeys(e.target.value ? [e.target.value] : [])
+                    (e) =>
+                        setSelectedKeys(e.target.value ? [e.target.value] : [])
                 "
                 @pressEnter="() => handleSearch(selectedKeys, confirm)"
                 style="width: 188px; margin-bottom: 8px; display: block;"
@@ -201,7 +202,7 @@ export default class ShopTable extends Vue {
     get dataSource() {
         const deletedText = this.$t('status.item.delete');
         const notDeletedText = this.$t('status.item.not-delete');
-        return this.shops.map(shop => ({
+        return this.shops.map((shop) => ({
             ...shop,
             key: shop.id,
             deleted: shop.isDeleted ? deletedText : notDeletedText
@@ -220,7 +221,7 @@ export default class ShopTable extends Vue {
     }
 
     isDeleted(record: Record): boolean {
-        const shop = this.shops.find(s => s.id === record.key) as Shop;
+        const shop = this.shops.find((s) => s.id === record.key) as Shop;
         return shop.isDeleted;
     }
 

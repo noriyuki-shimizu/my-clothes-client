@@ -30,18 +30,29 @@ import LanguageSelect from '@/components/language/Select.vue';
     }
 })
 export default class Layout extends Vue {
+    private readonly MOBILE_HEADER_ELEMENT_ID = 'mobile_header';
+
+    get mobileHeaderElement() {
+        return document.getElementById(
+            this.MOBILE_HEADER_ELEMENT_ID
+        ) as HTMLElement;
+    }
+
     mounted() {
-        const header = document.getElementById('mobile_header') as HTMLElement;
-        const headerHeight = header.clientHeight;
+        const headerHeight = this.mobileHeaderElement.clientHeight;
         let lastPos = 0;
 
         window.addEventListener('scroll', () => {
             const pos = window.scrollY;
             if (pos > headerHeight && pos > lastPos) {
-                header.classList.add('mobile-header--unpinned');
+                this.mobileHeaderElement.classList.add(
+                    'mobile-header--unpinned'
+                );
             }
             if (pos < headerHeight || pos < lastPos) {
-                header.classList.remove('mobile-header--unpinned');
+                this.mobileHeaderElement.classList.remove(
+                    'mobile-header--unpinned'
+                );
             }
 
             lastPos = pos;

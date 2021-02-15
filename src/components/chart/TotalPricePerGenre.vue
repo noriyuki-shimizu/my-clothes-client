@@ -1,6 +1,8 @@
 <template>
-    <a-empty class="empty-data" v-if="!totalPricePerGenres.length" />
-    <pie-chart v-else :chartData="chartData" :chartOptions="chartOptions" />
+    <div>
+        <a-empty class="empty-data" v-if="!totalPricePerGenres.length" />
+        <pie-chart v-else :chartData="chartData" :chartOptions="chartOptions" />
+    </div>
 </template>
 
 <script lang="ts">

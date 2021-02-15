@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import { Getters, Mutations, Actions } from 'vuex';
 import {
     State,
@@ -52,7 +53,7 @@ const mutations: Mutations<State, IMutations> = {
     },
     deleteCoordinate(state, payload) {
         state.coordinates = state.coordinates.filter(
-            coordinate => coordinate.id !== payload
+            (coordinate) => coordinate.id !== payload
         );
     },
     assistCoordinateItemStateChange(state, payload) {
@@ -92,10 +93,10 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         const currentUser = ctx.rootGetters['user/currentUser'] as AppUser;
         const imageLink = imageFile
             ? await firebaseStorage.image.upload(
-                  imageFile,
-                  currentUser.uid,
-                  'coordinate'
-              )
+                imageFile,
+                currentUser.uid,
+                'coordinate'
+            )
             : null;
 
         const response = await api.post<{ coordinate: Coordinate }>(
@@ -113,8 +114,8 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         const { id, season, clothingIds, image } = updateValue;
         const imageFile = image && image.file ? image.file.originFileObj : null;
 
-        const { imageId, imageLink } = ctx.getters['coordinates'].find(
-            c => c.id === id
+        const { imageId, imageLink } = ctx.getters.coordinates.find(
+            (c) => c.id === id
         ) as Coordinate;
         if (imageLink && imageFile) {
             await firebaseStorage.image.deleteImageByFullPath(imageLink);
@@ -123,10 +124,10 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         const currentUser = ctx.rootGetters['user/currentUser'] as AppUser;
         const updateImageLink = imageFile
             ? await firebaseStorage.image.upload(
-                  imageFile,
-                  currentUser.uid,
-                  'coordinate'
-              )
+                imageFile,
+                currentUser.uid,
+                'coordinate'
+            )
             : imageLink;
 
         await api.put(`/${ctx.rootGetters['user/id']}/coordinates/${id}`, {

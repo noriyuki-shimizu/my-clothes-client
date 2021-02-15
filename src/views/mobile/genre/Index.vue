@@ -133,17 +133,19 @@ export default class Index extends Vue {
         const trimValue = this.filteringGenreName.trim();
 
         if (trimValue) {
-            return genres.filter(genre => textIncludes(genre.name, trimValue));
+            return genres.filter((genre) =>
+                textIncludes(genre.name, trimValue)
+            );
         }
         return genres;
     }
 
     onChangeFilteringGenreName(value: string) {
         const genres = this.$store.getters['genre/genres'];
-        const genreNames = genres.map(genre => genre.name);
+        const genreNames = genres.map((genre) => genre.name);
         const trimValue = value.trim();
         if (trimValue) {
-            this.filteringGenreNames = genreNames.filter(name =>
+            this.filteringGenreNames = genreNames.filter((name) =>
                 textIncludes(name, trimValue)
             );
             return;

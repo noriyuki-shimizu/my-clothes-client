@@ -24,7 +24,7 @@ const guard: NavigationGuard<Vue> = (to, _, next) => {
 
     api.post(`/${store.getters['user/id']}/routing`, path)
         .then(() => next())
-        .catch(err => {
+        .catch((err) => {
             handleForbiddenError(err, store, next);
         });
 };

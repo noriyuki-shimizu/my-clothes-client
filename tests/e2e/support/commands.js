@@ -36,7 +36,7 @@ Cypress.Commands.add('login', () => {
             email: 'admin@datacatalog.com',
             password: 'password'
         }
-    }).then(response => {
+    }).then((response) => {
         window.localStorage.setItem(
             'credential',
             response.headers.authorization

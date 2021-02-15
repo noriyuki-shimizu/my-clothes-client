@@ -179,7 +179,11 @@ export default class GenreForm extends Vue {
             ? (genre: Genre) => genre.name === value && genre.id !== Number(id)
             : (genre: Genre) => genre.name === value;
 
-        this.genres.some(someCallback) ? cb(true) : cb();
+        if (this.genres.some(someCallback)) {
+            cb(true);
+            return;
+        }
+        cb();
     }
 
     handleSubmit(e: Event) {

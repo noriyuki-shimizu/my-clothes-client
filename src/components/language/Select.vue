@@ -24,16 +24,14 @@ export default class LanguageSelect extends Vue {
 
     language = language;
 
+    selectedLanguage = getLanguage();
+
     @Prop({ type: String as () => LanguageSelectSize })
     size?: LanguageSelectSize;
 
     handleChange(languageName: string) {
         setLanguage(languageName);
         this.$i18n.locale = languageName;
-    }
-
-    get selectedLanguage() {
-        return getLanguage();
     }
 
     get specifiedSize(): LanguageSelectSize {

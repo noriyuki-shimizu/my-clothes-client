@@ -168,7 +168,12 @@ export default class BrandForm extends Vue {
             ? (brand: Brand) => brand.name === value && brand.id !== Number(id)
             : (brand: Brand) => brand.name === value;
 
-        brands.some(someBrand) ? cb(true) : cb();
+        if (brands.some(someBrand)) {
+            cb(true);
+            return;
+        }
+
+        cb();
     }
 
     beforeUpload(file: File) {
@@ -183,7 +188,7 @@ export default class BrandForm extends Vue {
     }
 
     setSelectImage(file: any) {
-        var fileReader = new FileReader();
+        const fileReader = new FileReader();
         fileReader.onload = () => {
             this.imageURL = fileReader.result;
         };

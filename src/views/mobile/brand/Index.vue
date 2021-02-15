@@ -144,17 +144,19 @@ export default class Index extends Vue {
         const trimValue = this.filteringBrandName.trim();
 
         if (trimValue) {
-            return brands.filter(brand => textIncludes(brand.name, trimValue));
+            return brands.filter((brand) =>
+                textIncludes(brand.name, trimValue)
+            );
         }
         return brands;
     }
 
     onChangeFilteringBrandName(value: string) {
         const brands = this.$store.getters['brand/brands'];
-        const brandNames = brands.map(brand => brand.name);
+        const brandNames = brands.map((brand) => brand.name);
         const trimValue = value.trim();
         if (trimValue) {
-            this.filteringBrandNames = brandNames.filter(name =>
+            this.filteringBrandNames = brandNames.filter((name) =>
                 textIncludes(name, trimValue)
             );
             return;

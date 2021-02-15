@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import { Getters, Mutations, Actions } from 'vuex';
 import {
     State,
@@ -49,13 +50,13 @@ const mutations: Mutations<State, IMutations> = {
         state.brands.push(payload);
     },
     deleteBrand(state, payload) {
-        const brand = state.brands.find(brand => brand.id === payload);
+        const brand = state.brands.find((brand) => brand.id === payload);
         if (brand) {
             brand.isDeleted = true;
         }
     },
     restorationBrand(state, payload) {
-        const brand = state.brands.find(brand => brand.id === payload);
+        const brand = state.brands.find((brand) => brand.id === payload);
         if (brand) {
             brand.isDeleted = false;
         }
@@ -84,10 +85,10 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         const currentUser = ctx.rootGetters['user/currentUser'] as AppUser;
         const imageLink = imageFile
             ? await firebaseStorage.image.upload(
-                  imageFile,
-                  currentUser.uid,
-                  'brand'
-              )
+                imageFile,
+                currentUser.uid,
+                'brand'
+            )
             : null;
 
         const response = await api.post<{ brand: Brand }>(
@@ -106,7 +107,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         const { id, name, image, link, country } = updateValue;
         const imageFile = image && image.file ? image.file.originFileObj : null;
 
-        const brand = ctx.getters['brands'].find(b => b.id === id) as Brand;
+        const brand = ctx.getters.brands.find((b) => b.id === id) as Brand;
         if (brand.imageLink && imageFile) {
             await firebaseStorage.image.deleteImageByFullPath(brand.imageLink);
         }
@@ -114,10 +115,10 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         const currentUser = ctx.rootGetters['user/currentUser'] as AppUser;
         const imageLink = imageFile
             ? await firebaseStorage.image.upload(
-                  imageFile,
-                  currentUser.uid,
-                  'brand/'
-              )
+                imageFile,
+                currentUser.uid,
+                'brand/'
+            )
             : brand.imageLink;
 
         await api.put(`/${ctx.rootGetters['user/id']}/brands/${id}`, {

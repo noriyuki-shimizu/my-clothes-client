@@ -261,7 +261,7 @@ export default class ClothesForm extends Vue {
             this.form.setFieldsValue({
                 brandId: newClothes.brand.id,
                 shopId: newClothes.shop.id,
-                genreIds: newClothes.genres.map(genre => genre.id),
+                genreIds: newClothes.genres.map((genre) => genre.id),
                 price: newClothes.price,
                 buyDate: moment(newClothes.buyDate, dateFormat),
                 comment: newClothes.comment,
@@ -288,7 +288,7 @@ export default class ClothesForm extends Vue {
             this.$store.dispatch('clothes/fetchAssistGenres'),
             this.$store.dispatch('clothes/fetchAssistBrands'),
             this.$store.dispatch('clothes/fetchAssistShops')
-        ]).catch(err => {
+        ]).catch((err) => {
             this.$emit('on-error', err);
         });
     }
@@ -305,7 +305,7 @@ export default class ClothesForm extends Vue {
     }
 
     setSelectImage(file: any) {
-        var fileReader = new FileReader();
+        const fileReader = new FileReader();
         fileReader.onload = () => {
             this.imageURL = fileReader.result;
         };

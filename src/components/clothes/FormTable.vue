@@ -92,7 +92,7 @@ export default class ClothesFormTable extends Vue {
             this.$store.dispatch('clothes/fetchAssistGenres'),
             this.$store.dispatch('clothes/fetchAssistBrands'),
             this.$store.dispatch('clothes/fetchAssistShops')
-        ]).catch(err => {
+        ]).catch((err) => {
             this.$emit('on-error', err);
         });
 

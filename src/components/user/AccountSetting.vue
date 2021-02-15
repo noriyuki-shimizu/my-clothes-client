@@ -147,7 +147,7 @@ export default class AccountSetting extends Vue {
     }
 
     setSelectImage(file: any) {
-        var fileReader = new FileReader();
+        const fileReader = new FileReader();
         fileReader.onload = () => {
             this.imageURL = fileReader.result;
         };
@@ -196,9 +196,9 @@ export default class AccountSetting extends Vue {
                         this.$t('message.success.update-complete').toString()
                     );
                     this.$emit('on-close');
-                } catch (err) {
-                    if (isFirebaseStorageError(err)) {
-                        this.$message.error(err.message);
+                } catch (updateProfileErr) {
+                    if (isFirebaseStorageError(updateProfileErr)) {
+                        this.$message.error(updateProfileErr.message);
                     }
                 }
             }

@@ -14,7 +14,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     mutations: {
-        allStateReset: state => {
+        allStateReset: (state) => {
             // brand
             state.brand = {
                 brand: initBrand(),
@@ -78,10 +78,10 @@ export default new Vuex.Store({
             key: 'mcm-auth',
             paths: ['user'],
             storage: {
-                getItem: key => Cookies.get(key),
+                getItem: (key) => Cookies.get(key),
                 setItem: (key, value) =>
                     Cookies.set(key, value, { expires: 1 / 2, secure: false }),
-                removeItem: key => Cookies.remove(key)
+                removeItem: (key) => Cookies.remove(key)
             }
         })
     ]

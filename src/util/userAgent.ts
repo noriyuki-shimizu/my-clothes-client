@@ -1,5 +1,5 @@
 export const isMobile = () => {
-    const userAgent = navigator.userAgent;
+    const { userAgent } = navigator;
     return (
         userAgent.indexOf('iPhone') > 0 ||
         userAgent.indexOf('iPod') > 0 ||

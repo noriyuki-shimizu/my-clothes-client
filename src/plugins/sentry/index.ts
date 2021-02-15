@@ -4,12 +4,12 @@ import { Integrations } from '@sentry/tracing';
 import Vue, { VueConstructor } from 'vue';
 
 export default {
-    init: (Vue: VueConstructor<Vue>) => {
+    init: (vue: VueConstructor<Vue>) => {
         Sentry.init({
             dsn: process.env.VUE_APP_SENTRY_DSN,
             integrations: [
                 new VueIntegration({
-                    Vue,
+                    Vue: vue,
                     tracing: true
                 }),
                 new Integrations.BrowserTracing()

@@ -157,17 +157,17 @@ export default class Index extends Vue {
         const trimValue = this.filteringShopName.trim();
 
         if (trimValue) {
-            return shops.filter(shop => textIncludes(shop.name, trimValue));
+            return shops.filter((shop) => textIncludes(shop.name, trimValue));
         }
         return shops;
     }
 
     onChangeFilteringShopName(value: string) {
         const shops = this.$store.getters['shop/shops'];
-        const shopNames = shops.map(shop => shop.name);
+        const shopNames = shops.map((shop) => shop.name);
         const trimValue = value.trim();
         if (trimValue) {
-            this.filteringShopNames = shopNames.filter(name =>
+            this.filteringShopNames = shopNames.filter((name) =>
                 textIncludes(name, trimValue)
             );
             return;

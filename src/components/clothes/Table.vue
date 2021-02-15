@@ -135,7 +135,7 @@ export default class ClothesTable extends Vue {
         const deletedText = this.$t('status.item.delete');
         const notDeletedText = this.$t('status.item.not-delete');
 
-        return clothes.map(c => {
+        return clothes.map((c) => {
             const {
                 id,
                 imageLink,
@@ -153,7 +153,7 @@ export default class ClothesTable extends Vue {
                 imageLink,
                 brandName: brand.name,
                 shopName: shop.name,
-                genres: genres,
+                genres,
                 price,
                 buyDate,
                 comment,
@@ -175,7 +175,7 @@ export default class ClothesTable extends Vue {
     }
 
     isDeleted(record: Record): boolean {
-        const item = this.clothes.find(c => c.id === record.key) as Clothes;
+        const item = this.clothes.find((c) => c.id === record.key) as Clothes;
         return item.isDeleted;
     }
 

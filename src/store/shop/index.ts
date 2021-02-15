@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import { Getters, Mutations, Actions } from 'vuex';
 import { State, IGetters, IMutations, IActions, Shop } from '@/store/shop/type';
 
@@ -48,13 +49,13 @@ const mutations: Mutations<State, IMutations> = {
         state.shops.push(payload);
     },
     deleteShop(state, payload) {
-        const shop = state.shops.find(shop => shop.id === payload);
+        const shop = state.shops.find((shop) => shop.id === payload);
         if (shop) {
             shop.isDeleted = true;
         }
     },
     restorationShop(state, payload) {
-        const shop = state.shops.find(shop => shop.id === payload);
+        const shop = state.shops.find((shop) => shop.id === payload);
         if (shop) {
             shop.isDeleted = false;
         }
@@ -97,10 +98,10 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         const currentUser = ctx.rootGetters['user/currentUser'] as AppUser;
         const imageLink = imageFile
             ? await firebaseStorage.image.upload(
-                  imageFile,
-                  currentUser.uid,
-                  'shop'
-              )
+                imageFile,
+                currentUser.uid,
+                'shop'
+            )
             : null;
 
         const response = await api.post<{ shop: Shop }>(
@@ -137,7 +138,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
             timeFormat
         )}~${endBusinessHours.format(timeFormat)}`;
 
-        const shop = ctx.getters['shops'].find(s => s.id === id) as Shop;
+        const shop = ctx.getters.shops.find((s) => s.id === id) as Shop;
         if (shop.imageLink && imageFile) {
             await firebaseStorage.image.deleteImageByFullPath(shop.imageLink);
         }
@@ -145,10 +146,10 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         const currentUser = ctx.rootGetters['user/currentUser'] as AppUser;
         const updateImageLink = imageFile
             ? await firebaseStorage.image.upload(
-                  imageFile,
-                  currentUser.uid,
-                  'shop'
-              )
+                imageFile,
+                currentUser.uid,
+                'shop'
+            )
             : shop.imageLink;
 
         await api.put(`/${ctx.rootGetters['user/id']}/shops/${id}`, {

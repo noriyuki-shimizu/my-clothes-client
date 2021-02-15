@@ -159,8 +159,8 @@ export default class Index extends Vue {
         ];
 
         await Promise.all(
-            despatches.map(despatch => this.$store.dispatch(despatch))
-        ).catch(err => {
+            despatches.map((despatch) => this.$store.dispatch(despatch))
+        ).catch((err) => {
             this.onError(err);
         });
 
@@ -169,7 +169,7 @@ export default class Index extends Vue {
 
     get clothes(): Clothes[] {
         const clothes = this.$store.getters['clothes/clothes'];
-        return clothes.filter(c => {
+        return clothes.filter((c) => {
             if (
                 this.filteringBrands.length &&
                 !this.filteringBrands.includes(c.brand.name)
@@ -183,8 +183,8 @@ export default class Index extends Vue {
                 return false;
             }
             if (this.filteringGenres.length) {
-                const clothesGenres = c.genres.map(genre => genre.name);
-                const includes = this.filteringGenres.some(filteringGenre =>
+                const clothesGenres = c.genres.map((genre) => genre.name);
+                const includes = this.filteringGenres.some((filteringGenre) =>
                     clothesGenres.includes(filteringGenre)
                 );
                 if (!includes) {
@@ -197,17 +197,17 @@ export default class Index extends Vue {
 
     get filteringBrandOptions(): string[] {
         const brands = this.$store.getters['clothes/assistBrands'];
-        return brands.map(brand => brand.name);
+        return brands.map((brand) => brand.name);
     }
 
     get filteringShopOptions(): string[] {
         const shops = this.$store.getters['clothes/assistShops'];
-        return shops.map(shop => shop.name);
+        return shops.map((shop) => shop.name);
     }
 
     get filteringGenreOptions(): string[] {
         const genres = this.$store.getters['clothes/assistGenres'];
-        return genres.map(genre => genre.name);
+        return genres.map((genre) => genre.name);
     }
 
     async onDelete(id: number) {

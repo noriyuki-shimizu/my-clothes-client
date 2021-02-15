@@ -189,7 +189,7 @@ export default class CoordinateMobileForm extends Vue {
     onTargetChange(newCoordinate: Coordinate) {
         if (newCoordinate) {
             const clothingIds = newCoordinate.usedCoordinates.map(
-                usedCoordinate => usedCoordinate.id
+                (usedCoordinate) => usedCoordinate.id
             );
 
             this.form.setFieldsValue({
@@ -238,7 +238,7 @@ export default class CoordinateMobileForm extends Vue {
     }
 
     setSelectImage(file: any) {
-        var fileReader = new FileReader();
+        const fileReader = new FileReader();
         fileReader.onload = () => {
             this.imageURL = fileReader.result;
         };

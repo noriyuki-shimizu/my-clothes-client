@@ -22,7 +22,7 @@ export default {
                     displayName,
                     photoURL
                 })
-                .catch(err => {
+                .catch((err) => {
                     throw err;
                 });
         }

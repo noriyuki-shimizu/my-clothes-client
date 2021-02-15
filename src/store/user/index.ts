@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import api from '@/plugins/api';
 import firebaseAuth from '@/plugins/firebase/auth';
 import firebaseStorage from '@/plugins/firebase/storage';
@@ -79,7 +80,7 @@ const actions: Actions<State, IActions, IGetters, IMutations> = {
         await firebaseAuth.signOut();
     },
     async updateProfile(ctx, { displayName, iconFile }) {
-        const user = ctx.getters['currentUser'] as firebase.User;
+        const user = ctx.getters.currentUser as firebase.User;
 
         if (
             user.photoURL &&

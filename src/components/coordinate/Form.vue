@@ -203,7 +203,7 @@ export default class CoordinateForm extends Vue {
     onTargetChange(newCoordinate: Coordinate) {
         if (newCoordinate) {
             const clothingIds = newCoordinate.usedCoordinates.map(
-                usedCoordinate => usedCoordinate.id
+                (usedCoordinate) => usedCoordinate.id
             );
 
             this.form.setFieldsValue({
@@ -218,14 +218,14 @@ export default class CoordinateForm extends Vue {
 
     get tableItems() {
         return this.dataSource.filter(
-            coordinateItem =>
+            (coordinateItem) =>
                 this.selectedRowKeys.indexOf(coordinateItem.key) === -1
         );
     }
 
     get checkboxGroupItems() {
         return this.dataSource.filter(
-            coordinateItem =>
+            (coordinateItem) =>
                 this.selectedRowKeys.indexOf(coordinateItem.key) !== -1
         );
     }
@@ -252,7 +252,7 @@ export default class CoordinateForm extends Vue {
 
     onRemoveItemKey(key: number) {
         this.selectedRowKeys = this.selectedRowKeys.filter(
-            selectedRowKey => key !== selectedRowKey
+            (selectedRowKey) => key !== selectedRowKey
         );
         this.form.setFieldsValue({ clothingIds: this.selectedRowKeys });
     }
@@ -269,7 +269,7 @@ export default class CoordinateForm extends Vue {
     }
 
     setSelectImage(file: any) {
-        var fileReader = new FileReader();
+        const fileReader = new FileReader();
         fileReader.onload = () => {
             this.imageURL = fileReader.result;
         };

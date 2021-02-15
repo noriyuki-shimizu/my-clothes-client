@@ -4,9 +4,9 @@ import Vue, { VueConstructor } from 'vue';
 import VueI18n from 'vue-i18n';
 import { getLanguage } from './language';
 
-export default (Vue?: VueConstructor<Vue>) => {
-    if (Vue) {
-        Vue.use(VueI18n);
+export default (vue?: VueConstructor<Vue>) => {
+    if (vue) {
+        vue.use(VueI18n);
     }
 
     return new VueI18n({
