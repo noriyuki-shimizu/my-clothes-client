@@ -1,6 +1,6 @@
 <template>
     <div id="home-title">
-        <h1>My Clothes</h1>
+        <img class="icon" :src="require('@/assets/image/icon.png')" />
         <a-carousel autoplay>
             <div v-if="!imageAddresses.length" class="loading-image-address">
                 <a-spin size="large" />
@@ -39,6 +39,11 @@ export default class Home extends Vue {
 <style scoped>
 #home-title {
     text-align: center;
+}
+
+.icon {
+    width: 240px;
+    padding: 24px 0;
 }
 
 h1 {

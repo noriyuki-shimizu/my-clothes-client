@@ -2,7 +2,10 @@
     <a-layout id="components-layout-fixed-sider">
         <a-layout-sider class="sidebar">
             <router-link to="/home">
-                <img class="logo" :src="require('@/assets/image/icon.jpg')" />
+                <img
+                    class="logo"
+                    :src="require('@/assets/image/icon-white.png')"
+                />
             </router-link>
             <side-menu />
         </a-layout-sider>
@@ -45,6 +48,14 @@ export default class Layout extends Vue {}
     height: 100vh;
     position: fixed;
     left: 0;
+}
+
+#components-layout-fixed-sider .logo[data-v-692a017f] {
+    height: 68px;
+    margin: 16px 16px 40px;
+}
+.logo {
+    width: 168px;
 }
 
 #components-layout-fixed-sider .logo {
