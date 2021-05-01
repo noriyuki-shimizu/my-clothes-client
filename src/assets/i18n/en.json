@@ -52,6 +52,11 @@
             "buy-date": "Buy date",
             "satisfaction": "Satisfaction"
         },
+        "sort": {
+            "index": "Order",
+            "new-order": "New order",
+            "old-order": "Old order"
+        },
         "empty": "No Data",
         "price": "Price",
         "total-price": "Total price",

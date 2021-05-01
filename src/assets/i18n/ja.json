@@ -52,6 +52,11 @@
             "buy-date": "購入日",
             "satisfaction": "満足度"
         },
+        "sort": {
+            "index": "表示順",
+            "new-order": "新しい順",
+            "old-order": "古い順"
+        },
         "empty": "データが存在しません",
         "price": "金額",
         "total-price": "合計金額",
