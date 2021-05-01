@@ -60,6 +60,28 @@
             </a-collapse-panel>
         </a-collapse>
 
+        <a-collapse class="mc-refine-container">
+            <a-collapse-panel :header="$t('dictionary.sort.index')">
+                <a-form layout="vertical">
+                    <a-form-item :label="$t('dictionary.clothes.buy-date')">
+                        <a-select v-model="buyDateSort" style="width: 100%">
+                            <a-select-option
+                                v-for="(buyDateSortItem,
+                                index) in buyDateSortItems"
+                                :key="index"
+                                :value="buyDateSortItem.value"
+                            >
+                                {{ $t(buyDateSortItem.label) }}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-item>
+                    <div class="mc-operation-reset">
+                        <a @click="resetSorter">{{ $t('operation.reset') }}</a>
+                    </div>
+                </a-form>
+            </a-collapse-panel>
+        </a-collapse>
+
         <a-empty v-if="!clothes.length" />
         <a-list v-else :grid="{ gutter: 5, column: 2 }" :data-source="clothes">
             <a-list-item slot="renderItem" slot-scope="item">
@@ -112,17 +134,14 @@
 <script lang="ts">
 import { Vue, Component, Emit, Watch } from 'vue-property-decorator';
 import * as Vuex from 'vuex';
+import moment from 'moment';
 import { AppMessage } from 'ant-design-vue/types/message';
 
 import { resetMessage } from '@/util/message';
 import { handleForbiddenError } from '@/util/errorHandle';
-import {
-    ClothesItem,
-    Clothes,
-    AssistBrand,
-    AssistShop,
-    AssistGenre
-} from '@/store/clothes/type';
+import { Clothes } from '@/store/clothes/type';
+import { BuyDateSortItem } from '@/components/clothes/type';
+import { buyDateSortItems } from '@/components/clothes/sorter';
 
 type ClothesDispatches =
     | 'clothes/fetchClothes'
@@ -144,6 +163,10 @@ export default class Index extends Vue {
 
     filteringGenres: string[] = [];
 
+    buyDateSortItems: Readonly<BuyDateSortItem[]> = buyDateSortItems;
+
+    buyDateSort: BuyDateSortItem['value'] | '' = '';
+
     @Watch('$i18n.locale')
     onLocalChange() {
         this.message = resetMessage();
@@ -154,6 +177,7 @@ export default class Index extends Vue {
     }
 
     private async fetchClothes() {
+
         this.loading = true;
 
         const despatches: ClothesDispatches[] = [
@@ -178,32 +202,52 @@ export default class Index extends Vue {
         this.filteringGenres = [];
     }
 
+    resetSorter() {
+        this.buyDateSort = '';
+    }
+
     get clothes(): Clothes[] {
         const clothes = this.$store.getters['clothes/clothes'];
-        return clothes.filter((c) => {
-            if (
-                this.filteringBrands.length &&
-                !this.filteringBrands.includes(c.brand.name)
-            ) {
-                return false;
-            }
-            if (
-                this.filteringShops.length &&
-                !this.filteringShops.includes(c.shop.name)
-            ) {
-                return false;
-            }
-            if (this.filteringGenres.length) {
-                const clothesGenres = c.genres.map((genre) => genre.name);
-                const includes = this.filteringGenres.some((filteringGenre) =>
-                    clothesGenres.includes(filteringGenre)
-                );
-                if (!includes) {
+        return [...clothes]
+            .sort((a, b) => {
+                const aBuyDate = moment(a.buyDate);
+                const bBuyDate = moment(b.buyDate);
+                if (aBuyDate.isSame(bBuyDate)) {
+                    return 0;
+                }
+                if (this.buyDateSort === 'new') {
+                    return aBuyDate.isSameOrAfter(bBuyDate) ? -1 : 1;
+                }
+                if (this.buyDateSort === 'old') {
+                    return aBuyDate.isSameOrAfter(bBuyDate) ? 1 : -1;
+                }
+                return 0;
+            })
+            .filter((c) => {
+                if (
+                    this.filteringBrands.length &&
+                    !this.filteringBrands.includes(c.brand.name)
+                ) {
                     return false;
                 }
-            }
-            return true;
-        });
+                if (
+                    this.filteringShops.length &&
+                    !this.filteringShops.includes(c.shop.name)
+                ) {
+                    return false;
+                }
+                if (this.filteringGenres.length) {
+                    const clothesGenres = c.genres.map((genre) => genre.name);
+                    const includes = this.filteringGenres.some(
+                        (filteringGenre) =>
+                            clothesGenres.includes(filteringGenre)
+                    );
+                    if (!includes) {
+                        return false;
+                    }
+                }
+                return true;
+            });
     }
 
     get filteringBrandOptions(): string[] {

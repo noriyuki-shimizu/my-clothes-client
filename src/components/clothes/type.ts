@@ -33,3 +33,9 @@ export type AssistItem = {
     shops: AssistShop[];
     genres: AssistGenre[];
 };
+
+export type BuyDateSortItem = {
+    label: 'dictionary.sort.new-order'
+    | 'dictionary.sort.old-order';
+    value: 'new' | 'old'
+}
