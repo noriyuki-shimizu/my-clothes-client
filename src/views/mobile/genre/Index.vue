@@ -48,6 +48,11 @@
                             </template>
                         </a-auto-complete>
                     </a-form-item>
+                    <div class="mc-operation-reset">
+                        <a @click="resetFiltering">{{
+                            $t('operation.reset')
+                        }}</a>
+                    </div>
                 </a-form>
             </a-collapse-panel>
         </a-collapse>
@@ -126,6 +131,10 @@ export default class Index extends Vue {
         await this.$store.dispatch('genre/fetchGenres').catch(this.onError);
 
         this.loading = false;
+    }
+
+    resetFiltering() {
+        this.filteringGenreName = '';
     }
 
     get genres(): Genre[] {

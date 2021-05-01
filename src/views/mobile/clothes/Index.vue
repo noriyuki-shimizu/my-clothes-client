@@ -51,6 +51,11 @@
                             :options="filteringGenreOptions"
                         />
                     </a-form-item>
+                    <div class="mc-operation-reset">
+                        <a @click="resetFiltering">{{
+                            $t('operation.reset')
+                        }}</a>
+                    </div>
                 </a-form>
             </a-collapse-panel>
         </a-collapse>
@@ -165,6 +170,12 @@ export default class Index extends Vue {
         });
 
         this.loading = false;
+    }
+
+    resetFiltering() {
+        this.filteringBrands = [];
+        this.filteringShops = [];
+        this.filteringGenres = [];
     }
 
     get clothes(): Clothes[] {

@@ -48,6 +48,11 @@
                             </template>
                         </a-auto-complete>
                     </a-form-item>
+                    <div class="mc-operation-reset">
+                        <a @click="resetFiltering">{{
+                            $t('operation.reset')
+                        }}</a>
+                    </div>
                 </a-form>
             </a-collapse-panel>
         </a-collapse>
@@ -149,6 +154,10 @@ export default class Index extends Vue {
             );
         }
         return brands;
+    }
+
+    resetFiltering() {
+        this.filteringBrandName = '';
     }
 
     onChangeFilteringBrandName(value: string) {

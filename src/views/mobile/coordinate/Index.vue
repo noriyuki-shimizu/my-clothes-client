@@ -44,6 +44,11 @@
                             </a-select-option>
                         </a-select>
                     </a-form-item>
+                    <div class="mc-operation-reset">
+                        <a @click="resetFiltering">{{
+                            $t('operation.reset')
+                        }}</a>
+                    </div>
                 </a-form>
             </a-collapse-panel>
         </a-collapse>
@@ -125,6 +130,10 @@ export default class Index extends Vue {
             .dispatch('coordinate/fetchCoordinates')
             .catch(this.onError);
         this.loading = false;
+    }
+
+    resetFiltering() {
+        this.filteringSeason = '';
     }
 
     get coordinates(): Coordinate[] {
