@@ -36,3 +36,7 @@
 .mc-refine-container {
     margin-bottom: 10px;
 }
+
+.mc-operation-reset {
+    text-align: right;
+}
