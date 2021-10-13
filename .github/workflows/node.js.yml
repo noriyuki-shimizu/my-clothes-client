@@ -1,0 +1,76 @@
+# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  pull_request:
+    branches: [ develop ]
+    types: [ closed ]
+  push:
+    paths:
+      - .github/workflows/node.js.yml
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [13.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - name: Create Pull Request
+      # You may pin to the exact commit or the version.
+      # uses: peter-evans/create-pull-request@7380612b49221684fefa025244f2ef4008ae50ad
+      uses: peter-evans/create-pull-request@v3.10.1
+      with:
+        # GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)
+        # token: # optional, default is ${{ github.token }}
+        # Relative path under $GITHUB_WORKSPACE to the repository. Defaults to $GITHUB_WORKSPACE.
+
+        # path: # optional
+        # The message to use when committing changes.
+        # commit-message: # optional, default is [create-pull-request] automated change
+        # The committer name and email address in the format `Display Name <email@address.com>`. Defaults to the GitHub Actions bot user.
+
+        # committer: # optional, default is GitHub <noreply@github.com>
+        # The author name and email address in the format `Display Name <email@address.com>`. Defaults to the user who triggered the workflow run.
+
+        # author: # optional, default is ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+        # Add `Signed-off-by` line by the committer at the end of the commit log message.
+        # signoff: # optional
+        # The pull request branch name.
+        branch: test
+        # Delete the `branch` when closing pull requests, and when undeleted after merging. Recommend `true`.
+
+        delete-branch: true
+        # The branch suffix type when using the alternative branching strategy.
+        # branch-suffix: # optional
+        # The pull request base branch. Defaults to the branch checked out in the workflow.
+
+        base: develop
+        # A fork of the checked out parent repository to which the pull request branch will be pushed. e.g. `owner/repo-fork`. The pull request will be created to merge the fork's branch into the parent's base.
+
+        # push-to-fork: # optional
+        # The title of the pull request.
+        title: test
+        # The body of the pull request.
+        body: test body
+        # A comma or newline separated list of labels.
+        # labels: # optional
+        # A comma or newline separated list of assignees (GitHub usernames).
+        # assignees: # optional
+        # A comma or newline separated list of reviewers (GitHub usernames) to request a review from.
+        # reviewers: # optional
+        # A comma or newline separated list of GitHub teams to request a review from. Note that a `repo` scoped Personal Access Token (PAT) may be required.
+
+        # team-reviewers: # optional
+        # The number of the milestone to associate the pull request with.
+        # milestone: # optional
+        # Create a draft pull request
+        # draft: # optional
+    
+    
